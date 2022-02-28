@@ -1,37 +1,26 @@
-// import { useState } from "react"
 import Sidebar from "./components/sidebar"
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/home'
-import { BarChart, PieChart } from "./pages/statistic"
-import { useSelector, useDispatch } from 'react-redux'
-import { Form } from 'react-bootstrap'
-import { setCollapse } from "./redux/slice/sidebar"
+import Statistic from "./pages/statistic"
+import styled from "styled-components"
+import { useSelector } from "react-redux"
+
+const Main = styled.div`
+  transition: 0.3s;
+`;
 
 export default function App() {
-  const sidebarCollapse = useSelector(state => state.sidebar.collapse)
-  const dispatch = useDispatch()
-  console.log(sidebarCollapse);
-  return <div className="">
-    <div className="row">
-      <div className="col-auto">
-        <Sidebar collapse={sidebarCollapse} />
-      </div>
-
-      <main className="col">
+  const collapse = useSelector(state => state.sidebar.collapse)
+  return <div>
+    <Sidebar />
+    <Main style={{ marginLeft: collapse ? '80px' : '270px' }}>
+      <div className="container-fluid p-4">
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/home' element={<Home />} />
-          <Route path='/statistic/bar' element={<BarChart />} />
-          <Route path='/statistic/donut' element={<PieChart />} />
+          <Route path="/stat/*" element={<Statistic />} />
         </Routes>
-        <Form.Check
-          type="switch"
-          id="custom-switch"
-          label="Check this switch"
-          value={sidebarCollapse}
-          onChange={() => dispatch(setCollapse(!sidebarCollapse))}
-        />
-      </main>
-    </div>
+      </div>
+    </Main>
   </div>
 }

@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 import 'react-pro-sidebar/dist/css/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-daterangepicker/daterangepicker.css';
 
 ReactDOM.render(
   <React.StrictMode>

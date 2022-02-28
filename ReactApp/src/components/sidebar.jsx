@@ -1,22 +1,46 @@
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent } from 'react-pro-sidebar'
 import { Link } from 'react-router-dom'
-import { House, GraphUpArrow, BarChartLine, PieChart } from 'react-bootstrap-icons'
+import { House, Speedometer2, BarChartLine, PieChart, List, GraphUp } from 'react-bootstrap-icons'
+import { useDispatch, useSelector } from 'react-redux';
+import { setCollapse } from '../redux/slice/sidebar';
+import styled from 'styled-components'
 
-export default function Sidebar({ collapse }) {
-    return <ProSidebar style={{ height: '100vh' }} collapsed={collapse}>
-        <SidebarHeader>
-            TickFund
+const SidebarHeaderContent = styled.div`
+    padding: 14px 25px; 
+    text-transform: uppercase; 
+    font-weight: 600; 
+    font-size: 14px; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+`;
+
+const sidebarStyle = {
+    position: 'fixed',
+    left: 0,
+    top: 0
+}
+
+export default function Sidebar() {
+    const collapse = useSelector(state => state.sidebar.collapse)
+    const dispatch = useDispatch()
+
+    return <ProSidebar style={sidebarStyle} collapsed={collapse}>
+        <SidebarHeader className='text-light'>
+            <SidebarHeaderContent className='d-inline-flex align-items-center'>
+                <List
+                    className='fw-bold hover me-3' size={25}
+                    onClick={() => dispatch(setCollapse(!collapse))}
+                />
+                {!collapse && <span>TickFund</span>}
+            </SidebarHeaderContent>
+
         </SidebarHeader>
         <SidebarContent>
             <Menu iconShape="circle">
                 {sidebarContent.map(content => visitItem(content))}
             </Menu>
         </SidebarContent>
-        {/* <SidebarFooter>
-            <Menu>
-                
-            </Menu>
-        </SidebarFooter> */}
     </ProSidebar>;
 }
 
@@ -24,10 +48,10 @@ function visitItem(node) {
     return node.children ? <SubMenu icon={node.icon} title={node.title} key={node.title}>{
         node.children.map(child => visitItem(child))
     }</SubMenu>
-    : <MenuItem icon={node.icon} key={node.title}>
-        {/* {node.title} */}
-        <Link to={node.path}>{node.title}</Link>
-    </MenuItem>
+        : <MenuItem icon={node.icon} key={node.title}>
+            {/* {node.title} */}
+            <Link to={node.path}>{node.title}</Link>
+        </MenuItem>
 }
 
 const sidebarContent = [{
@@ -35,15 +59,19 @@ const sidebarContent = [{
     title: 'Trang chủ',
     path: '/home'
 }, {
-    icon: <GraphUpArrow size={18} />,
+    icon: <Speedometer2 size={18} />,
     title: 'Thống kê',
     children: [{
         icon: <PieChart size={18} />,
         title: 'Biểu đồ tròn',
-        path: '/statistic/donut'
+        path: '/stat/donut'
     }, {
         icon: <BarChartLine size={18} />,
         title: 'Biểu đồ cột',
-        path: '/statistic/bar'
+        path: '/stat/bar'
+    }, {
+        icon: <GraphUp size={18} />,
+        title: 'Biểu đồ đường',
+        path: '/stat/line'
     }]
 }]
