@@ -19,24 +19,32 @@ export default function Log() {
 
 const headers = [{
     label: 'Mã giao dịch',
-    association: 'transactionID',
-    sortable: false,
-    type: 'text'
+    association: {
+        key: 'transactionID',
+        type: 'text'
+    },
+    sortable: false
 }, {
     label: 'Thời gian',
-    association: 'time',
-    sortable: true,
-    type: 'datetime'
+    association: {
+        key: 'time',
+        type: 'datetime-local'
+    },
+    sortable: true
 }, {
     label: 'Số tiền',
-    association: 'amount',
-    sortable: true,
-    type: 'number'
+    association: {
+        key: 'amount',
+        type: 'number'
+    },
+    sortable: true
 }, {
     label: 'Danh mục',
-    association: 'category',
-    sortable: false,
-    type: 'text'
+    association: {
+        key: 'category',
+        type: 'text'
+    },
+    sortable: false
 }]
 
 const data = [{

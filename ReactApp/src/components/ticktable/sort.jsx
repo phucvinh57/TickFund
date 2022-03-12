@@ -2,22 +2,22 @@ import { Form, Button } from 'react-bootstrap'
 import { useState } from 'react'
 
 export default function Sort({ onSort, fields }) {
-    const [sortOption, setSortOption] = useState(fields.length !== 0 ? {
-        association: fields[0].association,
+    const [sortOption, setSortOption] = useState({
+        key: fields[0].association.key,
         order: 'desc'
-    } : null)
+    })
     return <div className='col-auto d-flex border-left'>
         <div className='me-2'>
             <Form.Select
-                value={sortOption.association} size='sm'
+                value={sortOption.key} size='sm'
                 onChange={e => setSortOption({
                     ...sortOption,
-                    association: fields.find(field => field.association === e.target.value).association
+                    key: fields.find(field => field.association.key === e.target.value).association.key
                 })}
             >
                 {fields.map(field => <option
-                    key={field.association}
-                    value={field.association}
+                    key={field.association.key}
+                    value={field.association.key}
                 >
                     {field.label}
                 </option>)}

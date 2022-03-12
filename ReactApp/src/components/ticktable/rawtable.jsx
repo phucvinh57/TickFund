@@ -26,12 +26,12 @@ export default function RawTable({ headers, data, onRowClick }) {
 					}}
 					className={onRowClick ? 'hover' : ''}
 				>
-					{associations.map((association) => {
+					{associations.map(association => {
 						return <td key={shortKey()} >
 							{
-								isObject(item[association]) ?
-									item[association].component
-									: item[association]
+								isObject(item[association.key]) ?
+									item[association.key].component
+									: item[association.key]
 							}
 						</td>
 					})}
