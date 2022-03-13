@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom'
 
 import 'react-pro-sidebar/dist/css/styles.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './scss/custom.scss'
 import 'bootstrap-daterangepicker/daterangepicker.css';
 
 ReactDOM.render(

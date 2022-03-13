@@ -5,6 +5,7 @@ import Statistic from "./pages/statistic"
 import styled from "styled-components"
 import { useSelector } from "react-redux"
 import Permission from "./pages/permission"
+import Log from "./pages/log"
 
 const Main = styled.div`
   transition: 0.3s;
@@ -21,6 +22,7 @@ export default function App() {
           <Route path='/home' element={<Home />} />
           <Route path="/stat/*" element={<Statistic />} />
           <Route path='/permission' element={<Permission/>} />
+          <Route path="/log" element={<Log />} />
         </Routes>
       </div>
     </Main>
