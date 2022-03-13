@@ -1,6 +1,7 @@
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent } from 'react-pro-sidebar'
 import { Link } from 'react-router-dom'
-import { House, Speedometer2, BarChartLine, PieChart, List, GraphUp } from 'react-bootstrap-icons'
+import { House, Speedometer2, BarChartLine, PieChart, List, GraphUp, ShieldLock} from 'react-bootstrap-icons'
+
 import { useDispatch, useSelector } from 'react-redux';
 import { setCollapse } from '../redux/slice/sidebar';
 import styled from 'styled-components'
@@ -74,4 +75,8 @@ const sidebarContent = [{
         title: 'Biểu đồ đường',
         path: '/stat/line'
     }]
+}, {
+    icon: <ShieldLock size={18}/>,
+    title: 'Quyền truy cập',
+    path: '/permission'
 }]
