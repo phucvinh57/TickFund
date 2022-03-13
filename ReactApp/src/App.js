@@ -6,6 +6,7 @@ import styled from "styled-components"
 import { useSelector } from "react-redux"
 import Permission from "./pages/permission"
 import Log from "./pages/log"
+import Transaction from "./pages/transaction"
 
 const Main = styled.div`
   transition: 0.3s;
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/stat/*" element={<Statistic />} />
           <Route path='/permission' element={<Permission/>} />
           <Route path="/log" element={<Log />} />
+          <Route path="/transaction" element={<Transaction />} />
         </Routes>
       </div>
     </Main>

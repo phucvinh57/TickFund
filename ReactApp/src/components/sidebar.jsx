@@ -82,4 +82,8 @@ const sidebarContent = [{
     icon: <JournalText size={18}/>,
     title: 'Nhật ký hệ thống',
     path: '/log'
+}, {
+    icon: <Tags size={18} />,
+    title: "Giao dịch",
+    path: '/transaction'
 }]
