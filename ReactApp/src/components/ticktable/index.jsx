@@ -26,29 +26,29 @@ export default function TickTable({
 		<h4>{name}</h4>
 		<div className='row'>
 			{/* Form search */}
-			<div className='col'>
+			{onSearch && <div className='col'>
 				<SearchBox onSearch={onSearch} />
-			</div>
+			</div>}
 
 			{/* Form sort */}
-			{sortableFields.length !== 0 ? <Sort onSort={onSort} fields={sortableFields} /> : null}
+			{(sortableFields.length !== 0 && onSort) && <Sort onSort={onSort} fields={sortableFields} />}
 
 			{/* Filter button click to show and hide */}
-			<div className='col-auto'>
+			{onFilter && <div className='col-auto'>
 				<Button size='sm' onClick={() => setShowFilter(!showFilter)}>
 					<Funnel size={18} />
 				</Button>
-			</div>
+			</div>}
 		</div>
 
-		<div className='mt-2 d-flex justify-content-end'>
-			<Filter 
-				onFilter={onFilter} 
-				fields={headers} 
+		{onFilter && <div className='mt-2 d-flex justify-content-end'>
+			<Filter
+				onFilter={onFilter}
+				fields={headers}
 				show={showFilter}
 				onHide={() => setShowFilter(false)}
 			/>
-		</div>
+		</div>}
 
 		{/* Render Date */}
 		<RawTable
@@ -56,9 +56,14 @@ export default function TickTable({
 			data={data}
 			onRowClick={onRowClick}
 		/>
-
+		{data.length === 0 && <div
+			className="d-flex justify-content-center py-5"
+			style={{ borderBottom: '1px solid #343a40' }}
+		>
+			<h5 className="text-muted">No data available</h5>
+		</div>}
 		{/* Pagination */}
-		<div className='float-end mt-2'>
+		<div className='d-flex justify-content-end mt-2'>
 			<ReactPaginate
 				nextLabel='>'
 				previousLabel='<'

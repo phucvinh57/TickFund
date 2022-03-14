@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const sidebarSlice = createSlice({
     name: 'sidebar',
     initialState: {
-        collapse: false
+        collapse: true
     },
     reducers: {
         setCollapse: (state, action) => {

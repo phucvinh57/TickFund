@@ -1,110 +1,71 @@
 import TickTable from "../components/ticktable";
-import { House } from "react-bootstrap-icons"
+import { useEffect, useState, useMemo } from "react";
+import { MockDatabase } from "../utils";
+import randLogData, { numItemsPerPage, headers } from "../components/log/sampleData";
+
 
 export default function Log() {
+    // Data in a page
+    const [pageData, setPageData] = useState([])
+    const [numPages, setNumPages] = useState(0)
+
+    const [searchQuery, setSearchQuery] = useState('')
+
+    const mockDB = useMemo(() => {
+        const initDB = () => {
+            const logData = []
+            for (let i = 0; i < 201; ++i) {
+                logData.push(randLogData())
+            }
+            return logData
+        }
+        return new MockDatabase(initDB())
+    }, [])
+
+    const init = () => {
+        // When we have backend, get number of pages and data by APIs
+        setPageData(mockDB.slice(0, numItemsPerPage))
+        setNumPages(Math.ceil(mockDB.getCurrLength() / numItemsPerPage))
+    }
+
+    useEffect(init, [mockDB])
+
+    const handleSearch = query => {
+        setSearchQuery(query)
+        if (query === '') {
+            init()
+            return
+        }
+        const searchResult = mockDB.search(query, 0, numItemsPerPage)
+        setPageData(searchResult)
+        setNumPages(Math.ceil(mockDB.getCurrLength() / numItemsPerPage))
+    }
+    const handlePageChange = nth => {
+        let start = nth * numItemsPerPage
+        let end = start + numItemsPerPage
+        setPageData(searchQuery === '' ? mockDB.slice(start, end) : mockDB.search(searchQuery, start, end))
+    }
+
+    const handleSort = option => {
+        console.log(option)
+        mockDB.sort(option.key, option.order)
+        init()
+    }
+    const handleFilter = filters => {
+        console.log(filters)
+    }
+
     return <div>
         <TickTable
-            data={data}
+            data={pageData}
             headers={headers}
             name="Nhật ký hệ thống"
-            numPages={20}
-            onSearch={str => console.log(str)}
-            onPageChange={pageNum => console.log(pageNum)}
-            onRowClick={row => console.log(row)}
-            onSort={sortOption => console.log(sortOption)}
-            onFilter={filter => console.log(filter)}
+            numPages={numPages}
+            onSearch={handleSearch}
+            onPageChange={handlePageChange}
+            // onRowClick={row => console.log(row)}
+            onSort={handleSort}
+            onFilter={handleFilter}
         />
     </div>
 }
-
-const headers = [{
-    label: 'Mã giao dịch',
-    association: {
-        key: 'transactionID',
-        type: 'text'
-    },
-    sortable: false
-}, {
-    label: 'Thời gian',
-    association: {
-        key: 'time',
-        type: 'datetime-local'
-    },
-    sortable: true
-}, {
-    label: 'Số tiền',
-    association: {
-        key: 'amount',
-        type: 'number'
-    },
-    sortable: true
-}, {
-    label: 'Danh mục',
-    association: {
-        key: 'category',
-        type: 'text'
-    },
-    sortable: false
-}]
-
-const data = [{
-    transactionID: '121342',
-    time: new Date().toISOString().slice(0, 19).replace('T', ' ').replaceAll('-', '/'),
-    amount: 500000,
-    category: {
-        val: 'Tiền nhà',
-        component: <div className='d-flex align-items-center justify-content-end'>
-            <House size={18} className='me-2' />Tiền nhà
-        </div>
-    }
-}, {
-    transactionID: '121342',
-    time: new Date().toISOString().slice(0, 19).replace('T', ' ').replaceAll('-', '/'),
-    amount: 500000,
-    category: {
-        val: 'Tiền nhà',
-        component: <div className='d-flex align-items-center justify-content-end'>
-            <House size={18} className='me-2' />Tiền nhà
-        </div>
-    }
-}, {
-    transactionID: '121342',
-    time: new Date().toISOString().slice(0, 19).replace('T', ' ').replaceAll('-', '/'),
-    amount: 500000,
-    category: {
-        val: 'Tiền nhà',
-        component: <div className='d-flex align-items-center justify-content-end'>
-            <House size={18} className='me-2' />Tiền nhà
-        </div>
-    }
-}, {
-    transactionID: '121342',
-    time: new Date().toISOString().slice(0, 19).replace('T', ' ').replaceAll('-', '/'),
-    amount: 500000,
-    category: {
-        val: 'Tiền nhà',
-        component: <div className='d-flex align-items-center justify-content-end'>
-            <House size={18} className='me-2' />Tiền nhà
-        </div>
-    }
-}, {
-    transactionID: '121342',
-    time: new Date().toISOString().slice(0, 19).replace('T', ' ').replaceAll('-', '/'),
-    amount: 500000,
-    category: {
-        val: 'Tiền nhà',
-        component: <div className='d-flex align-items-center justify-content-end'>
-            <House size={18} className='me-2' />Tiền nhà
-        </div>
-    }
-}, {
-    transactionID: '121342',
-    time: new Date().toISOString().slice(0, 19).replace('T', ' ').replaceAll('-', '/'),
-    amount: 500000,
-    category: {
-        val: 'Tiền nhà',
-        component: <div className='d-flex align-items-center justify-content-end'>
-            <House size={18} className='me-2' />Tiền nhà
-        </div>
-    }
-}]

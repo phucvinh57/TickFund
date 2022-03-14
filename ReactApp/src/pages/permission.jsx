@@ -48,7 +48,7 @@ const init = [
 export default function Permission(){
     return(
         <Container>
-            <h2>Chỉnh sửa quyền truy cập</h2>
+            <h4>Chỉnh sửa quyền truy cập</h4>
             <PermissionCheckCard init={init} role={'Quản trị viên'}/>
             <PermissionCheckCard init={init} role={'Thành viên'}/>
         </Container>

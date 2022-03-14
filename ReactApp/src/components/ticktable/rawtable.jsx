@@ -21,13 +21,13 @@ export default function RawTable({ headers, data, onRowClick }) {
 		<tbody>
 			{data.map(item =>
 				<tr key={shortKey()}
-					onClick={() => {
+					onClick={onRowClick ? () => {
 						onRowClick(item)
-					}}
+					} : null}
 					className={onRowClick ? 'hover' : ''}
 				>
-					{associations.map(association => {
-						return <td key={shortKey()} >
+					{associations.map((association, idx) => {
+						return <td key={shortKey()} className={idx === headers.length - 1 ? 'text-end' : ''}>
 							{
 								isObject(item[association.key]) ?
 									item[association.key].component

@@ -49,7 +49,7 @@ import { useState, useEffect } from "react"
 
 export default function PermissionCheckCard({init, role}){
     const [shrink, setShrink] = useState(true)
-    const [resource, setResource] = useState([])
+    // const [resource, setResource] = useState([])
     const [permissions, setPermissions] = useState(init)
     const [save, setSave] = useState(false)
 
