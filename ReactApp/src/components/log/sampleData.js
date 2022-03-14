@@ -17,7 +17,7 @@ export default function randLogData() {
     let linkText = getRandomItem(randActivity.link.text)
 
     return {
-        time: prettyDate(getRandomDate(new Date(2021, 1, 1), new Date(2022, 3, 15))),
+        time: prettyDate(getRandomDate(new Date(2021, 1, 1), new Date())),
         account: {
             val: randAccount.name,
             component: <Account img={randAccount.img} name={randAccount.name} />

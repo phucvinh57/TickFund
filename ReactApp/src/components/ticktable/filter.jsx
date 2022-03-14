@@ -8,10 +8,14 @@ export default function Filter({ onFilter, fields, show, onHide }) {
 
     const filterFields = useMemo(() => {
         const list = fields.map(field => {
+            let defaultCompareValue
+            if(field.association.type === 'select') 
+                defaultCompareValue = field.association.options[0]
+            else defaultCompareValue = ''
             let filterField = {
                 ...field,
-                operator: '',
-                comparedValue: '',
+                operator: operators[0],
+                comparedValue: defaultCompareValue,
                 id: shortKey()
             }
             delete filterField.sortable
@@ -20,18 +24,29 @@ export default function Filter({ onFilter, fields, show, onHide }) {
         return list
     }, [fields])
 
-
-
+    // Set right hand side of a filter expression
     const setFilterComparison = (id, key, value) => {
         const newFilter = [...filters]
         let filter = newFilter.find(val => val.id === id)
         filter[key] = value
+        if(key === 'association') {
+            if(Array.isArray(value.options))
+                filter.comparedValue = value.options[0]
+            else filter.comparedValue = ''
+        }
         setFilters(newFilter)
     }
 
+    // Get type of a left hand side of a filter expression
     const findType = key => {
         const field = filterFields.find(val => val.association.key === key)
         return field.association.type
+    }
+
+    const findOptions = key => {
+        const field = filterFields.find(val => val.association.key === key)
+        if (field.association.options) return field.association.options
+        return null
     }
 
     const removeFilter = id => {
@@ -44,50 +59,64 @@ export default function Filter({ onFilter, fields, show, onHide }) {
     const addFilter = () => setFilters([...filters, { ...filterFields[0], id: shortKey() }])
 
     return <ToastContainer className="position-absolute zdrop bg-white rounded">
-        <Toast show={show} onClose={onHide} position='top-end' style={{ width: '500px' }}>
+        <Toast show={show} onClose={onHide} position='top-end' style={{ width: '550px' }}>
             <Toast.Header>
                 <strong className="me-auto">Define your filter</strong>
             </Toast.Header>
             <Toast.Body>
+                {/* For each filter, render UI */}
                 {filters.length !== 0 ? filters.map(filter => {
                     return <div className="row align-items-center mb-2" key={filter.id}>
+                        {/* Left hand side */}
                         <Form.Group className="col">
                             <Form.Select
                                 value={filter.association.key} size='sm'
                                 onChange={e => setFilterComparison(filter.id, 'association', {
                                     key: e.target.value,
-                                    type: findType(e.target.value)
+                                    type: findType(e.target.value),
+                                    options: findOptions(e.target.value)
                                 })}
                             >
-                                {filterFields.map(val => <option key={shortKey()} value={val.association.key}>
-                                    {val.label}
-                                </option>)}
+                                {filterFields.map(val =>
+                                    <option key={shortKey()} value={val.association.key}>
+                                        {val.label}
+                                    </option>)}
                             </Form.Select>
                         </Form.Group>
+
+                        {/* Expression: equal, unequal, less than ... */}
                         <Form.Group className="col-auto">
                             <Form.Select
                                 value={filter.operator} size='sm'
                                 onChange={e => setFilterComparison(filter.id, 'operator', e.target.value)}
                             >
-                                {operators.map(op => <option key={shortKey()}>{op}</option>)}
+                                {operators.map(op =>
+                                    <option key={shortKey()}>
+                                        {op}
+                                    </option>)}
                             </Form.Select>
                         </Form.Group>
-                        <Form.Group className="col-auto">
-                            {filter.association.type !== 'select' ? <Form.Control
-                                type={filter.association.type} value={filter.comparedValue} size='sm'
-                                onChange={e => setFilterComparison(filter.id, 'comparedValue', e.target.value)}
-                            /> : <Form.Select value={filter.comparedValue} size='sm'
-                                onChange={e => setFilterComparison(filter.id, 'comparedValue', e.target.value)}
-                            >
-                                {filter.association.options.map(option => {
-                                    // console.log(isValidElement(option))
-                                    return <option value={option} key={shortKey()}>
-                                        {option}
-                                    </option>
-                                })}
-                            </Form.Select>}
 
+                        {/* Right hand side value */}
+                        <Form.Group className="col-auto">
+                            {filter.association.type !== 'select' ?
+                                <Form.Control
+                                    type={filter.association.type} value={filter.comparedValue} size='sm'
+                                    onChange={e => setFilterComparison(filter.id, 'comparedValue', e.target.value)}
+                                />
+                                : <Form.Select value={filter.comparedValue} size='sm'
+                                    onChange={e => setFilterComparison(filter.id, 'comparedValue', e.target.value)}
+                                >
+                                    {filter.association.options.map(option => {
+                                        return <option value={option} key={shortKey()}>
+                                            {option}
+                                        </option>
+                                    })}
+                                </Form.Select>
+                            }
                         </Form.Group>
+
+                        {/* Remove filter button */}
                         <div className="col-auto ps-0">
                             <Trash size={20} className='hover'
                                 onClick={() => removeFilter(filter.id)}
