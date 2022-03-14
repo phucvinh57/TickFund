@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/TickFund/static/css/main.e970c350.css",
+    "main.js": "/TickFund/static/js/main.c1d64790.js",
+    "static/media/vinh.jpg": "/TickFund/static/media/vinh.f04362152e6815346ed7.jpg",
+    "static/media/nhancu.jpg": "/TickFund/static/media/nhancu.6d78baa66078f7780bee.jpg",
+    "static/media/kiettran.jpg": "/TickFund/static/media/kiettran.a25e89062cbeb23c89a4.jpg",
+    "index.html": "/TickFund/index.html",
+    "main.e970c350.css.map": "/TickFund/static/css/main.e970c350.css.map",
+    "main.c1d64790.js.map": "/TickFund/static/js/main.c1d64790.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e970c350.css",
+    "static/js/main.c1d64790.js"
+  ]
+}
