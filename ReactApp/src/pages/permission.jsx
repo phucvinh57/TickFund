@@ -1,6 +1,8 @@
-import { Container } from "react-bootstrap";
+import { Container, Accordion } from "react-bootstrap";
+import AccountTable from "../components/permission/accountTable";
 import PermissionCheckCard from "../components/permission/permissionCheckCard";
-const init = [
+
+var init = [
     {
         resource: 'Tài khoản',
         actions: [
@@ -47,10 +49,13 @@ const init = [
 ]
 export default function Permission(){
     return(
-        <Container>
+        <div>
+            <AccountTable/>
             <h4>Chỉnh sửa quyền truy cập</h4>
-            <PermissionCheckCard init={init} role={'Quản trị viên'}/>
-            <PermissionCheckCard init={init} role={'Thành viên'}/>
-        </Container>
+            <Accordion>
+                <PermissionCheckCard init={init} role={'Quản trị viên'}/>
+                <PermissionCheckCard init={init} role={'Thành viên'}/>
+            </Accordion>
+        </div>
     )
 }
