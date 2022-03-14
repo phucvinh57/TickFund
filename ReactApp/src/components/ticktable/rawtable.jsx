@@ -19,10 +19,10 @@ export default function RawTable({ headers, data, onRowClick }) {
 
 		{/* Render data */}
 		<tbody>
-			{data.map((item, idx) =>
+			{data.map(item =>
 				<tr key={shortKey()}
 					onClick={onRowClick ? () => {
-						onRowClick(idx)
+						onRowClick(item)
 					} : null}
 					className={onRowClick ? 'hover' : ''}
 				>

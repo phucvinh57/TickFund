@@ -40,7 +40,7 @@ export default function AccountTable(){
                 numPages={Math.ceil(accounts.length / 20)}
                 onSearch={onSearch}
                 onPageChange={pageNum => console.log(pageNum)}
-                onRowClick={row => {setShowAccount(accounts[row])}}
+                onRowClick={row => {setShowAccount(accounts.filter(acc => acc.accountName === row.name.val)[0])}}
                 onSort={sortOption => console.log(sortOption)}
                 onFilter={filter => console.log(filter)}
             />
@@ -65,7 +65,7 @@ export default function AccountTable(){
         return accounts.map((acc, idx) => (
             {
                 name: {
-                    val: acc.name,
+                    val: acc.accountName,
                     component: <div>
                         <Row>
                             <Col className='col-auto d-flex align-items-center'>
