@@ -73,10 +73,20 @@ export default function Filter({ onFilter, fields, show, onHide }) {
                             </Form.Select>
                         </Form.Group>
                         <Form.Group className="col-auto">
-                            <Form.Control
+                            {filter.association.type !== 'select' ? <Form.Control
                                 type={filter.association.type} value={filter.comparedValue} size='sm'
                                 onChange={e => setFilterComparison(filter.id, 'comparedValue', e.target.value)}
-                            />
+                            /> : <Form.Select value={filter.comparedValue} size='sm'
+                                onChange={e => setFilterComparison(filter.id, 'comparedValue', e.target.value)}
+                            >
+                                {filter.association.options.map(option => {
+                                    // console.log(isValidElement(option))
+                                    return <option value={option} key={shortKey()}>
+                                        {option}
+                                    </option>
+                                })}
+                            </Form.Select>}
+
                         </Form.Group>
                         <div className="col-auto ps-0">
                             <Trash size={20} className='hover'
@@ -84,7 +94,7 @@ export default function Filter({ onFilter, fields, show, onHide }) {
                             />
                         </div>
                     </div>
-                }) : <i className="text-secondary">Add your own filter ...</i>}
+                }) : <i className="text-muted">Add your own filter ...</i>}
                 <hr className="my-2" />
                 <div className="d-flex justify-content-between align-items-center">
                     <span>
@@ -98,7 +108,7 @@ export default function Filter({ onFilter, fields, show, onHide }) {
                 </div>
             </Toast.Body>
         </Toast>
-    </ToastContainer>
+    </ToastContainer >
 }
 
 const operators = ['LT', 'GT', 'EQ', 'UNEQ', 'LTE', 'GTE']

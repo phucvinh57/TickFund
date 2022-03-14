@@ -12,6 +12,6 @@ export default function SearchBox({ onSearch }) {
             onKeyDown={e => { e.key === 'Enter' && onSearch(query) }}
             placeholder='Search text ...'
         />
-        <Button><Search size={18} /></Button>
+        <Button onClick={() => onSearch(query)}><Search size={18} /></Button>
     </InputGroup>
 } 
