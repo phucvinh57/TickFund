@@ -20,8 +20,7 @@ export default function Filter({ onFilter, fields, show, onHide }) {
         return list
     }, [fields])
 
-
-
+    // Set right hand side of a filter expression
     const setFilterComparison = (id, key, value) => {
         const newFilter = [...filters]
         let filter = newFilter.find(val => val.id === id)
@@ -29,6 +28,7 @@ export default function Filter({ onFilter, fields, show, onHide }) {
         setFilters(newFilter)
     }
 
+    // Get type of a left hand side of a filter expression
     const findType = key => {
         const field = filterFields.find(val => val.association.key === key)
         return field.association.type
@@ -49,8 +49,10 @@ export default function Filter({ onFilter, fields, show, onHide }) {
                 <strong className="me-auto">Define your filter</strong>
             </Toast.Header>
             <Toast.Body>
+                {/* For each filter, render UI */}
                 {filters.length !== 0 ? filters.map(filter => {
                     return <div className="row align-items-center mb-2" key={filter.id}>
+                        {/* Left hand side */}
                         <Form.Group className="col">
                             <Form.Select
                                 value={filter.association.key} size='sm'
@@ -64,6 +66,8 @@ export default function Filter({ onFilter, fields, show, onHide }) {
                                 </option>)}
                             </Form.Select>
                         </Form.Group>
+
+                        {/* Expression: equal, unequal, less than ... */}
                         <Form.Group className="col-auto">
                             <Form.Select
                                 value={filter.operator} size='sm'
@@ -72,22 +76,27 @@ export default function Filter({ onFilter, fields, show, onHide }) {
                                 {operators.map(op => <option key={shortKey()}>{op}</option>)}
                             </Form.Select>
                         </Form.Group>
-                        <Form.Group className="col-auto">
-                            {filter.association.type !== 'select' ? <Form.Control
-                                type={filter.association.type} value={filter.comparedValue} size='sm'
-                                onChange={e => setFilterComparison(filter.id, 'comparedValue', e.target.value)}
-                            /> : <Form.Select value={filter.comparedValue} size='sm'
-                                onChange={e => setFilterComparison(filter.id, 'comparedValue', e.target.value)}
-                            >
-                                {filter.association.options.map(option => {
-                                    // console.log(isValidElement(option))
-                                    return <option value={option} key={shortKey()}>
-                                        {option}
-                                    </option>
-                                })}
-                            </Form.Select>}
 
+                        {/* Right hand side value */}
+                        <Form.Group className="col-auto">
+                            {filter.association.type !== 'select' ?
+                                <Form.Control
+                                    type={filter.association.type} value={filter.comparedValue} size='sm'
+                                    onChange={e => setFilterComparison(filter.id, 'comparedValue', e.target.value)}
+                                />
+                                : <Form.Select value={filter.comparedValue} size='sm'
+                                    onChange={e => setFilterComparison(filter.id, 'comparedValue', e.target.value)}
+                                >
+                                    {filter.association.options.map(option => {
+                                        return <option value={option} key={shortKey()}>
+                                            {option}
+                                        </option>
+                                    })}
+                                </Form.Select>
+                            }
                         </Form.Group>
+
+                        {/* Remove filter button */}
                         <div className="col-auto ps-0">
                             <Trash size={20} className='hover'
                                 onClick={() => removeFilter(filter.id)}

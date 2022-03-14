@@ -10,7 +10,7 @@ export default function Log() {
     const [numPages, setNumPages] = useState(0)
 
     const [searchQuery, setSearchQuery] = useState('')
-
+    
     const mockDB = useMemo(() => {
         const initDB = () => {
             const logData = []
