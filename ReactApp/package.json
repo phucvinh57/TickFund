@@ -1,5 +1,5 @@
 {
-  "homepage": "https://phucvinh57.github.io/TickFund/",
+  "homepage": "http://phucvinh57.github.io/TickFund/",
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
@@ -30,6 +30,7 @@
     "styled-components": "^5.3.3"
   },
   "scripts": {
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
