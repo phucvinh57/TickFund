@@ -1,6 +1,6 @@
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent } from 'react-pro-sidebar'
 import { Link } from 'react-router-dom'
-import { House, Speedometer2, BarChartLine, PieChart, List, GraphUp,ShieldLock, JournalText } from 'react-bootstrap-icons'
+import { House, Speedometer2, BarChartLine, PieChart, List, GraphUp,ShieldLock, JournalText, Tags } from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { setCollapse } from '../redux/slice/sidebar';
 import styled from 'styled-components'

@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { Button, Dropdown, Row, Col, ListGroup, ButtonGroup} from "react-bootstrap"
+import React, {useState} from 'react';
+import { Button, Row, Col, ListGroup, ButtonGroup} from "react-bootstrap"
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 // import ModalHeader from 'react-bootstrap/ModalHeader'
@@ -33,8 +33,8 @@ function UploadFile() {
                     selectedFiles.map((file, id) => {
                         console.log(id)
                         return (<ButtonGroup key={id} className="m-1">
-                                <Button variant="secondary" size="sm">{file.name}</Button>
-                                <Button variant="secondary" size="sm" className='p-1' onClick={() => removeHandler(id)}><X size={12}/></Button>
+                                <Button variant="primary" size="sm">{file.name}</Button>
+                                <Button variant="primary" size="sm" className='p-1' onClick={() => removeHandler(id)}><X size={12}/></Button>
                             </ButtonGroup>)
                     })
                     : <div></div>
@@ -66,16 +66,8 @@ function PopUp(props) {
             <ModalBody>
                 <Form>
                     <Form.Group className="mb-3">
-                        <Form.Label>Tên giao dịch</Form.Label>
-                        <Form.Control type="text" placeholder="Đóng tiền quỹ"/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
                         <Form.Label>Số tiền</Form.Label>
                         <Form.Control type="number" placeholder="300 000đ"/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Thời gian giao dịch</Form.Label>
-                        <Form.Control type="datetime-local" size="sm" placeholder={Date.now()}/>
                     </Form.Group>
                     <Row className="mb-3">
                         <Form.Group as={Col}>
@@ -96,6 +88,10 @@ function PopUp(props) {
                         </Form.Group>
                     </Row>
                     <Form.Group className="mb-3">
+                        <Form.Label>Thời gian giao dịch</Form.Label>
+                        <Form.Control type="datetime-local" size="sm" placeholder={Date.now()}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Người giao dịch</Form.Label>
                         <Form.Control type="text" placeholder="Nguyễn Phúc Vinh"/>
                     </Form.Group>
@@ -114,7 +110,7 @@ function PopUp(props) {
 
 export default function InitTransaction() {
     const [modalShow, setModalShow] = useState(false);
-    return <div>
+    return <div className='mb-3'>
         <Button variant="primary" onClick={() => setModalShow(true)}>
             Tạo giao dịch
         </Button>
