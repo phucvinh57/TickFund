@@ -8,10 +8,14 @@ export default function Filter({ onFilter, fields, show, onHide }) {
 
     const filterFields = useMemo(() => {
         const list = fields.map(field => {
+            let defaultCompareValue
+            if(field.association.type === 'select') 
+                defaultCompareValue = field.association.options[0]
+            else defaultCompareValue = ''
             let filterField = {
                 ...field,
-                operator: '',
-                comparedValue: '',
+                operator: operators[0],
+                comparedValue: defaultCompareValue,
                 id: shortKey()
             }
             delete filterField.sortable
@@ -25,6 +29,11 @@ export default function Filter({ onFilter, fields, show, onHide }) {
         const newFilter = [...filters]
         let filter = newFilter.find(val => val.id === id)
         filter[key] = value
+        if(key === 'association') {
+            if(Array.isArray(value.options))
+                filter.comparedValue = value.options[0]
+            else filter.comparedValue = ''
+        }
         setFilters(newFilter)
     }
 
@@ -32,6 +41,12 @@ export default function Filter({ onFilter, fields, show, onHide }) {
     const findType = key => {
         const field = filterFields.find(val => val.association.key === key)
         return field.association.type
+    }
+
+    const findOptions = key => {
+        const field = filterFields.find(val => val.association.key === key)
+        if (field.association.options) return field.association.options
+        return null
     }
 
     const removeFilter = id => {
@@ -44,7 +59,7 @@ export default function Filter({ onFilter, fields, show, onHide }) {
     const addFilter = () => setFilters([...filters, { ...filterFields[0], id: shortKey() }])
 
     return <ToastContainer className="position-absolute zdrop bg-white rounded">
-        <Toast show={show} onClose={onHide} position='top-end' style={{ width: '500px' }}>
+        <Toast show={show} onClose={onHide} position='top-end' style={{ width: '550px' }}>
             <Toast.Header>
                 <strong className="me-auto">Define your filter</strong>
             </Toast.Header>
@@ -58,12 +73,14 @@ export default function Filter({ onFilter, fields, show, onHide }) {
                                 value={filter.association.key} size='sm'
                                 onChange={e => setFilterComparison(filter.id, 'association', {
                                     key: e.target.value,
-                                    type: findType(e.target.value)
+                                    type: findType(e.target.value),
+                                    options: findOptions(e.target.value)
                                 })}
                             >
-                                {filterFields.map(val => <option key={shortKey()} value={val.association.key}>
-                                    {val.label}
-                                </option>)}
+                                {filterFields.map(val =>
+                                    <option key={shortKey()} value={val.association.key}>
+                                        {val.label}
+                                    </option>)}
                             </Form.Select>
                         </Form.Group>
 
@@ -73,7 +90,10 @@ export default function Filter({ onFilter, fields, show, onHide }) {
                                 value={filter.operator} size='sm'
                                 onChange={e => setFilterComparison(filter.id, 'operator', e.target.value)}
                             >
-                                {operators.map(op => <option key={shortKey()}>{op}</option>)}
+                                {operators.map(op =>
+                                    <option key={shortKey()}>
+                                        {op}
+                                    </option>)}
                             </Form.Select>
                         </Form.Group>
 
