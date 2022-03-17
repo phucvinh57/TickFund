@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { Card, Ratio, Button, InputGroup, FormControl  } from 'react-bootstrap'
 import { PencilSquare, Search, Trash } from 'react-bootstrap-icons'
+import InitCategory from './initCategory'
 import InitTransaction from './initTransaction'
 import { data, category } from './sampleData'
 
@@ -49,7 +50,7 @@ export default function Category() {
                 <SearchBox onSearch={(str) => console.log(str)}/>
             </div>
             <div className='col-auto'>
-
+                <InitCategory />
             </div>
             <div className='col-auto'>
                 <InitTransaction />
