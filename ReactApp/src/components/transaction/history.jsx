@@ -1,85 +1,11 @@
-import React from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
+import { MockDatabase } from '../../utils';
 // import { Button, Row, Col, ListGroup, ButtonGroup} from "react-bootstrap"
 import TickTable from '../ticktable';
-import { prettyDate } from '../../utils';
+
+import { data, category } from './sampleData'
 
 const pages = 10
-const category = [
-    {
-        name: "Quỹ Lab",
-        type: "Thu"
-    },
-    {
-        name: "Tiền nhà",
-        type: "Chi"
-    },
-    {
-        name: "Tiền nước",
-        type: "Chi"
-    }
-]
-const data = [
-    {
-        id: '123456',
-        time: prettyDate(new Date()),
-        money: '250000 đ',
-        category: category[0].type + " " + category[0].name
-    },
-    {
-        id: '123456',
-        time: prettyDate(new Date()),
-        money: '250000 đ',
-        category: category[1].type + " " + category[1].name
-    },
-    {
-        id: '123456',
-        time: prettyDate(new Date()),
-        money: '250000 đ',
-        category: category[2].type + " " + category[2].name
-    },
-    {
-        id: '123456',
-        time: prettyDate(new Date()),
-        money: '250000 đ',
-        category: category[0].type + " " + category[0].name
-    },
-    {
-        id: '123456',
-        time: prettyDate(new Date()),
-        money: '250000 đ',
-        category: category[1].type + " " + category[1].name
-    },
-    {
-        id: '123456',
-        time: prettyDate(new Date()),
-        money: '250000 đ',
-        category: category[2].type + " " + category[2].name
-    },
-    {
-        id: '123456',
-        time: prettyDate(new Date()),
-        money: '250000 đ',
-        category: category[0].type + " " + category[0].name
-    },
-    {
-        id: '123456',
-        time: prettyDate(new Date()),
-        money: '250000 đ',
-        category: category[1].type + " " + category[1].name
-    },
-    {
-        id: '123456',
-        time: prettyDate(new Date()),
-        money: '250000 đ',
-        category: category[2].type + " " + category[2].name
-    },
-    {
-        id: '123456',
-        time: prettyDate(new Date()),
-        money: '250000 đ',
-        category: category[0].type + " " + category[0].name
-    }
-]
 
 const headers = [
     {
@@ -116,35 +42,73 @@ const headers = [
     }
 ]
 
-const name = "Giao dịch"
+const name = "Lịch sử giao dịch"
+const itemsPerPage = 10
 
 export default function History() {
-    const search = (str) => {
-        console.log(str)
+
+
+
+    const [pageData, setPageData] = useState([])
+    const [numPages, setNumPages] = useState(0)
+
+    const [searchQuery, setSearchQuery] = useState('')
+
+    const mockDB = useMemo(() => {return new MockDatabase(data)}, [])
+
+    const init = () => {
+        setPageData(mockDB.slice(0, itemsPerPage))
+        setNumPages(Math.ceil(mockDB.getCurrLength() / itemsPerPage))
+    }
+
+    useEffect(init, [mockDB])
+
+    const search = (query) => {
+        setSearchQuery(query)
+        if (query === '') {
+            init()
+            return
+        }
+        const searchResult = mockDB.search(query, 0, itemsPerPage)
+        setPageData(searchResult)
+        setNumPages(Math.ceil(mockDB.getCurrLength() / itemsPerPage))
     }
     
-    const change = (str) => {
-        console.log(str)
+    const change = (nth) => {
+        let start = nth * itemsPerPage
+        let end = start + itemsPerPage
+        setPageData(searchQuery === '' ? mockDB.slice(start, end) : mockDB.search(searchQuery, start, end))
     }
     
     const click = (str) => {
         console.log(str)
     }
     
-    const sort = (str) => {
-        console.log(str)
+    const sort = (option) => {
+        mockDB.sort(option.key, option.order)
+        init()
     }
     
     const filter = (str) => {
         console.log(str)
     }
 
-    return <div >
+
+    // const [pageData, setPageData] = useState([])
+    // const [numPages, setNumPages] = useState(0)
+
+    // const [searchQuery, setSearchQuery] = useState('')
+
+    // const mockDB = useMemo(() => {
+
+    // })
+
+    return <div className='mb-3' >
         <TickTable
-            data={data}
+            data={pageData}
             headers = {headers}
             name={name}
-            numPages={pages}
+            numPages={numPages}
             onSearch = {search}
             onPageChange = {change}
             onRowClick={click}

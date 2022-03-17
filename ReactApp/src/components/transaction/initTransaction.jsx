@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form'
 // import ModalHeader from 'react-bootstrap/ModalHeader'
 // import ModalTitle from 'react-bootstrap/ModalTitle'
 import ModalBody from 'react-bootstrap/ModalBody'
-import {Link, List, X} from 'react-bootstrap-icons'
+import {Link, X} from 'react-bootstrap-icons'
 
 function UploadFile() {
     
