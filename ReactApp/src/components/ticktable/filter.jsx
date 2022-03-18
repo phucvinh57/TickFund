@@ -5,11 +5,12 @@ import { TerminalPlus, Trash } from "react-bootstrap-icons";
 
 export default function Filter({ onFilter, fields, show, onHide }) {
     const [filters, setFilters] = useState([])
+    const [logic, setLogic] = useState('AND')
 
     const filterFields = useMemo(() => {
         const list = fields.map(field => {
             let defaultCompareValue
-            if(field.association.type === 'select') 
+            if (field.association.type === 'select')
                 defaultCompareValue = field.association.options[0]
             else defaultCompareValue = ''
             let filterField = {
@@ -29,8 +30,8 @@ export default function Filter({ onFilter, fields, show, onHide }) {
         const newFilter = [...filters]
         let filter = newFilter.find(val => val.id === id)
         filter[key] = value
-        if(key === 'association') {
-            if(Array.isArray(value.options))
+        if (key === 'association') {
+            if (Array.isArray(value.options))
                 filter.comparedValue = value.options[0]
             else filter.comparedValue = ''
         }
@@ -62,6 +63,13 @@ export default function Filter({ onFilter, fields, show, onHide }) {
         <Toast show={show} onClose={onHide} position='top-end' style={{ width: '550px' }}>
             <Toast.Header>
                 <strong className="me-auto">Define your filter</strong>
+                <div>
+                    <Form.Select size="sm" value={logic} onChange={e => setLogic(e.target.value)}>
+                        <option value={'AND'}>Phù hợp tất cả</option>
+                        <option value='OR'>Thoả mãn một trong</option>
+                    </Form.Select>
+                </div>
+
             </Toast.Header>
             <Toast.Body>
                 {/* For each filter, render UI */}
@@ -131,7 +139,10 @@ export default function Filter({ onFilter, fields, show, onHide }) {
                             onClick={addFilter}
                         />
                     </span>
-                    <Button size='sm' onClick={() => onFilter(filters)} >
+                    <Button size='sm' onClick={() => onFilter({
+                        logic,
+                        filters
+                    })} >
                         Apply
                     </Button>
                 </div>
