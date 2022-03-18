@@ -3,8 +3,6 @@ import { MockDatabase } from '../../utils';
 // import { Button, Row, Col, ListGroup, ButtonGroup} from "react-bootstrap"
 import TickTable from '../ticktable';
 
-import { data, category } from './sampleData'
-
 const pages = 10
 
 const headers = [
@@ -45,16 +43,14 @@ const headers = [
 const name = "Lịch sử giao dịch"
 const itemsPerPage = 10
 
-export default function History() {
-
-
+export default function History({data}) {
 
     const [pageData, setPageData] = useState([])
     const [numPages, setNumPages] = useState(0)
 
     const [searchQuery, setSearchQuery] = useState('')
 
-    const mockDB = useMemo(() => {return new MockDatabase(data)}, [])
+    const mockDB = useMemo(() => { let db = new MockDatabase(data); db.sort('time', 'dec'); return db}, [data])
 
     const init = () => {
         setPageData(mockDB.slice(0, itemsPerPage))
@@ -92,16 +88,6 @@ export default function History() {
     const filter = (str) => {
         console.log(str)
     }
-
-
-    // const [pageData, setPageData] = useState([])
-    // const [numPages, setNumPages] = useState(0)
-
-    // const [searchQuery, setSearchQuery] = useState('')
-
-    // const mockDB = useMemo(() => {
-
-    // })
 
     return <div className='mb-3' >
         <TickTable

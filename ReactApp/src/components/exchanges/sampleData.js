@@ -1,7 +1,7 @@
 
 import { getRandomDate, getRandomItem, prettyDate } from '../../utils';
 
-const makeid = (length) => {
+export let makeid = (length) => {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
@@ -14,18 +14,18 @@ const makeid = (length) => {
 
 const genCategory = () => {
     let categories = []
-    const type = {
+    const kind = {
         Chi : ['tiền nhà', 'tiền điện', 'tiền nước', 'thiết bị', 'duy trì server', 'vật dụng', 'viễn thông'],
-        Thu : ['quỹ lab', 'đề tài', 'dự án', 'thiết bị', 'vật dụng', 'quỹ đầu tư', 'tài trợ']
+        Thu : ['quỹ lab', 'đề tài', 'dự án', 'quỹ đầu tư', 'tài trợ']
     }
     
     
-    for (const property in type) {
-        type[property].map(el => {
+    for (const property in kind) {
+        kind[property].map(el => {
             categories.push({
                     name: el,
-                    type: property,
-                    img: "https://picsum.photos/400/301"
+                    kind: property,
+                    img: "https://picsum.photos/400/300"
                 })
             }
         )
@@ -40,11 +40,11 @@ const genTransaction = (amount, categories) => {
         return {
             id: makeid(10),
             time: prettyDate(getRandomDate(new Date(2021, 1, 1), new Date())),
-            money: getRandomItem(Array.from({length: 100}, (_, i) => (i % 3 != 0) ? i * 5 : (i != 0) ? i * 2 : i + 10 )) + "000 đ",
-            category: getRandomItem([...categories].map(el => el.type + " " + el.name)),
+            money: getRandomItem(Array.from({length: 100}, (_, i) => (i % 3 !== 0) ? i * 5 : (i !== 0) ? i * 2 : i + 10 )) + "000 đ",
+            category: getRandomItem([...categories].map(el => el.kind + " " + el.name)),
         }
     })
 }
 
-export const data = genTransaction(200, category);
+export const history = genTransaction(200, category);
 
