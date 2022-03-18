@@ -1,9 +1,10 @@
-import { Modal, Button, Container, Row, Col, InputGroup, FormControl} from "react-bootstrap"
+import { Modal, Button, Container, Row, Col, InputGroup, FormControl, Form} from "react-bootstrap"
 import { useRef, useState, useEffect } from "react";
 import { prettyDate } from "../../utils";
 import { ACTIVE_STR, INACTIVE_STR } from "../../resource";
+import { MEMBER_ROLE_STR } from "../../resource";
 
-export default function AccountDetail({show, handleClose, handleSave, init, departments, roles}){
+export default function AccountDetail({show, handleClose, handleSave, init, departments, roles, handleAdd}){
 
     const [account, setAccount] = useState(init)
     const [isChange, setIsChange] = useState(false)
@@ -14,6 +15,12 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
         JSON.stringify(init) !== JSON.stringify(account) 
             ? setIsChange(true)
             : setIsChange(false)
+    });
+
+    useEffect(() => {
+        if(!roles.includes(account.role)){
+            setAccount({...account, role: MEMBER_ROLE_STR})
+        }
     });
 
     function handleImgChange(event){
@@ -34,9 +41,10 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
     function setProperty(obj){
         setAccount({...account, ...obj})
     }
+
     return(
         <Modal show={show} onHide={handleClose} size='lg'>
-            <Modal.Header closeButton>
+            <Modal.Header>
             <Modal.Title>Tài khoản</Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -82,7 +90,7 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
                     <Col>
                         <InputGroup className="mb-3">
                             <InputGroup.Text>Tên tài khoản</InputGroup.Text>
-                            <FormControl contentEditable={false}  value={account.accountName} />
+                            <FormControl readOnly={init.accountName} value={account.accountName ? account.accountName : ''} onChange={e => setProperty({accountName: e.target.value})} />
                         </InputGroup>
                     </Col>
                     <Col>
@@ -96,7 +104,7 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
                     <Col>
                         <InputGroup className="mb-3">
                             <InputGroup.Text>Ngày sinh</InputGroup.Text>
-                            <FormControl type='date' value={account.dob.toISOString().split('T')[0]}
+                            <FormControl type='date' value={account.dob ? account.dob.toISOString().split('T')[0] : ''}
                                 onChange={e => setProperty({dob: new Date(e.target.value)})} />
                         </InputGroup>
                     </Col>
@@ -125,25 +133,30 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
                     <Col>
                         <InputGroup className="mb-3">
                             <InputGroup.Text>Bộ phận</InputGroup.Text>
-                            <select class="form-select" onChange={e => setProperty({department: e.target.value})}>
+                            <Form.Select 
+                                className="form-select" 
+                                onChange={e => setProperty({department: e.target.value})}
+                                defaultValue={account.department}>
                                 {
-                                    departments.map(dp => <option selected={account.department == dp}>
+                                    departments.map(dp => <option key={dp}>
                                         {dp}
                                     </option>)
                                 }
-                            </select>
+                            </Form.Select>
                         </InputGroup>
                     </Col>
                     <Col>
                         <InputGroup className="mb-3">
                             <InputGroup.Text>Vai trò</InputGroup.Text>
-                            <select class="form-select" onChange={e => setProperty({role: e.target.value})}>
+                            <Form.Select 
+                                defaultValue={roles.includes(account.role) ? account.role : MEMBER_ROLE_STR}
+                                onChange={e => setProperty({role: e.target.value})}>
                                 {
-                                    roles.map(role => <option selected={account.role == role}>
+                                    roles.map(role => <option key={role}>
                                         {role}
                                     </option>)
                                 }
-                            </select>
+                            </Form.Select>
                         </InputGroup>
                     </Col>
                 </Row>
@@ -153,9 +166,9 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
                 <Button variant="primary" 
                     disabled={!isChange}
                     onClick={() => {
-                        handleSave(account)
+                        init.accountName ? handleSave(account) : handleAdd(account)
                     }}>
-                    Lưu thay đổi
+                    {init.accountName ? 'Lưu thay đổi' : 'Thêm tài khoản'}
                 </Button>
             </Modal.Footer>
         </Modal>
