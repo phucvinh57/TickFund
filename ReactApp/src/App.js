@@ -7,7 +7,7 @@ import { useSelector } from "react-redux"
 import Permission from "./pages/permission"
 import Log from "./pages/log"
 import Exchanges from "./pages/exchanges"
-import Plannings from "./pages/plannings"
+// import Plannings from "./pages/plannings"
 
 const Main = styled.div`
   transition: 0.3s;
