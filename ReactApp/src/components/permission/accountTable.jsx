@@ -1,15 +1,13 @@
 import TickTable from "../ticktable"
-import { House } from "react-bootstrap-icons"
-import { Container, Row, Col, Form, Modal, Button } from "react-bootstrap"
+import { Row, Col, Form, Button } from "react-bootstrap"
 import { useState, useEffect } from "react"
 import { removeAccents, reduceValuesToString, evalComp } from "../../utils"
-import { fa } from "faker/lib/locales"
 import AccountDetail from "./accountDetail"
 import { ACTIVE_STR, INACTIVE_STR, MEMBER_ROLE_STR, EMPTY_AVATAR } from "../../resource"
 
 export default function AccountTable({roles, DB, setDB}){
     function dataFeed(accounts, roles) {
-        return accounts.map((acc, idx) => (
+        return accounts.map(acc => (
             {
                 accountName: acc.accountName, // For search only, not for rendering
                 name: {

@@ -1,13 +1,12 @@
-import { Container, Accordion, Button, Row, Col, Modal, InputGroup, FormControl} from "react-bootstrap";
+import { Accordion, Button, Row, Col, Modal, InputGroup, FormControl} from "react-bootstrap";
 import AccountTable from "../components/permission/accountTable";
 import PermissionCheckCard from "../components/permission/permissionCheckCard";
 import { useState } from "react";
-import { MEMBER_ROLE_STR } from "../resource";
+import { EMPTY_AVATAR, MEMBER_ROLE_STR } from "../resource";
 
 export default function Permission(){
     const [roles, setRoles] = useState(initRoles)
     const [addRoleShow, setAddRoleShow] = useState(false)
-    const [isEmpty, setIsEmpty] = useState(true)
     const [db, setDb] = useState(ACCOUNT_DB)
 
     return(
@@ -68,7 +67,7 @@ var ACCOUNT_DB = [
     {
         name: 'Cù Đỗ Thanh Nhân',
         accountName: 'cudothanhnhan',
-        img: 'https://scontent.fsgn8-1.fna.fbcdn.net/v/t39.30808-1/245963739_1953900554769951_141450765917909238_n.jpg?stp=dst-jpg_p240x240&_nc_cat=111&ccb=1-5&_nc_sid=7206a8&_nc_ohc=pr21gQHESBIAX_qgP-_&_nc_ht=scontent.fsgn8-1.fna&oh=00_AT-bd_Mv8wGqnV4aKsTaubmjYr6DJcAbrR8tjoRRaSKuLA&oe=6232234B',
+        img: EMPTY_AVATAR,
         department: 'IT',
         role: 'Thành viên',
         active: true,
@@ -80,7 +79,7 @@ var ACCOUNT_DB = [
     {
         name: 'Nguyễn Phúc Vinh',
         accountName: 'nguyenphucvinh',
-        img: 'https://scontent.fsgn8-1.fna.fbcdn.net/v/t39.30808-1/245963739_1953900554769951_141450765917909238_n.jpg?stp=dst-jpg_p240x240&_nc_cat=111&ccb=1-5&_nc_sid=7206a8&_nc_ohc=pr21gQHESBIAX_qgP-_&_nc_ht=scontent.fsgn8-1.fna&oh=00_AT-bd_Mv8wGqnV4aKsTaubmjYr6DJcAbrR8tjoRRaSKuLA&oe=6232234B',
+        img: EMPTY_AVATAR,
         department: 'IT',
         role: 'Quản trị viên',
         active: true,
@@ -92,7 +91,7 @@ var ACCOUNT_DB = [
     {
         name: 'Trần Hà Tuấn Kiệt',
         accountName: 'kiettran',
-        img: 'https://scontent.fsgn8-1.fna.fbcdn.net/v/t39.30808-1/245963739_1953900554769951_141450765917909238_n.jpg?stp=dst-jpg_p240x240&_nc_cat=111&ccb=1-5&_nc_sid=7206a8&_nc_ohc=pr21gQHESBIAX_qgP-_&_nc_ht=scontent.fsgn8-1.fna&oh=00_AT-bd_Mv8wGqnV4aKsTaubmjYr6DJcAbrR8tjoRRaSKuLA&oe=6232234B',
+        img: EMPTY_AVATAR,
         department: 'IT',
         role: 'Thành viên',
         active: false,
