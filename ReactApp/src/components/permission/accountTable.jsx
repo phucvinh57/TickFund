@@ -170,9 +170,9 @@ export default function AccountTable({roles, DB, setDB}){
     }
 
     function handleFilter(filterOptions){
-        const OP = '&&'
+        const OP = filterOptions.logic == 'AND' ? '&&' : '||'
         const initVal = OP === '&&' ? true : false 
-        const filteredAccounts = DB.filter(ele => filterOptions.map( option => evalComp(ele, 
+        const filteredAccounts = DB.filter(ele => filterOptions.filters.map( option => evalComp(ele, 
                                             option.association.key,
                                             option.operator,
                                             option.comparedValue)).reduce((prev, cur) => eval(`prev ${OP} cur`), initVal))
