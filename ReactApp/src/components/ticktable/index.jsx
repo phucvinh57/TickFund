@@ -14,7 +14,8 @@ export default function TickTable({
 	onSearch,
 	onSort,
 	onFilter,
-	onRowClick
+	onRowClick,
+	componentSize: size
 }) {
 	const sortableFields = useMemo(() => {
 		return headers.filter(header => header.sortable === true)
@@ -27,15 +28,21 @@ export default function TickTable({
 		<div className='row'>
 			{/* Form search */}
 			{onSearch && <div className='col'>
-				<SearchBox onSearch={onSearch} />
+				<SearchBox 
+					onSearch={onSearch} 
+					size={size ? size : 'md'}
+				/>
 			</div>}
 
 			{/* Form sort */}
-			{(sortableFields.length !== 0 && onSort) && <Sort onSort={onSort} fields={sortableFields} />}
+			{(sortableFields.length !== 0 && onSort) && <Sort
+				onSort={onSort} fields={sortableFields}
+				size={size ? size : 'md'}
+			/>}
 
 			{/* Filter button click to show and hide */}
 			{onFilter && <div className='col-auto'>
-				<Button size='sm' onClick={() => setShowFilter(!showFilter)}>
+				<Button size={size ? size : 'md'} onClick={() => setShowFilter(!showFilter)}>
 					<Funnel size={18} />
 				</Button>
 			</div>}

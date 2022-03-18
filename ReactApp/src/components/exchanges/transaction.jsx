@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
-import { Button, Row, Col, ListGroup, ButtonGroup} from "react-bootstrap"
+import React, {useEffect, useState} from 'react';
+import { Button, Row, Col, ListGroup, ButtonGroup } from "react-bootstrap"
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 // import ModalHeader from 'react-bootstrap/ModalHeader'
 // import ModalTitle from 'react-bootstrap/ModalTitle'
 import ModalBody from 'react-bootstrap/ModalBody'
-import {Link, List, X} from 'react-bootstrap-icons'
+import {Link, X} from 'react-bootstrap-icons'
+import { prettyDate } from '../../utils';
+import { makeid } from './sampleData';
 
 function UploadFile() {
     
@@ -52,9 +54,31 @@ function UploadFile() {
     )
 }
 
-function PopUp(props) {
+export default function Transaction({categoryList, show, onHide, onClick}) {
+    const init = {
+        id: makeid(10),
+        time: prettyDate(new Date(1970,1,1)),
+        money: '',
+        category: {
+            name: '',
+            kind: ''
+        },
+        user: '',
+        notes: '',
+        attachment: ''
+    }
+    const [transaction, setTransaction] = useState(init)
+    const [optionList, setOptionList] = useState([])
+    const [option, setOption] = useState(0)
+
+
+    const modify = (obj) => {
+        setTransaction({ ...transaction, ...obj })
+    }
+    
     return <Modal
-            {...props}
+            show={show}
+            onHide={onHide}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered>
@@ -64,36 +88,55 @@ function PopUp(props) {
                 </Modal.Title>
             </Modal.Header>
             <ModalBody>
-                <Form>
+                <Form onSubmit={(event) => {event.preventDefault();onClick(transaction)} } >
                     <Form.Group className="mb-3">
                         <Form.Label>Số tiền</Form.Label>
-                        <Form.Control type="number" placeholder="300 000đ"/>
+                        <Form.Control type="number" onChange={(event) => modify({money: event.target.value + ' đ'})}/>
                     </Form.Group>
                     <Row className="mb-3">
                         <Form.Group as={Col}>
                             <Form.Label>Loại danh mục</Form.Label>
-                            <Form.Select defaultValue="Chọn...">
-                                <option>Chọn...</option>
-                                <option value="1">Thu</option>
-                                <option value="2">Chi</option>  
+                            <Form.Select defaultValue="Chọn..." onChange={(event) => {
+                                        modify({category: 
+                                            {name:optionList[option], kind: event.target.value}
+                                        })
+                                        const arr = categoryList.filter(el => el['kind'] === event.target.value ).map( ({name}) => (name) )
+                                        setOptionList(arr)
+                                    } 
+                                }>
+                                <option value="">Chọn...</option>
+                                <option value="Thu">Thu</option>
+                                <option value="Chi">Chi</option>  
                             </Form.Select>
                         </Form.Group>
                         <Form.Group as={Col}>
                             <Form.Label>Tên danh mục</Form.Label>
-                            <Form.Select defaultValue="Chọn...">
+                            <Form.Select defaultValue="Chọn..." 
+                                    onChange={
+                                        (event) => {
+                                            setOption(event.target.value)
+                                            modify({category: 
+                                                {name:optionList[option], kind: transaction.category.kind}
+                                            }) 
+                                    }
+                                }>
                                 <option>Chọn...</option>
-                                <option value="1">Quỹ Lab hằng tháng</option>
-                                <option value="2">Viễn thông</option>  
+                                {console.log(optionList[option])}
+                                { (optionList.length !== 0) ? optionList.map((el, idx) => <option key={idx} value={idx}>{el}</option>) : <></>}
                             </Form.Select>
                         </Form.Group>
                     </Row>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Thời gian giao dịch</Form.Label>
-                        <Form.Control type="datetime-local" size="sm" placeholder={Date.now()}/>
+                    <Form.Group className="mb-3" controlId="duedate">
+                        <Form.Label>Thời gian giao dịch</Form.Label> 
+                        <Form.Control
+                            type="datetime-local"
+                            name="duedate"
+                            onChange={(event) => modify({time: prettyDate(new Date(event.target.value))})}
+                        />
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Người giao dịch</Form.Label>
-                        <Form.Control type="text" placeholder="Nguyễn Phúc Vinh"/>
+                        <Form.Control type="text" placeholder="Nguyễn Phúc Vinh" onChange={(event) => modify({user: event.target.value})}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Ghi chú</Form.Label>
@@ -106,20 +149,4 @@ function PopUp(props) {
                 </Form>
             </ModalBody>
         </Modal>
-}
-
-export default function InitTransaction() {
-    const [modalShow, setModalShow] = useState(false);
-    return <div className='mb-3'>
-        <Button variant="primary" onClick={() => setModalShow(true)}>
-            Tạo giao dịch
-        </Button>
-
-        <PopUp
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-        ></PopUp>
-
-
-    </div>
 }
