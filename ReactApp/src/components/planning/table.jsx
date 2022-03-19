@@ -37,9 +37,10 @@ export default function PlanningTable() {
     }, [planningData])
 
     const handleRowClick = row => {
-        console.log(row)
+        
         let planning = planningData.find(val => val.id === row.id.val)
         setTargetPlan(planning)
+        console.log(planning)
         setShowEditModal(true)
     }
 

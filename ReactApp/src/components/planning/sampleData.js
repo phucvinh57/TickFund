@@ -1,4 +1,10 @@
-import { shortKey } from '../../utils'
+import {
+    shortKey,
+    getRandomDate,
+    getRandomItem,
+    prettyDate,
+    generateHexId
+} from "../../utils";
 
 export const headers = [{
     label: 'Mã dự trù',
@@ -60,6 +66,8 @@ export const categories = [{
     type: 'Thu'
 }]
 
+export const cycleOptions = ['day', 'week', 'month', 'year']
+
 export const users = [{
     id: shortKey(),
     name: 'Nguyễn Phúc Vinh'
@@ -70,3 +78,28 @@ export const users = [{
     id: shortKey(),
     name: 'Trần Hà Tuấn Kiệt',
 }]
+
+export const repeatModes = ['cycle', 'countdown']
+
+export default function randLogData() {
+    const data = []
+    for (let i = 0; i < 15; ++i) {
+        let rand = {
+            amount: Math.floor(Math.random() * (10000000 - 5000) + 5000),
+            category: getRandomItem(categories),
+            id: generateHexId(),
+            isRepeat: Math.floor(Math.random()) === 1,
+            repeat: {
+                cycle: getRandomItem(cycleOptions),
+                endDate: '',
+                hasEndDay: Math.floor(Math.random()) === 1,
+                mode: getRandomItem(repeatModes),
+                times: 0
+            },
+            startDate: getRandomDate(new Date(2021, 1, 1), new Date()).toISOString().slice(0, 10),
+            trader: ''
+        }
+        data.push(rand)
+    }
+    return data
+}

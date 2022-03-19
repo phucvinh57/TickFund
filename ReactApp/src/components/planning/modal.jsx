@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux'
 import { addPlanning, editPlanning, dropPlanning } from '../../redux/slice/planning'
 
-import { categoryType, categories, users } from "./sampleData";
+import { categoryType, categories, users, repeatModes } from "./sampleData";
 
-const repeatModes = ['countdown', 'cycle']
+
 const emptyData = {
   id: '',
   category: {
