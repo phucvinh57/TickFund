@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { Modal, Button, Row, Col, InputGroup, FormControl} from "react-bootstrap"
-=======
 import { Modal, Button, Container, Row, Col, InputGroup, FormControl, Form} from "react-bootstrap"
->>>>>>> ea71e029d52783352d0c4f770cad6a5daea2e54a
 import { useRef, useState, useEffect } from "react";
 import { ACTIVE_STR, INACTIVE_STR } from "../../resource";
 import { MEMBER_ROLE_STR } from "../../resource";
@@ -144,11 +140,7 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
                                 onChange={e => setProperty({department: e.target.value})}
                                 defaultValue={account.department}>
                                 {
-<<<<<<< HEAD
-                                    departments.map(dp => <option selected={account.department === dp}>
-=======
                                     departments.map(dp => <option key={dp}>
->>>>>>> ea71e029d52783352d0c4f770cad6a5daea2e54a
                                         {dp}
                                     </option>)
                                 }
@@ -162,11 +154,7 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
                                 defaultValue={roles.includes(account.role) ? account.role : MEMBER_ROLE_STR}
                                 onChange={e => setProperty({role: e.target.value})}>
                                 {
-<<<<<<< HEAD
-                                    roles.map(role => <option selected={account.role === role}>
-=======
                                     roles.map(role => <option key={role}>
->>>>>>> ea71e029d52783352d0c4f770cad6a5daea2e54a
                                         {role}
                                     </option>)
                                 }

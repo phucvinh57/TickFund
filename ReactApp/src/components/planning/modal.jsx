@@ -1,8 +1,10 @@
 import { Modal, Form, Button } from "react-bootstrap";
-import { shortKey, generateHexId } from "../../utils";
+import {  generateHexId } from "../../utils";
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux'
 import { addPlanning, editPlanning, dropPlanning } from '../../redux/slice/planning'
+
+import { categoryType, categories, users } from "./sampleData";
 
 const repeatModes = ['countdown', 'cycle']
 const emptyData = {
@@ -272,37 +274,3 @@ export default function PlanningModal({ show, onHide, mode, initData }) {
     </Modal.Body>
   </Modal>
 }
-
-// const categoryName = ['Tiền nhà', 'Tiền điện', 'Tiền thiết bị', 'Tiền nước', 'Tiền duy trì server']
-const categoryType = ['Thu', 'Chi']
-
-const categories = [{
-  name: 'Tiền nhà',
-  type: 'Chi'
-}, {
-  name: 'Tiền điện',
-  type: 'Chi'
-}, {
-  name: 'Tiền thiết bị',
-  type: 'Chi'
-}, {
-  name: 'Tiền dự án',
-  type: 'Thu'
-}, {
-  name: 'Tiền nước',
-  type: 'Chi'
-}, {
-  name: 'Tiền đầu tư',
-  type: 'Thu'
-}]
-
-const users = [{
-  id: shortKey(),
-  name: 'Nguyễn Phúc Vinh'
-}, {
-  id: shortKey(),
-  name: 'Cù Đỗ Thanh Nhân'
-}, {
-  id: shortKey(),
-  name: 'Trần Hà Tuấn Kiệt',
-}]

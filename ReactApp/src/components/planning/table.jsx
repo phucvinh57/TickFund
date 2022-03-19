@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import TickTable from "../ticktable";
+import { headers } from './sampleData.js'
 
 import PlanningModal from "./modal";
 
@@ -35,46 +36,6 @@ export default function PlanningTable() {
         })
     }, [planningData])
 
-    const headers = useMemo(() => {
-        return [{
-            label: 'Mã dự trù',
-            association: {
-                key: 'id',
-                type: 'text'
-            },
-            sortable: false
-        }, {
-            label: 'Tên danh mục',
-            association: {
-                key: 'categoryName',
-                type: 'text'
-            },
-            sortable: false
-        }, {
-            label: 'Loại',
-            association: {
-                key: 'categoryType',
-                type: 'select',
-                options: ['Thu', 'Chi']
-            },
-            sortable: false
-        }, {
-            label: 'Số tiền',
-            association: {
-                key: 'amount',
-                type: 'number' // Select
-            },
-            sortable: true
-        }, {
-            label: 'Ngày bắt đầu',
-            association: {
-                key: 'startDate',
-                type: 'date' // Select
-            },
-            sortable: true
-        }]
-    }, [])
-
     const handleRowClick = row => {
         console.log(row)
         let planning = planningData.find(val => val.id === row.id.val)
@@ -83,7 +44,7 @@ export default function PlanningTable() {
     }
 
     return <div>
-        {targetPlan !== null && <PlanningModal 
+        {targetPlan !== null && <PlanningModal
             show={showEditModal}
             onHide={() => setShowEditModal(false)}
             mode='edit'

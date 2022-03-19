@@ -9,10 +9,6 @@ export default function PermissionCheckCard({init, role, handleDelete}){
 
 
     useEffect(() => {
-<<<<<<< HEAD
-        // console.log(init)
-=======
->>>>>>> ea71e029d52783352d0c4f770cad6a5daea2e54a
         JSON.stringify(init) === JSON.stringify(permissions) ? setSave(false) : setSave(true)
     }, [permissions, init]);
 
