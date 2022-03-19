@@ -6,11 +6,6 @@ import TickTable from '../ticktable';
 import { category } from './sampleData';
 
 function Detail({openData,show,onHide}) {
-    const openFile = (event, file) => {
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        return event.target.result
-    }
 
     console.log(openData)
     return <Modal
@@ -207,7 +202,7 @@ export default function History({DB}) {
     }
     
     const filter = (str) => {
-
+        console.log(str)
     }
 
     return <div className='mb-3' >

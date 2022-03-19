@@ -76,6 +76,7 @@ export default function Exchanges() {
     const [ history, setHistory ] = useState(transaction)
 
     const handleChange = (transaction) => {
+        console.log(transaction)
         const _history = [transaction, ...history]
         setHistory(_history)
     }

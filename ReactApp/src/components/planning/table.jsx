@@ -58,7 +58,7 @@ export default function PlanningTable() {
             onSort={sortOption => console.log(sortOption)}
             onFilter={filter => console.log(filter)}
             onRowClick={handleRowClick}
-            numPages={10}
+            numPages={1}
             onPageChange={number => console.log(number)}
         />
     </div>

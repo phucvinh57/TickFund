@@ -8,9 +8,13 @@ import ModalBody from 'react-bootstrap/ModalBody'
 import {Link, X} from 'react-bootstrap-icons'
 import { prettyDate } from '../../utils';
 import { makeid } from './sampleData';
+import { EMPTY_AVATAR } from '../../resource';
+
 
 function ViewTransaction({ init, users, categories, show, onHide, onClick}) {
     const [selectedFiles, setSelectedFiles] = useState([])
+
+    console.log(categories)
 
     const changeHandler = (event) => {
         let files = selectedFiles.concat([...event.target.files].filter((file) => 
@@ -65,22 +69,20 @@ function ViewTransaction({ init, users, categories, show, onHide, onClick}) {
                         <Form.Group as={Col}>
                             <Form.Label>Loại danh mục</Form.Label>
                             <Form.Select required defaultValue="Chọn..." onChange={(event) => {
-                                        const arr = categories.filter(el => el['kind'] === event.target.value ).map( ({name}) => (name) )
-
+                                        const arr = categories.filter(el => el['kind'] === event.target.value ).map( ({val}) => (val) )
+                                        console.log(arr)
                                         if (option < arr.length) modify({category: 
                                             {
-                                                name: arr[option], 
+                                                val: arr[option], 
                                                 kind: event.target.value,
-                                                val: event.target.value + ' ' + arr[option],
-                                                component: <div>{event.target.value + ' ' + arr[option]}</div>
+                                                img: "https://picsum.photos/400/300"
                                             }
                                         })
                                         else modify({category: 
                                             {
-                                                name: '', 
+                                                val: '', 
                                                 kind: event.target.value,
-                                                val: event.target.value + ' ' + '',
-                                                component: <div>{event.target.value + ' '}</div>
+                                                img: "https://picsum.photos/400/300"
                                             }
                                         })
                                         setOptionList(arr)
@@ -98,27 +100,26 @@ function ViewTransaction({ init, users, categories, show, onHide, onClick}) {
                                         (event) => {
                                             modify({category: 
                                                 {
-                                                    name:optionList[event.target.value], 
+                                                    val: optionList[event.target.value], 
                                                     kind: transaction.category.kind,
-                                                    val: transaction.category.kind + ' ' + optionList[event.target.value],
-                                                    component: <div>{transaction.category.kind + ' ' + optionList[event.target.value]}</div>
+                                                    img: "https://picsum.photos/400/300"
                                                 }
                                             }) 
                                             setOption(event.target.value)
                                     }
                                 }>
                                 <option value="">Chọn...</option>
-                                {/* {console.log(optionList[option])} */}
+                                {console.log(optionList[option])}
                                 { (optionList.length !== 0) ? optionList.map((el, idx) => <option key={idx} value={idx}>{el}</option>) : <></>}
                             </Form.Select>
                         </Form.Group>
                     </Row>
                     <Form.Group className="mb-3">
                         <Form.Label>Người giao dịch</Form.Label>
-                        <Form.Select defaultValue="Chọn..." required onChange={(event) => modify({user: users[event.target.value]})}>
+                        <Form.Select defaultValue="Chọn..." required onChange={(event) => modify({user: { val: users[event.target.value].val, img: EMPTY_AVATAR} } )}>
                             <option value="">Chọn...</option>
                             {
-                                (users.length !== 0) ? users.map((el, idx) => <option key={idx} value={idx}>{el}</option>) : <></>
+                                (users.length !== 0) ? users.map((el, idx) => <option key={idx} value={idx}>{el.val}</option>) : <></>
                             }
                         </Form.Select>
                     </Form.Group>
