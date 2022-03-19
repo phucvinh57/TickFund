@@ -74,13 +74,17 @@ const genTransaction = (amount, categories, users) => {
 
 export default function Exchanges() {
     const [ history, setHistory ] = useState(transaction)
+    const [ category, setCategory ] = useState(categories)
 
     const handleChange = (transaction) => {
         console.log(transaction)
         const _history = [transaction, ...history]
         setHistory(_history)
     }
-    console.log(history)
+    useEffect(() => {
+        const _category = category
+        setCategory(_category)
+    })
 
     return <div>
         <Transaction
@@ -89,7 +93,7 @@ export default function Exchanges() {
             categories={categories}
             onClick={handleChange}
         ></Transaction>     
-        <Category data={categories} />
+        <Category data={category} />
         <History DB={history}/>
     </div>
 }

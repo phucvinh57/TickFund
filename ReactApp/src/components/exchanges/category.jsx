@@ -56,6 +56,7 @@ function FormCategory({show, onHide, onClick}) {
         const arrCategory = Object.values(category)
         let _isChanged = !(arrInit.some((el, idx) => el == arrCategory[idx]))
         setIsChanged(_isChanged)
+        console.log(category)
     })
 
     const modify = (obj) => {
@@ -74,7 +75,9 @@ function FormCategory({show, onHide, onClick}) {
                 </Modal.Title>
             </Modal.Header>
             <ModalBody>
-                <Form onSubmit={(event) => {event.preventDefault(); if (isChanged) onClick(category)} }>
+                <Form onSubmit={(event) => {event.preventDefault(); 
+                    console.log(isChanged); 
+                    if (isChanged) onClick(category);} }>
                     <Row className="mb-3">
                         <Form.Group as={Col}>
                             <Form.Label>Loại danh mục</Form.Label>
@@ -86,7 +89,7 @@ function FormCategory({show, onHide, onClick}) {
                         </Form.Group>
                         <Form.Group as={Col}>
                             <Form.Label>Tên danh mục</Form.Label>
-                            <Form.Control type="text" placeholder="Tên danh mục" onChange={event => modify({name: event.target.value})}/>
+                            <Form.Control type="text" placeholder="Tên danh mục" onChange={event => modify({val: event.target.value})}/>
                         </Form.Group>
                     </Row>
                     <Button variant="primary" type="submit">
@@ -106,8 +109,8 @@ export default function Category({data}) {
 
     const handleChange = (newCategory) => {
         const _categories = categories.some(
-            el => removeAccents(newCategory.name).replaceAll(' ', '').toLowerCase() 
-              === removeAccents(el.name).replaceAll(' ', '').toLowerCase()) 
+            el => removeAccents(newCategory.val).replaceAll(' ', '').toLowerCase() 
+              === removeAccents(el.val).replaceAll(' ', '').toLowerCase()) 
         ? categories 
         : [newCategory,
             ...categories
