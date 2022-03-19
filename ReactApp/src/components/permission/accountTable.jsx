@@ -15,8 +15,8 @@ export default function AccountTable({roles, DB, setDB}){
                     component: <div>
                         <Row>
                             <Col className='col-auto d-flex align-items-center'>
-                                <div style={{height: '2.5rem', width: '2.5rem' }}>
-                                <img className='img-fluid circle-border' src={acc.img} style={{aspectRatio: '1/1'}}></img>
+                                <div style={{ height: '2.5rem', width: '2.5rem' }}>
+                                    <img className='img-fluid circle-border' src={acc.img} style={{ aspectRatio: '1/1' }} alt='img' />
                                 </div>
                             </Col>
                             <Col>

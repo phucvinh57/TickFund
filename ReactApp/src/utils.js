@@ -7,6 +7,11 @@ export const shortKey = new ShortUniqueId({
     dictionary: 'alphanum'
 })
 
+export const generateHexId = new ShortUniqueId({
+    length: 8,
+    dictionary: 'hex'
+})
+
 export const isObject = obj => (typeof obj === 'object' && obj !== null)
 
 export const reduceValuesToString = obj => {
@@ -98,7 +103,7 @@ export class MockDatabase {
             this.#db.sort((row1, row2) => row1[key].localeCompare(row2[key]))
         else this.#db.sort((row1, row2) => -row1[key].localeCompare(row2[key]))
 
-        this.#db.forEach(row => console.log(row[key]))
+        // this.#db.forEach(row => console.log(row[key]))
     }
 
     filter(filterOptions, start, end = null) {

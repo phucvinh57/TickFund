@@ -1,6 +1,5 @@
-import { Modal, Button, Container, Row, Col, InputGroup, FormControl, Form} from "react-bootstrap"
+import { Modal, Button, Row, Col, InputGroup, FormControl, Form} from "react-bootstrap"
 import { useRef, useState, useEffect } from "react";
-import { prettyDate } from "../../utils";
 import { ACTIVE_STR, INACTIVE_STR } from "../../resource";
 import { MEMBER_ROLE_STR} from "../../resource";
 
@@ -15,7 +14,7 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
         JSON.stringify(init) !== JSON.stringify(account) 
             ? setIsChange(true)
             : setIsChange(false)
-    });
+    }, [init, account]);
 
     useEffect(() => {
         if(!roles.includes(account.role)){

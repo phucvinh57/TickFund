@@ -1,6 +1,6 @@
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent } from 'react-pro-sidebar'
 import { Link } from 'react-router-dom'
-import { House, Speedometer2, BarChartLine, PieChart, List, GraphUp,ShieldLock, JournalText, Tags, Wallet2 } from 'react-bootstrap-icons'
+import { Speedometer2, BarChartLine, PieChart, List, GraphUp, ShieldLock, JournalText, Coin, PiggyBank } from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { setCollapse } from '../redux/slice/sidebar';
 import styled from 'styled-components'
@@ -54,42 +54,46 @@ function visitItem(node) {
         </MenuItem>
 }
 
-const sidebarContent = [{
-    icon: <House size={18} />,
-    title: 'Trang chủ',
-    path: '/home'
-}, {
-    icon: <Tags size={18} />,
-    title: "Giao dịch",
-    path: '/exchanges'
-}, 
-// {
-//     icon: <Wallet2 size={18} />,
-//     title: "Giao dịch",
-//     path: '/plannings'
-// }, 
-{
-    icon: <Speedometer2 size={18} />,
-    title: 'Thống kê',
-    children: [{
-        icon: <PieChart size={18} />,
-        title: 'Biểu đồ tròn',
-        path: '/stat/donut'
+const sidebarContent = [
+    // {
+    //     icon: <House size={18} />,
+    //     title: 'Trang chủ',
+    //     path: '/home'
+    // }, 
+    {
+        icon: <Speedometer2 size={18} />,
+        title: 'Thống kê',
+        children: [{
+            icon: <PieChart size={18} />,
+            title: 'Biểu đồ tròn',
+            path: '/stat/donut'
+        }, {
+            icon: <BarChartLine size={18} />,
+            title: 'Biểu đồ cột',
+            path: '/stat/bar'
+        }, {
+            icon: <GraphUp size={18} />,
+            title: 'Biểu đồ đường',
+            path: '/stat/line'
+        }]
+    },
+    {
+        icon: <Coin size={18} />,
+        title: "Giao dịch",
+        path: '/exchanges'
+    },
+    {
+        icon: <PiggyBank size={18} />,
+        title: "Dự trù",
+        path: '/plannings'
+    }, 
+    {
+        icon: <ShieldLock size={18} />,
+        title: 'Quyền truy cập',
+        path: '/permission'
     }, {
-        icon: <BarChartLine size={18} />,
-        title: 'Biểu đồ cột',
-        path: '/stat/bar'
-    }, {
-        icon: <GraphUp size={18} />,
-        title: 'Biểu đồ đường',
-        path: '/stat/line'
-    }]
-}, {
-    icon: <ShieldLock size={18}/>,
-    title: 'Quyền truy cập',
-    path: '/permission'
-}, {
-    icon: <JournalText size={18}/>,
-    title: 'Nhật ký hệ thống',
-    path: '/log'
-}]
+        icon: <JournalText size={18} />,
+        title: 'Nhật ký hệ thống',
+        path: '/log'
+    }
+]
