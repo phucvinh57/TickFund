@@ -57,6 +57,7 @@ export default function Log() {
 
     return <div>
         <TickTable
+            componentSize="sm"
             data={pageData}
             headers={headers}
             name="Nhật ký hệ thống"

@@ -1,37 +1,37 @@
 import TickTable from "../ticktable"
-import { House } from "react-bootstrap-icons"
-import { Container, Row, Col, Form, Modal, Button } from "react-bootstrap"
-import { useState, useEffect } from "react"
+import { Row, Col, Form } from "react-bootstrap"
+import { useState } from "react"
 import { removeAccents, reduceValuesToString } from "../../utils"
-import { fa } from "faker/lib/locales"
 import AccountDetail from "./accountDetail"
 import { ACTIVE_STR, INACTIVE_STR } from "../../resource"
+import { shortKey } from "../../utils"
 
-export default function AccountTable(){
+export default function AccountTable() {
     const [showAccount, setShowAccount] = useState(null)
     const [accounts, setAccounts] = useState(DB)
-    function handleClose(){
+    function handleClose() {
         setShowAccount(null)
     }
 
-    function handleSave(newAcc){
-        const newAccounts = accounts.map(acc => acc.accountName == newAcc.accountName ? newAcc : acc)
+    function handleSave(newAcc) {
+        const newAccounts = accounts.map(acc => acc.accountName === newAcc.accountName ? newAcc : acc)
         setAccounts(newAccounts)
         setShowAccount(newAcc)
     }
 
     function onSearch(str) {
         str = removeAccents(str).replaceAll(' ', '').toLowerCase()
-        
+
         const matchedAccount = DB.filter(acc => {
             return removeAccents(reduceValuesToString(dataFeed([acc], roles)))
-            .replaceAll(' ', '')
-            .toLowerCase()
-            .match(str)})
+                .replaceAll(' ', '')
+                .toLowerCase()
+                .match(str)
+        })
         setAccounts(matchedAccount, roles)
     }
 
-    return(
+    return (
         <div>
             <TickTable
                 data={dataFeed(accounts, roles)}
@@ -40,23 +40,23 @@ export default function AccountTable(){
                 numPages={Math.ceil(accounts.length / 20)}
                 onSearch={onSearch}
                 onPageChange={pageNum => console.log(pageNum)}
-                onRowClick={row => {setShowAccount(accounts.filter(acc => acc.accountName === row.name.val)[0])}}
+                onRowClick={row => { setShowAccount(accounts.filter(acc => acc.accountName === row.name.val)[0]) }}
                 onSort={sortOption => console.log(sortOption)}
                 onFilter={filter => console.log(filter)}
             />
-            
+
             {
-                Boolean(showAccount) ? 
-                <AccountDetail
-                    departments={departments}
-                    roles={roles}
-                    init={showAccount}
-                    show={true}
-                    handleClose={handleClose}
-                    handleSave={handleSave}/>
-                :<></>
+                Boolean(showAccount) ?
+                    <AccountDetail
+                        departments={departments}
+                        roles={roles}
+                        init={showAccount}
+                        show={true}
+                        handleClose={handleClose}
+                        handleSave={handleSave} />
+                    : <></>
             }
-            
+
 
         </div>
     )
@@ -69,8 +69,8 @@ export default function AccountTable(){
                     component: <div>
                         <Row>
                             <Col className='col-auto d-flex align-items-center'>
-                                <div style={{height: '2.5rem', width: '2.5rem' }}>
-                                <img className='img-fluid circle-border' src={acc.img} style={{aspectRatio: '1/1'}}></img>
+                                <div style={{ height: '2.5rem', width: '2.5rem' }}>
+                                    <img className='img-fluid circle-border' src={acc.img} style={{ aspectRatio: '1/1' }} alt='img' />
                                 </div>
                             </Col>
                             <Col>
@@ -88,17 +88,17 @@ export default function AccountTable(){
                 role: {
                     val: acc.role,
                     component: <div>
-                        <Form.Select 
+                        <Form.Select
                             onChange={e => {
                                 const newAccounts = [...accounts]
-                                newAccounts[idx] = {...acc, role: e.target.value}
+                                newAccounts[idx] = { ...acc, role: e.target.value }
                                 setAccounts(newAccounts)
                             }}
                             onClick={e => {
                                 e.stopPropagation()
                             }}>
                             {
-                                roles.map(role => <option selected={acc.role == role}>
+                                roles.map(role => <option key={shortKey()} selected={acc.role === role}>
                                     {role}
                                 </option>)
                             }
@@ -131,7 +131,7 @@ var DB = [
     {
         name: 'Cù Đỗ Thanh Nhân',
         accountName: 'cudothanhnhan',
-        img: 'https://scontent.fsgn8-1.fna.fbcdn.net/v/t39.30808-1/245963739_1953900554769951_141450765917909238_n.jpg?stp=dst-jpg_p240x240&_nc_cat=111&ccb=1-5&_nc_sid=7206a8&_nc_ohc=pr21gQHESBIAX_qgP-_&_nc_ht=scontent.fsgn8-1.fna&oh=00_AT-bd_Mv8wGqnV4aKsTaubmjYr6DJcAbrR8tjoRRaSKuLA&oe=6232234B',
+        img: 'https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-6/245963739_1953900554769951_141450765917909238_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=FBNo7TjeNgMAX87xJhW&_nc_ht=scontent.fsgn5-15.fna&oh=00_AT89fXgxvSYVSBB_-tPg1UzbvObyzznGN0x4oxujMiqxXA&oe=6238F50D',
         department: 'IT',
         role: 'Thủ quỹ',
         active: true,
@@ -143,7 +143,7 @@ var DB = [
     {
         name: 'Nguyễn Phúc Vinh',
         accountName: 'nguyenphucvinh',
-        img: 'https://scontent.fsgn8-1.fna.fbcdn.net/v/t39.30808-1/245963739_1953900554769951_141450765917909238_n.jpg?stp=dst-jpg_p240x240&_nc_cat=111&ccb=1-5&_nc_sid=7206a8&_nc_ohc=pr21gQHESBIAX_qgP-_&_nc_ht=scontent.fsgn8-1.fna&oh=00_AT-bd_Mv8wGqnV4aKsTaubmjYr6DJcAbrR8tjoRRaSKuLA&oe=6232234B',
+        img: 'https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-6/245963739_1953900554769951_141450765917909238_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=FBNo7TjeNgMAX87xJhW&_nc_ht=scontent.fsgn5-15.fna&oh=00_AT89fXgxvSYVSBB_-tPg1UzbvObyzznGN0x4oxujMiqxXA&oe=6238F50D',
         department: 'IT',
         role: 'Quản trị viên',
         active: true,
@@ -155,7 +155,7 @@ var DB = [
     {
         name: 'Trần Hà Tuấn Kiệt',
         accountName: 'kiettran',
-        img: 'https://scontent.fsgn8-1.fna.fbcdn.net/v/t39.30808-1/245963739_1953900554769951_141450765917909238_n.jpg?stp=dst-jpg_p240x240&_nc_cat=111&ccb=1-5&_nc_sid=7206a8&_nc_ohc=pr21gQHESBIAX_qgP-_&_nc_ht=scontent.fsgn8-1.fna&oh=00_AT-bd_Mv8wGqnV4aKsTaubmjYr6DJcAbrR8tjoRRaSKuLA&oe=6232234B',
+        img: 'https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-6/245963739_1953900554769951_141450765917909238_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=FBNo7TjeNgMAX87xJhW&_nc_ht=scontent.fsgn5-15.fna&oh=00_AT89fXgxvSYVSBB_-tPg1UzbvObyzznGN0x4oxujMiqxXA&oe=6238F50D',
         department: 'IT',
         role: 'Thành viên',
         active: false,

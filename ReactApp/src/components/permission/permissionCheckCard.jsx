@@ -1,5 +1,4 @@
-import { Container, Row, Col, Button, Form, FormCheck, Accordion } from "react-bootstrap"
-import { CaretRight, CaretDown } from "react-bootstrap-icons"
+import { Row, Col, Button, FormCheck, Accordion } from "react-bootstrap"
 import { useState, useEffect } from "react"
 
 export default function PermissionCheckCard({init, role}){
@@ -9,9 +8,9 @@ export default function PermissionCheckCard({init, role}){
 
 
     useEffect(() => {
-        console.log(init)
+        // console.log(init)
         JSON.stringify(init) === JSON.stringify(permissions) ? setSave(false) : setSave(true)
-    });
+    }, [permissions, init]);
 
 
 

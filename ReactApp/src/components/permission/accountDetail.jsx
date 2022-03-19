@@ -1,6 +1,5 @@
-import { Modal, Button, Container, Row, Col, InputGroup, FormControl} from "react-bootstrap"
+import { Modal, Button, Row, Col, InputGroup, FormControl} from "react-bootstrap"
 import { useRef, useState, useEffect } from "react";
-import { prettyDate } from "../../utils";
 import { ACTIVE_STR, INACTIVE_STR } from "../../resource";
 
 export default function AccountDetail({show, handleClose, handleSave, init, departments, roles}){
@@ -14,7 +13,7 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
         JSON.stringify(init) !== JSON.stringify(account) 
             ? setIsChange(true)
             : setIsChange(false)
-    });
+    }, [init, account]);
 
     function handleImgChange(event){
         const url = URL.createObjectURL(event.target.files[0]);
@@ -42,7 +41,10 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
             <Modal.Body>
                 <Row className='justify-content-center'>
                     <Col className='col-2 text-center'>
-                        <img className='img-fluid circle-border mb-2' src={account.img} style={{aspectRatio: '1/1'}}></img>
+                        <img className='img-fluid circle-border mb-2' 
+                            src={account.img} style={{aspectRatio: '1/1'}} 
+                            alt={"img"}
+                        />
                     </Col>
                     <Col>
                         <p className='my-0 fw-bold'>@{account.accountName}</p>
@@ -127,7 +129,7 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
                             <InputGroup.Text>Bộ phận</InputGroup.Text>
                             <select class="form-select" onChange={e => setProperty({department: e.target.value})}>
                                 {
-                                    departments.map(dp => <option selected={account.department == dp}>
+                                    departments.map(dp => <option selected={account.department === dp}>
                                         {dp}
                                     </option>)
                                 }
@@ -139,7 +141,7 @@ export default function AccountDetail({show, handleClose, handleSave, init, depa
                             <InputGroup.Text>Vai trò</InputGroup.Text>
                             <select class="form-select" onChange={e => setProperty({role: e.target.value})}>
                                 {
-                                    roles.map(role => <option selected={account.role == role}>
+                                    roles.map(role => <option selected={account.role === role}>
                                         {role}
                                     </option>)
                                 }
