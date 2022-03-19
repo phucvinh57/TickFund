@@ -1,22 +1,22 @@
 import TickTable from "../ticktable"
 import { Row, Col, Form, Button } from "react-bootstrap"
 import { useState, useEffect } from "react"
-import { removeAccents, reduceValuesToString, evalComp } from "../../utils"
+import { removeAccents, reduceValuesToString, multiFilter } from "../../utils"
 import AccountDetail from "./accountDetail"
-import { ACTIVE_STR, INACTIVE_STR, MEMBER_ROLE_STR, EMPTY_AVATAR } from "../../resource"
+import { ACTIVE_STR, INACTIVE_STR, MEMBER_ROLE_STR, EMPTY_AVATAR, EXIST_ACCOUNT_ERROR } from "../../resource"
 
 export default function AccountTable({roles, DB, setDB}){
-    function dataFeed(accounts, roles) {
+    function populateTable(accounts, roles) {
         return accounts.map(acc => (
             {
                 accountName: acc.accountName, // For search only, not for rendering
                 name: {
-                    val: acc.name,
+                    val: acc.name,  
                     component: <div>
                         <Row>
                             <Col className='col-auto d-flex align-items-center'>
-                                <div style={{height: '2.5rem', width: '2.5rem' }}>
-                                <img className='img-fluid circle-border' src={acc.img} style={{aspectRatio: '1/1'}}></img>
+                                <div style={{ height: '2.5rem', width: '2.5rem' }}>
+                                    <img className='img-fluid circle-border' src={acc.img} style={{ aspectRatio: '1/1' }} alt='img' />
                                 </div>
                             </Col>
                             <Col>
@@ -131,12 +131,8 @@ export default function AccountTable({roles, DB, setDB}){
     }
 
     function handleAdd(newAcc) {
-        if(!newAcc.accountName){
-            alert('Tên tài khoản phải được cung cấp')
-            return
-        }
-        else if(DB.find(ele => ele.accountName === newAcc.accountName)){
-            alert('Tên tài khoản đã tồn tại')
+        if(DB.find(ele => ele.accountName === newAcc.accountName)){
+            alert(EXIST_ACCOUNT_ERROR)
             return
         }
         setAccounts([...accounts, newAcc])
@@ -159,7 +155,7 @@ export default function AccountTable({roles, DB, setDB}){
         str = removeAccents(str).replaceAll(' ', '').toLowerCase()
 
         const matchedAccount = DB.filter(acc => {
-            return removeAccents(reduceValuesToString(dataFeed([acc], roles)))
+            return removeAccents(reduceValuesToString(populateTable([acc], roles)))
             .replaceAll(' ', '')
             .toLowerCase()
             .match(str)})
@@ -168,12 +164,7 @@ export default function AccountTable({roles, DB, setDB}){
     }
 
     function handleFilter(filterOptions){
-        const OP = filterOptions.logic == 'AND' ? '&&' : '||'
-        const initVal = OP === '&&' ? true : false 
-        const filteredAccounts = DB.filter(ele => filterOptions.filters.map( option => evalComp(ele, 
-                                            option.association.key,
-                                            option.operator,
-                                            option.comparedValue)).reduce((prev, cur) => eval(`prev ${OP} cur`), initVal))
+        const filteredAccounts = multiFilter(DB, filterOptions)
         setAccounts(filteredAccounts)
     }
 
@@ -188,7 +179,7 @@ export default function AccountTable({roles, DB, setDB}){
                 </Col>
             </Row>
             <TickTable
-                data={dataFeed(accounts, roles)}
+                data={populateTable(accounts, roles)}
                 headers={headers}
                 numPages={Math.ceil(accounts.length / 20)}
                 onSearch={handleSearch}

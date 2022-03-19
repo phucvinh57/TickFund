@@ -11,3 +11,7 @@ export const COMP_STR = {
     gte: 'GTE'
 }
 export const EMPTY_AVATAR = 'https://apsec.iafor.org/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg'
+
+export const EXIST_ACCOUNT_ERROR = 'Tên tài khoản đã tồn tại'
+
+export const DATE_TIME_TYPE = 'datetime-local'

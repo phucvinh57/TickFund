@@ -1,6 +1,6 @@
 import TickTable from "../components/ticktable";
 import { useEffect, useState, useMemo } from "react";
-import { MockDatabase } from "../utils";
+import { MockDatabase, multiFilter } from "../utils";
 import randLogData, { numItemsPerPage, headers } from "../components/log/sampleData";
 
 
@@ -10,6 +10,8 @@ export default function Log() {
     const [numPages, setNumPages] = useState(0)
 
     const [searchQuery, setSearchQuery] = useState('')
+    const [filters, setFilters] = useState(null)
+    const [sortOption, setSortOption] = useState(null)
     
     const mockDB = useMemo(() => {
         const initDB = () => {
@@ -32,31 +34,43 @@ export default function Log() {
 
     const handleSearch = query => {
         setSearchQuery(query)
-        if (query === '') {
-            init()
-            return
-        }
-        const searchResult = mockDB.search(query, 0, numItemsPerPage)
-        setPageData(searchResult)
-        setNumPages(Math.ceil(mockDB.getCurrLength() / numItemsPerPage))
+
+        const result = mockDB.query(query, filters, sortOption)
+
+        setPageData(result.slice(0, numItemsPerPage))
+        setNumPages(Math.ceil(result.length / numItemsPerPage))
     }
     const handlePageChange = nth => {
         let start = nth * numItemsPerPage
         let end = start + numItemsPerPage
-        setPageData(searchQuery === '' ? mockDB.slice(start, end) : mockDB.search(searchQuery, start, end))
-    }
 
+        const searchResult = searchQuery === '' ? mockDB.slice(0) : mockDB.search(searchQuery, 0)
+        const filterResult = filters ? multiFilter(searchResult, filters) : searchResult
+        setPageData(filterResult.slice(start, end))
+    }
+    
     const handleSort = option => {
         console.log(option)
-        mockDB.sort(option.key, option.order)
-        init()
+        setSortOption(option)
+        
+        const result = mockDB.query(searchQuery, filters, option)
+
+        setPageData(result.slice(0, numItemsPerPage))
+        setNumPages(Math.ceil(result.length / numItemsPerPage))
     }
-    const handleFilter = filters => {
-        console.log(filters)
+    const handleFilter = filterOptions => {
+        setFilters(filterOptions)
+        console.log(filterOptions)
+        
+        const result = mockDB.query(searchQuery, filterOptions, sortOption)
+
+        setPageData(result.slice(0, numItemsPerPage))
+        setNumPages(Math.ceil(result.length / numItemsPerPage))
     }
 
     return <div>
         <TickTable
+            componentSize="sm"
             data={pageData}
             headers={headers}
             name="Nhật ký hệ thống"

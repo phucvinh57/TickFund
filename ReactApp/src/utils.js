@@ -1,10 +1,15 @@
 import ShortUniqueId from 'short-unique-id'
 import { isValidElement } from 'react'
-import { COMP_STR } from './resource'
+import { COMP_STR, DATE_TIME_TYPE } from './resource'
 
 export const shortKey = new ShortUniqueId({
     length: 6,
     dictionary: 'alphanum'
+})
+
+export const generateHexId = new ShortUniqueId({
+    length: 8,
+    dictionary: 'hex'
 })
 
 export const isObject = obj => (typeof obj === 'object' && obj !== null)
@@ -61,7 +66,17 @@ export class MockDatabase {
         this.#db = db
         this.#currLength = db.length
     }
-    search(query, start, end) {
+
+    query(searchStr, filterOptions, sortOption) {
+        sortOption && this.sort(sortOption.key, sortOption.order)
+
+        const searchResult = searchStr ? this.search(searchStr, 0) : this.#db
+        const filterResult = filterOptions ? multiFilter(searchResult, filterOptions) : searchResult
+
+        return filterResult
+    }
+
+    search(query, start, end = null) {
         const matches = this.#db.filter(value => {
             let str = removeAccents(reduceValuesToString(value))
                 .replaceAll(' ', '').toLowerCase()
@@ -71,11 +86,12 @@ export class MockDatabase {
         })
         console.log(matches)
         this.#currLength = matches.length
-        return matches.slice(start, end)
+        return end ? matches.slice(start, end) : matches.slice(start)
     }
+
     slice(start, end) {
         this.#currLength = this.#db.length
-        return this.#db.slice(start, end)
+        return end ? this.#db.slice(start, end) : this.#db.slice(start)
     }
 
     getCurrLength() {
@@ -95,15 +111,38 @@ export class MockDatabase {
             }
         )
 
-        this.#db.forEach(row => console.log(row[key]))
+        // this.#db.forEach(row => console.log(row[key]))
+    }
+
+    filter(filterOptions, start, end = null) {
+        const matches = multiFilter(this.#db, filterOptions)
+        this.#currLength = matches.length
+        return end ? matches.slice(start, end) : matches.slice(start)
     }
 }
 
-export const evalComp = (ele, key, op, comparedValue) => {
-    if(op === COMP_STR.eq) {return ele[key] === comparedValue}
-    else if(op === COMP_STR.lt) {return ele[key] < comparedValue}
-    else if(op === COMP_STR.gt) {return ele[key] > comparedValue}
-    else if(op === COMP_STR.uneq) {return ele[key] !== comparedValue}
-    else if(op === COMP_STR.lte) {return ele[key] <= comparedValue}
-    else if(op === COMP_STR.gte) {return ele[key] >= comparedValue}
+const evalComp = (ele, key, op, comparedValue, type) => {
+    if (type === DATE_TIME_TYPE) {
+        comparedValue = prettyDate(new Date(comparedValue))
+    }
+
+    const propertyVal = ele[key].val ? ele[key].val : ele[key] // check if ele[key] is object
+
+    if(op === COMP_STR.eq) {return propertyVal === comparedValue}
+    else if(op === COMP_STR.lt) {return propertyVal < comparedValue}
+    else if(op === COMP_STR.gt) {return propertyVal > comparedValue}
+    else if(op === COMP_STR.uneq) {return propertyVal !== comparedValue}
+    else if(op === COMP_STR.lte) {return propertyVal <= comparedValue}
+    else if(op === COMP_STR.gte) {return propertyVal >= comparedValue}
+}
+
+export const multiFilter = (arr, filterOptions) => {
+    const OP = filterOptions.logic == 'AND' ? '&&' : '||'
+    const initVal = OP === '&&' ? true : false 
+    const filteredResult = arr.filter(ele => filterOptions.filters.map( option => evalComp(ele, 
+                                        option.association.key,
+                                        option.operator,
+                                        option.comparedValue,
+                                        option.association.type)).reduce((prev, cur) => eval(`prev ${OP} cur`), initVal))
+    return filteredResult
 }

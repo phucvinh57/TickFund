@@ -28,8 +28,8 @@ export default function TickTable({
 		<div className='row'>
 			{/* Form search */}
 			{onSearch && <div className='col'>
-				<SearchBox 
-					onSearch={onSearch} 
+				<SearchBox
+					onSearch={onSearch}
 					size={size ? size : 'md'}
 				/>
 			</div>}
@@ -70,7 +70,7 @@ export default function TickTable({
 			<h5 className="text-muted">No data available</h5>
 		</div>}
 		{/* Pagination */}
-		<div className='d-flex justify-content-end mt-2'>
+		{data.length !== 0 && <div className='d-flex justify-content-end mt-2'>
 			<ReactPaginate
 				nextLabel='>'
 				previousLabel='<'
@@ -93,6 +93,6 @@ export default function TickTable({
 				nextLinkClassName="page-link"
 				activeClassName="active"
 			/>
-		</div>
+		</div>}
 	</div>
 }
