@@ -1,14 +1,18 @@
 import { Row, Col, Button, FormCheck, Accordion } from "react-bootstrap"
 import { useState, useEffect } from "react"
+import { ADMIN_ROLE_STR, MEMBER_ROLE_STR } from "../../resource"
 
-export default function PermissionCheckCard({init, role}){
+export default function PermissionCheckCard({init, role, handleDelete}){
 
     const [permissions, setPermissions] = useState(init)
     const [save, setSave] = useState(false)
 
 
     useEffect(() => {
+<<<<<<< HEAD
         // console.log(init)
+=======
+>>>>>>> ea71e029d52783352d0c4f770cad6a5daea2e54a
         JSON.stringify(init) === JSON.stringify(permissions) ? setSave(false) : setSave(true)
     }, [permissions, init]);
 
@@ -50,32 +54,42 @@ export default function PermissionCheckCard({init, role}){
                                                     <FormCheck checked={action.valid } onClick={() => {
                                                         var newPermission = JSON.parse(JSON.stringify(permissions))
                                                         newPermission[itemIdx].actions[actionIdx].valid = !action.valid
-                                                        console.log(newPermission)
                                                         setPermissions(newPermission)
                 
                                                     }}
                                                     onChange={e => {}}
                                                     disabled={item.actions.every(action => action.valid)}/>
                                                 </Col>
-                                                
                                             </Row>
                                         )
                                     })
                                 }
                             </div>
-
                         )
                     })
                 }
-                <div className='clearfix'>
-                    <Button className='my-1 float-end' 
-                        variant='primary' 
-                        disabled={!save}
-                        onClick={() => {
-                            init = permissions
-                            setSave(false)
-                        }}>Lưu những thay đổi</Button>
-                </div>
+                <Row className='clearfix justify-content-end'>
+                    {
+                        (role === ADMIN_ROLE_STR || role === MEMBER_ROLE_STR)
+                        ? <></> 
+                        :
+                        <Col className='col-auto'>
+                            <Button className='my-1' 
+                                variant='danger' 
+                                onClick={() => {
+                                    handleDelete(role)
+                                }}>Xóa nhóm quyền</Button>
+                        </Col>
+                    }
+                    <Col className='col-auto'>
+                        <Button className='my-1' 
+                            variant='primary' 
+                            disabled={!save}
+                            onClick={() => {
+                                setSave(false)
+                            }}>Lưu những thay đổi</Button>
+                    </Col>
+                </Row>
             </Accordion.Body>
         </Accordion.Item>
     )

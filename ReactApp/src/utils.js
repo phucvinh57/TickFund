@@ -1,5 +1,6 @@
 import ShortUniqueId from 'short-unique-id'
 import { isValidElement } from 'react'
+import { COMP_STR } from './resource'
 
 export const shortKey = new ShortUniqueId({
     length: 6,
@@ -93,4 +94,13 @@ export class MockDatabase {
 
         // this.#db.forEach(row => console.log(row[key]))
     }
+}
+
+export const evalComp = (ele, key, op, comparedValue) => {
+    if(op === COMP_STR.eq) {return ele[key] === comparedValue}
+    else if(op === COMP_STR.lt) {return ele[key] < comparedValue}
+    else if(op === COMP_STR.gt) {return ele[key] > comparedValue}
+    else if(op === COMP_STR.uneq) {return ele[key] !== comparedValue}
+    else if(op === COMP_STR.lte) {return ele[key] <= comparedValue}
+    else if(op === COMP_STR.gte) {return ele[key] >= comparedValue}
 }
