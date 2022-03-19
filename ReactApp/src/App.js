@@ -7,7 +7,7 @@ import { useSelector } from "react-redux"
 import Permission from "./pages/permission"
 import Log from "./pages/log"
 import Exchanges from "./pages/exchanges"
-// import Plannings from "./pages/plannings"
+import Plannings from "./pages/plannings"
 
 const Main = styled.div`
   transition: 0.3s;
@@ -23,7 +23,7 @@ export default function App() {
           <Route path='/' element={<Navigate to='/home' />} />
           <Route path='/home' element={<Home />} />
           <Route path="/exchanges" element={<Exchanges />} />
-          {/* <Route path="/plannings" element={<Plannings />} /> */}
+          <Route path="/plannings" element={<Plannings />} />
           <Route path="/stat/*" element={<Statistic />} />
           <Route path='/permission' element={<Permission/>} />
           <Route path="/log" element={<Log />} />

@@ -18,7 +18,7 @@ const CardsHolder = (props) => (
                     <Card.Img variant='top' src={card.img} />
                 </Ratio>
                 <Card.Body>
-                    <Card.Title>{card.name.split().map(el => el.charAt(0).toUpperCase() + el.slice(1)).join(' ')}</Card.Title>
+                    <Card.Title>{card.val.split().map(el => el.charAt(0).toUpperCase() + el.slice(1)).join(' ')}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{card.kind}</Card.Subtitle>
                 </Card.Body>
             </Card>
@@ -44,7 +44,7 @@ function SearchBox({ onSearch }) {
 
 function FormCategory({show, onHide, onClick}) {
     const init = {
-        name: '',
+        val: '',
         kind: '',
         img: ''
     }

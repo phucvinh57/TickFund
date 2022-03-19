@@ -90,7 +90,7 @@ export const headers = [{
         type: 'select',
         options: persons.map(person => person.name)
     },
-    sortable: 'false'
+    sortable: true
 }, {
     label: 'Thời gian',
     association: {

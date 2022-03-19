@@ -9,8 +9,7 @@ import {Link, X} from 'react-bootstrap-icons'
 import { prettyDate } from '../../utils';
 import { makeid } from './sampleData';
 
-function UploadFile() {
-    
+function ViewTransaction({ init, users, categories, show, onHide, onClick}) {
     const [selectedFiles, setSelectedFiles] = useState([])
 
     const changeHandler = (event) => {
@@ -27,53 +26,14 @@ function UploadFile() {
 
     }
 
-    return (
-        <ListGroup horizontal="sm">
-            <ListGroup.Item className='p-1 flex-grow-1'>
-                {
-                    selectedFiles.length !== 0 ?
-                    selectedFiles.map((file, id) => {
-                        console.log(id)
-                        return (<ButtonGroup key={id} className="m-1">
-                                <Button variant="primary" size="sm">{file.name}</Button>
-                                <Button variant="primary" size="sm" className='p-1' onClick={() => removeHandler(id)}><X size={12}/></Button>
-                            </ButtonGroup>)
-                    })
-                    : <div></div>
-                }
-            </ListGroup.Item>
-            <ListGroup.Item className='py-1 px-2'>
-                <Form.Group>
-                    <Form.Label className='mb-1'>
-                        <input type="file" name="file" accept="image/*" multiple hidden onChange={changeHandler}/>
-                        <Link size={15}/>
-                    </Form.Label>
-                </Form.Group>
-            </ListGroup.Item>
-        </ListGroup>
-    )
-}
-
-export default function Transaction({categoryList, show, onHide, onClick}) {
-    const init = {
-        id: makeid(10),
-        time: prettyDate(new Date(1970,1,1)),
-        money: '',
-        category: {
-            name: '',
-            kind: ''
-        },
-        user: '',
-        notes: '',
-        attachment: ''
-    }
     const [transaction, setTransaction] = useState(init)
     const [optionList, setOptionList] = useState([])
-    const [option, setOption] = useState(0)
+    const [option, setOption] = useState('')
 
 
     const modify = (obj) => {
-        setTransaction({ ...transaction, ...obj })
+        const _transaction = { ...transaction, ...obj }
+        setTransaction(_transaction)
     }
     
     return <Modal
@@ -88,19 +48,41 @@ export default function Transaction({categoryList, show, onHide, onClick}) {
                 </Modal.Title>
             </Modal.Header>
             <ModalBody>
-                <Form onSubmit={(event) => {event.preventDefault();onClick(transaction)} } >
+                <Form onSubmit={(event) => {
+                    const files = selectedFiles.map(el => URL.createObjectURL(el))
+                    console.log(files)
+                    const changes = {...transaction, time: prettyDate(new Date), attachments: files};
+                    event.preventDefault();
+                    onClick(changes);
+                    setTransaction(transaction);
+                    setSelectedFiles([]);
+                }} >
                     <Form.Group className="mb-3">
                         <Form.Label>Số tiền</Form.Label>
-                        <Form.Control type="number" onChange={(event) => modify({money: event.target.value + ' đ'})}/>
+                        <Form.Control type="number" required onChange={(event) => modify({money: event.target.value + ' đ'})}/>
                     </Form.Group>
                     <Row className="mb-3">
                         <Form.Group as={Col}>
                             <Form.Label>Loại danh mục</Form.Label>
-                            <Form.Select defaultValue="Chọn..." onChange={(event) => {
-                                        modify({category: 
-                                            {name:optionList[option], kind: event.target.value}
+                            <Form.Select required defaultValue="Chọn..." onChange={(event) => {
+                                        const arr = categories.filter(el => el['kind'] === event.target.value ).map( ({name}) => (name) )
+
+                                        if (option < arr.length) modify({category: 
+                                            {
+                                                name: arr[option], 
+                                                kind: event.target.value,
+                                                val: event.target.value + ' ' + arr[option],
+                                                component: <div>{event.target.value + ' ' + arr[option]}</div>
+                                            }
                                         })
-                                        const arr = categoryList.filter(el => el['kind'] === event.target.value ).map( ({name}) => (name) )
+                                        else modify({category: 
+                                            {
+                                                name: '', 
+                                                kind: event.target.value,
+                                                val: event.target.value + ' ' + '',
+                                                component: <div>{event.target.value + ' '}</div>
+                                            }
+                                        })
                                         setOptionList(arr)
                                     } 
                                 }>
@@ -111,37 +93,62 @@ export default function Transaction({categoryList, show, onHide, onClick}) {
                         </Form.Group>
                         <Form.Group as={Col}>
                             <Form.Label>Tên danh mục</Form.Label>
-                            <Form.Select defaultValue="Chọn..." 
+                            <Form.Select required defaultValue="Chọn..." 
                                     onChange={
                                         (event) => {
-                                            setOption(event.target.value)
                                             modify({category: 
-                                                {name:optionList[option], kind: transaction.category.kind}
+                                                {
+                                                    name:optionList[event.target.value], 
+                                                    kind: transaction.category.kind,
+                                                    val: transaction.category.kind + ' ' + optionList[event.target.value],
+                                                    component: <div>{transaction.category.kind + ' ' + optionList[event.target.value]}</div>
+                                                }
                                             }) 
+                                            setOption(event.target.value)
                                     }
                                 }>
-                                <option>Chọn...</option>
-                                {console.log(optionList[option])}
+                                <option value="">Chọn...</option>
+                                {/* {console.log(optionList[option])} */}
                                 { (optionList.length !== 0) ? optionList.map((el, idx) => <option key={idx} value={idx}>{el}</option>) : <></>}
                             </Form.Select>
                         </Form.Group>
                     </Row>
-                    <Form.Group className="mb-3" controlId="duedate">
-                        <Form.Label>Thời gian giao dịch</Form.Label> 
-                        <Form.Control
-                            type="datetime-local"
-                            name="duedate"
-                            onChange={(event) => modify({time: prettyDate(new Date(event.target.value))})}
-                        />
-                    </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Người giao dịch</Form.Label>
-                        <Form.Control type="text" placeholder="Nguyễn Phúc Vinh" onChange={(event) => modify({user: event.target.value})}/>
+                        <Form.Select defaultValue="Chọn..." required onChange={(event) => modify({user: users[event.target.value]})}>
+                            <option value="">Chọn...</option>
+                            {
+                                (users.length !== 0) ? users.map((el, idx) => <option key={idx} value={idx}>{el}</option>) : <></>
+                            }
+                        </Form.Select>
                     </Form.Group>
+
                     <Form.Group className="mb-3">
                         <Form.Label>Ghi chú</Form.Label>
-                        <Form.Control as="textarea" rows={3} />
-                        <UploadFile/>
+                        <Form.Control as="textarea" rows={3} onChange={(event) => modify({notes: event.target.value})}/>
+                        <ListGroup horizontal="sm">
+                            <ListGroup.Item className='p-1 flex-grow-1'>
+                                {
+                                    selectedFiles.length !== 0 ?
+                                    selectedFiles.map((file, id) => {
+                                        console.log(id)
+                                        return (<ButtonGroup key={id} className="m-1">
+                                                <Button variant="primary" size="sm" className='text-truncate' style={{width: 5+'rem'}}>{file.name}</Button>
+                                                <Button variant="primary" size="sm" className='p-1' onClick={() => removeHandler(id)}><X size={12}/></Button>
+                                            </ButtonGroup>)
+                                    })
+                                    : <div></div>
+                                }
+                            </ListGroup.Item>
+                            <ListGroup.Item className='py-1 px-2'>
+                                <Form.Group>
+                                    <Form.Label className='mb-1'>
+                                        <input type="file" name="file" accept="image/*" multiple hidden onChange={changeHandler}/>
+                                        <Link size={15}/>
+                                    </Form.Label>
+                                </Form.Group>
+                            </ListGroup.Item>
+                        </ListGroup>
                     </Form.Group>
                     <Button variant="primary" type="submit">
                         Submit
@@ -149,4 +156,27 @@ export default function Transaction({categoryList, show, onHide, onClick}) {
                 </Form>
             </ModalBody>
         </Modal>
+}
+
+
+export default function Transaction({ init,users,categories, onClick}) {
+    const [ modalShow, setModalShow ] = useState(false)
+    
+    return <div className="mb-3">
+        <Button variant="primary" onClick={() => setModalShow(true)}>
+            Tạo giao dịch
+        </Button>
+
+        <ViewTransaction
+            init={init}
+            users={users}
+            categories={categories}
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+            onClick={(transaction) => {
+                onClick(transaction)
+                setModalShow(false)
+            }}
+        ></ViewTransaction>
+    </div>  
 }

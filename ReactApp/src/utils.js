@@ -84,8 +84,16 @@ export class MockDatabase {
 
     sort(key, order) {
         if (order === 'inc')
-            this.#db.sort((row1, row2) => row1[key].localeCompare(row2[key]))
-        else this.#db.sort((row1, row2) => -row1[key].localeCompare(row2[key]))
+            this.#db.sort((row1, row2) => {
+                if(isObject(row1[key])) return row1[key].val.localeCompare(row2[key].val)
+                return row1[key].localeCompare(row2[key])
+                
+            })
+        else this.#db.sort((row1, row2) => {
+                if(isObject(row1[key])) return row1[key].val.localeCompare(row2[key].val)
+                return -row1[key].localeCompare(row2[key])
+            }
+        )
 
         this.#db.forEach(row => console.log(row[key]))
     }

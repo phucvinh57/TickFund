@@ -63,11 +63,11 @@ const sidebarContent = [{
     title: "Giao dịch",
     path: '/exchanges'
 }, 
-// {
-//     icon: <Wallet2 size={18} />,
-//     title: "Giao dịch",
-//     path: '/plannings'
-// }, 
+{
+    icon: <Wallet2 size={18} />,
+    title: "Giao dịch",
+    path: '/plannings'
+}, 
 {
     icon: <Speedometer2 size={18} />,
     title: 'Thống kê',
