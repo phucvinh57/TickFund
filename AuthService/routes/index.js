@@ -1,7 +1,7 @@
-const transactionRouter = require('./transaction.route')
+const authRouter = require('./auth.route')
 
 function routes(app) {
-    app.use('/api/login', transactionRouter)
+    app.use('/auth', authRouter)
 }
 
 module.exports = routes

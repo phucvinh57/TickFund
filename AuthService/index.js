@@ -6,14 +6,12 @@ const routes = require('./routes')
 const app = express()
 const PORT = process.env.PORT
 
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+
 routes(app)
 
 app.get('/', (req, res) => {
-    res.send(`<html>
-        <body>
-            <h1>Auth Service</h1>
-        </body>
-    </html>`)
+    res.sendFile(__dirname + '/views/index.html')
 })
 
 app.listen(PORT, () => {

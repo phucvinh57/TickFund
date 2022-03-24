@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <title>Centralize Auth</title>
+    <style>
+        body {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container d-flex justify-content-center mt-5">
+        <form class="w-75" action="/auth/login" method="post">
+            <div class="mb-2">
+                <label for="email-or-uname" class="form-label">Email address</label>
+                <input type="text" class="form-control" id="email-or-uname" placeholder="email@example.com or name ..." required>
+            </div>
+            <div class="mb-2">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="d6se@p%1#az*..." required>
+            </div>
+            <button type="submit" class="btn btn-success float-end">
+                Login
+            </button>
+        </form>
+    </div>
+</body>
+
+</html>
