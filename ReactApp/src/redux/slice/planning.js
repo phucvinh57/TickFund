@@ -3,9 +3,14 @@ import randLogData from '../../components/planning/sampleData'
 
 const data = randLogData()
 
+// const stateForm = {
+//   data: dataOfAPage,
+//   conditions: conditions
+// }
+
 const planningSlice = createSlice({
   name: 'planning',
-  initialState: data,
+  initialState: data, // Data of a page
   reducers: {
     addPlanning: (state, action) => {
       return [action.payload, ...state]
