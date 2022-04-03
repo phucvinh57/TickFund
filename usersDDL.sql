@@ -1,7 +1,8 @@
 -- Used by root user, not by programmed service
-DROP DATABASE IF EXISTS `users`;
-CREATE DATABASE IF NOT EXISTS `users`;
-USE `users`;
+
+DROP DATABASE IF EXISTS `ticklab_users`;
+CREATE DATABASE IF NOT EXISTS `ticklab_users`;
+USE `ticklab_users`;
 
 CREATE TABLE IF NOT EXISTS department (
     dname VARCHAR(20) PRIMARY KEY
@@ -16,8 +17,7 @@ CREATE TABLE IF NOT EXISTS account (
     `password` VARCHAR(100) NOT NULL,
     avatarURL VARCHAR(255),
     birthday DATE,
-    dname VARCHAR(20) NOT NULL,
+    dname VARCHAR(20),
     FOREIGN KEY (dname) REFERENCES department(dname)
         ON DELETE SET NULL ON UPDATE CASCADE
 );
-
