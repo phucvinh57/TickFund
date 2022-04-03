@@ -7,6 +7,8 @@ const SALT_ROUNDS = 10
 const ERR_CODE_500 = 'INTERNAL SERVER ERROR'
 const OK_CODE_200 = 'SUCCESS'
 
+const LOGIN_FAIL = 'Incorrect username or email or password'
+
 const createUser = async function (req, res) {
     const { username, password, ID, department } = req.body
 
@@ -32,23 +34,22 @@ const login = async function (req, res) {
             [user, user]
         )
         if (hashPassword.length === 0) {
-            res.json({ msg: 'Incorrect username or email or password' })
+            res.json({ msg: LOGIN_FAIL })
             return
         }
 
         let checkPassword = await bcrypt.compare(password, hashPassword[0])
         if (!checkPassword) {
-            res.json({ msg: 'Incorrect username or email or password' })
+            res.json({ msg: LOGIN_FAIL })
             return
         }
 
-        const token = jwt.sign(
-            // payload
-            {
-                verify: true
+        const token = jwt.sign({
+                username: user,
+                verify: true,
             },
-            // key
-            process.env.SECRET_KEY
+            process.env.SECRET_KEY,
+            { expiresIn: 300}
         )
         res.json({ token })
     }

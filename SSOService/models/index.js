@@ -4,11 +4,12 @@ const util = require('util')
 
 const dbConfig = {
     host: process.env.DB_HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     dateStrings: true
 }
+console.log(dbConfig)
 
 const connection = mysql.createConnection(dbConfig)
 connection.connect(err => {
