@@ -45,28 +45,29 @@ $secondary: #007bff;
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    
+
     &::-webkit-scrollbar {
-      display: none;
+        display: none;
     }
 }
 
-.card-item {
-    width: 18rem;
+.icon-item {
+    width: 5rem;
     flex: 0 0 auto;
 
-    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+    transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
     cursor: pointer;
-    
+
     &:hover {
         transform: scale(1.02);
-        box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
     }
 }
 
 .fw-500 {
     font-weight: 500
 }
+
 .w-30 {
     width: 30%;
 }

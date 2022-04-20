@@ -113,6 +113,7 @@ export class MockDatabase {
     }
 }
 
+
 const evalComp = (ele, key, op, comparedValue, type) => {
     if (type === DATE_TIME_TYPE) {
         comparedValue = prettyDate(new Date(comparedValue))
