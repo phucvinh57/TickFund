@@ -5,13 +5,24 @@ info:
   version: 0.0.2
 
 servers:
-  - url: http://localhost
-    description: Development server
+  - url: http://localhost:3000
+    description: Development url
+  - url: https://api.tickfund.com/v1
+    description: API Gateway
+
+tags:
+  - name: transactions
+    description: Everythings about transactions
+  - name: plannings
+    description: ""
+  - name: satistics
 
 paths:
   /transactions/new:
     post:
       summary: Add a new transaction
+      tags:
+        - transactions
       requestBody:
         content:
           application/json:

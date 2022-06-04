@@ -80,7 +80,7 @@ const sidebarContent = [
     {
         icon: <Coin size={18} />,
         title: "Giao dịch",
-        path: '/exchanges'
+        path: '/transactions'
     },
     {
         icon: <PiggyBank size={18} />,
