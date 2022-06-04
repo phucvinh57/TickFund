@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: TickFund API Gateway
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: API Gateway
+
+paths:
+  /transactions:
+    post:
+      summary: Adds a new user
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+              example: # Sample object
+                id: 10
+                name: Jessica Smith
+      responses:
+        "200":
+          description: callback successfully processed
+
+components:
+  schemas:
+    Category:
+      type: object
+      required:
+        - "name"
+        - "type"
+      properties:
+        name:
+          type: string
+        type:
+          enum:
+            - "Thu"
+            - "Chi"
+    NewTransaction:
+      type: object
+      required:
+        - "amount"
+        - "category"
+      properties:
+        amount:
+          type: integer
+        category:
+          $ref: "#/components/schemas/Category"
