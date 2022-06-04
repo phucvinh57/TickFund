@@ -41,7 +41,7 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-  
+
   /transactions/{id}:
     get:
       summary: Get more detail (notes and attachments) of a transaction by given ID
@@ -49,7 +49,7 @@ paths:
         - transactions
       parameters:
         - in: path
-          name: id   # Note the name is the same as in the path
+          name: id # Note the name is the same as in the path
           required: true
           schema:
             type: string
@@ -58,6 +58,28 @@ paths:
       responses:
         200:
           description: New Category successfully added
+        400:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /transactions/history/:
+    get:
+      summary: Get a transaction data by given ID
+      tags:
+        - transactions
+      parameters:
+        - in: query
+          name: queryObj
+          schema:
+            type: object
+            $ref: "#/components/schemas/Query"
+          required: false
+          description: The number of items to skip before starting to collect the result set
+      responses:
+        200:
+          description: Retrieve successfully
+
         400:
           description: Not Found
         500:
@@ -80,7 +102,7 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-  
+
   /categories/delete/{name}:
     delete:
       summary: Delete an exist category
@@ -229,3 +251,19 @@ components:
         avatar:
           type: string
           example: "https://cdn.ticklab.com"
+          format: byte
+
+    Query:
+      type: object
+      properties:
+        offset:
+          type: integer
+        limit:
+          type: integer
+        sort:
+          type: string
+          enum: [asc, desc]
+        search:
+          type: string
+        filter:
+          type: object
