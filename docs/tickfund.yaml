@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  title: TickFund API Gateway
+  description: blah blah
+  version: 0.0.2
+
+servers:
+  - url: http://localhost
+    description: Development server
+
+paths:
+  /transactions:
+    post:
+      summary: Add a new transaction
+      requestBody:
+        description: Connect successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Transactions"
+      responses:
+        201:
+          description: New Transaction successfully added
+        400:
+          description: Error
+ 
+
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Tiền điện
+        type:
+          type: string
+          enum: [Thu, Chi]
+    Transactions:
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: "int64"
+        category:
+          $ref: "#/components/schemas/Category"
