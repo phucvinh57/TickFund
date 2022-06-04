@@ -5,10 +5,11 @@ import { useSelector } from "react-redux"
 
 import Permission from "./pages/permission"
 import Log from "./pages/log"
-import Exchanges from "./pages/exchanges"
+import Transactions from "./pages/transactions"
 
 import Statistic from "./pages/statistic"
 import Planning from "./pages/planning"
+import NotFound from "./pages/notFound"
 
 const Main = styled.div`
   transition: 0.3s;
@@ -22,11 +23,12 @@ export default function App() {
       <div className="container-fluid p-4">
         <Routes>
           <Route path='/' element={<Navigate to='/stat/donut' />} />
-          <Route path="/exchanges" element={<Exchanges />} />
+          <Route path="/transactions" element={<Transactions />} />
           <Route path="/plannings" element={<Planning />} />
           <Route path="/stat/*" element={<Statistic />} />
           <Route path='/permission' element={<Permission/>} />
           <Route path="/log" element={<Log />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
     </Main>
