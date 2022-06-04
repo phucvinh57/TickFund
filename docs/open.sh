@@ -1,1 +1,1 @@
-http-server -c-1 -p 3000 docs;
+http-server -c-1 -p 3000 . -o 
