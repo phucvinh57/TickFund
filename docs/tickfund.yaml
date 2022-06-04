@@ -9,13 +9,19 @@ servers:
     description: Development url
   - url: https://api.tickfund.com/v1
     description: API Gateway
+  - url: https://cdn.tickfund.com/
+    description: Transfer files for system
 
 tags:
   - name: transactions
-    description: Everythings about transactions
+    description: API for transactions
+  - name: categories
+    description: API for categories
   - name: plannings
-    description: ""
+    description: API for plannings
   - name: satistics
+    description: API for satistics
+  
 
 paths:
   /transactions/new:
@@ -39,6 +45,8 @@ paths:
   /transactions/{id}:
     get:
       summary: Get more detail (notes and attachments) of a transaction by given ID
+      tags:
+        - transactions
       parameters:
         - in: path
           name: id   # Note the name is the same as in the path
@@ -58,6 +66,8 @@ paths:
   /categories/new:
     post:
       summary: Add a new category
+      tags:
+        - categories
       requestBody:
         content:
           application/json:
@@ -74,6 +84,8 @@ paths:
   /categories/delete/{name}:
     delete:
       summary: Delete an exist category
+      tags:
+        - categories
       parameters:
         - in: path
           name: name
@@ -89,7 +101,57 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
+  
+  /categories/edit/{name}:
+    put:
+      summary: Edit a category name
+      tags:
+        - categories
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+            example: "Tien dien"
+          description: Ten danh muc
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newName:
+                  type: string
+                  example: "Tien dien moi"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Not Found
+        500:
+          description: Internal Server Error
 
+  /categories:
+    get:
+      summary: Get all categories
+      tags:
+        - categories
+      responses:
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+
+
+        400:
+          description: Not Found
+        500:
+          description: Internal Server Error
 components:
   schemas:
     Category:
@@ -139,13 +201,17 @@ components:
           type: string
           example: "Tien dien thang 4"
         attachments:
-          type: string
-          format: binary
-          example: tiendien.jpg
+          type: array
+          format: url
+          example: [ "tiendien.jpg", "anh_giao_dich.png" ]
     
     TransactionDetailData:
       type: object
-      description: Get more details of a trans
+      description: Get more details of a transaction
+      properties:
+        attachments:
+          type: array
+          example: []
 
     Person:
       type: object
@@ -162,5 +228,4 @@ components:
           example: "@nhan2k1"
         avatar:
           type: string
-          format: byte
-          example: "nhan.jpg"
+          example: "https://cdn.ticklab.com"
