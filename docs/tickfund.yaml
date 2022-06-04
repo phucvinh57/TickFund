@@ -27,7 +27,7 @@ paths:
   
   /transactions/{id}:
     get:
-      summary: Get a transaction data by given ID
+      summary: Get more detail (notes and attachments) of a transaction by given ID
       parameters:
         - in: path
           name: id   # Note the name is the same as in the path
@@ -94,6 +94,7 @@ components:
 
     NewTransactionData:
       type: object
+      description: Data format for create a new transaction
       properties:
         amount:
           type: integer
@@ -114,15 +115,15 @@ components:
 
     TransactionData:
       type: object
+      description: Data for displaying a transaction on table
       properties:
         id:
           type: string
           example: "#10ac6we"
         category:
           $ref: "#/components/schemas/Category"
-        userID:
-          type: string
-          example: 1915940
+        user:
+          $ref: "#/components/schemas/Person"
         note:
           type: string
           example: "Tien dien thang 4"
@@ -130,9 +131,14 @@ components:
           type: string
           format: binary
           example: tiendien.jpg
+    
+    TransactionDetailData:
+      type: object
+      description: Get more details of a trans
 
     Person:
       type: object
+      description: Display basic personal data of a user
       properties:
         id:
           type: string
