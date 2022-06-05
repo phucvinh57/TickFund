@@ -21,9 +21,9 @@ tags:
     description: API for plannings
   - name: satistics
     description: API for satistics
-  
 
 paths:
+  # TRANSACTION
   /transactions/new:
     post:
       summary: Add a new transaction
@@ -58,33 +58,43 @@ paths:
       responses:
         200:
           description: New Category successfully added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionDetailData"
         400:
           description: Not Found
         500:
           description: Internal Server Error
 
-  /transactions/history/:
+  /transactions/history:
     get:
-      summary: Get a transaction data by given ID
+      summary: Get transaction list by some pre-condition
       tags:
         - transactions
       parameters:
         - in: query
-          name: queryObj
+          name: query
           schema:
-            type: object
             $ref: "#/components/schemas/Query"
+            default: {}
           required: false
-          description: The number of items to skip before starting to collect the result set
+          description: Object of conditions
       responses:
         200:
           description: Retrieve successfully
-
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TransactionData"
         400:
           description: Not Found
         500:
           description: Internal Server Error
-
+  
+  # CATEGORIES
   /categories/new:
     post:
       summary: Add a new category
@@ -174,6 +184,78 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
+
+  # PLANNING
+  /plannings/new:
+    post:
+      summary: Add a new planning
+      tags:
+        - plannings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewTransactionData"
+      responses:
+        200:
+          description: New Transaction successfully added
+        400:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /plannings/{id}:
+    get:
+      summary: Get more detail (notes and attachments) of a transaction by given ID
+      tags:
+        - plannings
+      parameters:
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+            example: "#1d34ae"
+          description: Transaction ID
+      responses:
+        200:
+          description: New Category successfully added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionDetailData"
+        400:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /plannings/history:
+    get:
+      summary: Get transaction list by some pre-condition
+      tags:
+        - plannings
+      parameters:
+        - in: query
+          name: query
+          schema:
+            $ref: "#/components/schemas/Query"
+            default: {}
+          required: false
+          description: Object of conditions
+      responses:
+        200:
+          description: Retrieve successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TransactionData"
+        400:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
 components:
   schemas:
     Category:
@@ -215,10 +297,23 @@ components:
         id:
           type: string
           example: "#10ac6we"
-        category:
-          $ref: "#/components/schemas/Category"
         user:
           $ref: "#/components/schemas/Person"
+        time:
+          type: string
+          example: "2022/03/30 06:24:24"
+        amount:
+          type: number
+          example: 300000
+        category:
+          $ref: "#/components/schemas/Category"
+        
+        
+    
+    TransactionDetailData:
+      type: object
+      description: Get more details of a transaction
+      properties:
         note:
           type: string
           example: "Tien dien thang 4"
@@ -226,14 +321,6 @@ components:
           type: array
           format: url
           example: [ "tiendien.jpg", "anh_giao_dich.png" ]
-    
-    TransactionDetailData:
-      type: object
-      description: Get more details of a transaction
-      properties:
-        attachments:
-          type: array
-          example: []
 
     Person:
       type: object
@@ -258,12 +345,39 @@ components:
       properties:
         offset:
           type: integer
+          default: 0
         limit:
           type: integer
+          default: 20
         sort:
           type: string
-          enum: [asc, desc]
+          enum: ["asc", "desc"]
+          default: "desc"
         search:
           type: string
+          example: "Tien nha"
         filter:
-          type: object
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                example: 'amount'
+              op:
+                type: string
+                enum: ['<', '>', '==', '...']
+              rhs:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: 'datetime'
+                  value:
+                    type: string
+                    example: '2022-10-05 15:30'
+
+  
+      
+        
+
