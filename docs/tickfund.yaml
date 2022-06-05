@@ -33,7 +33,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/NewTransactionData"
+              $ref: "#/components/schemas/Transaction.New"
       responses:
         200:
           description: New Transaction successfully added
@@ -61,7 +61,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TransactionDetailData"
+                $ref: "#/components/schemas/Transaction.RowData.Addition"
         400:
           description: Not Found
         500:
@@ -88,7 +88,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/TransactionData"
+                  $ref: "#/components/schemas/Transaction.RowData"
         400:
           description: Not Found
         500:
@@ -113,7 +113,7 @@ paths:
         500:
           description: Internal Server Error
 
-  /categories/delete/{name}:
+  /categories/delete?name={name}:
     delete:
       summary: Delete an exist category
       tags:
@@ -195,11 +195,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/NewTransactionData"
+              $ref: "#/components/schemas/Planning.New"
+
       responses:
         200:
-          description: New Transaction successfully added
-        400:
+          description: Add new planning successfully 
+        404:
           description: Not Found
         500:
           description: Internal Server Error
@@ -216,20 +217,63 @@ paths:
           schema:
             type: string
             example: "#1d34ae"
-          description: Transaction ID
+          description: Planning ID
       responses:
         200:
-          description: New Category successfully added
+          description: Get a planning by provided ID
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TransactionDetailData"
+                $ref: "#/components/schemas/Planning.RowData.Addition"
         400:
           description: Not Found
         500:
           description: Internal Server Error
-
-  /plannings/history:
+    put:
+      summary: Update a planning which has a given ID
+      tags:
+        - plannings
+      parameters:
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+            example: "#1d34ae"
+          description: Planning ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Planning.Update"
+              
+      responses:
+        200:
+          description: Update successfully
+        400:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    delete:
+      summary: Delete a planning by given id
+      tags:
+        - plannings
+      parameters:
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+            example: "#1d34ae"
+          description: Planning ID
+      responses:
+        200:
+          description: Delete successfully 
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+  /plannings:
     get:
       summary: Get transaction list by some pre-condition
       tags:
@@ -250,8 +294,8 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/TransactionData"
-        400:
+                  $ref: "#/components/schemas/Planning.RowData"
+        404:
           description: Not Found
         500:
           description: Internal Server Error
@@ -269,7 +313,7 @@ components:
           enum: [Thu, Chi]
           example: Thu
 
-    NewTransactionData:
+    Transaction.New:
       type: object
       description: Data format for create a new transaction
       properties:
@@ -287,10 +331,9 @@ components:
           example: "Tien dien thang 4"
         attachments:
           type: string
-          format: binary
           example: tiendien.jpg
 
-    TransactionData:
+    Transaction.RowData:
       type: object
       description: Data for displaying a transaction on table
       properties:
@@ -298,7 +341,7 @@ components:
           type: string
           example: "#10ac6we"
         user:
-          $ref: "#/components/schemas/Person"
+          $ref: "#/components/schemas/Account.Basic"
         time:
           type: string
           example: "2022/03/30 06:24:24"
@@ -307,10 +350,8 @@ components:
           example: 300000
         category:
           $ref: "#/components/schemas/Category"
-        
-        
-    
-    TransactionDetailData:
+
+    Transaction.RowData.Addition:
       type: object
       description: Get more details of a transaction
       properties:
@@ -319,10 +360,9 @@ components:
           example: "Tien dien thang 4"
         attachments:
           type: array
-          format: url
           example: [ "tiendien.jpg", "anh_giao_dich.png" ]
 
-    Person:
+    Account.Basic:
       type: object
       description: Display basic personal data of a user
       properties:
@@ -334,11 +374,122 @@ components:
           example: Cu Do Thanh Nhan
         username:
           type: string
-          example: "@nhan2k1"
+          example: "nhan2k1"
         avatar:
           type: string
           example: "https://cdn.ticklab.com"
-          format: byte
+
+    Planning.New:
+      type: object
+      required:
+        - category
+        - amount
+        - startDate
+        - isRepeat
+      properties:
+        category:
+          $ref: "#/components/schemas/Category"
+        amount:
+          type: integer
+          example: 2000000
+        userID:
+          type: string
+          example: "#343a40"
+        isRepeat:
+          type: boolean
+          example: true
+        startDate:
+          type: string
+          example: "2022-10-05 15:30"
+        repeat:
+          $ref: "#/components/schemas/Planning.Repetition"
+    
+    Planning.Update:
+      type: object
+      required:
+        - category
+        - amount
+        - startDate
+        - isRepeat
+      properties:
+        category:
+          $ref: "#/components/schemas/Category"
+        amount:
+          type: integer
+          example: 2000000
+        userID:
+          type: string
+          example: "#343a40"
+        isRepeat:
+          type: boolean
+          example: true
+        startDate:
+          type: string
+          example: "2022-10-05 15:30"
+        repeat:
+          $ref: "#/components/schemas/Planning.Repetition"
+
+    Planning.RowData:
+      type: object
+      properties:
+        id: 
+          type: string
+          example: "#343a40"
+        category:
+          $ref: "#/components/schemas/Category"
+        amount:
+          type: integer
+          example: 150000
+        startDate:
+          type: string
+          example: "2022-04-07"
+
+    Planning.RowData.Addition:
+      type: object
+      properties:
+        userID:
+          type: string
+          example: "#343a40"
+        isRepeat:
+          type: boolean
+          example: true
+        repeat:
+          $ref: "#/components/schemas/Planning.Repetition"
+            
+
+    Planning.Repetition:
+      type: object
+      properties:
+        mode:
+          type: string
+          enum:
+            - countdown
+            - cycle
+          example: cycle
+          description: Use to determine which option user has chosen
+
+        cycle:
+          type: object
+          properties:
+            cycle:
+              type: string
+              enum:
+                - day
+                - week
+                - month
+                - quarter
+                - year
+            endDate:
+              type: string
+              example: "2022-12-05 15:30"
+            hasEndDay:
+              type: boolean
+              example: false
+          
+        countdown:
+          type: integer
+          example: 10
+
 
     Query:
       type: object
