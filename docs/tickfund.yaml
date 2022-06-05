@@ -21,6 +21,8 @@ tags:
     description: API for plannings
   - name: satistics
     description: API for satistics
+  - name: users
+    description: API for user info
 
 paths:
   # TRANSACTION
@@ -93,7 +95,7 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-  
+
   # CATEGORIES
   /categories/new:
     post:
@@ -133,7 +135,7 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-  
+
   /categories/edit/{name}:
     put:
       summary: Edit a category name
@@ -172,14 +174,88 @@ paths:
       responses:
         200:
           description: Success
-          content: 
+          content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: "#/components/schemas/Category"
+        400:
+          description: Not Found
+        500:
+          description: Internal Server Error
 
+  /users:
+    get:
+      summary: Get a list of all users
+      tags:
+        - users
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Account"
+        400:
+          description: Not Found
+        500:
+          description: Internal Server Error
 
+  /users/new:
+    post:
+      summary: Add a new user
+      tags:
+        - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Account"
+      responses:
+        200:
+          description: New User successfully added
+        400:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /users/delete/{id}:
+    delete:
+      summary: Delete an exist user
+      tags:
+        - users
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: 1915940
+          description: Id of a user
+      responses:
+        200:
+          description: Success
+        400:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /users/edit:
+    put:
+      summary: Edit
+      tags:
+        - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Account"
+      responses:
+        200:
+          description: Success
         400:
           description: Not Found
         500:
@@ -359,20 +435,22 @@ components:
           type: string
           example: "Tien dien thang 4"
         attachments:
-          type: array
-          example: [ "tiendien.jpg", "anh_giao_dich.png" ]
+          type: string
+          example:
+            - tiendien.jpg
+            - anh_giao_dich.png
 
-    Account.Basic:
+    Account:
       type: object
-      description: Display basic personal data of a user
+      description: all information of a user
       properties:
         id:
           type: string
           example: 1915940
         name:
           type: string
-          example: Cu Do Thanh Nhan
-        username:
+          example: Cù Đỗ Thanh Nhân
+        accountName:
           type: string
           example: "nhan2k1"
         avatar:
@@ -490,6 +568,34 @@ components:
           type: integer
           example: 10
 
+          example: cudothanhnhan
+        avatar:
+          type: string
+          example: "https://cdn.ticklab.com"
+        department:
+          type: string
+          example: IT
+        role:
+          type: string
+          example: Thành viên
+        active:
+          type: boolean
+          example: true
+        dob:
+          type: string
+          format: date
+          example: 2001-6-1
+        email:
+          type: string
+          pattern: '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+          example: email@gmail.com
+        phone:
+          type: string
+          pattern: '(84|0[3|5|7|8|9])+([0-9]{8})\b'
+          example: "0915654321"
+        facebookLink:
+          type: string
+          example: "https://www.facebook.com/"
 
     Query:
       type: object
@@ -514,21 +620,16 @@ components:
             properties:
               field:
                 type: string
-                example: 'amount'
+                example: "amount"
               op:
                 type: string
-                enum: ['<', '>', '==', '...']
+                enum: ["<", ">", "==", "..."]
               rhs:
                 type: object
                 properties:
                   type:
                     type: string
-                    example: 'datetime'
+                    example: "datetime"
                   value:
                     type: string
-                    example: '2022-10-05 15:30'
-
-  
-      
-        
-
+                    example: "2022-10-05 15:30"
