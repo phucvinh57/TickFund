@@ -7,6 +7,8 @@ info:
 servers:
   - url: https://api.tickfund.com/v1
     description: API Gateway
+  - url: https://api.tickfund.com/
+    description: API Gateway - test connection
 
 tags:
   - name: transactions
@@ -15,14 +17,71 @@ tags:
     description: API for categories
   - name: plannings
     description: API for plannings
-  - name: satistics
-    description: API for satistics
+  - name: statistics
+    description: API for statistics
   - name: logs
     description: API for logs
   - name: users
     description: API for user info
 
 paths:
+  # STATISTIC
+  /stat/total?option={option}:
+    get:
+      summary: Summary fund by each period in the given range time
+      tags:
+        - statistics
+      parameters:
+        - in: query
+          name: option
+          required: true
+          schema:
+            $ref: "#/components/schemas/Statistic.Filter"
+
+      responses:
+        200:
+          description: Return two arrays of incomes and expenses
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Statistic.Overview"
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    
+  /stat/highest?option={option}:
+    get:
+      tags:
+        - statistics
+      summary: Get data for bar chart
+      parameters:
+        - in: query
+          name: option
+          required: true
+          schema:
+            $ref: "#/components/schemas/Statistic.Filter"
+      responses:
+        200:
+          description: Return 5 categories which has the highest amount of incomes and expenses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  incomes:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Statistic.PieChart.Category"
+                  expenses:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Statistic.PieChart.Category"
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
   # TRANSACTION
   /transactions/new:
     post:
@@ -709,6 +768,57 @@ components:
               type: string
               format: url
               example: https://api.tickfund.com/v1/plannings/343a40
-      
-        
+    Statistic.Filter:
+      type: object
+      required:
+        - include_planning
+        - time_range
+        - period
+      properties:
+        include_planning:
+          type: boolean
+          example: true
+        time_range:
+          type: object
+          properties:
+            start:
+              type: string
+              example: '2022/02/16'
+            end:
+              type: string
+              example: '2022/07/01'
+        period:
+          type: string
+          enum:
+            - week
+            - month
+            - quarter
+          example: month
+    
+    Statistic.Overview:
+      type: object
+      properties:
+        incomes:
+          type: array
+          items:
+            type: integer
+          example: [3000000, 4950000, 3578000]
+        expenses:
+          type: array
+          items:
+            type: integer
+          example: [156000, 790000, 1230000]
+
+    Statistic.PieChart.Category:
+      type: object
+      required:
+        - category
+        - amount
+      properties:
+        category:
+          type: string
+          example: "Tien nha"
+        amount:
+          type: integer
+          example: "3000000"
 
