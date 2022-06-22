@@ -11,5 +11,8 @@ public class TransactionExcept{
         public MissingField(String fieldName){
             this.fieldName = fieldName;
         }
+        public String getFieldName(){
+            return this.fieldName;
+        }
     }
 }
