@@ -1,7 +1,6 @@
-package com.example.TFService.modules.planning.dto;
+package com.example.TFService.modules.planning.vo;
 
 import com.example.TFService.enums.RepetitionModeEnum;
-import com.example.TFService.modules.planning.dto.out.PlanningCycle;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.example.TFService.interfaces.IBuilder;
 
@@ -10,21 +9,21 @@ import com.example.TFService.interfaces.IBuilder;
  * PlanningCycle cycle;
  * Integer countdown;
  */
-public class PlanningRepetitionDTO {
+public class PlanningRepetitionVO {
     @JsonProperty
     public RepetitionModeEnum mode;
 
     @JsonProperty
-    public PlanningCycle cycle;
+    public PlanningCycleVO cycle;
 
     @JsonProperty
     public Integer countdown;
 
-    public static class Builder implements IBuilder<PlanningRepetitionDTO> {
-        private PlanningRepetitionDTO dto = new PlanningRepetitionDTO();
+    public static class Builder implements IBuilder<PlanningRepetitionVO> {
+        private PlanningRepetitionVO dto = new PlanningRepetitionVO();
 
         @Override
-        public PlanningRepetitionDTO getResult() {
+        public PlanningRepetitionVO build() {
             // Must check requirement here
             return this.dto;
         }
@@ -34,7 +33,7 @@ public class PlanningRepetitionDTO {
             return this;
         }
 
-        public Builder setCycle(PlanningCycle cycle) {
+        public Builder setCycle(PlanningCycleVO cycle) {
             this.dto.cycle = cycle;
             return this;
         }

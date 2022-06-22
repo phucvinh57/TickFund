@@ -1,19 +1,19 @@
-package com.example.TFService.modules.planning.dto.out;
+package com.example.TFService.modules.planning.entity;
 
 import com.example.TFService.interfaces.IBuilder;
-import com.example.TFService.modules.planning.dto.PlanningRepetitionDTO;
+import com.example.TFService.modules.planning.vo.PlanningRepetitionVO;
 
-public class PlanningDTO {
+public class Planning {
     public String planningID;
     public String userID;
     public Boolean isRepeat;
-    public PlanningRepetitionDTO repeat;
+    public PlanningRepetitionVO repeat;
 
-    public static class Builder implements IBuilder<PlanningDTO> {
-        private PlanningDTO dto = new PlanningDTO();
+    public static class Builder implements IBuilder<Planning> {
+        private Planning dto = new Planning();
 
         @Override
-        public PlanningDTO getResult() {
+        public Planning build() {
             // Must check requirement here
             return this.dto;
         }
@@ -33,7 +33,7 @@ public class PlanningDTO {
             return this;
         }
 
-        public Builder setPlanningRepetitionDTO(PlanningRepetitionDTO repeat) {
+        public Builder setPlanningRepetitionDTO(PlanningRepetitionVO repeat) {
             this.dto.repeat = repeat;
             return this;
         }

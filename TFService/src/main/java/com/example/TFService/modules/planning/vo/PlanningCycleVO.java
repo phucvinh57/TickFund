@@ -1,11 +1,11 @@
-package com.example.TFService.modules.planning.dto.out;
+package com.example.TFService.modules.planning.vo;
 
 import com.example.TFService.enums.CycleEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 
-public class PlanningCycle {
+public class PlanningCycleVO {
     @JsonProperty
     public CycleEnum cycle;
 
@@ -15,7 +15,7 @@ public class PlanningCycle {
     @JsonProperty
     public Boolean hasEndDay;
 
-    public PlanningCycle(
+    public PlanningCycleVO(
         CycleEnum cycle,
         LocalDateTime endDate,
         Boolean hasEndDay
