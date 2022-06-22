@@ -2,11 +2,12 @@ package com.example.TFService.modules.transaction.vo;
 
 import java.util.ArrayList;
 
+import com.example.TFService.base.BaseEntity;
 import com.example.TFService.modules.common.CategoryVO;
-import com.example.TFService.modules.transaction.TransactionExcept;
+import com.example.TFService.modules.transaction.exception.TransactionExcept;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class TransactionVO {
+public class Transaction extends BaseEntity<String> {
     @JsonProperty
     String userId;
 
@@ -20,8 +21,8 @@ public class TransactionVO {
     CategoryVO category;
 
     static public class Builder {
-        TransactionVO transactionVO = new TransactionVO();
-        public TransactionVO build() throws TransactionExcept.MissingField{
+        Transaction transactionVO = new Transaction();
+        public Transaction build() throws TransactionExcept.MissingField{
             this.checkValid();
             return this.transactionVO;
         }

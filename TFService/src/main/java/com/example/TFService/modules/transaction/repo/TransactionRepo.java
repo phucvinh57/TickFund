@@ -1,18 +1,19 @@
 package com.example.TFService.modules.transaction.repo;
 
+import com.example.TFService.interfaces.IUIDGen;
 import com.example.TFService.modules.common.CategoryVO;
-import com.example.TFService.modules.common.IRepository;
-import com.example.TFService.modules.transaction.TransactionExcept;
-import com.example.TFService.modules.transaction.vo.TransactionVO;
+import com.example.TFService.interfaces.IRepository;
+import com.example.TFService.modules.transaction.exception.TransactionExcept;
+import com.example.TFService.modules.transaction.vo.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionRepo implements IRepository<TransactionVO, String> {
+public class TransactionRepo implements IRepository<Transaction, String>, IUIDGen<String> {
 
     @Override
-    public TransactionVO getById(String Id) {
-        TransactionVO.Builder builder = new TransactionVO.Builder();
+    public Transaction getById(String Id) {
+        Transaction.Builder builder = new Transaction.Builder();
         CategoryVO category = new CategoryVO("Tiền nhà", CategoryVO.CategoryType.INCOME);
         try {
             return builder
@@ -27,7 +28,12 @@ public class TransactionRepo implements IRepository<TransactionVO, String> {
     }
 
     @Override
-    public List<TransactionVO> getAll(Integer offset, Integer size) {
+    public List<Transaction> getAll(Integer offset, Integer size) {
         return new ArrayList<>();
+    }
+
+    @Override
+    public String genUID(){
+        return "Nhancu";
     }
 }

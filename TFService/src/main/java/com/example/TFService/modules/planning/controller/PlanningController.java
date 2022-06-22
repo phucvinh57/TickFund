@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.TFService.enums.CycleEnum;
 import com.example.TFService.enums.RepetitionModeEnum;
-import com.example.TFService.modules.planning.dto.PlanningRepetitionDTO;
-import com.example.TFService.modules.planning.dto.in.PlanningUpdateDTO;
-import com.example.TFService.modules.planning.dto.out.PlanningCycle;
-import com.example.TFService.modules.planning.dto.out.PlanningDTO;
+import com.example.TFService.modules.planning.vo.PlanningRepetitionVO;
+import com.example.TFService.modules.planning.vo.in.PlanningUpdateVO;
+import com.example.TFService.modules.planning.vo.PlanningCycleVO;
+import com.example.TFService.modules.planning.entity.Planning;
 
 import java.time.LocalDateTime;
 
@@ -22,31 +22,31 @@ import java.time.LocalDateTime;
 public class PlanningController {
     @GetMapping("/{id}")
     @ResponseBody
-    public PlanningDTO getPlanningById(@PathVariable String id) {
-        PlanningDTO.Builder dataBuilder = new PlanningDTO.Builder();
+    public Planning getPlanningById(@PathVariable String id) {
+        Planning.Builder dataBuilder = new Planning.Builder();
 
-        PlanningRepetitionDTO.Builder repeatBuilder = new PlanningRepetitionDTO.Builder();
-        PlanningRepetitionDTO repeat = repeatBuilder.setCycle(
-                new PlanningCycle(
+        PlanningRepetitionVO.Builder repeatBuilder = new PlanningRepetitionVO.Builder();
+        PlanningRepetitionVO repeat = repeatBuilder.setCycle(
+                new PlanningCycleVO(
                         CycleEnum.DAY,
                         LocalDateTime.now(),
                         false))
                 .setMode(RepetitionModeEnum.COUNTDOWN)
                 .setCountdown(15)
-                .getResult();
+                .build();
 
         return dataBuilder.setPlanningID(id)
                 .setUserID("userID")
                 .setIsRepeat(false)
                 .setPlanningRepetitionDTO(repeat)
-                .getResult();
+                .build();
     }
 
     @PutMapping("/{id}")
     @ResponseBody
-    public PlanningUpdateDTO updatePlanningById(
+    public PlanningUpdateVO updatePlanningById(
             @PathVariable String id,
-            @RequestBody PlanningUpdateDTO data) {
+            @RequestBody PlanningUpdateVO data) {
         return data;
     }
 }

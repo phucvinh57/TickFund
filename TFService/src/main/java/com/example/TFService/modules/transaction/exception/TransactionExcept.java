@@ -1,4 +1,4 @@
-package com.example.TFService.modules.transaction;
+package com.example.TFService.modules.transaction.exception;
 
 public class TransactionExcept{
     static public class MissingField extends Exception {
