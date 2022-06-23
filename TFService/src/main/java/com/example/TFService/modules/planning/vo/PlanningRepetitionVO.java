@@ -1,7 +1,7 @@
 package com.example.TFService.modules.planning.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.example.TFService.common.enums.RepetitionModeEnum;
+import com.example.TFService.commons.enums.RepetitionModeEnum;
 import com.example.TFService.interfaces.IBuilder;
 
 /*

@@ -1,7 +1,7 @@
 package com.example.TFService.modules.planning.vo.in;
 
-import com.example.TFService.common.vo.CategoryVO;
 import com.example.TFService.interfaces.IBuilder;
+import com.example.TFService.modules.category.vo.CategoryVO;
 import com.example.TFService.modules.planning.vo.PlanningRepetitionVO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

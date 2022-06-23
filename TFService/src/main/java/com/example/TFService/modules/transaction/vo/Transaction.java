@@ -3,8 +3,8 @@ package com.example.TFService.modules.transaction.vo;
 import java.util.ArrayList;
 
 import com.example.TFService.base.BaseEntity;
-import com.example.TFService.common.vo.CategoryVO;
 import com.example.TFService.exceptions.TransactionExcept;
+import com.example.TFService.modules.category.vo.CategoryVO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Transaction extends BaseEntity<String> {
@@ -18,7 +18,7 @@ public class Transaction extends BaseEntity<String> {
     ArrayList<String> attachmentsPath = new ArrayList<>();
 
     @JsonProperty
-    CategoryVO category;
+    CategoryVO categoryVO;
 
     static public class Builder {
         Transaction transactionVO = new Transaction();
@@ -37,8 +37,8 @@ public class Transaction extends BaseEntity<String> {
             return this;
         }
 
-        public Builder setCategory(CategoryVO category){
-            transactionVO.category = category;
+        public Builder setCategory(CategoryVO categoryVO){
+            transactionVO.categoryVO = categoryVO;
             return this;
         }
 
@@ -49,7 +49,7 @@ public class Transaction extends BaseEntity<String> {
             else if(transactionVO.note == null){
                 throw new TransactionExcept.MissingField("note");
             }
-            else if(transactionVO.category == null){
+            else if(transactionVO.categoryVO == null){
                 throw new TransactionExcept.MissingField("category");
             }
         }
