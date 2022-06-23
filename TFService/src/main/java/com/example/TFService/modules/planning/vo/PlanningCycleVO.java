@@ -1,6 +1,6 @@
 package com.example.TFService.modules.planning.vo;
 
-import com.example.TFService.enums.CycleEnum;
+import com.example.TFService.common.enums.CycleEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;

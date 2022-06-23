@@ -1,4 +1,4 @@
-package com.example.TFService.modules.common;
+package com.example.TFService.common.vo;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -2,8 +2,8 @@ package com.example.TFService.modules.planning.vo.in;
 
 import java.time.LocalDateTime;
 
+import com.example.TFService.common.Category;
 import com.example.TFService.interfaces.IBuilder;
-import com.example.TFService.modules.common.Category;
 import com.example.TFService.modules.planning.vo.PlanningRepetitionVO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

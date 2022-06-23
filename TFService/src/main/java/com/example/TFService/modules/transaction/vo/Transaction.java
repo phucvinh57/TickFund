@@ -3,8 +3,8 @@ package com.example.TFService.modules.transaction.vo;
 import java.util.ArrayList;
 
 import com.example.TFService.base.BaseEntity;
-import com.example.TFService.modules.common.CategoryVO;
-import com.example.TFService.modules.transaction.exception.TransactionExcept;
+import com.example.TFService.common.vo.CategoryVO;
+import com.example.TFService.exceptions.TransactionExcept;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Transaction extends BaseEntity<String> {
