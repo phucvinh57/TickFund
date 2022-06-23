@@ -4,6 +4,7 @@ import com.example.TFService.common.enums.CycleEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class PlanningCycleVO {
     @JsonProperty
@@ -17,11 +18,12 @@ public class PlanningCycleVO {
 
     public PlanningCycleVO(
         CycleEnum cycle,
-        LocalDateTime endDate,
+        String endDate,
         Boolean hasEndDay
     ) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         this.cycle = cycle;
-        this.endDate = endDate;
+        this.endDate = LocalDateTime.parse(endDate, formatter);
         this.hasEndDay = hasEndDay;
     }
 }
