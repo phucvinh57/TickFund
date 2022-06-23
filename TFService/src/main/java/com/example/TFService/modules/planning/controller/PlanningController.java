@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.TFService.modules.planning.vo.PlanningRepetitionVO;
 import com.example.TFService.modules.planning.vo.in.PlanningUpdateVO;
 import com.example.TFService.modules.planning.vo.PlanningCycleVO;
-import com.example.TFService.common.enums.CycleEnum;
-import com.example.TFService.common.enums.RepetitionModeEnum;
+import com.example.TFService.commons.enums.CycleEnum;
+import com.example.TFService.commons.enums.RepetitionModeEnum;
 import com.example.TFService.modules.planning.entity.Planning;
 
 import java.time.LocalDateTime;

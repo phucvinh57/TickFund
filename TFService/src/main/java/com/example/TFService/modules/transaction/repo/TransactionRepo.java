@@ -3,7 +3,8 @@ package com.example.TFService.modules.transaction.repo;
 import com.example.TFService.interfaces.IUIDGen;
 import com.example.TFService.interfaces.IRepository;
 import com.example.TFService.modules.transaction.vo.Transaction;
-import com.example.TFService.common.vo.CategoryVO;
+import com.example.TFService.modules.category.vo.CategoryVO;
+import com.example.TFService.commons.enums.CategoryType;
 import com.example.TFService.exceptions.TransactionExcept;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class TransactionRepo implements IRepository<Transaction, String>, IUIDGe
     @Override
     public Transaction getById(String Id) {
         Transaction.Builder builder = new Transaction.Builder();
-        CategoryVO category = new CategoryVO("Tiền nhà", CategoryVO.CategoryType.INCOME);
+        CategoryVO category = new CategoryVO("Tiền nhà", CategoryType.INCOME);
         try {
             return builder
                     .setNote("Tiền nhà tháng này giảm")

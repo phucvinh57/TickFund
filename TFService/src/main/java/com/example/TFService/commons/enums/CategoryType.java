@@ -1,9 +1,9 @@
-package com.example.TFService.common.enums;
+package com.example.TFService.commons.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum CategoryType {
-    THU("thu"), CHI("chi");
+    INCOME("thu"), EXPENSE("chi");
     private final String name;
     
     CategoryType(String name){

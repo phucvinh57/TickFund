@@ -2,15 +2,16 @@ package com.example.TFService.modules.planning.vo.in;
 
 import java.time.LocalDateTime;
 
-import com.example.TFService.common.Category;
+
 import com.example.TFService.interfaces.IBuilder;
+import com.example.TFService.modules.category.vo.CategoryVO;
 import com.example.TFService.modules.planning.vo.PlanningRepetitionVO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class PlanningUpdateVO {
     @JsonProperty
-    Category category;
+    CategoryVO category;
 
     @JsonProperty
     Integer amount;
@@ -36,7 +37,7 @@ public class PlanningUpdateVO {
             return this.dto;
         }
 
-        public PlanningUpdateVO.Builder setCategory(Category c) {
+        public PlanningUpdateVO.Builder setCategory(CategoryVO c) {
             this.dto.category = c;
             return this;
         }

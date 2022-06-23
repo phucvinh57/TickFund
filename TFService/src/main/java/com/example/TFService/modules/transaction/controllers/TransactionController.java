@@ -5,9 +5,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.TFService.modules.category.vo.CategoryVO;
 import com.example.TFService.modules.transaction.vo.Transaction;
-import com.example.TFService.common.vo.CategoryVO;
-import com.example.TFService.exceptions.TransactionExcept;;
+import com.example.TFService.commons.enums.CategoryType;
+import com.example.TFService.exceptions.TransactionExcept;
 
 @RestController
 @RequestMapping("/transactions")
@@ -18,7 +19,7 @@ public class TransactionController {
 
 		try {
 			Transaction.Builder builder = new Transaction.Builder();
-			CategoryVO cat = new CategoryVO("Tien nha", CategoryVO.CategoryType.INCOME);
+			CategoryVO cat = new CategoryVO("Tien nha", CategoryType.INCOME);
 			Transaction transactionVO = builder
 											.setNote("Nhan dep")
 											.setUserId("Nhan cu")

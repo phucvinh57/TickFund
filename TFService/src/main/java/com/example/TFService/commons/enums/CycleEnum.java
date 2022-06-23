@@ -1,4 +1,4 @@
-package com.example.TFService.common.enums;
+package com.example.TFService.commons.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
