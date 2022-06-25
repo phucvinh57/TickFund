@@ -2,39 +2,38 @@ package com.example.TFService.modules.transaction.repo;
 
 import com.example.TFService.interfaces.IUIDGen;
 import com.example.TFService.interfaces.IRepository;
-import com.example.TFService.modules.transaction.vo.Transaction;
+import com.example.TFService.modules.transaction.entity.Transaction;
 import com.example.TFService.modules.category.vo.CategoryVO;
 import com.example.TFService.commons.enums.CategoryType;
-import com.example.TFService.exceptions.TransactionExcept;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class TransactionRepo implements IRepository<Transaction, String>, IUIDGen<String> {
+public class TransactionRepo implements IRepository<Transaction, String>{
+
+    private ArrayList<Transaction> transactionArrayList = new ArrayList<>();
 
     @Override
-    public Transaction getById(String Id) {
+    public Transaction getById(String id) {
         Transaction.Builder builder = new Transaction.Builder();
         CategoryVO category = new CategoryVO("Tiền nhà", CategoryType.INCOME);
-        try {
-            return builder
-                    .setNote("Tiền nhà tháng này giảm")
-                    .setUserId("1914424")
-                    .setCategory(category)
-                    .build();
-        }
-        catch (TransactionExcept.MissingField ex){
-            return null;
-        }
+
+        return transactionArrayList
+                .stream()
+                .filter(transaction -> transaction.getId().equals(id))
+                .findAny()
+                .orElse(null);
+    }
+
+    @Override
+    public Transaction add(Transaction transaction){
+        transactionArrayList.add(transaction);
+        return transaction;
     }
 
     @Override
     public List<Transaction> getAll(Integer offset, Integer size) {
-        return new ArrayList<>();
-    }
-
-    @Override
-    public String genUID(){
-        return "Nhancu";
+        return this.transactionArrayList;
     }
 }

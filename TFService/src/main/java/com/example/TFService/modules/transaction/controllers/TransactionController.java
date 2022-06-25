@@ -1,34 +1,45 @@
 package com.example.TFService.modules.transaction.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.TFService.exceptions.BodyRequestFieldMissing;
+import com.example.TFService.modules.transaction.services.TransactionService;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.TFService.modules.category.vo.CategoryVO;
-import com.example.TFService.modules.transaction.vo.Transaction;
-import com.example.TFService.commons.enums.CategoryType;
-import com.example.TFService.exceptions.TransactionExcept;
+import com.example.TFService.modules.transaction.entity.Transaction;
+import com.example.TFService.exceptions.TransactionMissingField;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
+	TransactionService transactionService = new TransactionService();
 	@GetMapping("/{id}")
 	public Transaction getTransaction(@PathVariable String id) {
 		System.out.println("Transaction called");
-
-		try {
-			Transaction.Builder builder = new Transaction.Builder();
-			CategoryVO cat = new CategoryVO("Tien nha", CategoryType.INCOME);
-			Transaction transactionVO = builder
-											.setNote("Nhan dep")
-											.setUserId("Nhan cu")
-											.setCategory(cat)
-											.build();
-			return transactionVO;
+		Transaction transaction = transactionService.getTransactionById(id);
+		if(transaction == null){
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction with id %s is not found".formatted(id));
 		}
-		catch (TransactionExcept.MissingField ex){
-			return null;
+		else{
+			return transaction;
+		}
+	}
+
+	@PostMapping("/new")
+	public Transaction addTransaction(@RequestBody Transaction transaction){
+		try {
+
+			Transaction transactionWithId = new Transaction.Builder()
+					.copyProperties(transaction)
+					.setId(transactionService.genUID()).build();
+			System.out.println(transactionWithId);
+			return transactionService.addTransaction(transactionWithId);
+		}
+		catch (TransactionMissingField ex){
+			throw new BodyRequestFieldMissing(ex.getFieldName());
+		}
+		catch (Exception ex){
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface IRepository<TE, TID> {
     TE getById(TID Id);
     List<TE> getAll(Integer offset, Integer size);
+
+    TE add(TE entity);
 }
