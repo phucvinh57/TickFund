@@ -1,0 +1,256 @@
+> Task :compileJava
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :bootRunMainClassName
+
+> Task :bootRun
+23:19:11.877 [Thread-0] DEBUG org.springframework.boot.devtools.restart.classloader.RestartClassLoader - Created RestartClassLoader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@2cdf62a
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.7.0)
+
+2022-06-29 23:19:12.175  INFO 56783 --- [  restartedMain] c.t.TFService.TfServiceApplication       : Starting TfServiceApplication using Java 18 on PhucVinh with PID 56783 (/home/phucvinh/Code/TickFund/TFService/build/classes/java/main started by phucvinh in /home/phucvinh/Code/TickFund/TFService)
+2022-06-29 23:19:12.176  INFO 56783 --- [  restartedMain] c.t.TFService.TfServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2022-06-29 23:19:12.229  INFO 56783 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-29 23:19:12.229  INFO 56783 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-29 23:19:12.770  INFO 56783 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-06-29 23:19:12.812  INFO 56783 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 1 JPA repository interfaces.
+2022-06-29 23:19:13.513  INFO 56783 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2022-06-29 23:19:13.525  INFO 56783 --- [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-06-29 23:19:13.525  INFO 56783 --- [  restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+2022-06-29 23:19:13.583  INFO 56783 --- [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-06-29 23:19:13.583  INFO 56783 --- [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1353 ms
+2022-06-29 23:19:13.767  INFO 56783 --- [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-06-29 23:19:13.801  INFO 56783 --- [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.9.Final
+2022-06-29 23:19:13.958  INFO 56783 --- [  restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-06-29 23:19:14.026  INFO 56783 --- [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-06-29 23:19:14.289  INFO 56783 --- [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-06-29 23:19:14.310  INFO 56783 --- [  restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-06-29 23:19:14.786  INFO 56783 --- [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-06-29 23:19:14.792  INFO 56783 --- [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-06-29 23:19:14.850  WARN 56783 --- [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-06-29 23:19:15.295  INFO 56783 --- [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-06-29 23:19:15.318  INFO 56783 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2022-06-29 23:19:15.331  INFO 56783 --- [  restartedMain] c.t.TFService.TfServiceApplication       : Started TfServiceApplication in 3.444 seconds (JVM running for 3.787)
+Let's inspect the beans provided by Spring Boot:
+applicationAvailability
+applicationTaskExecutor
+basicErrorController
+beanNameHandlerMapping
+beanNameViewResolver
+categoryController
+characterEncodingFilter
+classPathFileSystemWatcher
+classPathRestartStrategy
+commandLineRunner
+conditionEvaluationDeltaLoggingListener
+conventionErrorViewResolver
+dataSource
+dataSourceScriptDatabaseInitializer
+defaultServletHandlerMapping
+defaultViewResolver
+dispatcherServlet
+dispatcherServletRegistration
+emBeanDefinitionRegistrarPostProcessor
+entityManagerFactory
+entityManagerFactoryBuilder
+error
+errorAttributes
+errorPageCustomizer
+errorPageRegistrarBeanPostProcessor
+fileSystemWatcherFactory
+flashMapManager
+formContentFilter
+handlerExceptionResolver
+handlerFunctionAdapter
+hikariPoolDataSourceMetadataProvider
+httpRequestHandlerAdapter
+inMemoryDatabaseShutdownExecutor
+jacksonGeoModule
+jacksonObjectMapper
+jacksonObjectMapperBuilder
+jdbcTemplate
+jpaContext
+jpaMappingContext
+jpaVendorAdapter
+jsonComponentModule
+jsonMixinModule
+lifecycleProcessor
+liveReloadServer
+liveReloadServerEventListener
+localeCharsetMappingsCustomizer
+localeResolver
+mappingJackson2HttpMessageConverter
+messageConverters
+multipartConfigElement
+multipartResolver
+mvcContentNegotiationManager
+mvcConversionService
+mvcHandlerMappingIntrospector
+mvcPathMatcher
+mvcPatternParser
+mvcResourceUrlProvider
+mvcUriComponentsContributor
+mvcUrlPathHelper
+mvcValidator
+mvcViewResolver
+namedParameterJdbcTemplate
+openEntityManagerInViewInterceptor
+openEntityManagerInViewInterceptorConfigurer
+optionalLiveReloadServer
+org.springframework.aop.config.internalAutoProxyCreator
+org.springframework.boot.autoconfigure.AutoConfigurationPackages
+org.springframework.boot.autoconfigure.aop.AopAutoConfiguration
+org.springframework.boot.autoconfigure.aop.AopAutoConfiguration$AspectJAutoProxyingConfiguration
+org.springframework.boot.autoconfigure.aop.AopAutoConfiguration$AspectJAutoProxyingConfiguration$CglibAutoProxyConfiguration
+org.springframework.boot.autoconfigure.availability.ApplicationAvailabilityAutoConfiguration
+org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration
+org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration
+org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration
+org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration
+org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration
+org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration
+org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
+org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration$StringHttpMessageConverterConfiguration
+org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration
+org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration$MappingJackson2HttpMessageConverterConfiguration
+org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration
+org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory
+org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
+org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration
+org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration
+org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperConfiguration
+org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$ParameterNamesModuleConfiguration
+org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration$PooledDataSourceConfiguration
+org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari
+org.springframework.boot.autoconfigure.jdbc.DataSourceJmxConfiguration
+org.springframework.boot.autoconfigure.jdbc.DataSourceJmxConfiguration$Hikari
+org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$JdbcTransactionManagerConfiguration
+org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration
+org.springframework.boot.autoconfigure.jdbc.JdbcTemplateConfiguration
+org.springframework.boot.autoconfigure.jdbc.NamedParameterJdbcTemplateConfiguration
+org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration
+org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration$HikariPoolDataSourceMetadataProviderConfiguration
+org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration
+org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration
+org.springframework.boot.autoconfigure.sql.init.DataSourceInitializationConfiguration
+org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration
+org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration
+org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration
+org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration
+org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$EnableTransactionManagementConfiguration
+org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$EnableTransactionManagementConfiguration$CglibAutoProxyConfiguration
+org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$TransactionTemplateConfiguration
+org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration
+org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration
+org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration
+org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration$TomcatWebServerFactoryCustomizerConfiguration
+org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration
+org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletConfiguration
+org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletRegistrationConfiguration
+org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration
+org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration
+org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration
+org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryConfiguration$EmbeddedTomcat
+org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration
+org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration
+org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter
+org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$DefaultErrorViewResolverConfiguration
+org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration
+org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration
+org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration$TomcatWebSocketConfiguration
+org.springframework.boot.context.internalConfigurationPropertiesBinder
+org.springframework.boot.context.internalConfigurationPropertiesBinderFactory
+org.springframework.boot.context.properties.BoundConfigurationProperties
+org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor
+org.springframework.boot.context.properties.EnableConfigurationPropertiesRegistrar.methodValidationExcludeFilter
+org.springframework.boot.devtools.autoconfigure.DevToolsDataSourceAutoConfiguration
+org.springframework.boot.devtools.autoconfigure.DevToolsDataSourceAutoConfiguration$DatabaseShutdownExecutorEntityManagerFactoryDependsOnPostProcessor
+org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration
+org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$LiveReloadConfiguration
+org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartConfiguration
+org.springframework.boot.sql.init.dependency.DatabaseInitializationDependencyConfigurer$DependsOnDatabaseInitializationPostProcessor
+org.springframework.context.annotation.internalAutowiredAnnotationProcessor
+org.springframework.context.annotation.internalCommonAnnotationProcessor
+org.springframework.context.annotation.internalConfigurationAnnotationProcessor
+org.springframework.context.annotation.internalPersistenceAnnotationProcessor
+org.springframework.context.event.internalEventListenerFactory
+org.springframework.context.event.internalEventListenerProcessor
+org.springframework.data.jpa.repository.support.JpaEvaluationContextExtension
+org.springframework.data.jpa.util.JpaMetamodelCacheCleanup
+org.springframework.data.web.config.ProjectingArgumentResolverRegistrar
+org.springframework.data.web.config.SpringDataJacksonConfiguration
+org.springframework.data.web.config.SpringDataWebConfiguration
+org.springframework.orm.jpa.SharedEntityManagerCreator#0
+org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration
+org.springframework.transaction.config.internalTransactionAdvisor
+org.springframework.transaction.config.internalTransactionalEventListenerFactory
+pageableCustomizer
+pageableResolver
+parameterNamesModule
+persistenceExceptionTranslationPostProcessor
+planningController
+platformTransactionManagerCustomizers
+preserveErrorControllerTargetClassPostProcessor
+projectingArgumentResolverBeanPostProcessor
+propertySourcesPlaceholderConfigurer
+requestContextFilter
+requestMappingHandlerAdapter
+requestMappingHandlerMapping
+resourceHandlerMapping
+restTemplateBuilder
+restTemplateBuilderConfigurer
+restartingClassPathChangedEventListener
+routerFunctionMapping
+scheduledBeanLazyInitializationExcludeFilter
+server-org.springframework.boot.autoconfigure.web.ServerProperties
+servletWebServerFactoryCustomizer
+simpleControllerHandlerAdapter
+sortCustomizer
+sortResolver
+spring.data.web-org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties
+spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
+spring.devtools-org.springframework.boot.devtools.autoconfigure.DevToolsProperties
+spring.info-org.springframework.boot.autoconfigure.info.ProjectInfoProperties
+spring.jackson-org.springframework.boot.autoconfigure.jackson.JacksonProperties
+spring.jdbc-org.springframework.boot.autoconfigure.jdbc.JdbcProperties
+spring.jpa-org.springframework.boot.autoconfigure.orm.jpa.JpaProperties
+spring.jpa.hibernate-org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties
+spring.lifecycle-org.springframework.boot.autoconfigure.context.LifecycleProperties
+spring.mvc-org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties
+spring.servlet.multipart-org.springframework.boot.autoconfigure.web.servlet.MultipartProperties
+spring.sql.init-org.springframework.boot.autoconfigure.sql.init.SqlInitializationProperties
+spring.task.execution-org.springframework.boot.autoconfigure.task.TaskExecutionProperties
+spring.task.scheduling-org.springframework.boot.autoconfigure.task.TaskSchedulingProperties
+spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties
+spring.web-org.springframework.boot.autoconfigure.web.WebProperties
+standardJacksonObjectMapperBuilderCustomizer
+stringHttpMessageConverter
+taskExecutorBuilder
+taskSchedulerBuilder
+tfServiceApplication
+themeResolver
+tomcatServletWebServerFactory
+tomcatServletWebServerFactoryCustomizer
+tomcatWebServerFactoryCustomizer
+transactionAttributeSource
+transactionController
+transactionInterceptor
+transactionManager
+transactionTemplate
+userRepository
+viewControllerHandlerMapping
+viewNameTranslator
+viewResolver
+webServerFactoryCustomizerBeanPostProcessor
+websocketServletWebServerCustomizer
+welcomePageHandlerMapping
