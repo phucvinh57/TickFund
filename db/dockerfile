@@ -1,0 +1,4 @@
+# environments
+FROM mysql
+ENTRYPOINT [ "executable" ]
+VOLUME [ "/data" ]

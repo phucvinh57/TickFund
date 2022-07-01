@@ -2,7 +2,9 @@ package com.tickfund.TFService.modules.category.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tickfund.TFService.commons.enums.CategoryType;
@@ -31,10 +33,10 @@ public class CategoryController {
 	}
 
 	@PostMapping("/new")
-	public void postCategory() {
+	@ResponseBody
+	public void postCategory(@RequestBody CategoryVO data) {
 		System.out.println("Post Category");
-
-
+		
 	}
 
 	
