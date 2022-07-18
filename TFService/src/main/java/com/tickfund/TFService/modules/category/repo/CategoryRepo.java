@@ -1,23 +1,29 @@
 package com.tickfund.TFService.modules.category.repo;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.tickfund.TFService.commons.enums.CategoryType;
-import com.tickfund.TFService.interfaces.IRepository;
-import com.tickfund.TFService.modules.category.vo.CategoryVO;
+// @Repository
+// public interface CategoryRepo extends JpaRepository<CategoryVO, String> {
 
-public class CategoryRepo implements IRepository<CategoryVO, String> {
+//     @Procedure(procedureName = "getCategory")
+//     List<CategoryType> getCategory();
+    
+//     @Procedure(procedureName = "updateCategory")
+//     String updateCategory(
+//         String name,
+//         String type,
+//         String img
+//     );
 
-    @Override
-    public CategoryVO getById (String name) { // id of Category is the name itself
-        return new CategoryVO(name, CategoryType.INCOME);
-    }
+//     @Procedure(procedureName = "deleteCategory")
+//     String deleteCategoryByName(
+//         String name
+//     );
 
-    @Override
-    public List<CategoryVO> getAll(Integer offset, Integer size) {
-        return new ArrayList<CategoryVO>();
-    }
+//     @Procedure(procedureName = "addCategory")
+//     String addCategory(
+//         String name,
+//         String type,
+//         String img
+//     );
 
-}
+// }
