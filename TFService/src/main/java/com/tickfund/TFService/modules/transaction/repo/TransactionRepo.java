@@ -15,7 +15,7 @@ public class TransactionRepo implements IRepository<Transaction, String>, IUIDGe
     @Override
     public Transaction getById(String Id) {
         Transaction.Builder builder = new Transaction.Builder();
-        CategoryVO category = new CategoryVO("Tiền nhà", CategoryType.INCOME);
+        CategoryVO category = new CategoryVO("Tiền nhà", CategoryType.INCOME, "");
         try {
             return builder
                     .setNote("Tiền nhà tháng này giảm")

@@ -14,7 +14,6 @@ import com.tickfund.TFService.commons.enums.MajorEnum;
 
 @Entity
 @Table(
-    schema = "ticklab_users",
     name = "user"
 )
 public class User {
@@ -24,7 +23,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Column
+    @Column()
     private String password;
 
     @Column(unique = true, nullable = false, length = 50)
