@@ -1,8 +1,8 @@
-package com.tickfund.TFService.modules.planning.repository;
+package com.tickfund.TFService.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.tickfund.TFService.modules.planning.entity.User;
+import com.tickfund.TFService.entities.User;
 
 public interface UserRepository extends CrudRepository<User, String> {
 
