@@ -1,7 +1,6 @@
 -- Creates the new database
 CREATE DATABASE IF NOT EXISTS tickfund;
 
-DROP DATABASE IF EXISTS `ticklab_users`;
 CREATE DATABASE IF NOT EXISTS `ticklab_users`;
 USE `ticklab_users`;
 
