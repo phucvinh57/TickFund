@@ -1,2 +1,2 @@
 .env
-./init/users.sql
+/init/users.sql
