@@ -5,13 +5,17 @@ import com.tickfund.TFService.commons.enums.CategoryType;
 
 public class CategoryVO {
     @JsonProperty
-    String name;
+    private String name;
 
     @JsonProperty
-    CategoryType type;
+    private CategoryType type;
 
-    public CategoryVO(String name, CategoryType type) {
+    @JsonProperty
+    private String img; 
+
+    public CategoryVO(String name, CategoryType type, String img) {
         this.name = name;
         this.type = type;
+        this.img = img;
     }
 }

@@ -18,15 +18,15 @@ public class CategoryController {
 		System.out.println("Get Categories");
 
 		CategoryVO[] categoryList = {
-			new CategoryVO("Tiền điện", CategoryType.EXPENSE),
-			new CategoryVO("Tiền nước", CategoryType.EXPENSE),
-			new CategoryVO("Tiền viễn thông", CategoryType.EXPENSE),
-			new CategoryVO("Ăn trưa", CategoryType.EXPENSE),
-			new CategoryVO("Tiệc", CategoryType.EXPENSE),
-			new CategoryVO("Quỹ Lab", CategoryType.INCOME),
-			new CategoryVO("Dự án", CategoryType.INCOME),
-			new CategoryVO("Đề tài", CategoryType.INCOME),
-			new CategoryVO("Tài trợ", CategoryType.INCOME)
+			new CategoryVO("Tiền điện", 		CategoryType.EXPENSE, ""),
+			new CategoryVO("Tiền nước", 		CategoryType.EXPENSE, ""),
+			new CategoryVO("Tiền viễn thông", CategoryType.EXPENSE, ""),
+			new CategoryVO("Ăn trưa", 		CategoryType.EXPENSE, ""),
+			new CategoryVO("Tiệc", 			CategoryType.EXPENSE, ""),
+			new CategoryVO("Quỹ Lab", 		CategoryType.INCOME, ""),
+			new CategoryVO("Dự án", 			CategoryType.INCOME, ""),
+			new CategoryVO("Đề tài", 			CategoryType.INCOME, ""),
+			new CategoryVO("Tài trợ", 		CategoryType.INCOME, "")
 		};
 
 		return categoryList;

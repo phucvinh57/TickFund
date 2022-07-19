@@ -19,7 +19,7 @@ public class TransactionController {
 
 		try {
 			Transaction.Builder builder = new Transaction.Builder();
-			CategoryVO cat = new CategoryVO("Tien nha", CategoryType.INCOME);
+			CategoryVO cat = new CategoryVO("Tien nha", CategoryType.INCOME, "");
 			Transaction transactionVO = builder
 											.setNote("Nhan dep")
 											.setUserId("Nhan cu")
