@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tickfund.TFService.entities.Planning;
 // import com.tickfund.TFService.modules.planning.repository.UserRepository;
 // import com.tickfund.TFService.modules.planning.repository.PlanningRepository;
-import com.tickfund.TFService.modules.planning.vo.in.PlanningVO;
 
 import java.util.ArrayList;
 
@@ -59,7 +58,7 @@ public class PlanningController {
 	@ResponseBody
 	public String updatePlanningById(
 			@PathVariable String id,
-			@RequestBody PlanningVO data) {
+			@RequestBody String data) {
 		return id;
 	}
 
