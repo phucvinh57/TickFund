@@ -1,9 +1,15 @@
 package com.tickfund.TFService.commons.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum RepetitionModeEnum {
-    COUNTDOWN("countdown"), CYCLE("cycle");
+    @JsonProperty("countdown")
+    COUNTDOWN("countdown"), 
+
+    @JsonProperty("cycle")
+    CYCLE("cycle");
+
     private final String name;
 
     RepetitionModeEnum(String name) {

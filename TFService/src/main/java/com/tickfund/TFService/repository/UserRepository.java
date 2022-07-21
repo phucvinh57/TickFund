@@ -2,8 +2,8 @@ package com.tickfund.TFService.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.tickfund.TFService.entities.User;
+import com.tickfund.TFService.entities.TickLabUser;
 
-public interface UserRepository extends CrudRepository<User, String> {
+public interface UserRepository extends CrudRepository<TickLabUser, String> {
 
 }

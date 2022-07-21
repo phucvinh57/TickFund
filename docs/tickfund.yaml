@@ -327,7 +327,7 @@ paths:
           description: Internal Server Error
 
   # PLANNING
-  /plannings/new:
+  /plannings:
     post:
       summary: Add a new planning
       tags:
@@ -547,7 +547,7 @@ components:
         amount:
           type: integer
           example: 2000000
-        userID:
+        userId:
           type: string
           example: "#343a40"
         isRepeat:
@@ -636,7 +636,7 @@ components:
             endDate:
               type: string
               example: "2022-12-05 15:30"
-            hasEndDay:
+            hasEndDate:
               type: boolean
               example: false
         countdown:

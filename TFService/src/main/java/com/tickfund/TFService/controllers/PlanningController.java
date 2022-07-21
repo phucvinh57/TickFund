@@ -1,6 +1,6 @@
 package com.tickfund.TFService.controllers;
 
-// import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,19 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tickfund.TFService.entities.Planning;
-// import com.tickfund.TFService.modules.planning.repository.UserRepository;
-// import com.tickfund.TFService.modules.planning.repository.PlanningRepository;
+import com.tickfund.TFService.dtos.NewPlanningDto;
+import com.tickfund.TFService.entities.PlanningEntity;
+import com.tickfund.TFService.repository.PlanningRepository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/plannings")
 public class PlanningController {
-	// @Autowired
-	// private PlanningRepository repo;
-	// @Autowired
-	// private UserRepository repo;
+	@Autowired
+	private PlanningRepository repo;
 
 	@GetMapping("")
 	@ResponseBody
@@ -33,25 +32,13 @@ public class PlanningController {
 
 	@GetMapping("/{id}")
 	@ResponseBody
-	public Planning getPlanningById(@PathVariable String id) {
-		// PlanningRepetitionVO.Builder repeatBuilder = new PlanningRepetitionVO.Builder();
-		// PlanningRepetitionVO repeat = repeatBuilder.setCycle(
-		// 		new PlanningCycleVO(
-		// 				CycleEnum.DAY,
-		// 				"2022-07-05 15:30",
-		// 				false))
-		// 		.setMode(RepetitionModeEnum.COUNTDOWN)
-		// 		.setCountdown(15)
-		// 		.build();
+	public PlanningEntity getPlanningById(@PathVariable String id) {
+		Optional<PlanningEntity> result = this.repo.findById(1);
+		if(result.isEmpty()) {
+			return null;
+		}
 
-		// Planning.Builder dataBuilder = new Planning.Builder();
-
-		// Planning data = dataBuilder.setID(id)
-		// 		.setUserID("userID")
-		// 		.setIsRepeat(false)
-		// 		// .setPlanningRepetitionDTO(repeat)
-		// 		.build();
-		return new Planning();
+		return result.get();
 	}
 
 	@PutMapping("/{id}")
@@ -64,30 +51,12 @@ public class PlanningController {
 
 	@PostMapping("")
 	@ResponseBody
-	public String createPlanningById(
-	// @RequestBody PlanningVO data
+	public Integer createPlanning(
+		@RequestBody NewPlanningDto newPlanning
 	) {
-		// final String id = "1915940";
-		// PlanningRepetitionVO.Builder repeatBuilder = new PlanningRepetitionVO.Builder();
-		// PlanningRepetitionVO repeat = repeatBuilder.setCycle(
-		// 		new PlanningCycleVO(
-		// 				CycleEnum.DAY,
-		// 				"2022-07-05 15:30",
-		// 				false))
-		// 		.setMode(RepetitionModeEnum.COUNTDOWN)
-		// 		.setCountdown(15)
-		// 		.build();
-
-		// Planning.Builder dataBuilder = new Planning.Builder();
-
-		// Planning p = dataBuilder.setID(id)
-		// 		.setUserID("userID")
-		// 		.setIsRepeat(false)
-		// 		// .setPlanningRepetitionDTO(repeat)
-		// 		.build();
-		// // this.repo.save(p);
-		
-		return "p.getID()";
+		PlanningEntity planning = new PlanningEntity(newPlanning);
+		this.repo.save(planning);
+		return planning.ID;
 	}
 
 	@DeleteMapping("/{id}")

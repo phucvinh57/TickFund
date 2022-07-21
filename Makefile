@@ -1,10 +1,10 @@
 bootstrap:
 	cd db; docker-compose up -d
 
-drop_db:
-	cd db; docker-compose down --volumes
+down:
+	cd db; docker-compose down
 
-start_tf:
+tfservice:
 	cd TFService; ./gradlew bootRun
 
 start_app:

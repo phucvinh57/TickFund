@@ -13,10 +13,8 @@ import com.tickfund.TFService.commons.enums.DepartmentEnum;
 import com.tickfund.TFService.commons.enums.MajorEnum;
 
 @Entity
-@Table(
-    name = "user"
-)
-public class User {
+@Table(schema = "ticklab_users", name = "user")
+public class TickLabUser {
     @Id
     private String ID;
 

@@ -1,5 +1,6 @@
 package com.tickfund.TFService.commons.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum CycleEnum {
@@ -9,6 +10,7 @@ public enum CycleEnum {
     QUARTER("quarter"), 
     YEAR("year");
 
+    @JsonProperty
     private final String name;
 
     CycleEnum(String name) {
