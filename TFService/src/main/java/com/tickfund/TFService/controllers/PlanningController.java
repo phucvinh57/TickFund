@@ -51,12 +51,11 @@ public class PlanningController {
 
 	@PostMapping("")
 	@ResponseBody
-	public Integer createPlanning(
+	public PlanningEntity createPlanning(
 		@RequestBody NewPlanningDto newPlanning
 	) {
 		PlanningEntity planning = new PlanningEntity(newPlanning);
-		this.repo.save(planning);
-		return planning.ID;
+		return this.repo.save(planning);
 	}
 
 	@DeleteMapping("/{id}")

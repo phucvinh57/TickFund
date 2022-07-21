@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS user (
 );
 
 CREATE TABLE IF NOT EXISTS planning (
-    ID INT PRIMARY KEY,
+    ID VARCHAR(64) PRIMARY KEY,
     amount INT UNSIGNED NOT NULL,
     `start_date` DATE NOT NULL,
     is_repeat BOOLEAN DEFAULT FALSE,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS planning (
 );
 
 CREATE TABLE IF NOT EXISTS `transaction` (
-    ID INT PRIMARY KEY,
+    ID VARCHAR(64) PRIMARY KEY,
     amount INT UNSIGNED NOT NULL,
     history DATE NOT NULL,
     category_name VARCHAR(255) NOT NULL,
@@ -70,14 +70,8 @@ CREATE TABLE IF NOT EXISTS `transaction` (
 );
 
 CREATE TABLE IF NOT EXISTS attachment (
-    transaction_id INT NOT NULL,
-    attachment_id INT PRIMARY KEY,
+    ID VARCHAR(64) PRIMARY KEY,
+    transaction_id VARCHAR(64) NOT NULL,
     `url` TEXT NOT NULL,
     FOREIGN KEY (transaction_id) REFERENCES `transaction`(ID)
 );
-
-CREATE TRIGGER set_uuid_short BEFORE
-INSERT
-    ON planning FOR EACH ROW
-SET
-    new.ID = uuid_short();

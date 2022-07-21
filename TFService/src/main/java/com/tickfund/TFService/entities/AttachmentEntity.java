@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 @Table(schema = "tickfund", name = "attachment")
 public class AttachmentEntity {
     @Id
+    @Column(name = "ID")
     public Integer attachmentId;
 
     @Column

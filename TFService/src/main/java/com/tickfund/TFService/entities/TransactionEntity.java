@@ -20,7 +20,7 @@ import com.tickfund.TFService.commons.enums.CategoryType;
 @Table(schema = "tickfund", name = "transaction")
 public class TransactionEntity {
     @Id
-    public Integer ID;
+    public String ID;
 
     @Column()
     @Min(value = 0)

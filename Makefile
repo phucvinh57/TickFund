@@ -4,6 +4,9 @@ bootstrap:
 down:
 	cd db; docker-compose down
 
+down_db:
+	cd db; docker-compose down --volumes
+
 tfservice:
 	cd TFService; ./gradlew bootRun
 

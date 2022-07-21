@@ -23,7 +23,7 @@ import com.tickfund.TFService.dtos.NewPlanningDto;
 )
 public class PlanningEntity {
     @Id
-    public Integer ID;
+    public String ID;
 
     @Column
     @Min(value = 0)
@@ -60,7 +60,6 @@ public class PlanningEntity {
     public PlanningEntity() {}
 
     public PlanningEntity(NewPlanningDto dto) {
-        this.ID = 1; // After insert, db auto replace by uuid_short()
         this.amount = dto.amount;
         this.startDate = dto.startDate;
         this.isRepeat = dto.isRepeat;
