@@ -11,36 +11,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tickfund.TFService.dtos.NewPlanningDto;
-import com.tickfund.TFService.entities.PlanningEntity;
-import com.tickfund.TFService.repository.PlanningRepository;
+import com.tickfund.TFService.dtos.in.NewPlanningDto;
+import com.tickfund.TFService.dtos.out.ExtraPlanningDto;
+import com.tickfund.TFService.services.PlanningService;
 
 import java.util.ArrayList;
-import java.util.Optional;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/plannings")
 public class PlanningController {
 	@Autowired
-	private PlanningRepository repo;
+	private PlanningService service;
 
+	// TODO
 	@GetMapping("")
 	@ResponseBody
-	public ArrayList<String> getPlannings() {
+	public ArrayList<Object> getPlannings() {
 		return new ArrayList<>();
 	}
 
 	@GetMapping("/{id}")
 	@ResponseBody
-	public PlanningEntity getPlanningById(@PathVariable String id) {
-		Optional<PlanningEntity> result = this.repo.findById(1);
-		if(result.isEmpty()) {
-			return null;
-		}
-
-		return result.get();
+	public ExtraPlanningDto getPlanningById(@PathVariable(name = "id") String planningId) {
+		ExtraPlanningDto result = this.service.getExtraPlanningDataById(planningId);
+		return result;
 	}
 
+	// TODO
 	@PutMapping("/{id}")
 	@ResponseBody
 	public String updatePlanningById(
@@ -51,15 +50,15 @@ public class PlanningController {
 
 	@PostMapping("")
 	@ResponseBody
-	public PlanningEntity createPlanning(
-		@RequestBody NewPlanningDto newPlanning
+	public String createPlanning(
+		@Valid @RequestBody NewPlanningDto newPlanning
 	) {
-		PlanningEntity planning = new PlanningEntity(newPlanning);
-		return this.repo.save(planning);
+		return this.service.create(newPlanning);
 	}
 
 	@DeleteMapping("/{id}")
-	public String deletePlanningById(@PathVariable String id) {
-		return id;
+	public String deletePlanningById(@PathVariable(name = "id") String ID) {
+		this.service.deleteById(ID);
+		return ID;
 	}
 }

@@ -493,7 +493,7 @@ components:
           example: 300 000
         category:
           $ref: "#/components/schemas/Category"
-        userID:
+        userId:
           type: string
           example: 1915940
         note:
@@ -572,7 +572,7 @@ components:
         amount:
           type: integer
           example: 2000000
-        userID:
+        userId:
           type: string
           example: "#343a40"
         isRepeat:
@@ -602,7 +602,7 @@ components:
     Planning.RowData.Addition:
       type: object
       properties:
-        userID:
+        userId:
           type: string
           example: "#343a40"
         isRepeat:

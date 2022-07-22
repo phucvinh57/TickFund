@@ -14,7 +14,8 @@ import javax.validation.constraints.Min;
 
 import com.tickfund.TFService.commons.enums.CategoryType;
 import com.tickfund.TFService.commons.enums.CycleEnum;
-import com.tickfund.TFService.dtos.NewPlanningDto;
+import com.tickfund.TFService.dtos.in.NewPlanningDto;
+import com.tickfund.TFService.modules.UniqueId;
 
 @Entity
 @Table(
@@ -60,14 +61,17 @@ public class PlanningEntity {
     public PlanningEntity() {}
 
     public PlanningEntity(NewPlanningDto dto) {
+        this.ID = UniqueId.generate("vinh.np");
         this.amount = dto.amount;
         this.startDate = dto.startDate;
         this.isRepeat = dto.isRepeat;
-        
-        this.cycleUnit = dto.repeat.cycle.cycle;
-        this.endDate = dto.repeat.cycle.endDate;
-        this.countdown = dto.repeat.countdown;
         this.categoryName = dto.category.name;
-        this.categoryType = dto.category.type;
+            this.categoryType = dto.category.type;
+
+        if(dto.repeat != null) {
+            this.cycleUnit = dto.repeat.cycle.cycle;
+            this.endDate = dto.repeat.cycle.endDate;
+            this.countdown = dto.repeat.countdown;
+        }
     }
 }

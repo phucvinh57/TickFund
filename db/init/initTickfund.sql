@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS planning (
     `start_date` DATE NOT NULL,
     is_repeat BOOLEAN DEFAULT FALSE,
     has_end_date BOOLEAN DEFAULT FALSE,
+    cycle_mode ENUM('CYCLE', 'COUNTDOWN') NOT NULL,
     cycle_unit ENUM('DAY', 'WEEK', 'MONTH', 'QUARTER', 'YEAR'),
     end_date DATE,
     countdown SMALLINT UNSIGNED,

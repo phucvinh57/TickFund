@@ -15,7 +15,7 @@ public class CycleVo {
     @JsonProperty
     public Boolean hasEndDate;
 
-    CycleVo(CycleEnum cycle, Date endDate, Boolean hasEndDate) {
+    public CycleVo(CycleEnum cycle, Boolean hasEndDate, Date endDate) {
         this.cycle = cycle;
         this.endDate = endDate;
         this.hasEndDate = hasEndDate;

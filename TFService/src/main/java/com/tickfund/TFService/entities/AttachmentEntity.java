@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 public class AttachmentEntity {
     @Id
     @Column(name = "ID")
-    public Integer attachmentId;
+    public String ID;
 
     @Column
     public String url;

@@ -53,6 +53,6 @@ public class TransactionEntity {
     @NotNull
     public Date createdAt;
 
-    @OneToMany(mappedBy = "attachmentId")
+    @OneToMany(mappedBy = "ID")
     public Set<AttachmentEntity> attachments; 
 }
