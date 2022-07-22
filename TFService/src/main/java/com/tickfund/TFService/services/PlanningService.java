@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tickfund.TFService.dtos.in.NewPlanningDto;
+import com.tickfund.TFService.dtos.in.PlanningDto;
 import com.tickfund.TFService.dtos.out.ExtraPlanningDto;
 import com.tickfund.TFService.entities.PlanningEntity;
 import com.tickfund.TFService.repository.PlanningRepository;
@@ -27,9 +27,16 @@ public class PlanningService {
         return new ExtraPlanningDto(data.get(0));
     }
 
-    public String create(NewPlanningDto dto) {
+    public String create(PlanningDto dto) {
         PlanningEntity entity = new PlanningEntity(dto);
+        entity.setId();
         this.repository.save(entity);
         return entity.ID;
+    }
+
+    public String updateById(String ID, PlanningDto dto) {
+        PlanningEntity entity = new PlanningEntity(dto);
+        entity.setId(ID);
+        return this.repository.save(entity).ID;
     }
 }

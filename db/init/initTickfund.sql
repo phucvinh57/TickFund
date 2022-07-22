@@ -43,14 +43,14 @@ CREATE TABLE IF NOT EXISTS planning (
     ID VARCHAR(64) PRIMARY KEY,
     amount INT UNSIGNED NOT NULL,
     `start_date` DATE NOT NULL,
-    is_repeat BOOLEAN DEFAULT FALSE,
-    has_end_date BOOLEAN DEFAULT FALSE,
-    cycle_mode ENUM('CYCLE', 'COUNTDOWN') NOT NULL,
+    is_repeat BOOLEAN NOT NULL,
+    has_end_date BOOLEAN,
+    cycle_mode ENUM('CYCLE', 'COUNTDOWN'),
     cycle_unit ENUM('DAY', 'WEEK', 'MONTH', 'QUARTER', 'YEAR'),
     end_date DATE,
     countdown SMALLINT UNSIGNED,
     category_name VARCHAR(255) NOT NULL,
-    `type` ENUM('INCOME', 'EXPENSE'),
+    `type` ENUM('INCOME', 'EXPENSE') NOT NULL,
     `user_id` INT,
     FOREIGN KEY (`user_id`) REFERENCES user(ID) ON DELETE
     SET

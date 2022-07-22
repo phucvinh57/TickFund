@@ -9,7 +9,7 @@ import com.tickfund.TFService.commons.vos.RepetitionVo;
 // import com.tickfund.TFService.interfaces.IBuilder;
 import com.tickfund.TFService.dtos.CategoryDto;
 
-public class NewPlanningDto {
+public class PlanningDto {
     @JsonProperty
     @NotNull
     public CategoryDto category;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tickfund.TFService.dtos.in.NewPlanningDto;
+import com.tickfund.TFService.dtos.in.PlanningDto;
 import com.tickfund.TFService.dtos.out.ExtraPlanningDto;
 import com.tickfund.TFService.services.PlanningService;
 
@@ -39,21 +39,21 @@ public class PlanningController {
 		return result;
 	}
 
-	// TODO
 	@PutMapping("/{id}")
 	@ResponseBody
 	public String updatePlanningById(
-			@PathVariable String id,
-			@RequestBody String data) {
-		return id;
+			@PathVariable(name = "id") String ID,
+			@Valid @RequestBody PlanningDto planningDto) {
+		return this.service.updateById(ID, planningDto);
 	}
 
 	@PostMapping("")
 	@ResponseBody
 	public String createPlanning(
-		@Valid @RequestBody NewPlanningDto newPlanning
+		@Valid @RequestBody PlanningDto newPlanning
 	) {
-		return this.service.create(newPlanning);
+		String planningId = this.service.create(newPlanning);
+		return planningId;
 	}
 
 	@DeleteMapping("/{id}")

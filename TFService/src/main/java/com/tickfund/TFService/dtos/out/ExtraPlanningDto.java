@@ -13,6 +13,16 @@ import com.tickfund.TFService.commons.enums.CycleEnum;
 import com.tickfund.TFService.commons.enums.RepetitionModeEnum;
 import com.tickfund.TFService.commons.vos.CycleVo;
 
+enum ParamName {
+    USER_ID,
+    IS_REPEAT,
+    CYCLE_MODE,
+    CYCLE_UNIT,
+    HAS_END_DATE,
+    END_DATE,
+    COUNTDOWN
+}
+
 public class ExtraPlanningDto {
     @JsonProperty
     public String userId;
@@ -25,29 +35,43 @@ public class ExtraPlanningDto {
 
     public ExtraPlanningDto(ArrayList<Object> queryData) {
         try {
-            String userId = String.valueOf(queryData.get(0));
-            Boolean isRepeat = Boolean.valueOf(queryData.get(1).toString());
+            Object userIdData = queryData.get(ParamName.USER_ID.ordinal());
+            String userId = userIdData == null ? null : String.valueOf(userIdData);
+
+            Boolean isRepeat = Boolean.valueOf(queryData.get(ParamName.IS_REPEAT.ordinal()).toString());
 
             RepetitionVo repeat = new RepetitionVo();
 
-            // cycle_mode
-            RepetitionModeEnum cycleMode = RepetitionModeEnum.valueOf(
-                    String.valueOf(queryData.get(2)));
+            Object cycleModeData = queryData.get(ParamName.CYCLE_MODE.ordinal());
+            RepetitionModeEnum cycleMode = cycleModeData == null ? null
+                    : RepetitionModeEnum.valueOf(String.valueOf(cycleModeData));
 
-            CycleEnum cycleUnit = CycleEnum.valueOf(String.valueOf(queryData.get(3)));
-            Boolean hasEndDate = Boolean.valueOf(queryData.get(4).toString());
-            Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(queryData.get(5).toString());
+            Object cycleUnitData = queryData.get(ParamName.CYCLE_UNIT.ordinal());
+            CycleEnum cycleUnit = cycleUnitData == null ? null : CycleEnum.valueOf(cycleUnitData.toString());
+
+            Object hasEndDateData = queryData.get(ParamName.HAS_END_DATE.ordinal());
+            Boolean hasEndDate = hasEndDateData == null ? null : Boolean.valueOf(hasEndDateData.toString());
+
+            Object endDateData = queryData.get(ParamName.END_DATE.ordinal());
+            Date endDate = endDateData == null ? null
+                    : new SimpleDateFormat("yyyy-MM-dd")
+                            .parse(endDateData.toString());
+
             repeat.mode = cycleMode;
             repeat.cycle = new CycleVo(cycleUnit, hasEndDate, endDate);
 
-            // countdown
-            repeat.countdown = Integer.valueOf(queryData.get(6).toString());
+            Object countdownData = queryData.get(ParamName.COUNTDOWN.ordinal());
+            repeat.countdown = countdownData == null ? null
+                    : Integer.valueOf(countdownData.toString());
 
             this.userId = userId;
             this.isRepeat = isRepeat;
             this.repeat = repeat;
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", e);
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Internal Server Error",
+                    e);
         }
 
     }
