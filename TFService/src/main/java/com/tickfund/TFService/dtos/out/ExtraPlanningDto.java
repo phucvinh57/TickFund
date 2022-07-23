@@ -1,6 +1,5 @@
 package com.tickfund.TFService.dtos.out;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,21 +8,22 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.commons.vos.RepetitionVo;
+import com.tickfund.TFService.modules.ObjectCaster;
 import com.tickfund.TFService.commons.enums.CycleEnum;
 import com.tickfund.TFService.commons.enums.RepetitionModeEnum;
 import com.tickfund.TFService.commons.vos.CycleVo;
 
-enum ParamName {
-    USER_ID,
-    IS_REPEAT,
-    CYCLE_MODE,
-    CYCLE_UNIT,
-    HAS_END_DATE,
-    END_DATE,
-    COUNTDOWN
-}
-
 public class ExtraPlanningDto {
+    private enum ParamName {
+        USER_ID,
+        IS_REPEAT,
+        CYCLE_MODE,
+        CYCLE_UNIT,
+        HAS_END_DATE,
+        END_DATE,
+        COUNTDOWN
+    }
+
     @JsonProperty
     public String userId;
 
@@ -35,34 +35,33 @@ public class ExtraPlanningDto {
 
     public ExtraPlanningDto(ArrayList<Object> queryData) {
         try {
-            Object userIdData = queryData.get(ParamName.USER_ID.ordinal());
-            String userId = userIdData == null ? null : String.valueOf(userIdData);
+            String userId = ObjectCaster.toString(
+                    queryData.get(ParamName.USER_ID.ordinal()));
 
-            Boolean isRepeat = Boolean.valueOf(queryData.get(ParamName.IS_REPEAT.ordinal()).toString());
+            Boolean isRepeat = ObjectCaster.toBoolean(
+                    queryData.get(ParamName.IS_REPEAT.ordinal()));
 
             RepetitionVo repeat = new RepetitionVo();
 
-            Object cycleModeData = queryData.get(ParamName.CYCLE_MODE.ordinal());
-            RepetitionModeEnum cycleMode = cycleModeData == null ? null
-                    : RepetitionModeEnum.valueOf(String.valueOf(cycleModeData));
+            RepetitionModeEnum cycleMode = ObjectCaster.toEnum(
+                    RepetitionModeEnum.class,
+                    queryData.get(ParamName.CYCLE_MODE.ordinal()));
 
-            Object cycleUnitData = queryData.get(ParamName.CYCLE_UNIT.ordinal());
-            CycleEnum cycleUnit = cycleUnitData == null ? null : CycleEnum.valueOf(cycleUnitData.toString());
+            CycleEnum cycleUnit = ObjectCaster.toEnum(
+                    CycleEnum.class,
+                    queryData.get(ParamName.CYCLE_UNIT.ordinal()));
 
-            Object hasEndDateData = queryData.get(ParamName.HAS_END_DATE.ordinal());
-            Boolean hasEndDate = hasEndDateData == null ? null : Boolean.valueOf(hasEndDateData.toString());
+            Boolean hasEndDate = ObjectCaster.toBoolean(
+                    queryData.get(ParamName.HAS_END_DATE.ordinal()));
 
-            Object endDateData = queryData.get(ParamName.END_DATE.ordinal());
-            Date endDate = endDateData == null ? null
-                    : new SimpleDateFormat("yyyy-MM-dd")
-                            .parse(endDateData.toString());
+            Date endDate = ObjectCaster.toDate(
+                    "yyyy-MM-dd", queryData.get(ParamName.END_DATE.ordinal()));
 
             repeat.mode = cycleMode;
             repeat.cycle = new CycleVo(cycleUnit, hasEndDate, endDate);
 
-            Object countdownData = queryData.get(ParamName.COUNTDOWN.ordinal());
-            repeat.countdown = countdownData == null ? null
-                    : Integer.valueOf(countdownData.toString());
+            repeat.countdown = ObjectCaster.toInteger(
+                    queryData.get(ParamName.COUNTDOWN.ordinal()));
 
             this.userId = userId;
             this.isRepeat = isRepeat;
