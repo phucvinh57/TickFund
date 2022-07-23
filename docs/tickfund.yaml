@@ -154,7 +154,7 @@ paths:
           description: Internal Server Error
 
   # CATEGORIES
-  /categories/new:
+  /categories:
     post:
       summary: Add a new category
       tags:
@@ -168,6 +168,23 @@ paths:
         200:
           description: New Category successfully added
         404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    get:
+      summary: Get all categories
+      tags:
+        - categories
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+        400:
           description: Not Found
         500:
           description: Internal Server Error
@@ -192,8 +209,7 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-
-  /categories/edit/{name}:
+          
     put:
       summary: Edit a category name
       tags:
@@ -210,11 +226,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                newName:
-                  type: string
-                  example: "Tien dien moi"
+              $ref: "#/components/schemas/Category"
       responses:
         200:
           description: Success
@@ -222,26 +234,6 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-
-  /categories:
-    get:
-      summary: Get all categories
-      tags:
-        - categories
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Category"
-        400:
-          description: Not Found
-        500:
-          description: Internal Server Error
-
   /users:
     get:
       summary: Get a list of all users
@@ -482,6 +474,9 @@ components:
           type: string
           enum: [Thu, Chi]
           example: Thu
+        icon:
+          type: string
+          example: :)
 
     Transaction.New:
       type: object

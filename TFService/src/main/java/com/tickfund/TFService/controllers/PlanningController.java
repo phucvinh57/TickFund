@@ -57,6 +57,7 @@ public class PlanningController {
 	}
 
 	@DeleteMapping("/{id}")
+	@ResponseBody
 	public String deletePlanningById(@PathVariable(name = "id") String ID) {
 		this.service.deleteById(ID);
 		return ID;

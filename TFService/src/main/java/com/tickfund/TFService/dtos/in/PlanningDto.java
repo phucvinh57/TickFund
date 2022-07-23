@@ -5,14 +5,13 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tickfund.TFService.commons.vos.CategoryVo;
 import com.tickfund.TFService.commons.vos.RepetitionVo;
-// import com.tickfund.TFService.interfaces.IBuilder;
-import com.tickfund.TFService.dtos.CategoryDto;
 
 public class PlanningDto {
     @JsonProperty
     @NotNull
-    public CategoryDto category;
+    public CategoryVo category;
 
     @JsonProperty
     @NotNull

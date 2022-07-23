@@ -5,7 +5,7 @@ USE tickfund;
 CREATE TABLE IF NOT EXISTS category (
     `name` VARCHAR(255) PRIMARY KEY,
     icon TEXT,
-    `type` ENUM('INCOME', 'EXPENSE')
+    `type` ENUM('INCOME', 'EXPENSE') NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `role` (
@@ -52,10 +52,8 @@ CREATE TABLE IF NOT EXISTS planning (
     category_name VARCHAR(255) NOT NULL,
     `type` ENUM('INCOME', 'EXPENSE') NOT NULL,
     `user_id` INT,
-    FOREIGN KEY (`user_id`) REFERENCES user(ID) ON DELETE
-    SET
-        NULL,
-        FOREIGN KEY (category_name) REFERENCES category(`name`) -- Must set default to category
+    FOREIGN KEY (`user_id`) REFERENCES user(ID) ON DELETE SET NULL,
+    FOREIGN KEY (category_name) REFERENCES category(`name`) ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `transaction` (
