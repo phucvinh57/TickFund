@@ -27,6 +27,6 @@ package-lock.json
 
 .vscode
 
-.idea
+/.idea
 
 /TFService/src/main/resources/application.properties
