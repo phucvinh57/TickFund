@@ -40,4 +40,8 @@ public class CategoryService {
         Integer succeed = this.repository.updateByName(oldName, entity);
         return succeed == 1 ? entity.name : oldName;
     }
+
+    public boolean isExist(String name){
+        return this.repository.existsById(name);
+    }
 }
