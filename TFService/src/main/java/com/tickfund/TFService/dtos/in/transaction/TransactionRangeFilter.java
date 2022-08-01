@@ -1,5 +1,6 @@
 package com.tickfund.TFService.dtos.in.transaction;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.dtos.validator.transaction.TransactionQueryFieldConstraint;
 import com.tickfund.TFService.entities.TransactionEntity;
@@ -35,9 +36,11 @@ public class TransactionRangeFilter extends TransactionQueryFilter {
     }
 
     @JsonProperty
+    @JsonAlias({"lower_bound"})
     Object lowerBound;
 
     @JsonProperty
+    @JsonAlias({"upper_bound"})
     Object upperBound;
 
     @JsonProperty
