@@ -63,17 +63,17 @@ public class TransactionService {
         Root<TransactionEntity> transactionRoot = criteriaQuery.from(TransactionEntity.class);
 
         List<Predicate> predicateList = new ArrayList<>();
-        List<TransactionQueryFilter> conditionDTOList = ! queryDTO.getShould().isEmpty() ? queryDTO.getShould() : queryDTO.getMust();
+        List<TransactionQueryFilter> conditionDTOList = queryDTO.getFilters();
 
         for(TransactionQueryFilter conditionDTO : conditionDTOList){
             predicateList.add(conditionDTO.toPredicate(criteriaBuilder, transactionRoot));
         }
 
-        if(! queryDTO.getShould().isEmpty()){
-            criteriaQuery.where(criteriaBuilder.or(predicateList.toArray(new Predicate[0])));
+        if(queryDTO.isMust()){
+            criteriaQuery.where(criteriaBuilder.and(predicateList.toArray(new Predicate[0])));
         }
         else {
-            criteriaQuery.where(criteriaBuilder.and(predicateList.toArray(new Predicate[0])));
+            criteriaQuery.where(criteriaBuilder.or(predicateList.toArray(new Predicate[0])));
         }
 
         String orderField = queryDTO.getOrder().getField();

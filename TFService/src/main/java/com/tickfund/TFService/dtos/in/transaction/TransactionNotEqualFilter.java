@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 
 public class TransactionNotEqualFilter extends TransactionQueryFilter {
@@ -28,23 +29,29 @@ public class TransactionNotEqualFilter extends TransactionQueryFilter {
         return value;
     }
 
-
     @JsonProperty
     Object value;
+
+    @JsonProperty
+    String format = "yyyy-MM-dd";
 
     public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot){
         String entityMapField = AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(), field);
 
         Class fieldType = transactionRoot.get(entityMapField).getJavaType();
         if(fieldType.equals(Date.class)){
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            DateFormat dateFormat = new SimpleDateFormat(format, Locale.ENGLISH);
+            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             try{
-                Date value = format.parse(String.valueOf(this.value));
+                Date value = dateFormat.parse(String.valueOf(this.value));
                 return builder.notEqual(transactionRoot.get(entityMapField), value);
             }
             catch (Exception e){
                 // Empty
             }
+        }
+        else if(fieldType.isEnum()){
+            return builder.notEqual(transactionRoot.get(field), Enum.valueOf(fieldType, (String) value));
         }
         return builder.notEqual(transactionRoot.get(field), value);
     }
