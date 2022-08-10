@@ -12,7 +12,6 @@ export const validateToken = function (req: Request, res: Response, next: NextFu
             const payload: any = verify(token, JWT_SECRET_KEY)
 
             // next()
-            // Must redirect to the 
             const userId: string = payload["id"]
             
             const appCallbackUrl = req.query["appCallbackUrl"]
