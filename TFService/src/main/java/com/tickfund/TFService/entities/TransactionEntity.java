@@ -58,19 +58,19 @@ public class TransactionEntity {
         this.categoryName = categoryName;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public Integer getCreatorId() {
+    public String getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(Integer creatorId) {
+    public void setCreatorId(String creatorId) {
         this.creatorId = creatorId;
     }
 
@@ -120,12 +120,12 @@ public class TransactionEntity {
 
     @Column(name = "user_id")
     @JsonAlias({"user_id"})
-    private Integer userId;
+    private String userId;
 
     @Column(name = "creator_id")
     @JsonAlias({"creator_id"})
     @NotNull
-    private Integer creatorId;
+    private String creatorId;
 
     @Column
     private String note;

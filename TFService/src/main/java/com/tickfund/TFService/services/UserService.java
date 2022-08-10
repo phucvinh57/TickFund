@@ -10,7 +10,7 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-    public boolean isExist(Integer userId){
-        return this.repository.existsById(String.valueOf(userId));
+    public boolean isExist(String userId){
+        return this.repository.existsById(userId);
     }
 }

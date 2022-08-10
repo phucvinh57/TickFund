@@ -74,7 +74,6 @@ public class TransactionRangeFilter extends TransactionQueryFilter {
         }
 
         return captureHelper(builder, transactionRoot, fieldType, entityMapField);
-
     }
     <T> Predicate captureHelper(CriteriaBuilder builder, Root transactionRoot, Class<T> clazz, String field){
         if(lowerBound != null && upperBound != null){

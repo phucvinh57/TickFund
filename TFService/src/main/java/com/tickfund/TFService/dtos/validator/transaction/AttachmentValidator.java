@@ -26,7 +26,7 @@ public class AttachmentValidator implements
             return true;
         }
         for(String attachment : values){
-            if(! attachmentService.isTempExist(attachment)){
+            if(! attachmentService.isPendingFileExist(attachment)){
                 return false;
             }
         }

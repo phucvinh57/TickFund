@@ -32,13 +32,13 @@ public class TransactionDTO {
     @UserIDConstraint
     @NotNull
     @JsonProperty
-    public Integer userId;
+    public String userId;
 
     @JsonAlias({"creator_id"})
     @UserIDConstraint
     @NotNull
     @JsonProperty
-    public Integer creatorId;
+    public String creatorId;
 
     @Column
     @JsonProperty

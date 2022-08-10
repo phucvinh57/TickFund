@@ -13,6 +13,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
+import javax.annotation.PostConstruct;
+
 @SpringBootApplication
 @ComponentScan("com.tickfund")
 public class TfServiceApplication {
@@ -30,5 +32,11 @@ public class TfServiceApplication {
 				System.out.println(beanName);
 			}
 		};
+	}
+
+	@PostConstruct
+	public void init(){
+		// Setting Spring Boot SetTimeZone
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 	}
 }

@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 
 @Service
 public class UserIDValidator implements
-        ConstraintValidator<UserIDConstraint, Integer> {
+        ConstraintValidator<UserIDConstraint, String> {
 
     @Autowired
     UserService userService;
@@ -20,7 +20,7 @@ public class UserIDValidator implements
     }
 
     @Override
-    public boolean isValid(Integer value, ConstraintValidatorContext context) {
+    public boolean isValid(String value, ConstraintValidatorContext context) {
         return userService.isExist(value);
     }
 }
