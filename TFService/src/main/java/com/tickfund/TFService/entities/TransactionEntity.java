@@ -1,58 +1,141 @@
 package com.tickfund.TFService.entities;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tickfund.TFService.commons.enums.CategoryType;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(schema = "tickfund", name = "transaction")
 public class TransactionEntity {
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public Date getHistory() {
+        return history;
+    }
+
+    public void setHistory(Date history) {
+        this.history = history;
+    }
+
+    public CategoryType getCategoryType() {
+        return categoryType;
+    }
+
+    public void setCategoryType(CategoryType categoryType) {
+        this.categoryType = categoryType;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Set<AttachmentEntity> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(Set<AttachmentEntity> attachments) {
+        this.attachments = attachments;
+    }
+
     @Id
-    public String ID;
+    private String ID;
 
     @Column()
     @Min(value = 0)
     @NotNull
-    public Integer amount;
+    private Integer amount;
 
     @Column
-    @NotNull
-    public Date history;
+    @Temporal(TemporalType.DATE)
+    private Date history;
 
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private CategoryType categoryType;
     @Column(length = 255)
     @NotNull
-    public String categoryName;
+    @JsonAlias({"category_name"})
+    private String categoryName;
 
-    @Column
-    public Integer userId;
+    @Column(name = "user_id")
+    @JsonAlias({"user_id"})
+    private String userId;
 
-    @Column
+    @Column(name = "creator_id")
+    @JsonAlias({"creator_id"})
     @NotNull
-    public Integer creatorId;
+    private String creatorId;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    public CategoryType type;
+    private String note;
 
-    @Column
-    public String note;
+    @Column(name = "created_at", insertable = false)
+    @JsonAlias({"created_at"})
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
-    @Column
-    @NotNull
-    public Date createdAt;
-
-    @OneToMany(mappedBy = "ID")
-    public Set<AttachmentEntity> attachments; 
+    @OneToMany(mappedBy = "transactionEntity", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<AttachmentEntity> attachments = new HashSet<>();
 }

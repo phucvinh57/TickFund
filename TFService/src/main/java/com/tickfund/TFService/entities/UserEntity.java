@@ -11,10 +11,8 @@ import javax.persistence.Table;
 @Table(schema = "tickfund", name = "user")
 public class UserEntity {
     @Id
-    public Integer ID;
+    public String ID;
 
     @OneToMany(mappedBy = "ID")
     public Set<PlanningEntity> planningEntities;
-
-    
 }
