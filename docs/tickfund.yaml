@@ -95,6 +95,7 @@ paths:
               $ref: "#/components/schemas/Transaction.New"
       responses:
         200:
+          description: ""
           content:
             application/json:
               schema:
