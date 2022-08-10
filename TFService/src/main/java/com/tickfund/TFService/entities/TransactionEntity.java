@@ -112,6 +112,7 @@ public class TransactionEntity {
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
+    @JsonAlias({"category_type"})
     private CategoryType categoryType;
     @Column(length = 255)
     @NotNull

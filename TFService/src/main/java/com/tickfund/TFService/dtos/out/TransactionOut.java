@@ -44,7 +44,7 @@ public class TransactionOut {
     @JsonProperty("create_at")
     private Date createdAt;
 
-    @JsonProperty
+    @JsonProperty("attachments")
     private Set<String> attachmentIds = new HashSet<>();
 
     public TransactionOut(TransactionEntity entity) {

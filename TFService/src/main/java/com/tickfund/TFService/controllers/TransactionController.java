@@ -38,10 +38,10 @@ public class TransactionController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public TransactionEntity getTransactionById(@PathVariable(name = "id") String ID) throws ResourceNotFoundException {
+    public TransactionOut getTransactionById(@PathVariable(name = "id") String ID) throws ResourceNotFoundException {
         Optional<TransactionEntity> optionalTransaction =  this.transactionService.getTransactionById(ID);
         if(optionalTransaction.isPresent()){
-            return optionalTransaction.get();
+            return new TransactionOut(optionalTransaction.get());
         }
         else {
             throw new ResourceNotFoundException("Transaction ID %s is not exist".formatted(ID));
