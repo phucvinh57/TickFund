@@ -1,4 +1,4 @@
-export default class LoginDto {
+export default class UserDto {
     public email: string
     public password: string
 
