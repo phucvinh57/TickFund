@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { JwtPayload, verify } from "jsonwebtoken";
+import { verify } from "jsonwebtoken";
 import { ACCESS_DENIED, JWT_SECRET_KEY } from "../constants";
 import { authCodeManager } from "../services/authCodeManager";
 

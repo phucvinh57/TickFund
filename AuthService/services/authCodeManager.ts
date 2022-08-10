@@ -3,7 +3,7 @@ const MAX_CODE = 999999
 
 class AuthCodeManager {
     private static authCodes: { [key: number]: string } = {}
-    private static CODE_EXPIRES_IN = 3000
+    private static CODE_EXPIRES_IN = 5000
 
     public generateCode(userId: string): number {
         let code: number

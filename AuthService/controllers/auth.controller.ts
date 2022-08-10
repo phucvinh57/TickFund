@@ -31,8 +31,9 @@ export const AuthController = {
 
         res.cookie("token", jwt)
 
-        const appCallbackUrl = res.locals["appCallbackUrl"]
-        const serviceCallbackUrl = res.locals["serviceCallbackUrl"]
+        const appCallbackUrl = req.query["appCallbackUrl"]?.toString()
+        const serviceCallbackUrl = req.query["serviceCallbackUrl"]?.toString()
+
         const authCode = authCodeManager.generateCode(userId)
 
         res.redirect(301, `${serviceCallbackUrl}?appCallbackUrl=${appCallbackUrl}&code=${authCode}`)
