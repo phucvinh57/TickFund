@@ -1,5 +1,6 @@
 import express, { Express } from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser"
 import { connectToDb } from "./database";
 import { validateToken } from "./middlewares/validateToken.middleware";
 import router from "./routes";
@@ -11,6 +12,7 @@ connectToDb()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 app.use(cors())
 
 app.use("/", router);

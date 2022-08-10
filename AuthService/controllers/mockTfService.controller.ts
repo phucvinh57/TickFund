@@ -8,7 +8,6 @@ export const MockTFServiceController = {
         const appCallbackUrl = res.locals["appCallbackUrl"]
 
         const response: AxiosResponse = await axios.get(`http://localhost:8082/auth/check?code=${parseInt(authCode)}`)
-        console.log(response.data)
 
         // Create new jwt and save to cookie
         res.redirect(appCallbackUrl)
