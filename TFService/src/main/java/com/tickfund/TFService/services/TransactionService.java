@@ -9,6 +9,7 @@ import com.tickfund.TFService.entities.CategoryEntity;
 import com.tickfund.TFService.entities.TransactionEntity;
 import com.tickfund.TFService.modules.UniqueId;
 import com.tickfund.TFService.repository.CategoryRepository;
+import com.tickfund.TFService.utils.AnnotationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -79,11 +80,12 @@ public class TransactionService {
 
         String orderField = queryDTO.getOrder().getField();
 
+        String orderMapField = AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(), orderField);
         if(queryDTO.getOrder().isAsc()){
-            criteriaQuery.orderBy(criteriaBuilder.asc(transactionRoot.get(orderField)));
+            criteriaQuery.orderBy(criteriaBuilder.asc(transactionRoot.get(orderMapField)));
         }
         else {
-            criteriaQuery.orderBy(criteriaBuilder.desc(transactionRoot.get(orderField)));
+            criteriaQuery.orderBy(criteriaBuilder.desc(transactionRoot.get(orderMapField)));
 
         }
 
