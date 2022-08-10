@@ -14,6 +14,7 @@
     
     /* Type Checking */
     "strict": true,
-    "strictPropertyInitialization": true, 
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true
   }
 }
