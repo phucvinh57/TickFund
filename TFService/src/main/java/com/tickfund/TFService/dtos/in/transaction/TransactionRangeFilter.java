@@ -46,6 +46,7 @@ public class TransactionRangeFilter extends TransactionQueryFilter {
     @JsonProperty
     String format = "yyyy-MM-dd";
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot){
         String entityMapField = AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(), field);
 
@@ -75,6 +76,7 @@ public class TransactionRangeFilter extends TransactionQueryFilter {
 
         return captureHelper(builder, transactionRoot, fieldType, entityMapField);
     }
+    @SuppressWarnings({"unchecked", "rawtypes"})
     <T> Predicate captureHelper(CriteriaBuilder builder, Root transactionRoot, Class<T> clazz, String field){
         if(lowerBound != null && upperBound != null){
             return builder.between(transactionRoot.get(field), (Comparable) clazz.cast(lowerBound), (Comparable) clazz.cast(upperBound));

@@ -2,17 +2,42 @@ package com.tickfund.TFService.entities;
 
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(schema = "tickfund", name = "user")
 public class UserEntity {
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public Set<PlanningEntity> getPlanningEntities() {
+        return planningEntities;
+    }
+
+    public void setPlanningEntities(Set<PlanningEntity> planningEntities) {
+        this.planningEntities = planningEntities;
+    }
+
     @Id
-    public String ID;
+    String ID;
 
     @OneToMany(mappedBy = "ID")
-    public Set<PlanningEntity> planningEntities;
+    Set<PlanningEntity> planningEntities;
+
+    public RoleEntity getRoleEntity() {
+        return roleEntity;
+    }
+
+    public void setRoleEntity(RoleEntity roleEntity) {
+        this.roleEntity = roleEntity;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "role_id")
+    RoleEntity roleEntity;
 }

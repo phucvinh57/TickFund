@@ -25,6 +25,6 @@ public class AnnotationHelper {
         }
 
         Optional<Field> first = Stream.of(clsFields).filter(f -> f.getName().equals(alias)).findFirst();
-        return first.map(field -> field.getName()).orElse(null);
+        return first.map(Field::getName).orElse(null);
     }
 }

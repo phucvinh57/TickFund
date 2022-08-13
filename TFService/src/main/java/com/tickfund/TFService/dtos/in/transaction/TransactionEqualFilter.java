@@ -38,6 +38,7 @@ public class TransactionEqualFilter extends TransactionQueryFilter {
     @JsonProperty
     String format = "yyyy-MM-dd";
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot){
         String entityMapField = AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(), field);
 

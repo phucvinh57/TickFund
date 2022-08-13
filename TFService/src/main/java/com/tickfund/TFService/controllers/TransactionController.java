@@ -21,15 +21,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
-    public static String AMOUNT_KEY = "amount";
-    public static String CATEGORY_KEY = "category_name";
-    public static String USER_ID_KEY = "user_id";
-    public static String CREATOR_ID_KEY = "creator_id";
-    public static String HISTORY_KEY = "history";
-    public static String NOTE_KEY = "note";
-    public static String ATTACHMENTS_KEY = "attachments";
-    public static String RESPONSE_MESSAGE = "message";
-    public static String RESPONSE_TRANSACTION_ID = "id";
     @Autowired
     private TransactionService transactionService;
 
@@ -50,7 +41,8 @@ public class TransactionController {
 
     @PostMapping("/new")
     @ResponseBody
-    public Map createTransaction(@Valid @RequestBody TransactionDTO body) {
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> createTransaction(@Valid @RequestBody TransactionDTO body) {
         Map<String, Object> tempMap = new ObjectMapper().convertValue(body, Map.class);
         Set<String> attachmentIds = body.attachments;
         tempMap.remove("attachments");
@@ -71,7 +63,7 @@ public class TransactionController {
                 .transactionService
                 .getTransactionByQuery(dto)
                 .stream()
-                .map(transactionEntity -> new TransactionOut(transactionEntity))
+                .map(TransactionOut::new)
                 .collect(Collectors.toList());
     }
 }
