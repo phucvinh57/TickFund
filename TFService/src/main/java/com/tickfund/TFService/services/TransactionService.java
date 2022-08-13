@@ -2,7 +2,6 @@ package com.tickfund.TFService.services;
 
 import java.util.*;
 
-import com.tickfund.TFService.dtos.in.StatDTO;
 import com.tickfund.TFService.dtos.in.transaction.TransactionQueryFilter;
 import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
 import com.tickfund.TFService.entities.CategoryEntity;

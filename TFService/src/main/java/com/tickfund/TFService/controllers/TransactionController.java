@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tickfund.TFService.dtos.in.StatDTO;
 import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
 import com.tickfund.TFService.dtos.in.transaction.TransactionDTO;
 import com.tickfund.TFService.dtos.out.TransactionOut;
@@ -50,7 +49,7 @@ public class TransactionController {
 
     @PostMapping("/new")
     @ResponseBody
-    public Map createTransaction(@Valid @RequestBody TransactionDTO body) {
+    public Map<String, Object> createTransaction(@Valid @RequestBody TransactionDTO body) {
         Map<String, Object> tempMap = new ObjectMapper().convertValue(body, Map.class);
         Set<String> attachmentIds = body.attachments;
         tempMap.remove("attachments");

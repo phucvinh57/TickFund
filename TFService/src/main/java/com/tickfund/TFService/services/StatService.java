@@ -4,7 +4,6 @@ import com.tickfund.TFService.dtos.in.StatDTO;
 import com.tickfund.TFService.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.tickfund.TFService.commons.enums.CycleEnum;
 
 import java.util.List;
 import java.util.Map;

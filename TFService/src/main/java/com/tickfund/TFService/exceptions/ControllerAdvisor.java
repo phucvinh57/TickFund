@@ -14,7 +14,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.stream.Stream;
 
 @ControllerAdvice
 public class ControllerAdvisor {
@@ -23,11 +22,11 @@ public class ControllerAdvisor {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public Map onConstraintValidationException(
+    public Map<String, Object> onConstraintValidationException(
             ConstraintViolationException e) {
         Map<String, Object> response = new HashMap<>();
         List<String> messages = new ArrayList<>();
-        for (ConstraintViolation violation : e.getConstraintViolations()) {
+        for (ConstraintViolation<?> violation : e.getConstraintViolations()) {
             messages.add("Property path = %s. Message = %s".formatted(violation.getPropertyPath(), violation.getMessage()));
         }
         response.put("error", "Invalid request body");
@@ -38,12 +37,12 @@ public class ControllerAdvisor {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public Map onMethodArgumentNotValidException(
+    public Map<String, Object> onMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
 
         Map<String, Object> response = new HashMap<>();
         List<String> messages = new ArrayList<>();
-        List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
+        // List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         Field[] clsFields = e.getParameter().getParameter().getType().getDeclaredFields();
         for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
             String fieldErrorAlias = getFieldErrorAlias(clsFields, fieldError);

@@ -1,9 +1,6 @@
 package com.tickfund.TFService;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import org.springframework.boot.CommandLineRunner;

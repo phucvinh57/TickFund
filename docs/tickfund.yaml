@@ -28,6 +28,7 @@ paths:
   # STATISTIC
   /stat/total?option={option}:
     get:
+      deprecated: true
       summary: Summary fund by each period in the given range time
       tags:
         - statistics
@@ -52,6 +53,7 @@ paths:
     
   /stat/highest?option={option}:
     get:
+      deprecated: true
       tags:
         - statistics
       summary: Get data for bar chart
@@ -83,7 +85,7 @@ paths:
           description: Internal Server Error
 
   # TRANSACTION
-  /transactions/new:
+  /transactions:
     post:
       summary: Add a new transaction
       tags:
@@ -245,6 +247,7 @@ paths:
           description: Internal Server Error
   /users:
     get:
+      deprecated: true
       summary: Get a list of all users
       tags:
         - users
@@ -262,8 +265,8 @@ paths:
         500:
           description: Internal Server Error
 
-  /users/new:
     post:
+      deprecated: true
       summary: Add a new user
       tags:
         - users
@@ -280,13 +283,14 @@ paths:
         500:
           description: Internal Server Error
 
-  /users/delete/{id}:
+  /users?id={id}:
     delete:
+      deprecated: true
       summary: Delete an exist user
       tags:
         - users
       parameters:
-        - in: path
+        - in: query
           name: id
           required: true
           schema:
@@ -301,13 +305,13 @@ paths:
         500:
           description: Internal Server Error
 
-  /users/edit/{id}:
     put:
+      deprecated: true
       summary: Edit
       tags:
         - users
       parameters:
-        - in: path
+        - in: query
           name: id
           required: true
           schema:
@@ -446,6 +450,7 @@ paths:
   # LOGS
   /logs?q={query}:
     get:
+      deprecated: true
       summary: Get log list by some pre-condition
       tags:
         - logs

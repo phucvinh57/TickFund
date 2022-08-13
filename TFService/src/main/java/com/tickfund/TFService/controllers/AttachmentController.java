@@ -5,22 +5,15 @@ import com.tickfund.TFService.entities.AttachmentEntity;
 import com.tickfund.TFService.exceptions.ResourceNotFoundException;
 import com.tickfund.TFService.modules.UniqueId;
 import com.tickfund.TFService.services.AttachmentService;
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.server.ServerErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +43,7 @@ public class AttachmentController {
     }
 
     @PostMapping("/upload")
-    public Map uploadAttachment(@RequestParam("file") MultipartFile file){
+    public Map<String, Object> uploadAttachment(@RequestParam("file") MultipartFile file){
         Map<String, Object> response = new HashMap<>();
         WebClient client = WebClient.builder()
                 .baseUrl("http://localhost:6000")

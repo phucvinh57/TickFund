@@ -12,8 +12,8 @@ public enum CategoryType {
         this.name = name.toLowerCase();
     }
 
-//    @JsonValue
-//    public String getName(){
-//        return this.name;
-//    }
+   @JsonValue
+   public String getName(){
+       return this.name;
+   }
 }

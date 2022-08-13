@@ -10,10 +10,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tickfund.TFService.commons.enums.CategoryType;
-import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(schema = "tickfund", name = "transaction")
