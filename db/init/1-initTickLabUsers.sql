@@ -5,7 +5,7 @@ CREATE DATABASE IF NOT EXISTS `ticklab_users`;
 USE `ticklab_users`;
 
 CREATE TABLE IF NOT EXISTS department (
-    dname VARCHAR(20) PRIMARY KEY
+    dname VARCHAR(50) PRIMARY KEY
 );
 
 CREATE TABLE IF NOT EXISTS account (
