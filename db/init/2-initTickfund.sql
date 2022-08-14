@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS permission (
 );
 
 CREATE TABLE IF NOT EXISTS user (
-    ID INT PRIMARY KEY,
+    ID VARCHAR(50) PRIMARY KEY,
     role_id INT NOT NULL,
     FOREIGN KEY (role_id) REFERENCES `role`(ID) ON DELETE NO ACTION
 );
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS planning (
     countdown SMALLINT UNSIGNED,
     category_name VARCHAR(255) NOT NULL,
     `type` ENUM('INCOME', 'EXPENSE') NOT NULL,
-    `user_id` INT,
+    `user_id` VARCHAR(50),
     FOREIGN KEY (`user_id`) REFERENCES user(ID) ON DELETE SET NULL,
     FOREIGN KEY (category_name) REFERENCES category(`name`) ON UPDATE CASCADE
 );
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `transaction` (
     amount INT UNSIGNED NOT NULL,
     history DATE NOT NULL,
     category_name VARCHAR(255) NOT NULL,
-    user_id INT,
+    user_id VARCHAR(50),
     creator_id INT NOT NULL,
     `type` ENUM('INCOME', 'EXPENSE'),
     note TEXT,

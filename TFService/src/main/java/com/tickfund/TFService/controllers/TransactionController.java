@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
 import com.tickfund.TFService.dtos.in.transaction.TransactionDTO;
 import com.tickfund.TFService.dtos.out.TransactionOut;
-import com.tickfund.TFService.entities.TransactionEntity;
+import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 import com.tickfund.TFService.exceptions.ResourceNotFoundException;
 import com.tickfund.TFService.services.AttachmentService;
 import org.springframework.beans.factory.annotation.Autowired;

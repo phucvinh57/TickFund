@@ -1,4 +1,4 @@
-package com.tickfund.TFService.entities;
+package com.tickfund.TFService.entities.tickfund;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 

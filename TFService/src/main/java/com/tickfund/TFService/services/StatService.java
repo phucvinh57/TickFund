@@ -1,7 +1,8 @@
 package com.tickfund.TFService.services;
 
 import com.tickfund.TFService.dtos.in.StatDTO;
-import com.tickfund.TFService.repository.TransactionRepository;
+import com.tickfund.TFService.repositories.tickfund.TransactionRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

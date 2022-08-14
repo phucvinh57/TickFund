@@ -3,15 +3,15 @@ package com.tickfund.TFService.services;
 import java.util.*;
 
 import com.tickfund.TFService.dtos.in.transaction.TransactionQueryFilter;
+import com.tickfund.TFService.entities.tickfund.CategoryEntity;
+import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
-import com.tickfund.TFService.entities.CategoryEntity;
-import com.tickfund.TFService.entities.TransactionEntity;
 import com.tickfund.TFService.modules.UniqueId;
-import com.tickfund.TFService.repository.CategoryRepository;
+import com.tickfund.TFService.repositories.tickfund.CategoryRepository;
+import com.tickfund.TFService.repositories.tickfund.TransactionRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.tickfund.TFService.repository.TransactionRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

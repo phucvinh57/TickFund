@@ -1,4 +1,4 @@
-package com.tickfund.TFService.repository;
+package com.tickfund.TFService.repositories.tickfund;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.tickfund.TFService.entities.PlanningEntity;
+import com.tickfund.TFService.entities.tickfund.PlanningEntity;
 
 @Repository
 public interface PlanningRepository extends CrudRepository<PlanningEntity, String> {

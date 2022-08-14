@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.commons.enums.CategoryType;
-import com.tickfund.TFService.entities.CategoryEntity;
+import com.tickfund.TFService.entities.tickfund.CategoryEntity;
 
 public class CategoryDto {
     @JsonProperty

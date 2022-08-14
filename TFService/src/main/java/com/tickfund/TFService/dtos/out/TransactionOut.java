@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.commons.enums.CategoryType;
-import com.tickfund.TFService.entities.TransactionEntity;
+import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 
 public class TransactionOut {
     @JsonProperty

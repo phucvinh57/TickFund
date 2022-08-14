@@ -1,4 +1,4 @@
-package com.tickfund.TFService.repository;
+package com.tickfund.TFService.repositories.tickfund;
 
 import java.util.Date;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.tickfund.TFService.entities.TransactionEntity;
+import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 
 @Repository
 public interface TransactionRepository extends CrudRepository<TransactionEntity, String> {

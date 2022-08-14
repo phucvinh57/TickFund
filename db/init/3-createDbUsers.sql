@@ -1,5 +1,5 @@
-DROP USER 'auth_service'@'%';
-DROP USER 'tickfund_app'@'%';
+DROP USER IF EXISTS 'auth_service'@'%';
+DROP USER IF EXISTS 'tickfund_app'@'%';
 
 CREATE USER 'auth_service'@'%';
 GRANT SELECT ON `ticklab_users`.department TO 'auth_service'@'%';

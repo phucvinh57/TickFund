@@ -1,4 +1,4 @@
-package com.tickfund.TFService.repository;
+package com.tickfund.TFService.repositories.tickfund;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tickfund.TFService.entities.CategoryEntity;
+import com.tickfund.TFService.entities.tickfund.CategoryEntity;
 
 @Repository
 public interface CategoryRepository extends CrudRepository<CategoryEntity, String> {

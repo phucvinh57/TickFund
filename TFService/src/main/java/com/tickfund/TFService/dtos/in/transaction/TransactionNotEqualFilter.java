@@ -2,7 +2,7 @@ package com.tickfund.TFService.dtos.in.transaction;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.dtos.validator.transaction.TransactionQueryFieldConstraint;
-import com.tickfund.TFService.entities.TransactionEntity;
+import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 import com.tickfund.TFService.utils.AnnotationHelper;
 
 import javax.persistence.criteria.CriteriaBuilder;

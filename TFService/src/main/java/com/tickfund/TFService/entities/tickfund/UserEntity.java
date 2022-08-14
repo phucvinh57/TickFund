@@ -1,4 +1,4 @@
-package com.tickfund.TFService.entities;
+package com.tickfund.TFService.entities.tickfund;
 
 import java.util.Set;
 

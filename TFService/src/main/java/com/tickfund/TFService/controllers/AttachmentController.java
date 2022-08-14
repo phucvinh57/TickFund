@@ -1,7 +1,7 @@
 package com.tickfund.TFService.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tickfund.TFService.entities.AttachmentEntity;
+import com.tickfund.TFService.entities.tickfund.AttachmentEntity;
 import com.tickfund.TFService.exceptions.ResourceNotFoundException;
 import com.tickfund.TFService.modules.UniqueId;
 import com.tickfund.TFService.services.AttachmentService;

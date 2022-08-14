@@ -1,11 +1,12 @@
-package com.tickfund.TFService.repository;
+package com.tickfund.TFService.repositories.tickfund;
 
-import com.tickfund.TFService.entities.AttachmentEntity;
-import com.tickfund.TFService.entities.TransactionEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+
+import com.tickfund.TFService.entities.tickfund.AttachmentEntity;
+import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 
 import java.util.List;
 

@@ -6,14 +6,15 @@ import java.util.TimeZone;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 import javax.annotation.PostConstruct;
 
-@SpringBootApplication
-@ComponentScan("com.tickfund")
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
+@ComponentScan(basePackages = "com.tickfund")
 public class TfServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TfServiceApplication.class, args);
@@ -32,7 +33,7 @@ public class TfServiceApplication {
 	}
 
 	@PostConstruct
-	public void init(){
+	public void init() {
 		// Setting Spring Boot SetTimeZone
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 	}

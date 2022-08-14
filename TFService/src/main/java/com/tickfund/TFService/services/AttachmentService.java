@@ -1,8 +1,9 @@
 package com.tickfund.TFService.services;
 
-import com.tickfund.TFService.entities.AttachmentEntity;
-import com.tickfund.TFService.entities.TransactionEntity;
-import com.tickfund.TFService.repository.AttachmentRepository;
+import com.tickfund.TFService.entities.tickfund.AttachmentEntity;
+import com.tickfund.TFService.entities.tickfund.TransactionEntity;
+import com.tickfund.TFService.repositories.tickfund.AttachmentRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
