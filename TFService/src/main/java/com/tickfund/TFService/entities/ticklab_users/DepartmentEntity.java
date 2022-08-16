@@ -1,5 +1,6 @@
 package com.tickfund.TFService.entities.ticklab_users;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -8,5 +9,8 @@ import javax.persistence.Id;
 @Table(schema = "ticklab_users", name = "department")
 public class DepartmentEntity {
     @Id
-    public String dname;
+    public Integer ID;
+
+    @Column(nullable = false, unique = true)
+    public String name;
 }

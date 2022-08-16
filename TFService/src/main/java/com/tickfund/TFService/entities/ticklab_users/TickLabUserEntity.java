@@ -51,7 +51,7 @@ public class TickLabUserEntity {
     public Boolean active;
 
     @ManyToOne
-    @JoinColumn(name = "dname")
+    @JoinColumn(name = "department_id")
     public DepartmentEntity department;
 
     @OneToMany(targetEntity = PersonalLinkEntity.class)

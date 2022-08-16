@@ -2,6 +2,8 @@ package com.tickfund.TFService.entities.tickfund;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -9,4 +11,8 @@ import javax.persistence.Table;
 public class UserEntity {
     @Id
     public String ID;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    public RoleEntity role;
 }

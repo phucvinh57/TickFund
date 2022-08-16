@@ -286,8 +286,7 @@ paths:
                       type: boolean
                       example: true
                     department:
-                      type: string
-                      example: "Ban phát triển dự án"
+                      $ref: "#/components/schemas/Department"
         400:
           description: Not Found
         500:
@@ -735,8 +734,7 @@ components:
                 type: string
                 example: "https://www.facebook.com/"
             department:
-              type: string
-              example: "Ban phát triển dự án"
+              $ref: "#/components/schemas/Department"
 
     Query:
       type: object
@@ -772,6 +770,15 @@ components:
               - $ref: "#/components/schemas/Query.Equal"
               - $ref: "#/components/schemas/Query.NotEqual"
 
+    Department:
+      type: object
+      properties:
+        ID:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: "Ban phát triển dự án"
     Expertise:
       type: string
       enum: ["IT", "ME", "DEE"]
