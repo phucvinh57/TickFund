@@ -5,10 +5,8 @@ info:
   version: 1.0.0
 
 servers:
-  - url: https://api.tickfund.com/v1
-    description: API Gateway
-  - url: https://api.tickfund.com/
-    description: API Gateway - test connection
+  - url: http://127.0.0.1:8081
+    description: TF service
 
 tags:
   - name: transactions
@@ -307,6 +305,22 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
+    put:
+      summary: Edit
+      tags:
+        - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Account.Detail"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Not Found
+        500:
+          description: Internal Server Error
 
   /users?id={id}:
     delete:
@@ -322,32 +336,6 @@ paths:
             type: string
             example: 1915940
           description: Id of a user
-      responses:
-        200:
-          description: Success
-        400:
-          description: Not Found
-        500:
-          description: Internal Server Error
-
-    put:
-      deprecated: true
-      summary: Edit
-      tags:
-        - users
-      parameters:
-        - in: query
-          name: id
-          required: true
-          schema:
-            type: string
-            example: 1915940
-          description: Id of a user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Account.Detail"
       responses:
         200:
           description: Success
@@ -687,7 +675,7 @@ components:
         username:
           type: string
           example: cudothanhnhan
-        avatarURL:
+        avatarUrl:
           type: string
           example: "https://cdn.ticklab.com"
 
@@ -696,24 +684,21 @@ components:
         - $ref: "#/components/schemas/User"
         - type: object
           properties:
-            id:
+            ID:
               type: string
               example: 1915940
 
     Account.Detail:
       allOf:
-        - $ref: "#/components/schemas/User"
+        - $ref: "#/components/schemas/Account.Basic"
         - type: object
           description: all information of a user
           properties:
             expertise:
               $ref: "#/components/schemas/Expertise"
-            role:
-              type: string
-              example: Thành viên
-            active:
-              type: boolean
-              example: true
+            roleId:
+              type: integer
+              example: 1
             birthday:
               type: string
               format: date
@@ -731,8 +716,9 @@ components:
               items:
                 type: string
                 example: "https://www.facebook.com/"
-            department:
-              $ref: "#/components/schemas/Department"
+            departmentId:
+              type: integer
+              example: 1
 
     Query:
       type: object

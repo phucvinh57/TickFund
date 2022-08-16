@@ -1,6 +1,7 @@
 package com.tickfund.TFService.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tickfund.TFService.dtos.in.user.CreateUserDto;
 import com.tickfund.TFService.dtos.out.user.TickfundUserWithRoleDto;
 import com.tickfund.TFService.dtos.out.user.TicklabUserDto;
 import com.tickfund.TFService.dtos.out.user.UserDto;
@@ -55,5 +56,13 @@ public class UserService {
         }
 
         return allUsersInfo;
+    }
+
+    public String createUser(CreateUserDto dto) {
+        String userId = dto.ID;
+        Integer roleId = dto.roleId;
+        this.ticklabUserRepository.createAccount(dto);
+        this.userRepository.setRoleForUser(userId, roleId);
+        return userId;
     }
 }
