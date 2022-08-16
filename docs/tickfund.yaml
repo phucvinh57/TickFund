@@ -259,7 +259,35 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Account.Detail"
+                  type: object
+                  title: User
+                  properties:
+                    ID:
+                      type: string
+                      example: 1915940
+                    name: 
+                      type: string
+                      example: Nguyễn Phúc Vinh
+                    username:
+                      type: string
+                      example: vinh.np
+                    expertise:
+                      $ref: "#/components/schemas/Expertise"
+                    role:
+                      type: object
+                      properties:
+                        ID:
+                          type: number
+                          example: 15
+                        name: 
+                          type: string
+                          example: "Thành viên"
+                    active:
+                      type: boolean
+                      example: true
+                    department:
+                      type: string
+                      example: "Ban phát triển dự án"
         400:
           description: Not Found
         500:
@@ -659,10 +687,10 @@ components:
         name:
           type: string
           example: Cu Do Thanh Nhan
-        accountName:
+        username:
           type: string
           example: cudothanhnhan
-        avatar:
+        avatarURL:
           type: string
           example: "https://cdn.ticklab.com"
 
@@ -681,9 +709,8 @@ components:
         - type: object
           description: all information of a user
           properties:
-            department:
-              type: string
-              example: IT
+            expertise:
+              $ref: "#/components/schemas/Expertise"
             role:
               type: string
               example: Thành viên
@@ -693,7 +720,7 @@ components:
             birthday:
               type: string
               format: date
-              example: 2001-6-1
+              example: '2001-06-01'
             email:
               type: string
               pattern: '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
@@ -702,9 +729,14 @@ components:
               type: string
               pattern: '(84|0[3|5|7|8|9])+([0-9]{8})\b'
               example: "0915654321"
-            facebookLink:
+            personalLinks:
+              type: array
+              items:
+                type: string
+                example: "https://www.facebook.com/"
+            department:
               type: string
-              example: "https://www.facebook.com/"
+              example: "Ban phát triển dự án"
 
     Query:
       type: object
@@ -740,6 +772,9 @@ components:
               - $ref: "#/components/schemas/Query.Equal"
               - $ref: "#/components/schemas/Query.NotEqual"
 
+    Expertise:
+      type: string
+      enum: ["IT", "ME", "DEE"]
 
     Query.Range:
       type: object

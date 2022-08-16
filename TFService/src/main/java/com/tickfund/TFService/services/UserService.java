@@ -21,9 +21,10 @@ public class UserService {
                 .existsById(userId);
     }
 
-    public ArrayList<Object> getAllUser() {
-        ArrayList<Object> result = new ArrayList<>();
-        this.ticklabUserRepository.findAll().forEach(result::add);
-        return result;
+    public Object getAllUserInfo() {
+        ArrayList<Object> list = new ArrayList<>();
+        list.add(this.ticklabUserRepository.getAllUserInfo());
+        list.add(this.userRepository.findAll());
+        return list;
     }
 }

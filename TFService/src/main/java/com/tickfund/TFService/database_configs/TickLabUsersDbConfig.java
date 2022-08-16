@@ -1,4 +1,4 @@
-package com.tickfund.TFService.configs;
+package com.tickfund.TFService.database_configs;
 
 import javax.sql.DataSource;
 

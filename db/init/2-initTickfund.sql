@@ -1,4 +1,5 @@
 CREATE DATABASE IF NOT EXISTS tickfund;
+ALTER DATABASE tickfund CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 USE tickfund;
 
@@ -35,8 +36,9 @@ CREATE TABLE IF NOT EXISTS permission (
 
 CREATE TABLE IF NOT EXISTS user (
     ID VARCHAR(50) PRIMARY KEY,
-    role_id INT NOT NULL,
-    FOREIGN KEY (role_id) REFERENCES `role`(ID) ON DELETE NO ACTION
+    role_id INT,
+
+    FOREIGN KEY (role_id) REFERENCES `role`(ID)
 );
 
 CREATE TABLE IF NOT EXISTS planning (

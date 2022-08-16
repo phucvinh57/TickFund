@@ -1,4 +1,4 @@
-package com.tickfund.TFService.modules;
+package com.tickfund.TFService.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -15,7 +15,7 @@ import javax.validation.constraints.Min;
 import com.tickfund.TFService.commons.enums.CategoryType;
 import com.tickfund.TFService.commons.enums.CycleEnum;
 import com.tickfund.TFService.dtos.in.PlanningDto;
-import com.tickfund.TFService.modules.UniqueId;
+import com.tickfund.TFService.utils.UniqueId;
 
 @Entity
 @Table(

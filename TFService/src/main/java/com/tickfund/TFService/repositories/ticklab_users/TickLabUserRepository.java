@@ -10,8 +10,9 @@ import com.tickfund.TFService.entities.ticklab_users.TickLabUserEntity;
 
 @Repository
 public interface TickLabUserRepository extends CrudRepository<TickLabUserEntity, String> {
-    @Query(value = "SELECT *"
-            + " FROM account", nativeQuery = true)
-    // Return [ [data...] ]
-    public ArrayList<Object> getAll();
+    @Query(value = "SELECT new Map("
+            + "tlu.ID AS ID, tlu.name AS name, tlu.username AS username, "
+            + "tlu.expertise AS expertise, tlu.active AS active)"
+            + " FROM TickLabUserEntity AS tlu")
+    public ArrayList<Object> getAllUserInfo();
 }

@@ -1,5 +1,6 @@
 -- Creates the new database
 CREATE DATABASE IF NOT EXISTS tickfund;
+ALTER DATABASE tickfund CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE DATABASE IF NOT EXISTS `ticklab_users`;
 USE `ticklab_users`;
@@ -18,6 +19,17 @@ CREATE TABLE IF NOT EXISTS account (
     avatarURL VARCHAR(255),
     birthday DATE,
     dname VARCHAR(20),
+    expertise ENUM ('IT', 'ME', 'DEE') NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (dname) REFERENCES department(dname)
         ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS personal_link (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    `url` TEXT,
+    `account_id` VARCHAR(8) NOT NULL,
+
+    FOREIGN KEY (`account_id`) REFERENCES account(ID)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );

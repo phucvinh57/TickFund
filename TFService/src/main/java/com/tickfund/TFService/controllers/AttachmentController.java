@@ -3,8 +3,9 @@ package com.tickfund.TFService.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tickfund.TFService.entities.tickfund.AttachmentEntity;
 import com.tickfund.TFService.exceptions.ResourceNotFoundException;
-import com.tickfund.TFService.modules.UniqueId;
 import com.tickfund.TFService.services.AttachmentService;
+import com.tickfund.TFService.utils.UniqueId;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
