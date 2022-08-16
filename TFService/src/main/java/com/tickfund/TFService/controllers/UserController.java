@@ -38,7 +38,7 @@ public class UserController {
 
     @PutMapping("")
     @ResponseBody
-    public Object updateUser(@Valid @RequestBody UpdateUserDto dto) {
-        return dto;
+    public String updateUser(@Valid @RequestBody UpdateUserDto dto) throws Exception {
+        return this.userService.updateUser(dto);
     }
 }

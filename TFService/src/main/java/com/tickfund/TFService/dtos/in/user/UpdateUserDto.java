@@ -1,5 +1,11 @@
 package com.tickfund.TFService.dtos.in.user;
 
-public class UpdateUserDto extends CreateUserDto {
+import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class UpdateUserDto extends CreateUserDto {
+    @JsonProperty
+    @NotNull
+    public Boolean active;
 }

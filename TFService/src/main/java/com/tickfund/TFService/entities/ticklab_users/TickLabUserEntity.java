@@ -1,6 +1,6 @@
 package com.tickfund.TFService.entities.ticklab_users;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tickfund.TFService.commons.enums.ExpertiseEnum;
+import com.tickfund.TFService.dtos.in.user.UpdateUserDto;
 
 @Entity
 @Table(schema = "ticklab_users", name = "account")
@@ -41,7 +42,7 @@ public class TickLabUserEntity {
     public String avatarURL;
 
     @Column
-    public Date birthday;
+    public LocalDate birthday;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -57,4 +58,22 @@ public class TickLabUserEntity {
     @OneToMany(targetEntity = PersonalLinkEntity.class)
     @JsonManagedReference
     public Set<PersonalLinkEntity> personalLinks;
+
+    public void setBasicInfo(UpdateUserDto dto) {
+        this.active = dto.active;
+        this.avatarURL = dto.avatarUrl;
+        this.birthday = dto.birthday;
+        this.email = dto.email;
+        this.expertise = dto.expertise;
+        this.name = dto.name;
+        this.phone = dto.phone;
+    }
+
+    public void setDepartment(DepartmentEntity department) {
+        this.department = department;
+    }
+
+    public void setPersonalLinks(Set<PersonalLinkEntity> links) {
+        this.personalLinks = links;
+    }
 }
