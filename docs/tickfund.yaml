@@ -247,7 +247,6 @@ paths:
           description: Internal Server Error
   /users:
     get:
-      # deprecated: true
       summary: Get a list of all users
       tags:
         - users
@@ -293,7 +292,6 @@ paths:
           description: Internal Server Error
 
     post:
-      deprecated: true
       summary: Add a new user
       tags:
         - users
