@@ -21,8 +21,76 @@ tags:
     description: API for logs
   - name: users
     description: API for user info
-
+  - name: roles
+    description: API for access control
+    
 paths:
+  /roles:
+    post:
+      summary: Create a new role by name
+      tags:
+        - roles
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              type: string
+              example: "Giám sát quỹ lab"
+      responses:
+        200:
+          description: Create role successfully
+          content:
+            application/json:
+              schema:
+                type: integer
+                description: Id of a created role
+                example: 4
+    put:
+      summary: Update role name
+      tags:
+        - roles
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                ID: 
+                  type: integer
+                  example: 4
+                newName:
+                  type: string
+                  example: "Giám sát quỹ lab"
+      responses:
+        200:
+          description: Update role successfully
+          content:
+            application/json:
+              schema:
+                type: integer
+                description: Id of a updated role
+                example: 4
+  /roles?id={id}:
+    delete: 
+      summary: Summary fund by each period in the given range time
+      tags:
+        - roles
+      parameters:
+        - in: query
+          name: option
+          required: true
+          schema:
+            type: integer
+            example: 4
+      responses:
+        200:
+          description: Delete role successfully & return role id
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 4
+
   # STATISTIC
   /stat/total?option={option}:
     get:
@@ -274,7 +342,7 @@ paths:
                       type: object
                       properties:
                         ID:
-                          type: number
+                          type: integer
                           example: 15
                         name: 
                           type: string
@@ -314,28 +382,6 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/Account.Detail"
-      responses:
-        200:
-          description: Success
-        400:
-          description: Not Found
-        500:
-          description: Internal Server Error
-
-  /users?id={id}:
-    delete:
-      deprecated: true
-      summary: Delete an exist user
-      tags:
-        - users
-      parameters:
-        - in: query
-          name: id
-          required: true
-          schema:
-            type: string
-            example: 1915940
-          description: Id of a user
       responses:
         200:
           description: Success
@@ -758,7 +804,7 @@ components:
       type: object
       properties:
         ID:
-          type: number
+          type: integer
           example: 1
         name:
           type: string
