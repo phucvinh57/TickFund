@@ -1,11 +1,11 @@
 bootstrap:
-	cd db; docker-compose up -d
+	cd databases; docker-compose up -d
 
 down:
-	cd db; docker-compose down
+	cd databases; docker-compose down
 
 down_db:
-	cd db; docker-compose down --volumes
+	cd databases; docker-compose down --volumes
 
 tfservice:
 	cd TFService; ./gradlew bootRun
