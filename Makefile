@@ -1,3 +1,8 @@
+setup_env:
+	cd TFService/src/main/resources; cp application_example.properties application.properties
+	cd databases; cp .env_example .env; cp createDbUsers_example.sql createDbUsers.sql
+	cd AuthService; cp .env_example .env
+
 bootstrap:
 	cd databases; docker-compose up -d
 

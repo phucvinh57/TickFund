@@ -1,15 +1,15 @@
-DROP USER IF EXISTS 'auth_service'@'%';
-DROP USER IF EXISTS 'tickfund_app'@'%';
+DROP USER IF EXISTS '<user_centerdata>'@'%';
+DROP USER IF EXISTS '<user_tickfund>'@'%';
 
-CREATE USER 'auth_service'@'%';
-GRANT SELECT ON `ticklab_users`.* TO 'auth_service'@'%';
-GRANT INSERT, UPDATE ON `ticklab_users`.account TO 'auth_service'@'%';
-
--- Fill the password below
-ALTER USER 'auth_service'@'%' IDENTIFIED WITH mysql_native_password BY '';
-
-CREATE USER `tickfund_app`@'%';
-GRANT ALL ON tickfund.* TO 'tickfund_app'@'%';
+CREATE USER '<user_centerdata>'@'%';
+GRANT SELECT ON `ticklab_users`.* TO '<user_centerdata>'@'%';
+GRANT INSERT, UPDATE ON `ticklab_users`.account TO '<user_centerdata>'@'%';
 
 -- Fill the password below
-ALTER USER 'tickfund_app'@'%' IDENTIFIED WITH mysql_native_password BY '';
+ALTER USER '<user_centerdata>'@'%' IDENTIFIED WITH mysql_native_password BY '';
+
+CREATE USER `<user_tickfund>`@'%';
+GRANT ALL ON tickfund.* TO '<user_tickfund>'@'%';
+
+-- Fill the password below
+ALTER USER '<user_tickfund>'@'%' IDENTIFIED WITH mysql_native_password BY '';
