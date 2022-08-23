@@ -1,7 +1,6 @@
 package com.tickfund.TFService.interceptor;
 
 import com.tickfund.TFService.services.TokenManager;
-import com.tickfund.TFService.services.UserService;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +17,6 @@ import java.util.Optional;
 public class CookieInterceptor implements HandlerInterceptor {
     public static final String C_USER = "c_user";
     public static final String USER_TOKEN = "user_token";
-    public static final String SSO_URL = "http://facebook.com";
-
-    @Autowired
-    UserService userService;
 
     @Autowired
     TokenManager tokenManager;
@@ -33,6 +28,7 @@ public class CookieInterceptor implements HandlerInterceptor {
         Optional<Cookie> optCUserCookie = Arrays.stream(cookies)
                                     .filter(cookie -> cookie.getName().equals(C_USER))
                                     .findFirst();
+
         if(optCUserCookie.isPresent()) {
             try {
                 request.setAttribute(USER_TOKEN, tokenManager.parseToUserToken(optCUserCookie.get().getValue()));
@@ -43,6 +39,21 @@ public class CookieInterceptor implements HandlerInterceptor {
                 Cookie removeCUserCookie = new Cookie(C_USER, null);
                 removeCUserCookie.setMaxAge(0);
                 response.addCookie(removeCUserCookie);
+                return false;
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                throw e;
+            }
+        }
+        else if(request.getHeader("Authorization") != null){
+            try {
+                final Integer BEARER_LENGTH = 6;
+                final String AUTH_HEADER_VALUE = request.getHeader("Authorization");
+                request.setAttribute(USER_TOKEN, tokenManager.parseToUserToken(AUTH_HEADER_VALUE.substring(BEARER_LENGTH)));
+                return true;
+            }
+            catch (JwtException e){
                 return false;
             }
             catch (Exception e){
