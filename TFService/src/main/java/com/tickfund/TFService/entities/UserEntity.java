@@ -1,8 +1,7 @@
 package com.tickfund.TFService.entities;
 
-import java.util.Set;
-
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(schema = "tickfund", name = "user")

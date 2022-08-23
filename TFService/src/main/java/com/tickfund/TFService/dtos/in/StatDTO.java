@@ -5,17 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.commons.enums.CycleEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import java.util.Date;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.time.LocalDate;
 
 public class StatDTO {
 
-    public Date getStart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    public Date getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
@@ -23,11 +23,11 @@ public class StatDTO {
         return periodType;
     }
 
-    public void setStart(Date start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 
@@ -35,13 +35,13 @@ public class StatDTO {
         this.periodType = periodType;
     }
 
-    @JsonProperty
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    Date start;
+    @Temporal(TemporalType.DATE)
+    LocalDate start;
 
     @JsonProperty
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    Date end;
+    LocalDate end;
 
     @JsonProperty
     @JsonAlias({"period_type"})

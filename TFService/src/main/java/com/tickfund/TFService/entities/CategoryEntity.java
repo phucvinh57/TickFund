@@ -1,14 +1,9 @@
 package com.tickfund.TFService.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import com.tickfund.TFService.commons.enums.CategoryType;
 import com.tickfund.TFService.dtos.CategoryDto;
+
+import javax.persistence.*;
 
 @Entity
 @Table(schema = "tickfund", name = "category")

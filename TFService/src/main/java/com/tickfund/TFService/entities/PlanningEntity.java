@@ -1,21 +1,13 @@
 package com.tickfund.TFService.entities;
 
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.Min;
-
 import com.tickfund.TFService.commons.enums.CategoryType;
 import com.tickfund.TFService.commons.enums.CycleEnum;
 import com.tickfund.TFService.dtos.in.PlanningDto;
 import com.tickfund.TFService.modules.UniqueId;
+
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import java.time.LocalDate;
 
 @Entity
 @Table(
@@ -30,24 +22,27 @@ public class PlanningEntity {
     @Min(value = 0)
     public Integer amount;
 
-    @Column
-    public Date startDate; 
+    @Column(name = "start_date", columnDefinition = "DATE")
+    public LocalDate startDate;
 
-    @Column
+    @Column(name = "next_due", columnDefinition = "DATE")
+    public LocalDate nextDueDate;
+
+    @Column(name = "is_repeat")
     public Boolean isRepeat;
 
-    @Column
+    @Column(name = "cycle_unit")
     @Enumerated(EnumType.STRING)
     public CycleEnum cycleUnit;
 
-    @Column
-    public Date endDate;
+    @Column(name = "end_date", columnDefinition = "DATE")
+    public LocalDate endDate;
     
     @Column
     @Min(value = 0)
     public Integer countdown;
 
-    @Column
+    @Column(name = "category_name")
     public String categoryName;
 
     @Column(name = "type")
@@ -64,8 +59,8 @@ public class PlanningEntity {
         this.amount = dto.amount;
         this.startDate = dto.startDate;
         this.isRepeat = dto.isRepeat;
-        this.categoryName = dto.category.name;
-            this.categoryType = dto.category.type;
+        this.categoryName = dto.categoryName;
+        this.categoryType = null;
 
         if(dto.repeat != null) {
             this.cycleUnit = dto.repeat.cycle.cycle;
