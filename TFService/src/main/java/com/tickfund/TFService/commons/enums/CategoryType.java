@@ -1,7 +1,5 @@
 package com.tickfund.TFService.commons.enums;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-
 public enum CategoryType {
     INCOME("thu"),
 

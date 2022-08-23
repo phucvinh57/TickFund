@@ -1,17 +1,16 @@
 package com.tickfund.TFService.dtos.out;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tickfund.TFService.commons.vos.RepetitionVo;
-import com.tickfund.TFService.modules.ObjectCaster;
 import com.tickfund.TFService.commons.enums.CycleEnum;
 import com.tickfund.TFService.commons.enums.RepetitionModeEnum;
 import com.tickfund.TFService.commons.vos.CycleVo;
+import com.tickfund.TFService.commons.vos.RepetitionVo;
+import com.tickfund.TFService.modules.ObjectCaster;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class ExtraPlanningDto {
     private enum ParamName {
@@ -54,7 +53,7 @@ public class ExtraPlanningDto {
             Boolean hasEndDate = ObjectCaster.toBoolean(
                     queryData.get(ParamName.HAS_END_DATE.ordinal()));
 
-            Date endDate = ObjectCaster.toDate(
+            LocalDate endDate = ObjectCaster.toDate(
                     "yyyy-MM-dd", queryData.get(ParamName.END_DATE.ordinal()));
 
             repeat.mode = cycleMode;

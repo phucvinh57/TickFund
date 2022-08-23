@@ -6,7 +6,7 @@ import com.tickfund.TFService.dtos.validator.transaction.AttachmentConstraint;
 import com.tickfund.TFService.dtos.validator.transaction.CategoryNameConstraint;
 import com.tickfund.TFService.dtos.validator.user.UserIDConstraint;
 
-import javax.persistence.*;
+import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;

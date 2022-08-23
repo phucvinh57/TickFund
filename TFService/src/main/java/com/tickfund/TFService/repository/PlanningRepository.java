@@ -1,13 +1,13 @@
 package com.tickfund.TFService.repository;
 
-import java.util.ArrayList;
-
+import com.tickfund.TFService.entities.PlanningEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.tickfund.TFService.entities.PlanningEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public interface PlanningRepository extends CrudRepository<PlanningEntity, String> {
@@ -19,4 +19,8 @@ public interface PlanningRepository extends CrudRepository<PlanningEntity, Strin
 
     @Query(value = "SELECT * FROM planning", nativeQuery = true)
     public ArrayList<ArrayList<Object>> getAll();
+
+    @Query(value = "SELECT p FROM PlanningEntity as p"
+            + " WHERE p.countdown <> 0")
+    List<PlanningEntity> getAllUnFinishedPlanning();
 }

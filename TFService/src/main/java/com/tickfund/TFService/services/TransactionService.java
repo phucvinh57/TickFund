@@ -1,28 +1,25 @@
 package com.tickfund.TFService.services;
 
-import java.util.*;
-
-import com.tickfund.TFService.dtos.in.StatDTO;
-import com.tickfund.TFService.dtos.in.transaction.TransactionQueryFilter;
 import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
+import com.tickfund.TFService.dtos.in.transaction.TransactionQueryFilter;
 import com.tickfund.TFService.entities.CategoryEntity;
 import com.tickfund.TFService.entities.TransactionEntity;
 import com.tickfund.TFService.modules.UniqueId;
 import com.tickfund.TFService.repository.CategoryRepository;
+import com.tickfund.TFService.repository.TransactionRepository;
 import com.tickfund.TFService.utils.AnnotationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tickfund.TFService.repository.TransactionRepository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TransactionService {
@@ -64,6 +61,9 @@ public class TransactionService {
         CriteriaQuery<TransactionEntity> criteriaQuery = criteriaBuilder.createQuery(TransactionEntity.class);
         Root<TransactionEntity> transactionRoot = criteriaQuery.from(TransactionEntity.class);
 
+        // Tell criteria query that fetch mode is LEFT JOIN
+        transactionRoot.fetch("attachments", JoinType.LEFT);
+
         List<Predicate> predicateList = new ArrayList<>();
         List<TransactionQueryFilter> conditionDTOList = queryDTO.getFilters();
 
@@ -86,7 +86,6 @@ public class TransactionService {
         }
         else {
             criteriaQuery.orderBy(criteriaBuilder.desc(transactionRoot.get(orderMapField)));
-
         }
 
         TypedQuery<TransactionEntity> transactionQuery = entityManager.createQuery(criteriaQuery);

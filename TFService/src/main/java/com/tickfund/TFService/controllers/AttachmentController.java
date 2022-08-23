@@ -5,22 +5,16 @@ import com.tickfund.TFService.entities.AttachmentEntity;
 import com.tickfund.TFService.exceptions.ResourceNotFoundException;
 import com.tickfund.TFService.modules.UniqueId;
 import com.tickfund.TFService.services.AttachmentService;
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.server.ServerErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +22,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/attachments")
 public class AttachmentController {
-    final String FILE_SERVER_HOST = "http://localhost:6000";
+
+    @Value("${tickfund.domain.file.server}")
+    String FILE_SERVER_HOST;
+
+    @Value("${tickfund.domain.my}")
+    String MY_DOMAIN;
+    final String PROTOCOL = "http";
     final String MESSAGE = "message";
     final String ID = "id";
     @Autowired
@@ -39,7 +39,7 @@ public class AttachmentController {
         Integer code = attachmentService.genAuthCode();
         AttachmentEntity attachmentEntity = attachmentService.getAttachmentById(id);
         if(attachmentEntity != null){
-            attributes.addAttribute("code_callback", String.format("http://localhost:8081/auth/file?code=%d", code));
+            attributes.addAttribute("code_callback", String.format("%s://%s/auth/file?code=%d", PROTOCOL, MY_DOMAIN, code));
             RedirectView redirectView = new RedirectView();
             redirectView.setUrl(attachmentEntity.getUrl());
             return redirectView;
@@ -50,10 +50,11 @@ public class AttachmentController {
     }
 
     @PostMapping("/upload")
-    public Map uploadAttachment(@RequestParam("file") MultipartFile file){
+    @SuppressWarnings({"unchecked"})
+    public Map<String, Object> uploadAttachment(@RequestParam("file") MultipartFile file){
         Map<String, Object> response = new HashMap<>();
         WebClient client = WebClient.builder()
-                .baseUrl("http://localhost:6000")
+                .baseUrl(String.format("%s://%s", PROTOCOL, FILE_SERVER_HOST))
                 .build();
 
         try{

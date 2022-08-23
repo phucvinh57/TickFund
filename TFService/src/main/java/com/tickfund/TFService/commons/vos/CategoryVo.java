@@ -1,9 +1,9 @@
 package com.tickfund.TFService.commons.vos;
 
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.commons.enums.CategoryType;
+
+import javax.validation.constraints.NotNull;
 
 public class CategoryVo {
     @JsonProperty
