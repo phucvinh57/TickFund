@@ -25,11 +25,11 @@ public class ControllerAdvisor {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public Map onConstraintValidationException(
+    public Map<String, Object> onConstraintValidationException(
             ConstraintViolationException e) {
         Map<String, Object> response = new HashMap<>();
         List<String> messages = new ArrayList<>();
-        for (ConstraintViolation violation : e.getConstraintViolations()) {
+        for (ConstraintViolation<?> violation : e.getConstraintViolations()) {
             messages.add("Property path = %s. Message = %s".formatted(violation.getPropertyPath(), violation.getMessage()));
         }
         response.put("error", "Invalid request body");
@@ -40,12 +40,12 @@ public class ControllerAdvisor {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public Map onMethodArgumentNotValidException(
+    public Map<String, Object> onMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
 
         Map<String, Object> response = new HashMap<>();
         List<String> messages = new ArrayList<>();
-        List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
+        // List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         Field[] clsFields = e.getParameter().getParameter().getType().getDeclaredFields();
         for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
             String fieldErrorAlias = getFieldErrorAlias(clsFields, fieldError);
@@ -71,43 +71,4 @@ public class ControllerAdvisor {
 
         return values[0];
     }
-
-
-
-
-//    @ExceptionHandler(InvalidRequestException.class)
-//    public ResponseEntity<Object> handleInvalidRequest(
-//            InvalidRequestException ex, WebRequest request) {
-//
-//        Map<String, Object> body = new LinkedHashMap<>();
-//        body.put("error", "Invalid request body");
-//        body.put("timestamp", LocalDateTime.now());
-//        body.put("message", ex.getMessage());
-//
-//        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-//    }
-//
-//
-//    @ExceptionHandler(ServerException.class)
-//    public ResponseEntity<Object> handleServerError(
-//            ServerException ex, WebRequest request) {
-//
-//        Map<String, Object> body = new LinkedHashMap<>();
-//        body.put("timestamp", LocalDateTime.now());
-//        body.put("message", "Something went wrong in server");
-//
-//        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//
-//    @ExceptionHandler(ResourceNotFoundException.class)
-//    public ResponseEntity<Object> handleResourceNotFound(
-//            ResourceNotFoundException ex, WebRequest request) {
-//
-//        Map<String, Object> body = new LinkedHashMap<>();
-//        body.put("error", "Resource not found");
-//        body.put("timestamp", LocalDateTime.now());
-//        body.put("message", ex.getMessage());
-//
-//        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-//    }
 }

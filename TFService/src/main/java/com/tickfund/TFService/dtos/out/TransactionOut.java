@@ -2,7 +2,7 @@ package com.tickfund.TFService.dtos.out;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.commons.enums.CategoryType;
-import com.tickfund.TFService.entities.TransactionEntity;
+import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

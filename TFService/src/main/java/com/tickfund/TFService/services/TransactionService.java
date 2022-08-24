@@ -1,13 +1,15 @@
 package com.tickfund.TFService.services;
 
-import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
 import com.tickfund.TFService.dtos.in.transaction.TransactionQueryFilter;
-import com.tickfund.TFService.entities.CategoryEntity;
-import com.tickfund.TFService.entities.TransactionEntity;
-import com.tickfund.TFService.modules.UniqueId;
-import com.tickfund.TFService.repository.CategoryRepository;
-import com.tickfund.TFService.repository.TransactionRepository;
+import com.tickfund.TFService.entities.tickfund.CategoryEntity;
+import com.tickfund.TFService.entities.tickfund.TransactionEntity;
+import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
+import com.tickfund.TFService.repositories.tickfund.CategoryRepository;
+import com.tickfund.TFService.repositories.tickfund.TransactionRepository;
 import com.tickfund.TFService.utils.AnnotationHelper;
+import com.tickfund.TFService.utils.UniqueId;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

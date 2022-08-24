@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+    mysql:
+        image: mysql
+        container_name: ticklab_mysql
+        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        volumes:
+            - db:/var/lib/mysql
+            - ./init:/docker-entrypoint-initdb.d
+        restart: always
+        env_file: .env
+        ports:
+            - "3306:3306"
+    adminer:
+        image: adminer
+        container_name: ticklab_adminer
+        restart: always
+        ports:
+            - 8080:8080
+
+volumes:
+    db:
+        name: ticklab_db

@@ -1,12 +1,13 @@
 package com.tickfund.TFService.services;
 
 import com.tickfund.TFService.dtos.CategoryDto;
-import com.tickfund.TFService.entities.CategoryEntity;
-import com.tickfund.TFService.repository.CategoryRepository;
+import com.tickfund.TFService.entities.tickfund.CategoryEntity;
+import com.tickfund.TFService.repositories.tickfund.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+
 
 @Service
 public class CategoryService {

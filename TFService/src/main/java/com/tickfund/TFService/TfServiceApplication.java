@@ -1,16 +1,16 @@
 package com.tickfund.TFService;
 
+import java.util.Arrays;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import java.util.Arrays;
-
-@SpringBootApplication
-@ComponentScan("com.tickfund")
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
+@ComponentScan(basePackages = "com.tickfund")
 public class TfServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TfServiceApplication.class, args);

@@ -1,7 +1,7 @@
 package com.tickfund.TFService.services;
 
-import com.tickfund.TFService.entities.UserEntity;
 import com.tickfund.TFService.entities.UserToken;
+import com.tickfund.TFService.entities.tickfund.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -17,11 +17,15 @@ public class TokenManager {
     private static final String ROLE = "role";
     @Value("${tickfund.jwt.secret}")
     private String jwtSecret;
+
+    @Value("${tickfund.jwt.expiration}")
+    Integer EXPIRATION;
     public String generateJwtToken(UserEntity userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(ROLE, userDetails.getRoleEntity().getName());
+        claims.put(ROLE, userDetails.getRoleEntity().name);
         return Jwts.builder().setClaims(claims).setSubject(userDetails.getID())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
     }
     public UserToken parseToUserToken(String token) {

@@ -2,8 +2,8 @@ package com.tickfund.TFService.services;
 
 import com.tickfund.TFService.dtos.in.PlanningDto;
 import com.tickfund.TFService.dtos.out.ExtraPlanningDto;
-import com.tickfund.TFService.entities.PlanningEntity;
-import com.tickfund.TFService.repository.PlanningRepository;
+import com.tickfund.TFService.entities.tickfund.PlanningEntity;
+import com.tickfund.TFService.repositories.tickfund.PlanningRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

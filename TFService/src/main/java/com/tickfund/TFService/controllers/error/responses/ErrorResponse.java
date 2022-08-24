@@ -12,8 +12,8 @@ public class ErrorResponse {
         this.errorMessage = errorMessage;
     }
 
-    public Map toMap(){
-        Map<String, Object> errorMap = new HashMap();
+    public Map<String, Object> toMap(){
+        Map<String, Object> errorMap = new HashMap<>();
         errorMap.put(TIMESTAMP, LocalDateTime.now());
         errorMap.put(ERROR_MESSAGE, errorMessage);
         return errorMap;

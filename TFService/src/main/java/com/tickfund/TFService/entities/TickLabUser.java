@@ -1,7 +1,7 @@
 package com.tickfund.TFService.entities;
 
 import com.tickfund.TFService.commons.enums.DepartmentEnum;
-import com.tickfund.TFService.commons.enums.MajorEnum;
+import com.tickfund.TFService.commons.enums.ExpertiseEnum;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -39,5 +39,5 @@ public class TickLabUser {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private MajorEnum major;
+    private ExpertiseEnum expertise;
 }

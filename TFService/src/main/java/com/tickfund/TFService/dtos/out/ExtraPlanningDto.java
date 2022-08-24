@@ -1,11 +1,12 @@
 package com.tickfund.TFService.dtos.out;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tickfund.TFService.commons.vos.RepetitionVo;
+import com.tickfund.TFService.utils.ObjectCaster;
 import com.tickfund.TFService.commons.enums.CycleEnum;
 import com.tickfund.TFService.commons.enums.RepetitionModeEnum;
 import com.tickfund.TFService.commons.vos.CycleVo;
 import com.tickfund.TFService.commons.vos.RepetitionVo;
-import com.tickfund.TFService.modules.ObjectCaster;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 

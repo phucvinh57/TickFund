@@ -20,7 +20,11 @@ public class AlreadyLogInInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         if(tokenManager.validateFromCookie(request.getCookies(), C_USER)){
-            response.getWriter().write("You already logged in");
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("" +
+                    "    \"code\": true,\n" +
+                    "    \"message\": \"Already login\"");
             return false;
         }
         else {

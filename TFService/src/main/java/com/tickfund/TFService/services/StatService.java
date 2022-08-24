@@ -3,10 +3,10 @@ package com.tickfund.TFService.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tickfund.TFService.dtos.in.StatDTO;
 import com.tickfund.TFService.dtos.out.StatOut;
-import com.tickfund.TFService.entities.PlanningEntity;
 import com.tickfund.TFService.entities.StatBucket;
-import com.tickfund.TFService.repository.PlanningRepository;
-import com.tickfund.TFService.repository.TransactionRepository;
+import com.tickfund.TFService.entities.tickfund.PlanningEntity;
+import com.tickfund.TFService.repositories.tickfund.PlanningRepository;
+import com.tickfund.TFService.repositories.tickfund.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,6 @@ import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
