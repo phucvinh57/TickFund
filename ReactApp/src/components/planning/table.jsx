@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import TickTable from "../ticktable";
-import { headers } from './sampleData.js'
 
 import PlanningModal from "./modal";
+import TickTableV2 from "../ticktable/tableV2";
+import { tickTableV2Headers } from "../../constants/tickTableV2Headers"
 
 export default function PlanningTable() {
     const planningData = useSelector(state => state.planning)
@@ -21,8 +21,6 @@ export default function PlanningTable() {
                 categoryName: {
                     val: planning.category.name,
                     component: <span className="fw-bold">{planning.category.name}</span>
-
-
                 },
                 categoryType: planning.category.type,
                 amount: {
@@ -37,7 +35,7 @@ export default function PlanningTable() {
     }, [planningData])
 
     const handleRowClick = row => {
-        
+
         let planning = planningData.find(val => val.id === row.id.val)
         setTargetPlan(planning)
         console.log(planning)
@@ -51,15 +49,17 @@ export default function PlanningTable() {
             mode='edit'
             initData={targetPlan}
         />}
-        <TickTable
-            headers={headers}
+
+        <TickTableV2
+            // tableName={"Table Version 2"}
+            componentSize="md"
+            headers={tickTableV2Headers}
             data={data}
-            onSearch={query => console.log(query)}
-            onSort={sortOption => console.log(sortOption)}
-            onFilter={filter => console.log(filter)}
+            numPages={20}
+
+            defaultSortField='startDate'
+            onQuery={conditions => console.log(conditions)}
             onRowClick={handleRowClick}
-            numPages={10}
-            onPageChange={number => console.log(number)}
         />
     </div>
 }

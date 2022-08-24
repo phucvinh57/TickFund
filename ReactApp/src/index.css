@@ -29,3 +29,8 @@ code {
   outline: none !important;
   box-shadow: 0 ;
 } */
+
+.outline-none, .outline-none:focus {
+  outline: none !important;
+  box-shadow: 0 !important
+}

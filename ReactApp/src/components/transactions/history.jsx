@@ -71,7 +71,6 @@ function Detail({ data, show, onHide }) {
 export default function HistoryTable() {
   const users = useSelector(state => state.user)
   let DB = useSelector(state => state.transaction)
-  console.log(DB)
 
   const headers = [
     {
