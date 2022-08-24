@@ -95,7 +95,7 @@ public class StatService {
                     statBucket.setDay(bucketDate.getDayOfMonth());
                 case WEEK:
                     // Plus 1 here because Week.ISO starts at 0
-                    statBucket.setWeek(bucketDate.get(WeekFields.ISO.weekOfMonth()) + 1);
+                    statBucket.setWeek(bucketDate.get(WeekFields.ISO.weekOfYear()));
                 case MONTH:
                     statBucket.setMonth(bucketDate.getMonthValue());
                 case YEAR:

@@ -13,16 +13,16 @@ import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 
 @Repository
 public interface TransactionRepository extends CrudRepository<TransactionEntity, String> {
-    @Query("SELECT new Map(DAY(t.history) AS day, WEEK(t.history) AS week, MONTH(t.history) AS month, YEAR(t.history) AS year, t.categoryName AS category_name, t.categoryType as type, SUM(t.amount) AS sum)"
+    @Query("SELECT new Map(DAY(t.history) AS day, WEEK(t.history, 1) AS week, MONTH(t.history) AS month, YEAR(t.history) AS year, t.categoryName AS category_name, t.categoryType as type, SUM(t.amount) AS sum)"
             + " FROM TransactionEntity as t"
             + " WHERE t.history BETWEEN :dateFrom AND :dateTo"
-            + " GROUP BY t.categoryName, t.categoryType, DAY(t.history), WEEK(t.history), MONTH(t.history), YEAR(t.history)")
+            + " GROUP BY t.categoryName, t.categoryType, DAY(t.history), WEEK(t.history, 1), MONTH(t.history), YEAR(t.history)")
     public List<Map> getStatisticByDay(@Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
 
-    @Query("SELECT new Map(WEEK(t.history) AS week, MONTH(t.history) AS month, YEAR(t.history) AS year, t.categoryName AS category_name, t.categoryType as type, SUM(t.amount) AS sum)"
+    @Query("SELECT new Map(WEEK(t.history, 1) AS week, MONTH(t.history) AS month, YEAR(t.history) AS year, t.categoryName AS category_name, t.categoryType as type, SUM(t.amount) AS sum)"
             + " FROM TransactionEntity as t"
             + " WHERE t.history BETWEEN :dateFrom AND :dateTo"
-            + " GROUP BY t.categoryName, t.categoryType, WEEK(t.history), MONTH(t.history), YEAR(t.history)")
+            + " GROUP BY t.categoryName, t.categoryType, WEEK(t.history, 1), MONTH(t.history), YEAR(t.history)")
     public List<Map> getStatisticByWeek(@Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
 
     @Query("SELECT new Map(MONTH(t.history) AS month, YEAR(t.history) AS year, t.categoryName AS category_name, t.categoryType as type, SUM(t.amount) AS sum)"
