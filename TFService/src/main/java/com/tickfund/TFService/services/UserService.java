@@ -50,7 +50,7 @@ public class UserService {
         }
 
         final ArrayList<TickfundUserWithRoleDto> allTickfundUsersWithRole = new ArrayList<>();
-        for (Object userWithRole : this.userRepository.findAllByOrderByIDAsc()) {
+        for (UserEntity userWithRole : this.userRepository.findAllByOrderByIDAsc()) {
             allTickfundUsersWithRole.add(objectMapper.convertValue(
                     userWithRole,
                     TickfundUserWithRoleDto.class));
@@ -96,5 +96,8 @@ public class UserService {
         this.userRepository.save(user);
 
         return userId;
+    }
+    public UserEntity getUserById(String userId){
+        return this.userRepository.findById(userId).orElse(null);
     }
 }

@@ -3,6 +3,7 @@ package com.tickfund.TFService.dtos.out.user;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tickfund.TFService.entities.tickfund.RoleEntity;
 
 public class TickfundUserWithRoleDto {
     @NotBlank
@@ -10,5 +11,5 @@ public class TickfundUserWithRoleDto {
     public String ID;
 
     @JsonProperty
-    public Object role;
+    public RoleEntity role;
 }

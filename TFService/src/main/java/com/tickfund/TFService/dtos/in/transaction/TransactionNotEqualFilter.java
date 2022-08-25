@@ -8,11 +8,9 @@ import com.tickfund.TFService.utils.AnnotationHelper;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class TransactionNotEqualFilter extends TransactionQueryFilter {
@@ -35,16 +33,21 @@ public class TransactionNotEqualFilter extends TransactionQueryFilter {
     @JsonProperty
     String format = "yyyy-MM-dd";
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot){
         String entityMapField = AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(), field);
 
         Class fieldType = transactionRoot.get(entityMapField).getJavaType();
-        if(fieldType.equals(Date.class)){
-            DateFormat dateFormat = new SimpleDateFormat(format, Locale.ENGLISH);
-            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        if(fieldType.equals(LocalDate.class) || fieldType.equals(LocalDateTime.class)){
+            DateTimeFormatter dateFormat = this.getGeneralDateTimeFormat(format);
             try{
-                Date value = dateFormat.parse(String.valueOf(this.value));
-                return builder.notEqual(transactionRoot.get(entityMapField), value);
+                LocalDateTime value = LocalDateTime.parse(String.valueOf(this.value), dateFormat);
+                if(fieldType.equals(LocalDateTime.class)){
+                    return builder.notEqual(transactionRoot.get(entityMapField), value);
+                }
+                else {
+                    return builder.notEqual(transactionRoot.get(entityMapField), value.toLocalDate());
+                }
             }
             catch (Exception e){
                 // Empty

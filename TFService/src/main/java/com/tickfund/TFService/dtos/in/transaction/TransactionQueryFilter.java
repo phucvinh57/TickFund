@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
@@ -17,4 +20,11 @@ import javax.persistence.criteria.Root;
 @Service
 public abstract class TransactionQueryFilter {
     abstract public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot);
+    final DateTimeFormatter getGeneralDateTimeFormat(String format){
+        return new DateTimeFormatterBuilder().appendPattern(format)
+                .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                .toFormatter();
+    }
 }

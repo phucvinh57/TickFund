@@ -1,13 +1,14 @@
 package com.tickfund.TFService.dtos.out;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.commons.enums.CategoryType;
 import com.tickfund.TFService.entities.tickfund.TransactionEntity;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TransactionOut {
     @JsonProperty
@@ -16,7 +17,7 @@ public class TransactionOut {
     private Integer amount;
 
     @JsonProperty
-    private Date history;
+    private LocalDate history;
 
     @JsonProperty("category_type")
     private CategoryType categoryType;
@@ -33,9 +34,9 @@ public class TransactionOut {
     private String note;
 
     @JsonProperty("create_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
-    @JsonProperty
+    @JsonProperty("attachments")
     private Set<String> attachmentIds = new HashSet<>();
 
     public TransactionOut(TransactionEntity entity) {

@@ -44,10 +44,16 @@ export const AuthController = {
 
         const userId = authCodeManager.validateCode(parseInt(code))
         if (userId === undefined) {
-            res.status(ACCESS_DENIED).json({ msg: "Code is invalid or has been expired !" })
+            res.json({
+                code_check: false,
+                message: "Code is invalid or has been expired !" 
+            })
             return
         }
 
-        res.json({ userId })
+        res.json({ 
+            user_id: userId,
+            code_check: true
+        })
     }
 }

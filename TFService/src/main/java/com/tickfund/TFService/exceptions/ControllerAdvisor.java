@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @ControllerAdvice
 public class ControllerAdvisor {
@@ -68,43 +71,4 @@ public class ControllerAdvisor {
 
         return values[0];
     }
-
-
-
-
-//    @ExceptionHandler(InvalidRequestException.class)
-//    public ResponseEntity<Object> handleInvalidRequest(
-//            InvalidRequestException ex, WebRequest request) {
-//
-//        Map<String, Object> body = new LinkedHashMap<>();
-//        body.put("error", "Invalid request body");
-//        body.put("timestamp", LocalDateTime.now());
-//        body.put("message", ex.getMessage());
-//
-//        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-//    }
-//
-//
-//    @ExceptionHandler(ServerException.class)
-//    public ResponseEntity<Object> handleServerError(
-//            ServerException ex, WebRequest request) {
-//
-//        Map<String, Object> body = new LinkedHashMap<>();
-//        body.put("timestamp", LocalDateTime.now());
-//        body.put("message", "Something went wrong in server");
-//
-//        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//
-//    @ExceptionHandler(ResourceNotFoundException.class)
-//    public ResponseEntity<Object> handleResourceNotFound(
-//            ResourceNotFoundException ex, WebRequest request) {
-//
-//        Map<String, Object> body = new LinkedHashMap<>();
-//        body.put("error", "Resource not found");
-//        body.put("timestamp", LocalDateTime.now());
-//        body.put("message", ex.getMessage());
-//
-//        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-//    }
 }

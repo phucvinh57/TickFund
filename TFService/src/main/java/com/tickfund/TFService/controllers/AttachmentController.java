@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tickfund.TFService.entities.tickfund.AttachmentEntity;
 import com.tickfund.TFService.exceptions.ResourceNotFoundException;
 import com.tickfund.TFService.services.AttachmentService;
-import com.tickfund.TFService.utils.UniqueId;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import com.tickfund.TFService.utils.UniqueId;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/attachments")
 public class AttachmentController {
-    final String FILE_SERVER_HOST = "http://localhost:6000";
+
+    @Value("${tickfund.domain.file.server}")
+    String FILE_SERVER_HOST;
+
+    @Value("${tickfund.domain.my}")
+    String MY_DOMAIN;
+    final String PROTOCOL = "http";
     final String MESSAGE = "message";
     final String ID = "id";
     @Autowired
@@ -33,7 +39,7 @@ public class AttachmentController {
         Integer code = attachmentService.genAuthCode();
         AttachmentEntity attachmentEntity = attachmentService.getAttachmentById(id);
         if(attachmentEntity != null){
-            attributes.addAttribute("code_callback", String.format("http://localhost:8081/auth/file?code=%d", code));
+            attributes.addAttribute("code_callback", String.format("%s://%s/auth/file?code=%d", PROTOCOL, MY_DOMAIN, code));
             RedirectView redirectView = new RedirectView();
             redirectView.setUrl(attachmentEntity.getUrl());
             return redirectView;
@@ -44,10 +50,11 @@ public class AttachmentController {
     }
 
     @PostMapping("/upload")
+    @SuppressWarnings({"unchecked"})
     public Map<String, Object> uploadAttachment(@RequestParam("file") MultipartFile file){
         Map<String, Object> response = new HashMap<>();
         WebClient client = WebClient.builder()
-                .baseUrl("http://localhost:6000")
+                .baseUrl(String.format("%s://%s", PROTOCOL, FILE_SERVER_HOST))
                 .build();
 
         try{

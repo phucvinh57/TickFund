@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Service
@@ -38,16 +38,21 @@ public class TransactionEqualFilter extends TransactionQueryFilter {
     @JsonProperty
     String format = "yyyy-MM-dd";
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot){
         String entityMapField = AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(), field);
 
         Class fieldType = transactionRoot.get(entityMapField).getJavaType();
-        if(fieldType.equals(Date.class)){
-            DateFormat dateFormat = new SimpleDateFormat(format, Locale.ENGLISH);
-            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        if(fieldType.equals(LocalDate.class) || fieldType.equals(LocalDateTime.class)){
+            DateTimeFormatter dateFormat = this.getGeneralDateTimeFormat(format);
             try{
-                Date value = dateFormat.parse(String.valueOf(this.value));
-                return builder.equal(transactionRoot.get(entityMapField), value);
+                LocalDateTime value = LocalDateTime.parse(String.valueOf(this.value), dateFormat);
+                if(fieldType.equals(LocalDateTime.class)){
+                    return builder.equal(transactionRoot.get(entityMapField), value);
+                }
+                else {
+                    return builder.equal(transactionRoot.get(entityMapField), value.toLocalDate());
+                }
             }
             catch (Exception e){
                 // Empty

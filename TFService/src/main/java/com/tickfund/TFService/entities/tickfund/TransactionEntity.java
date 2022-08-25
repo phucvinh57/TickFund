@@ -1,18 +1,17 @@
 package com.tickfund.TFService.entities.tickfund;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.*;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tickfund.TFService.commons.enums.CategoryType;
 
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 @Entity
 @Table(schema = "tickfund", name = "transaction")
 public class TransactionEntity {
@@ -32,11 +31,11 @@ public class TransactionEntity {
         this.amount = amount;
     }
 
-    public Date getHistory() {
+    public LocalDate getHistory() {
         return history;
     }
 
-    public void setHistory(Date history) {
+    public void setHistory(LocalDate history) {
         this.history = history;
     }
 
@@ -80,11 +79,11 @@ public class TransactionEntity {
         this.note = note;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -105,13 +104,13 @@ public class TransactionEntity {
     private Integer amount;
 
     @Column
-    @Temporal(TemporalType.DATE)
-    private Date history;
+    private LocalDate history;
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
+    @JsonAlias({"category_type"})
     private CategoryType categoryType;
-    @Column(length = 255)
+    @Column(name = "category_name")
     @NotNull
     @JsonAlias({"category_name"})
     private String categoryName;
@@ -130,8 +129,7 @@ public class TransactionEntity {
 
     @Column(name = "created_at", insertable = false)
     @JsonAlias({"created_at"})
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "transactionEntity", cascade = CascadeType.ALL)
     @JsonManagedReference

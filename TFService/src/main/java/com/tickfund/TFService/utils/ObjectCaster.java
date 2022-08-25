@@ -1,8 +1,8 @@
 package com.tickfund.TFService.utils;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Cast Object to a specific type
@@ -20,8 +20,8 @@ public class ObjectCaster {
         return o == null ? null : Enum.valueOf(clazz, o.toString());
     }
 
-    public static Date toDate(String pattern, Object o) throws ParseException {
-        return o == null ? null : new SimpleDateFormat(pattern).parse(o.toString());
+    public static LocalDate toDate(String pattern, Object o) throws ParseException {
+        return o == null ? null : LocalDate.parse(o.toString(), DateTimeFormatter.ofPattern(pattern));
     }
 
     public static Integer toInteger(Object o) {

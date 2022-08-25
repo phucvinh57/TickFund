@@ -14,10 +14,10 @@ import java.util.*;
 @Service
 public class AttachmentService {
 
-    @Value("${tickfund.attacment.code.expiration}")
+    @Value("${tickfund.attachment.code.expiration}")
     Integer CODE_EXPIRATION_TIME;
 
-    @Value("${tickfund.attacment.pending.file.expiration}")
+    @Value("${tickfund.attachment.pending.file.expiration}")
     Integer PENDING_EXPIRATION_TIME;
     Map<String, AttachmentEntity> pendingAttachment = Collections.synchronizedMap(new HashMap<>());
     Set<Integer> codeSet = Collections.synchronizedSet(new HashSet<>());

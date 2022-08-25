@@ -2,10 +2,11 @@ package com.tickfund.TFService.dtos;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.commons.enums.CategoryType;
 import com.tickfund.TFService.entities.tickfund.CategoryEntity;
+
+import javax.validation.constraints.NotNull;
 
 public class CategoryDto {
     @JsonProperty
