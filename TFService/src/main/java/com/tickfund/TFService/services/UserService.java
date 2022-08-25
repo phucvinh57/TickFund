@@ -51,17 +51,10 @@ public class UserService {
 
         final ArrayList<TickfundUserWithRoleDto> allTickfundUsersWithRole = new ArrayList<>();
         for (UserEntity userWithRole : this.userRepository.findAllByOrderByIDAsc()) {
-
-            System.out.println("============");
-
-            System.out.println(userWithRole.getID());
-            System.out.println(userWithRole.getRoleEntity().ID);
-            System.out.println(userWithRole.getRoleEntity().name);
-            System.out.println("============");
-
-            allTickfundUsersWithRole.add(objectMapper.convertValue(
-                    userWithRole,
-                    TickfundUserWithRoleDto.class));
+            final TickfundUserWithRoleDto tfUserWithRole = new TickfundUserWithRoleDto();
+            tfUserWithRole.ID = userWithRole.ID;
+            tfUserWithRole.role = userWithRole.role;
+            allTickfundUsersWithRole.add(tfUserWithRole);
         }
 
         if (allAccountsInfo.size() != allTickfundUsersWithRole.size()) {
