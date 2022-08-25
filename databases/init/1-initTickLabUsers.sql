@@ -6,7 +6,7 @@ CREATE DATABASE IF NOT EXISTS `ticklab_users`;
 USE `ticklab_users`;
 
 CREATE TABLE IF NOT EXISTS department (
-    ID INT PRIMARY KEY AUTO_INCREMENT,
+    ID SMALLINT PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL UNIQUE
 );
 
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS account (
     `password` VARCHAR(100) NOT NULL,
     avatarURL VARCHAR(255),
     birthday DATE,
-    department_id INT,
+    department_id SMALLINT NOT NULL,
     expertise ENUM ('IT', 'ME', 'DEE') NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (department_id) REFERENCES department(ID)

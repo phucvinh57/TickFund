@@ -49,7 +49,6 @@ function visitItem(node) {
         node.children.map(child => visitItem(child))
     }</SubMenu>
         : <MenuItem icon={node.icon} key={node.title}>
-            {/* {node.title} */}
             <Link to={node.path}>{node.title}</Link>
         </MenuItem>
 }

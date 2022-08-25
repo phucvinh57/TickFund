@@ -1,11 +1,8 @@
-// import TickTable from "../components/ticktable"
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { PiggyBank } from "react-bootstrap-icons";
 import PlanningModal from "../components/planning/modal";
 import PlanningTable from "../components/planning/table";
-
-
 
 export default function Planning() {
     const [showModal, setShowModal] = useState(false)
@@ -26,5 +23,6 @@ export default function Planning() {
             onHide={() => setShowModal(false)}
             mode='add'
         />
+        
     </div>
 }

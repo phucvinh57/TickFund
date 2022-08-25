@@ -32,7 +32,7 @@ export const headers = [{
     label: 'Số tiền',
     association: {
         key: 'amount',
-        type: 'number' // Select
+        type: 'number'
     },
     sortable: true
 }, {

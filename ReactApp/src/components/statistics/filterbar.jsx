@@ -27,7 +27,9 @@ export default function FilterBar() {
                 </Button>)}
             </ButtonGroup>
             <FormGroup style={{ width: '210px' }}>
-                <DateRangePicker>
+                <DateRangePicker onCallback={(start, end, label) => {
+                    console.log(start, end, label)
+                }}>
                     <input type="text" className="form-control" />
                 </DateRangePicker>
             </FormGroup>
