@@ -9,7 +9,7 @@
     "start:prod": "node dist/index.js",
     "start:dev": "npx ts-node-dev index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed:password": "npx ts-node seeds/setDefaultPasswordForUser.ts"
+    "seed": "npx ts-node seeds/setDefaultPasswordForUser.ts"
   },
   "author": "",
   "license": "ISC",

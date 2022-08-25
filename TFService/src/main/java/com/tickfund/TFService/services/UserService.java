@@ -10,14 +10,12 @@ import com.tickfund.TFService.entities.tickfund.UserEntity;
 import com.tickfund.TFService.entities.ticklab_users.DepartmentEntity;
 import com.tickfund.TFService.entities.ticklab_users.TickLabUserEntity;
 import com.tickfund.TFService.exceptions.InconsistenceUserDataException;
-import com.tickfund.TFService.exceptions.ResourceNotFoundException;
 import com.tickfund.TFService.repositories.tickfund.RoleRepository;
 import com.tickfund.TFService.repositories.tickfund.UserRepository;
 import com.tickfund.TFService.repositories.ticklab_users.DepartmentRepository;
 import com.tickfund.TFService.repositories.ticklab_users.TickLabUserRepository;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

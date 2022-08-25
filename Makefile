@@ -22,7 +22,7 @@ build_app:
 	cd ReactApp; npm run build
 	
 api_specs:
-	cd APISpecs; http-server -c-1 -p 3000 . -o
+	cd APISpecs; http-server -c-1 -p 3001 . -o
 
 generate_user:
 	cd AuthService; npm run seed

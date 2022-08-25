@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.lang.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tickfund.TFService.commons.enums.ExpertiseEnum;
 import com.tickfund.TFService.dtos.in.user.UpdateUserDto;
@@ -53,6 +55,7 @@ public class TickLabUserEntity {
 
     @ManyToOne
     @JoinColumn(name = "department_id")
+    @Nullable
     public DepartmentEntity department;
 
     @OneToMany(targetEntity = PersonalLinkEntity.class)
