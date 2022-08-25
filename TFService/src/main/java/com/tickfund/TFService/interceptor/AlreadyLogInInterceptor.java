@@ -22,9 +22,10 @@ public class AlreadyLogInInterceptor implements HandlerInterceptor {
         if(tokenManager.validateFromCookie(request.getCookies(), C_USER)){
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("" +
+            response.getWriter().write("{" +
                     "    \"code\": true,\n" +
-                    "    \"message\": \"Already login\"");
+                    "    \"message\": \"Already login\"" +
+                    "}");
             return false;
         }
         else {

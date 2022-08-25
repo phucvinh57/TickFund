@@ -89,14 +89,16 @@ public class AuthController {
                 response.addCookie(cookie);
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
-                response.getWriter().write("" +
+                response.getWriter().write("{" +
                         "    \"code\": true,\n" +
-                        "    \"message\": \"Already login\"");
+                        "    \"message\": \"Already login\"" +
+                        "}");
             }
             else {
-                response.getWriter().write("" +
+                response.getWriter().write("{" +
                         "    \"code\": false,\n" +
-                        "    \"message\": \"Not login yet\"");
+                        "    \"message\": \"Not login yet\"" +
+                        "}");
             }
 
         }
