@@ -51,6 +51,14 @@ public class UserService {
 
         final ArrayList<TickfundUserWithRoleDto> allTickfundUsersWithRole = new ArrayList<>();
         for (UserEntity userWithRole : this.userRepository.findAllByOrderByIDAsc()) {
+
+            System.out.println("============");
+
+            System.out.println(userWithRole.getID());
+            System.out.println(userWithRole.getRoleEntity().ID);
+            System.out.println(userWithRole.getRoleEntity().name);
+            System.out.println("============");
+
             allTickfundUsersWithRole.add(objectMapper.convertValue(
                     userWithRole,
                     TickfundUserWithRoleDto.class));
@@ -90,7 +98,7 @@ public class UserService {
         ticklabUser.setBasicInfo(dto);
         ticklabUser.setDepartment(department);
 
-        user.role = this.roleRepository.findById(roleId).orElseThrow();
+        user.setRoleEntity(this.roleRepository.findById(roleId).orElseThrow());
 
         this.ticklabUserRepository.save(ticklabUser);
         this.userRepository.save(user);

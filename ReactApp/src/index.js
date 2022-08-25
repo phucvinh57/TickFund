@@ -9,12 +9,15 @@ import { BrowserRouter } from 'react-router-dom'
 import 'react-pro-sidebar/dist/css/styles.css';
 import './scss/custom.scss'
 import 'bootstrap-daterangepicker/daterangepicker.css';
+import Protector from './Protector';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <Protector>
+          <App />
+        </Protector>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

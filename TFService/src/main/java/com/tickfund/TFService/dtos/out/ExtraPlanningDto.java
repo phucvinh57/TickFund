@@ -6,7 +6,6 @@ import com.tickfund.TFService.utils.ObjectCaster;
 import com.tickfund.TFService.commons.enums.CycleEnum;
 import com.tickfund.TFService.commons.enums.RepetitionModeEnum;
 import com.tickfund.TFService.commons.vos.CycleVo;
-import com.tickfund.TFService.commons.vos.RepetitionVo;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 

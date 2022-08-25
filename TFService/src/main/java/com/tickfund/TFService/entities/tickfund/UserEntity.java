@@ -1,7 +1,6 @@
 package com.tickfund.TFService.entities.tickfund;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(schema = "tickfund", name = "user")
@@ -14,7 +13,7 @@ public class UserEntity {
         this.ID = ID;
     }
     @Id
-    String ID;
+    public String ID;
     public RoleEntity getRoleEntity() {
         return role;
     }

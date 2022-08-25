@@ -26,3 +26,6 @@ api_specs:
 
 generate_user:
 	cd AuthService; npm run seed
+
+auth_service:
+	cd AuthService; npm start
