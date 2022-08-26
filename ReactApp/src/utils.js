@@ -130,7 +130,7 @@ const evalComp = (ele, key, op, comparedValue, type) => {
 }
 
 export const multiFilter = (arr, filterOptions) => {
-    const OP = filterOptions.logic == 'AND' ? '&&' : '||'
+    const OP = filterOptions.logic === 'AND' ? '&&' : '||'
     const initVal = OP === '&&' ? true : false 
     const filteredResult = arr.filter(ele => filterOptions.filters.map( option => evalComp(ele, 
                                         option.association.key,

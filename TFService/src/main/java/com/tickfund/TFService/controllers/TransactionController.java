@@ -27,20 +27,19 @@ public class TransactionController {
     @GetMapping("/{id}")
     @ResponseBody
     public TransactionOut getTransactionById(@PathVariable(name = "id") String ID) throws ResourceNotFoundException {
-        Optional<TransactionEntity> optionalTransaction =  this.transactionService.getTransactionById(ID);
-        if(optionalTransaction.isPresent()){
+        Optional<TransactionEntity> optionalTransaction = this.transactionService.getTransactionById(ID);
+        if (optionalTransaction.isPresent()) {
             return new TransactionOut(optionalTransaction.get());
-        }
-        else {
+        } else {
             throw new ResourceNotFoundException("Transaction ID %s is not exist".formatted(ID));
         }
     }
 
     @PostMapping("/new")
     @ResponseBody
-//    @SuppressWarnings("unchecked")
+    // @SuppressWarnings("unchecked")
     public Map<String, Object> createTransaction(@Valid @RequestBody TransactionDTO body) {
-        Map tempMap = new ObjectMapper().convertValue(body, Map.class);
+        Map<?, ?> tempMap = new ObjectMapper().convertValue(body, Map.class);
         Set<String> attachmentIds = body.attachments;
         tempMap.remove("attachments");
 
@@ -56,8 +55,7 @@ public class TransactionController {
     @PostMapping("")
     @ResponseBody
     public List<TransactionOut> getTransactionsByQuery(@Valid @RequestBody TransactionQueryDTO dto) {
-        return this
-                .transactionService
+        return this.transactionService
                 .getTransactionByQuery(dto)
                 .stream()
                 .map(TransactionOut::new)

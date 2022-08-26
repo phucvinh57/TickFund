@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import authService from "./services/auth.service"
 
 export default function Protector({ children }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(true)
     useEffect(() => {
         authService.checkIfLoggedIn().then(response => {
             if(response.data.redirect) {

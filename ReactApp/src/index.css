@@ -31,6 +31,7 @@ code {
 } */
 
 .outline-none, .outline-none:focus {
-  outline: none !important;
-  box-shadow: 0 !important
+  z-index: 10000000000000;
+  outline: none;
+  box-shadow: 0;
 }
