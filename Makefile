@@ -15,7 +15,7 @@ down_db:
 tfservice:
 	cd TFService; ./gradlew bootRun
 
-start_app:
+application:
 	cd ReactApp; npm start
 
 build_app:

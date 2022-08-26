@@ -10,11 +10,13 @@ const PORT = 8082;
 const app: Express = express();
 
 connectToDb()
+
+app.use(cors())
 app.use(nocache())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
-app.use(cors())
+
 
 app.use("/", router);
 
