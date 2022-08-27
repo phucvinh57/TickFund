@@ -1,7 +1,6 @@
-package com.tickfund.TFService.dtos.in.transaction;
+package com.tickfund.TFService.dtos.in.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tickfund.TFService.dtos.validator.transaction.TransactionQueryFieldConstraint;
 import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 import com.tickfund.TFService.utils.AnnotationHelper;
 
@@ -13,15 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-public class TransactionNotEqualFilter extends TransactionQueryFilter {
-
-    @JsonProperty
-    @TransactionQueryFieldConstraint
-    String field;
-
-    public String getField() {
-        return field;
-    }
+public class QueryNotEqualFilter extends AbstractQueryFilter {
 
     public Object getValue() {
         return value;
@@ -34,8 +25,9 @@ public class TransactionNotEqualFilter extends TransactionQueryFilter {
     String format = "yyyy-MM-dd";
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot){
-        String entityMapField = AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(), field);
+    @Override
+    public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot, Class<?> clazz){
+        String entityMapField = AnnotationHelper.getFieldByAlias(clazz.getDeclaredFields(), field);
 
         Class fieldType = transactionRoot.get(entityMapField).getJavaType();
         if(fieldType.equals(LocalDate.class) || fieldType.equals(LocalDateTime.class)){
@@ -54,8 +46,8 @@ public class TransactionNotEqualFilter extends TransactionQueryFilter {
             }
         }
         else if(fieldType.isEnum()){
-            return builder.notEqual(transactionRoot.get(field), Enum.valueOf(fieldType, (String) value));
+            return builder.notEqual(transactionRoot.get(entityMapField), Enum.valueOf(fieldType, ((String) value).toUpperCase()));
         }
-        return builder.notEqual(transactionRoot.get(field), value);
+        return builder.notEqual(transactionRoot.get(entityMapField), value);
     }
 }

@@ -1,6 +1,5 @@
 package com.tickfund.TFService.controllers;
 
-import com.tickfund.TFService.commons.enums.CycleEnum;
 import com.tickfund.TFService.dtos.in.StatDTO;
 import com.tickfund.TFService.dtos.out.StatOut;
 import com.tickfund.TFService.services.StatService;
@@ -16,9 +15,8 @@ public class StatController {
 
     @GetMapping("")
     @ResponseBody
-    public StatOut getTransactionsStat(@RequestParam("period_type")CycleEnum periodType, StatDTO options) {
-        // Must do some trick here because spring boot cannot parse string to enum in statDTO
-        options.setPeriodType(periodType);
+    public StatOut getTransactionsStat(StatDTO options) {
+        options.setPeriod_type(options.getPeriod_type().toUpperCase());
         return this.statService.getStatistic(options);
     }
 }

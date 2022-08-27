@@ -1,4 +1,4 @@
-package com.tickfund.TFService.dtos.in;
+package com.tickfund.TFService.dtos.in.planning;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,7 +22,7 @@ public class PlanningDto {
 
     @JsonProperty
     @JsonAlias({"user_id"})
-    public Integer userId;
+    public String userId;
 
     @JsonProperty
     @NotNull

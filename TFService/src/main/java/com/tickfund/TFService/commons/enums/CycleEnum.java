@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 
 public enum CycleEnum {
-    DAY("day"), 
+    DAY("day"),
     WEEK("week"), 
     MONTH("month"), 
     QUARTER("quarter"), 

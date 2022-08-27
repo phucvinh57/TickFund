@@ -1,8 +1,7 @@
-package com.tickfund.TFService.dtos.in.transaction;
+package com.tickfund.TFService.dtos.in.query;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tickfund.TFService.dtos.validator.transaction.TransactionQueryFieldConstraint;
 import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 import com.tickfund.TFService.utils.AnnotationHelper;
 
@@ -15,15 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-public class TransactionRangeFilter extends TransactionQueryFilter {
-
-    @JsonProperty
-    @TransactionQueryFieldConstraint
-    String field;
-
-    public String getField() {
-        return field;
-    }
+public class QueryRangeFilter extends AbstractQueryFilter {
 
     public Object getLowerBound() {
         return lowerBound;
@@ -45,8 +36,8 @@ public class TransactionRangeFilter extends TransactionQueryFilter {
     String format = "yyyy-MM-dd";
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot){
-        String entityMapField = AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(), field);
+    public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot, Class<?> clazz){
+        String entityMapField = AnnotationHelper.getFieldByAlias(clazz.getDeclaredFields(), field);
 
         Class<?> fieldType = transactionRoot.get(entityMapField).getJavaType();
         if(fieldType.equals(LocalDate.class) || fieldType.equals(LocalDateTime.class)){
