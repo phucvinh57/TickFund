@@ -39,19 +39,19 @@ public class TransactionEqualFilter extends TransactionQueryFilter {
     String format = "yyyy-MM-dd";
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot){
+    public Predicate toPredicate(CriteriaBuilder builder, Root root){
         String entityMapField = AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(), field);
 
-        Class fieldType = transactionRoot.get(entityMapField).getJavaType();
+        Class fieldType = root.get(entityMapField).getJavaType();
         if(fieldType.equals(LocalDate.class) || fieldType.equals(LocalDateTime.class)){
             DateTimeFormatter dateFormat = this.getGeneralDateTimeFormat(format);
             try{
                 LocalDateTime value = LocalDateTime.parse(String.valueOf(this.value), dateFormat);
                 if(fieldType.equals(LocalDateTime.class)){
-                    return builder.equal(transactionRoot.get(entityMapField), value);
+                    return builder.equal(root.get(entityMapField), value);
                 }
                 else {
-                    return builder.equal(transactionRoot.get(entityMapField), value.toLocalDate());
+                    return builder.equal(root.get(entityMapField), value.toLocalDate());
                 }
             }
             catch (Exception e){
@@ -59,8 +59,8 @@ public class TransactionEqualFilter extends TransactionQueryFilter {
             }
         }
         else if(fieldType.isEnum()){
-            return builder.equal(transactionRoot.get(field), Enum.valueOf(fieldType, (String )value));
+            return builder.equal(root.get(field), Enum.valueOf(fieldType, (String )value));
         }
-        return builder.equal(transactionRoot.get(field), value);
+        return builder.equal(root.get(field), value);
     }
 }

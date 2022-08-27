@@ -59,11 +59,17 @@ public class AuthController {
         return response;
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     @ResponseBody
-    public void login(HttpServletResponse response, HttpServletRequest request) throws IOException {
-        final String SERVICE_CALLBACK = String.format("%s://%s", PROTOCOL_SCHEME, MY_DOMAIN) + "/auth/ticksso";
-        response.sendRedirect(String.format("%s://%s?serviceCallbackUrl=%s", PROTOCOL_SCHEME, SSO_SERVER, SERVICE_CALLBACK));
+    public void login(@RequestParam("appCallbackUrl") String appCallback, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        final String REDIRECT_SSO = this.genRedirectSso(appCallback);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{" +
+                "\"redirect_url\": %s,".formatted(REDIRECT_SSO) +
+                "\"message\": Not authorized, you must login in sso" +
+                "}");
     }
 
     @GetMapping("/ticksso")
@@ -95,9 +101,13 @@ public class AuthController {
                         "}");
             }
             else {
+                final String REDIRECT_SSO = this.genRedirectSso(appCallback);
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
                 response.getWriter().write("{" +
-                        "    \"code\": false,\n" +
-                        "    \"message\": \"Not login yet\"" +
+                        "\"redirect_url\": %s,".formatted(REDIRECT_SSO) +
+                        "\"message\": Sso code check fail. You must login in sso again" +
                         "}");
             }
 
@@ -105,6 +115,12 @@ public class AuthController {
         catch (Exception e){
             e.printStackTrace();
         }
-        // TODO: Handle situation in which Exception Happen
+
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+    }
+
+    String genRedirectSso(String appCallback){
+        final String SERVICE_CALLBACK = String.format("%s://%s", PROTOCOL_SCHEME, MY_DOMAIN) + "/auth/ticksso";
+        return String.format("%s://%s?serviceCallbackUrl=%s&appCallbackUrl=%s", PROTOCOL_SCHEME, SSO_SERVER, SERVICE_CALLBACK, appCallback);
     }
 }

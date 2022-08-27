@@ -39,6 +39,7 @@ public class CookieInterceptor implements HandlerInterceptor {
                 Cookie removeCUserCookie = new Cookie(C_USER, null);
                 removeCUserCookie.setMaxAge(0);
                 response.addCookie(removeCUserCookie);
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
                 return false;
             }
             catch (Exception e){
