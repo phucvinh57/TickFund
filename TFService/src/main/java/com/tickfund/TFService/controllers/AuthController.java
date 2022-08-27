@@ -59,7 +59,7 @@ public class AuthController {
         return response;
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     @ResponseBody
     public void login(@RequestParam("appCallbackUrl") String appCallback, HttpServletResponse response, HttpServletRequest request) throws IOException {
         final String REDIRECT_SSO = this.genRedirectSso(appCallback);
@@ -67,8 +67,8 @@ public class AuthController {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write("{" +
-                "\"redirect_url\": %s,".formatted(REDIRECT_SSO) +
-                "\"message\": Not authorized, you must login in sso" +
+                "\"redirect_url\": \"%s\",".formatted(REDIRECT_SSO) +
+                "\"message\": \"Not authorized, you must login in sso\"" +
                 "}");
     }
 
@@ -93,12 +93,8 @@ public class AuthController {
                 Cookie cookie = new Cookie(C_USER, token);
                 cookie.setPath("/");
                 response.addCookie(cookie);
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write("{" +
-                        "    \"code\": true,\n" +
-                        "    \"message\": \"Already login\"" +
-                        "}");
+
+                response.sendRedirect(appCallback);
             }
             else {
                 final String REDIRECT_SSO = this.genRedirectSso(appCallback);
@@ -106,8 +102,8 @@ public class AuthController {
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write("{" +
-                        "\"redirect_url\": %s,".formatted(REDIRECT_SSO) +
-                        "\"message\": Sso code check fail. You must login in sso again" +
+                        "\"redirect_url\": \"%s\",".formatted(REDIRECT_SSO) +
+                        "\"message\": \"Sso code check fail. You must login in sso again\"" +
                         "}");
             }
 
