@@ -22,7 +22,7 @@ public class TokenManager {
     Integer EXPIRATION;
     public String generateJwtToken(UserEntity userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(ROLE, userDetails.getRoleEntity().name);
+        claims.put(ROLE, userDetails.getRole().getName());
         return Jwts.builder().setClaims(claims).setSubject(userDetails.getID())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))

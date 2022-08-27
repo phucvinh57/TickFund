@@ -1,9 +1,9 @@
 package com.tickfund.TFService.entities.tickfund;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.tickfund.TFService.commons.enums.CategoryType;
 import com.tickfund.TFService.commons.enums.CycleEnum;
-import com.tickfund.TFService.dtos.in.PlanningDto;
-import com.tickfund.TFService.utils.UniqueId;
+import com.tickfund.TFService.dtos.in.planning.PlanningDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -16,64 +16,140 @@ import java.time.LocalDate;
 )
 public class PlanningEntity {
     @Id
-    public String ID;
+    private String ID;
 
     @Column
     @Min(value = 0)
-    public Integer amount;
+    private Integer amount;
 
     @Column(name = "start_date", columnDefinition = "DATE")
-    public LocalDate startDate;
+    @JsonAlias({"start_date"})
+    private LocalDate startDate;
 
     @Column(name = "next_due", columnDefinition = "DATE")
-    public LocalDate nextDueDate;
+    @JsonAlias({"next_due_date"})
+    private LocalDate nextDueDate;
 
     @Column(name = "is_repeat")
-    public Boolean isRepeat;
+    @JsonAlias({"is_repeat"})
+    private Boolean isRepeat;
 
     @Column(name = "cycle_unit")
     @Enumerated(EnumType.STRING)
-    public CycleEnum cycleUnit;
+    @JsonAlias({"cycle_unit"})
+    private CycleEnum cycleUnit;
 
     @Column(name = "end_date", columnDefinition = "DATE")
-    public LocalDate endDate;
+    @JsonAlias({""})
+    private LocalDate endDate;
     
     @Column
     @Min(value = 0)
-    public Integer countdown;
+    private Integer countdown;
 
     @Column(name = "category_name")
-    public String categoryName;
-
-    @Column(name = "type")
-    @Enumerated(EnumType.STRING)
-    public CategoryType categoryType;
+    private String categoryName;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    public UserEntity user;
+    private UserEntity user;
+
+    @Column(name = "user_id", insertable = false, updatable = false)
+    @JsonAlias({"user_id"})
+    // for search only
+    String userId;
 
     public PlanningEntity() {}
 
     public PlanningEntity(PlanningDto dto) {
-        this.amount = dto.amount;
-        this.startDate = dto.startDate;
-        this.isRepeat = dto.isRepeat;
-        this.categoryName = dto.categoryName;
-        this.categoryType = null;
+        this.setAmount(dto.amount);
+        this.setStartDate(dto.startDate);
+        this.setRepeat(dto.isRepeat);
+        this.setCategoryName(dto.categoryName);
 
         if(dto.repeat != null) {
-            this.cycleUnit = dto.repeat.cycle.cycle;
-            this.endDate = dto.repeat.cycle.endDate;
-            this.countdown = dto.repeat.countdown;
+            this.setCycleUnit(dto.repeat.cycle);
+            this.setEndDate(dto.repeat.endDate);
+            this.setCountdown(dto.repeat.countdown);
         }
     }
-
-    public void setId() {
-        this.ID = UniqueId.generate("vinh.np");
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
-    public void setId(String ID) {
-        this.ID = ID;
+    public String getID() {
+        return ID;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getNextDueDate() {
+        return nextDueDate;
+    }
+
+    public void setNextDueDate(LocalDate nextDueDate) {
+        this.nextDueDate = nextDueDate;
+    }
+
+    public Boolean getRepeat() {
+        return isRepeat;
+    }
+
+    public void setRepeat(Boolean repeat) {
+        isRepeat = repeat;
+    }
+
+    public CycleEnum getCycleUnit() {
+        return cycleUnit;
+    }
+
+    public void setCycleUnit(CycleEnum cycleUnit) {
+        this.cycleUnit = cycleUnit;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public Integer getCountdown() {
+        return countdown;
+    }
+
+    public void setCountdown(Integer countdown) {
+        this.countdown = countdown;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }

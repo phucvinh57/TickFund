@@ -90,7 +90,7 @@ public class UserService {
         ticklabUser.setBasicInfo(dto);
         ticklabUser.setDepartment(department);
 
-        user.role = this.roleRepository.findById(roleId).orElseThrow();
+        user.setRole(this.roleRepository.findById(roleId).orElseThrow());
 
         this.ticklabUserRepository.save(ticklabUser);
         this.userRepository.save(user);
