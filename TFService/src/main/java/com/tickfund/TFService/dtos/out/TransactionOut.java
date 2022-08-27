@@ -1,5 +1,6 @@
 package com.tickfund.TFService.dtos.out;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.commons.enums.CategoryType;
 import com.tickfund.TFService.entities.tickfund.TransactionEntity;
@@ -17,6 +18,7 @@ public class TransactionOut {
     private Integer amount;
 
     @JsonProperty
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate history;
 
     @JsonProperty("category_type")
@@ -34,6 +36,7 @@ public class TransactionOut {
     private String note;
 
     @JsonProperty("create_at")
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private LocalDateTime createdAt;
 
     @JsonProperty("attachments")
