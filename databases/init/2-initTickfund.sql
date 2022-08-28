@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS permission (
 
 CREATE TABLE IF NOT EXISTS user (
     ID VARCHAR(50) PRIMARY KEY,
-    role_id INT,
+    role_id INT NOT NULL,
 
     FOREIGN KEY (role_id) REFERENCES `role`(ID)
 );
