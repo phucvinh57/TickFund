@@ -2,7 +2,6 @@ package com.tickfund.TFService.dtos.out.user;
 
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.entities.tickfund.RoleEntity;
 

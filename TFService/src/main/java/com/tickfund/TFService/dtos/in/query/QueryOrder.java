@@ -1,11 +1,10 @@
-package com.tickfund.TFService.dtos.in.transaction;
+package com.tickfund.TFService.dtos.in.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tickfund.TFService.dtos.validator.transaction.TransactionQueryFieldConstraint;
 
 import javax.validation.constraints.Pattern;
 
-public class TransactionOrder {
+public class QueryOrder {
     public String getField() {
         return field;
     }
@@ -19,15 +18,14 @@ public class TransactionOrder {
     }
 
     @JsonProperty
-    @TransactionQueryFieldConstraint
     String field;
 
     @JsonProperty
     @Pattern(regexp = "ASC|DESC")
     String type;
 
-    public TransactionOrder(){}
-    public TransactionOrder(String field, String type){
+    public QueryOrder(){}
+    public QueryOrder(String field, String type){
         this.field = field;
         this.type = type;
     }

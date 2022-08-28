@@ -1,8 +1,6 @@
-package com.tickfund.TFService.dtos.in.transaction;
+package com.tickfund.TFService.dtos.in.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tickfund.TFService.dtos.validator.transaction.TransactionQueryFieldConstraint;
-import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 import com.tickfund.TFService.utils.AnnotationHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -17,20 +15,11 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 @Component
-public class TransactionEqualFilter extends TransactionQueryFilter {
-
-    @JsonProperty
-    @TransactionQueryFieldConstraint
-    String field;
-
-    public String getField() {
-        return field;
-    }
+public class QueryEqualFilter extends AbstractQueryFilter {
 
     public Object getValue() {
         return value;
     }
-
 
     @JsonProperty
     Object value;
@@ -39,8 +28,10 @@ public class TransactionEqualFilter extends TransactionQueryFilter {
     String format = "yyyy-MM-dd";
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public Predicate toPredicate(CriteriaBuilder builder, Root root){
-        String entityMapField = AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(), field);
+
+    @Override
+    public Predicate toPredicate(CriteriaBuilder builder, Root root, Class<?> clazz){
+        String entityMapField = AnnotationHelper.getFieldByAlias(clazz.getDeclaredFields(), field);
 
         Class fieldType = root.get(entityMapField).getJavaType();
         if(fieldType.equals(LocalDate.class) || fieldType.equals(LocalDateTime.class)){
@@ -59,8 +50,8 @@ public class TransactionEqualFilter extends TransactionQueryFilter {
             }
         }
         else if(fieldType.isEnum()){
-            return builder.equal(root.get(field), Enum.valueOf(fieldType, (String )value));
+            return builder.equal(root.get(entityMapField), Enum.valueOf(fieldType, ((String) value).toUpperCase()));
         }
-        return builder.equal(root.get(field), value);
+        return builder.equal(root.get(entityMapField), value);
     }
 }

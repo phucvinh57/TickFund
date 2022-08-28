@@ -27,3 +27,6 @@ compile.log
 /.idea
 
 /TFService/src/main/resources/application.properties
+
+media
+node_modules

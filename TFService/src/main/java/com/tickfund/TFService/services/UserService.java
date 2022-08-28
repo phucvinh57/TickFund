@@ -52,8 +52,8 @@ public class UserService {
         final ArrayList<TickfundUserWithRoleDto> allTickfundUsersWithRole = new ArrayList<>();
         for (UserEntity userWithRole : this.userRepository.findAllByOrderByIDAsc()) {
             final TickfundUserWithRoleDto tfUserWithRole = new TickfundUserWithRoleDto();
-            tfUserWithRole.ID = userWithRole.ID;
-            tfUserWithRole.role = userWithRole.role;
+            tfUserWithRole.ID = userWithRole.getID();
+            tfUserWithRole.role = userWithRole.getRole();
             allTickfundUsersWithRole.add(tfUserWithRole);
         }
 
@@ -91,7 +91,7 @@ public class UserService {
         ticklabUser.setBasicInfo(dto);
         ticklabUser.setDepartment(department);
 
-        user.setRoleEntity(this.roleRepository.findById(roleId).orElseThrow());
+        user.setRole(this.roleRepository.findById(roleId).orElseThrow());
 
         this.ticklabUserRepository.save(ticklabUser);
         this.userRepository.save(user);

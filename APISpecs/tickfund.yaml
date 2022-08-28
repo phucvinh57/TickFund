@@ -192,7 +192,7 @@ paths:
           required: true
           schema:
             type: string
-            example: "#1d34ae"
+            example: "1659543244836-nhancdt"
           description: Transaction ID
       responses:
         200:
@@ -206,8 +206,8 @@ paths:
         500:
           description: Internal Server Error
 
-  /transactions?q={query}:
-    post:
+  /transactions/query:
+    get:
       summary: Get transaction list by some pre-condition
       tags:
         - transactions
@@ -224,7 +224,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Transaction.RowData"
+                  $ref: "#/components/schemas/Transaction.RowData.Addition"
         404:
           description: Not Found
         500:
@@ -405,6 +405,17 @@ paths:
       responses:
         200:
           description: Add new planning successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: 
+                    type: string
+                    example: "Create planning successfully"
+                  id:
+                    type: string
+                    example: "1659171651406-0"
         404:
           description: Not Found
         500:
@@ -421,7 +432,7 @@ paths:
           required: true
           schema:
             type: string
-            example: "#1d34ae"
+            example: "1659171651406-0"
           description: Planning ID
       responses:
         200:
@@ -450,7 +461,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Planning.Update"
+              $ref: "#/components/schemas/Planning.RowData.Addition"
 
       responses:
         200:
@@ -469,17 +480,28 @@ paths:
           required: true
           schema:
             type: string
-            example: "#1d34ae"
+            example: "1659171651406-0"
           description: Planning ID
       responses:
         200:
-          description: Delete successfully
+          description: Delete planning successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: 
+                    type: string
+                    example: "Delete planning successfully"
+                  id:
+                    type: string
+                    example: "1659171651406-0"
         404:
           description: Not Found
         500:
           description: Internal Server Error
   
-  /plannings?q={query}:
+  /plannings/query:
     get:
       summary: Get transaction list by some pre-condition
       tags:
@@ -500,7 +522,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Planning.RowData"
+                  $ref: "#/components/schemas/Planning.RowData.Addition"
         404:
           description: Not Found
         500:
@@ -558,18 +580,25 @@ components:
         amount:
           type: integer
           format: int64
-          example: 300 000
-        category:
-          $ref: "#/components/schemas/Category"
-        userId:
+          example: 300000
+        history:
           type: string
-          example: 1915940
+          example: "2022-06-01"
+        category_name:
+          type: string
+          example: Tiền điện
+        user_id:
+          type: string
+          example: "nhancdt"
+        creator_id:
+          type: string
+          example: "nhancdt"
         note:
           type: string
-          example: "Tien dien thang 4"
+          example: "Tiền điện TickLab"
         attachments:
-          type: string
-          example: tiendien.jpg
+          type: array
+          example: ["hoadon.jpg", "hoadon.txt"]
 
     Transaction.RowData:
       type: object
@@ -593,14 +622,37 @@ components:
       type: object
       description: Get more details of a transaction
       properties:
+        ID:
+          type: string
+          example: "1659543244836-nhancdt"
+        amount:
+          type: number
+          example: 300000
+        history:
+          type: string
+          example: "2022-06-01"
         note:
           type: string
-          example: "Tien dien thang 4"
+          example: "Tiền nhà tháng 6"
+        category_name:
+          type: string
+          example: "Tiền điện"
+        category_type:
+          type: string
+          example: "expense"
+        user_id:
+          type: string
+          example: "nhancdt"
+        creator_id:
+          type: string
+          example: "nhancdt"
+        created_at:
+          type: string
+          example: "2022-08-10T17:46:17"
         attachments:
           type: array
           items:
-            type: string
-          example: [ "tiendien.jpg", "anh_giao_dich.png" ]
+            $ref: '#/components/schemas/Category'
 
     Planning.New:
       type: object
@@ -610,20 +662,21 @@ components:
         - startDate
         - isRepeat
       properties:
-        category:
-          $ref: "#/components/schemas/Category"
+        category_name:
+          type: string
+          example: "Tiền điện"
         amount:
           type: integer
           example: 2000000
-        userId:
+        user_id:
           type: string
-          example: "#343a40"
-        isRepeat:
+          example: "nhancdt"
+        is_repeat:
           type: boolean
           example: true
-        startDate:
+        start_date:
           type: string
-          example: "2022-10-05 15:30"
+          example: "2022-10-25"
         repeat:
           $ref: "#/components/schemas/Planning.Repetition"
 
@@ -670,43 +723,40 @@ components:
     Planning.RowData.Addition:
       type: object
       properties:
-        userId:
+        ID:
           type: string
-          example: "#343a40"
-        isRepeat:
+          example: "1659543244836-nhancdt"
+        amount:
+          type: number
+          example: 200000
+        countdown:
+          type: number
+          example: 4
+        start_date:
+          type: string
+          example: "2022-06-01"
+        next_due:
+          type: string
+          example: "2022-09-01"
+        user_id:
+          type: string
+          example: "nhancdt"
+        is_repeat:
           type: boolean
           example: true
-        repeat:
-          $ref: "#/components/schemas/Planning.Repetition"
+        cycle_unit:
+          type: string
+          enum: ["day", "week", "month", "year"]
+        category_name:
+          type: string
+          example: "Tiền điện"
           
     Planning.Repetition:
       type: object
       properties:
-        mode:
-          type: string
-          enum:
-            - countdown
-            - cycle
-          example: cycle
-          description: Use to determine which option user has chosen
-
         cycle:
-          type: object
-          properties:
-            cycle:
-              type: string
-              enum:
-                - day
-                - week
-                - month
-                - quarter
-                - year
-            endDate:
-              type: string
-              example: "2022-12-05 15:30"
-            hasEndDate:
-              type: boolean
-              example: false
+          type: string
+          enum: ["day", "week", "month", "year"]
         countdown:
           type: integer
           example: 10
@@ -797,6 +847,8 @@ components:
           items:
             oneOf:
               - $ref: "#/components/schemas/Query.Range"
+              - $ref: "#/components/schemas/Query.Range.Date"
+              - $ref: "#/components/schemas/Query.Range.DateTime"
               - $ref: "#/components/schemas/Query.Equal"
               - $ref: "#/components/schemas/Query.NotEqual"
 
@@ -829,6 +881,38 @@ components:
           type: integer
           example: 40000
 
+    Query.Range.Date:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "range"
+        field:
+          type: string
+          example: "history"
+        lower_bound:
+          type: string
+          example: "2022-01-01"
+        format:
+          type: string
+          example: "yyyy-MM-dd"
+
+    Query.Range.DateTime:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "range"
+        field:
+          type: string
+          example: "create_at"
+        lower_bound:
+          type: string
+          example: "2022-01-01T19:08:10.145Z"
+        format:
+          type: string
+          example: "yyyy-MM-dd'T'hh:mm:ss.SSSX"
+
     Query.Equal:
       type: object
       properties:
@@ -856,6 +940,17 @@ components:
           type: string
           example: "nhancdt"   
 
+    Attachment:
+      type: object
+      ID:
+        type: string
+        example: "1659543256692-0"
+      name:
+        type: string
+        example: "hoadon.txt"
+      path:
+        type: string
+        example: "http://tickfund.tl.vn:8081/1659543256692-0"
 
     Log:
       type: object

@@ -29,3 +29,6 @@ generate_user:
 
 auth_service:
 	cd AuthService; npm start
+
+file_server:
+	cd file-server; npm start

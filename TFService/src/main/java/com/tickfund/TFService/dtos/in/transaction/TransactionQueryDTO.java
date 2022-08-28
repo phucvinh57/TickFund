@@ -1,51 +1,34 @@
 package com.tickfund.TFService.dtos.in.transaction;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tickfund.TFService.dtos.in.QuerySize;
+import com.tickfund.TFService.dtos.in.query.AbstractQueryDTO;
+import com.tickfund.TFService.dtos.in.query.QueryOrder;
+import com.tickfund.TFService.entities.tickfund.TransactionEntity;
+import com.tickfund.TFService.utils.AnnotationHelper;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.AssertTrue;
 
 @Service
-public class TransactionQueryDTO {
-
-    private final static String MUST = "must";
-    private final static String SHOULD = "should";
-
-    @JsonProperty
-    @NotNull
-    @Pattern(regexp = "must|should")
-    String op;
-
-    @JsonProperty
-    @Valid
-    List<@Valid TransactionQueryFilter> filters = new ArrayList<>();
-
-    public List<TransactionQueryFilter> getFilters() {
-        return filters;
+public class TransactionQueryDTO extends AbstractQueryDTO {
+    @AssertTrue(message = "Some of field in filters is not valid in transaction")
+    @Override
+    public boolean isFilterFieldValid(){
+        return filters
+                .stream()
+                .allMatch(f ->
+                        AnnotationHelper
+                                .getFieldByAlias(TransactionEntity.class.getDeclaredFields(), f.getField()) != null);
     }
 
-    public QuerySize getSize() {
-        return size;
+    @Override
+    @AssertTrue(message = "Field in order is not valid in transaction")
+    public boolean isOrderFieldValid() {
+        return AnnotationHelper
+                .getFieldByAlias(TransactionEntity.class.getDeclaredFields(), order.getField()) != null;
     }
 
-    public TransactionOrder getOrder() {
-        return order;
-    }
-
-    @JsonProperty
-    @Valid
-    QuerySize size = new QuerySize(1, 20);
-
-    @JsonProperty
-    @Valid
-    TransactionOrder order = new TransactionOrder("history", "DESC");
-
-    public boolean isMust(){
-        return this.op.equals(MUST);
+    @Override
+    public QueryOrder defaultOrder() {
+        return new QueryOrder("history", "DESC");
     }
 }

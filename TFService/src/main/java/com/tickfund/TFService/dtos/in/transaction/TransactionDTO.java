@@ -9,7 +9,8 @@ import com.tickfund.TFService.dtos.validator.user.UserIDConstraint;
 import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class TransactionDTO {
@@ -20,7 +21,7 @@ public class TransactionDTO {
     public Integer amount;
 
     @NotNull
-    public Date history;
+    public LocalDate history;
 
     @NotNull
     @JsonAlias({"category_name"})
@@ -46,7 +47,7 @@ public class TransactionDTO {
 
     @JsonAlias({"created_at"})
     @JsonProperty
-    public Date createdAt;
+    public LocalDateTime createdAt;
 
     @AttachmentConstraint
     @JsonProperty

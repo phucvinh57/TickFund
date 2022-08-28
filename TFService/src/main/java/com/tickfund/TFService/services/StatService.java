@@ -1,10 +1,13 @@
 package com.tickfund.TFService.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tickfund.TFService.commons.enums.CycleEnum;
 import com.tickfund.TFService.dtos.in.StatDTO;
 import com.tickfund.TFService.dtos.out.StatOut;
 import com.tickfund.TFService.entities.StatBucket;
+import com.tickfund.TFService.entities.tickfund.CategoryEntity;
 import com.tickfund.TFService.entities.tickfund.PlanningEntity;
+import com.tickfund.TFService.repositories.tickfund.CategoryRepository;
 import com.tickfund.TFService.repositories.tickfund.PlanningRepository;
 import com.tickfund.TFService.repositories.tickfund.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +31,14 @@ public class StatService {
     @Autowired
     PlanningRepository planningRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     @SuppressWarnings({"rawtypes"})
     public StatOut getStatistic(StatDTO statDTO){
+        CycleEnum cycleEnum = CycleEnum.valueOf(statDTO.getPeriod_type());
         List<Map> transactionMapList = null;
-        switch (statDTO.getPeriodType()){
+        switch (cycleEnum){
             case DAY:
                 transactionMapList = this.transactionRepository.getStatisticByDay(statDTO.getStart(), statDTO.getEnd());
                 break;
@@ -67,11 +74,11 @@ public class StatService {
 
     Stream<StatBucket> planningToBucket(PlanningEntity planningEntity, StatDTO statDTO){
         LocalDate dateTo = statDTO.getEnd();
-        LocalDate nextDue = planningEntity.nextDueDate;
+        LocalDate nextDue = planningEntity.getNextDueDate();
 
         if(nextDue.isAfter(dateTo)) return Stream.empty();
-
-        ChronoUnit chronoUnit = switch (statDTO.getPeriodType()) {
+        CycleEnum cycleEnum = CycleEnum.valueOf(statDTO.getPeriod_type());
+        ChronoUnit chronoUnit = switch (cycleEnum) {
             case WEEK -> ChronoUnit.WEEKS;
             case MONTH -> ChronoUnit.MONTHS;
             case YEAR -> ChronoUnit.YEARS;
@@ -82,15 +89,18 @@ public class StatService {
 
         return IntStream.range(0, (int) rangeEnd + 1).mapToObj(offset -> {
             // Use calendar because some method of Date class is deprecated
-            LocalDate bucketDate = nextDue.plus(offset, statDTO.getPeriodType().toCalendarMagicField());
-
+            LocalDate bucketDate = nextDue.plus(offset, cycleEnum.toCalendarMagicField());
+            CategoryEntity categoryEntity = this
+                    .categoryRepository
+                    .findById(planningEntity.getCategoryName())
+                    .orElse(null);
             StatBucket statBucket = new StatBucket();
-            statBucket.setCategoryName(planningEntity.categoryName);
-            statBucket.setCategoryType(planningEntity.categoryType.name());
-            statBucket.setSum(planningEntity.amount);
+            statBucket.setCategoryName(planningEntity.getCategoryName());
+            statBucket.setCategoryType(categoryEntity.type.name());
+            statBucket.setSum(planningEntity.getAmount());
 
             // Note: don't add break statement here
-            switch (statDTO.getPeriodType()){
+            switch (cycleEnum){
                 case DAY:
                     statBucket.setDay(bucketDate.getDayOfMonth());
                 case WEEK:
