@@ -1,9 +1,16 @@
-import axios from "axios"
-
-const httpCommon = axios.create({
-    baseURL: "http://localhost:8081"
-})
+import { shortKey } from "../utils/utils"
+import { httpCommon } from "./httpCommon"
 
 export const fileService = {
-    upload()
+
+    upload: async function (formData) {
+        return { data: mockUploadFileResults }
+    }
 }
+
+const mockUploadFileResults = [...Array(10).keys()].map(key => {
+    return {
+        id: shortKey(),
+        message: ""
+    }
+})

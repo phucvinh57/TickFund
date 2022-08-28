@@ -5,6 +5,7 @@ import { shortKey } from "../utils/utils";
 export const transactionService = {
     getTransactions: async function (query) {
         return { data: generateTransaction(10) }
+        
     },
     getTransactionDetailById: async function (id) {
         return { data: sampleTransactionDetail }

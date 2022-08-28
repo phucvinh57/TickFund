@@ -1,6 +1,7 @@
 // $primary: #1aa79c;
 $primary: #0d1117;
 $secondary: #007bff;
+$danger: #e22a40;
 
 .styled-table {
     border-collapse: collapse;
@@ -71,6 +72,11 @@ $secondary: #007bff;
 
 .w-30 {
     width: 30%;
+}
+
+.hover-danger:hover {
+    background-color: $danger;
+    color: white;
 }
 
 @import "~bootstrap/scss/bootstrap.scss";

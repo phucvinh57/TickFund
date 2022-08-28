@@ -11,10 +11,9 @@ export default function Transactions() {
             <Button variant="primary" onClick={() => setModalAdd(true)}>
                 Tạo giao dịch
             </Button>
-            <CreateTransactionModal
-                show={modalAdd}
-                onHide={() => setModalAdd(false)}
-            />
+
+            <CreateTransactionModal show={modalAdd} onHide={() => setModalAdd(false)}/>
+
         </div>
         {/* <Category /> */}
         <TransactionTableV2 />

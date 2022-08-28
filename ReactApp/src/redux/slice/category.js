@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit"
 import { genCategory } from "../../components/transactions/sampleData"
 import { removeAccents } from "../../utils/utils"
 
-
 const data = genCategory()
 
 const categorySlice = createSlice({
