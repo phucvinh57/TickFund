@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Button } from "react-bootstrap";
 import TransactionTableV2 from "../components/transactions/transactionTableV2";
 
+
 export default function Transactions() {
     const [modalAdd, setModalAdd] = useState(false)
 
@@ -11,10 +12,7 @@ export default function Transactions() {
             <Button variant="primary" onClick={() => setModalAdd(true)}>
                 Tạo giao dịch
             </Button>
-            <CreateTransactionModal
-                show={modalAdd}
-                onHide={() => setModalAdd(false)}
-            />
+
         </div>
         {/* <Category /> */}
         <TransactionTableV2 />
