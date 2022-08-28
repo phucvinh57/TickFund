@@ -1,12 +1,11 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { Col, Container, Modal, ModalBody, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { removeAccents, reduceValuesToString, multiFilter } from "../../utils"
+import { removeAccents, reduceValuesToString, multiFilter } from "../../utils/utils"
 
-// import { Button, Row, Col, ListGroup, ButtonGroup} from "react-bootstrap"
 import TickTable from '../ticktable';
 
-function Detail({ data, show, onHide }) {
+function TransactionDetail({ data, show, onHide }) {
   // console.log(data)
   return <Modal
     show={show}
@@ -238,7 +237,7 @@ export default function HistoryTable() {
       onFilter={filter}
     />
 
-    <Detail
+    <TransactionDetail
       data={showData}
       show={show}
       onHide={() => setShow(false)}

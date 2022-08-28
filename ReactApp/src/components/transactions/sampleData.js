@@ -1,5 +1,5 @@
 import { EMPTY_AVATAR } from '../../resource';
-import { getRandomDate, getRandomItem, prettyDate } from '../../utils';
+import { getRandomDate, getRandomItem, prettyDate } from '../../utils/utils';
  
 const dummy_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fermentum et sollicitudin ac orci phasellus. Ipsum consequat nisl vel pretium lectus quam id leo in. Blandit libero volutpat sed cras ornare arcu dui. Odio morbi quis commodo odio aenean."
 
@@ -17,8 +17,8 @@ export const makeid = (length) => {
 export const genCategory = () => {
     let categories = []
     const type = {
-        Chi: ['tiền nhà', 'tiền điện', 'tiền nước', 'thiết bị', 'duy trì server', 'vật dụng', 'viễn thông'],
-        Thu: ['quỹ lab', 'đề tài', 'dự án', 'quỹ đầu tư', 'tài trợ']
+        Chi: ['Tiền nhà', 'Tiền điện', 'Tiền nước', 'Thiết bị', 'Duy trì server', 'Vật dụng', 'Viễn thông'],
+        Thu: ['Quỹ lab', 'Đề tài', 'Dự án', 'Quỹ đầu tư', 'Tài trợ']
     }
 
     for (const property in type) {
@@ -26,7 +26,7 @@ export const genCategory = () => {
             categories.push({
                 name: el,
                 type: property,
-                icon: ''
+                icon: '1f606'
             })
         }
         )

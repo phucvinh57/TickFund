@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { genCategory } from "../../components/transactions/sampleData"
-import { removeAccents } from "../../utils"
+import { removeAccents } from "../../utils/utils"
 
 
 const data = genCategory()
@@ -9,7 +9,7 @@ const categorySlice = createSlice({
     name: 'category',
     initialState: data,
     reducers: {
-        addCategory: (state,action) => {
+        addCategory: (state, action) => {
             const isDuplicated = (lhs, rhs) => {
                 return removeAccents(lhs.name) === removeAccents(rhs.name)
             }
@@ -28,5 +28,4 @@ const categorySlice = createSlice({
 })
 
 export const { addCategory, editCategory, removeCategory } = categorySlice.actions
-
 export default categorySlice.reducer

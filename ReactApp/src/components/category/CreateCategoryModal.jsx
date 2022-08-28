@@ -4,12 +4,7 @@ import { useState } from "react"
 import { Form, Modal, Button, ToastContainer, Toast, InputGroup } from "react-bootstrap"
 import { BrushFill } from "react-bootstrap-icons"
 
-function unifiedCodeToEmojiSymbol(unified) {
-  for (let item of Object.values(data.emojis)) {
-    if (item.skins[0].unified === unified) return item.skins[0].native
-  }
-  return null
-}
+import { convertUnifiedCodeToEmojiSymbol } from "../../utils/convertUnifiedCodeToEmojiSymbol"
 
 const defaultFormData = {
   type: "",
@@ -71,7 +66,7 @@ export default function CreateCategoryModal({ mode }) {
                 variant="outline-primary"
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
               >
-                {formData.icon === null ? <BrushFill /> : unifiedCodeToEmojiSymbol(formData.icon)}
+                {formData.icon === null ? <BrushFill /> : convertUnifiedCodeToEmojiSymbol(formData.icon)}
               </Button>
             </InputGroup>
 

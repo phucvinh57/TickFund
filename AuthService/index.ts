@@ -18,10 +18,11 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 
-app.use("/", router);
-
 app.use(validateToken)
 app.use(express.static("public"))
+
+app.use("/", router);
+
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)

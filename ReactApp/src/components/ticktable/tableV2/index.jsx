@@ -7,7 +7,7 @@ import { Funnel, TerminalPlus, Trash, XCircle } from "react-bootstrap-icons"
 import ReactPaginate from "react-paginate"
 import { BETWEEN, getOperators } from "../../../constants/compareOperator"
 import { PAGE_SIZE } from "../../../constants/pageSettings"
-import { shortKey } from "../../../utils"
+import { shortKey } from "../../../utils/utils"
 import RawTable from "./rawTable"
 
 export default function TickTableV2({

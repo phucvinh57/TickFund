@@ -597,8 +597,7 @@ components:
           type: string
           example: "Tiền điện TickLab"
         attachments:
-          type: array
-          example: ["hoadon.jpg", "hoadon.txt"]
+          $ref: "#/components/schemas/Attachments"
 
     Transaction.RowData:
       type: object
@@ -650,9 +649,7 @@ components:
           type: string
           example: "2022-08-10T17:46:17"
         attachments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Category'
+          $ref: "#/components/schemas/Attachments"
 
     Planning.New:
       type: object
@@ -942,15 +939,16 @@ components:
 
     Attachment:
       type: object
-      ID:
-        type: string
-        example: "1659543256692-0"
-      name:
-        type: string
-        example: "hoadon.txt"
-      path:
-        type: string
-        example: "http://tickfund.tl.vn:8081/1659543256692-0"
+      properties: 
+        ID:
+          type: string
+          example: "1659543256692-0"
+        name:
+          type: string
+          example: "hoadon.txt"
+        path:
+          type: string
+          example: "http://tickfund.tl.vn:8081/1659543256692-0"
 
     Log:
       type: object
@@ -1040,3 +1038,14 @@ components:
           type: integer
           example: "3000000"
 
+    Attachments:
+      type: array
+      items:
+        type: object
+        properties:
+          path: 
+            type: string
+            example: "http://localhost:8081/1456"
+          name:
+            type: string
+            example: "anhChupGiaoDich.jpg"
