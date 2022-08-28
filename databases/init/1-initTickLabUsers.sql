@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS account (
     expertise ENUM ('IT', 'ME', 'DEE') NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (department_id) REFERENCES department(ID)
-        ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS personal_link (
