@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS account (
     `name` VARCHAR(30),
     phone VARCHAR(15),
     email VARCHAR(50) ,
-    `password` VARCHAR(100) NOT NULL,
+    `password` VARCHAR(100),
     avatarURL VARCHAR(255),
     birthday DATE,
     department_id SMALLINT NOT NULL,

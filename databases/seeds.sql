@@ -62,7 +62,7 @@ VALUES
     (4, 'DELETE');
 
 INSERT INTO
-    `department` (`ID`, `name`)
+    ticklab_users.`department` (`ID`, `name`)
 VALUES
     (1, 'Ban Phát triển Dự án'),
     (2, 'Ban Nghiên cứu Khoa học'),
