@@ -1,11 +1,9 @@
-import axios from "axios"
-
-const httpCommon = axios.create({
-    baseURL: "http://localhost:8081"
-})
+import httpCommon from "./httpCommon"
 
 export const fileService = {
     upload: async function (formData) {
         console.log(formData)
     }
 }
+
+export default fileService

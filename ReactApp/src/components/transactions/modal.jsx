@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import ModalBody from 'react-bootstrap/ModalBody'
 import { Link, X } from 'react-bootstrap-icons'
-import { prettyDate } from '../../utils';
+import { prettyDate } from '../../utils/utils';
 import { makeid } from './sampleData';
 import { EMPTY_AVATAR } from '../../resource';
 import { useDispatch, useSelector } from 'react-redux';

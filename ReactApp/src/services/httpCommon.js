@@ -1,8 +1,10 @@
 import axios from "axios"
-export const httpCommon = axios.create({
-    baseURL: "http://localhost:8081",
+const httpCommon = axios.create({
+    baseURL: process.env.REACT_APP_TFSERVICE_BASE_URL, 
     headers: {
         "Content-type": "application/json"
     },
     withCredentials: true,
 })
+
+export default httpCommon

@@ -1,4 +1,4 @@
-import { httpCommon } from "./httpCommon"
+import httpCommon from "./httpCommon"
 
 const authService = {
     checkIfLoggedIn: async function (appCallbackUrl) {

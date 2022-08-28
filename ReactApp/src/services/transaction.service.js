@@ -1,6 +1,9 @@
 import { EMPTY_AVATAR } from "../resource";
 import { shortKey } from "../utils/utils";
-// import { httpCommon } from "./httpCommon";
+import httpCommon from "./httpCommon";
+// import httpCommon from "./httpCommon";
+
+const path = '/transactions/'
 
 export const transactionService = {
     getTransactions: async function (query) {
@@ -8,6 +11,9 @@ export const transactionService = {
     },
     getTransactionDetailById: async function (id) {
         return { data: sampleTransactionDetail }
+    },
+    addTransactions: async function (data) {
+        return httpCommon.post(path, data)
     }
 }
 

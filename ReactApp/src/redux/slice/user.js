@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { genUser } from "../../components/transactions/sampleData"; 
 
-const users = genUser();
+const users = [];
 
 const userSlice = createSlice({
     name: 'user',
