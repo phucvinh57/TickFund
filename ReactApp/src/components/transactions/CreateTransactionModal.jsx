@@ -20,7 +20,6 @@ export default function CreateTransactionModal({ show, onHide }) {
   // const users = useSelector(state => state.user)
   // const categories = useSelector(state => state.category)
 
-
   const [formData, setFormData] = useState(defaultState)
   const [categoryType, setCategoryType] = useState("INCOME")
 
@@ -38,7 +37,7 @@ export default function CreateTransactionModal({ show, onHide }) {
             <Form.Select value={formData.userId} onChange={e => setFormData({
               ...formData,
               userId: e.target.value
-            })}>
+            })} required>
               <option value={"1915940"}>
                 Nguyễn Phúc Vinh
               </option>
@@ -49,13 +48,13 @@ export default function CreateTransactionModal({ show, onHide }) {
             <Form.Control type="number" value={formData.amount} onChange={e => setFormData({
               ...formData,
               amount: e.target.value
-            })} />
+            })} required/>
           </Form.Group>
         </div>
         <div className="row mb-2">
           <Form.Group className="col-6">
             <Form.Label className="fw-bold">Loại:</Form.Label>
-            <Form.Select value={categoryType} onChange={e => setCategoryType(e.target.value)}>
+            <Form.Select value={categoryType} onChange={e => setCategoryType(e.target.value)} required>
               <option value={"INCOME"}>Thu</option>
               <option value={"EXPENSE"}>Chi</option>
             </Form.Select>
@@ -66,7 +65,7 @@ export default function CreateTransactionModal({ show, onHide }) {
             <Form.Select value={formData.categoryName} onChange={e => setFormData({
               ...formData,
               categoryName: e.target.value
-            })}>
+            })} required>
               <option value={"tien nha"}>Tiền nhà</option>
             </Form.Select>
           </Form.Group>
@@ -77,7 +76,7 @@ export default function CreateTransactionModal({ show, onHide }) {
           <Form.Control type="date" value={formData.history} onChange={e => setFormData({
             ...formData,
             history: e.target.value
-          })} />
+          })} required/>
         </Form.Group>
 
         <Form.Group className="mb-2">
