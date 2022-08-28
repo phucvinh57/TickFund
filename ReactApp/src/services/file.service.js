@@ -5,5 +5,7 @@ const httpCommon = axios.create({
 })
 
 export const fileService = {
-    upload()
+    upload: async function (formData) {
+        console.log(formData)
+    }
 }

@@ -1,13 +1,9 @@
-import { useState } from "react"
-import { Form, Modal } from "react-bootstrap"
-import { useSelector } from "react-redux"
-import { EMPTY_AVATAR } from "../../resource"
+import { Button, Form, Modal } from "react-bootstrap"
+import { AttachmentUploader } from "../attachment/attachmentUploader"
 
 export default function AddTransactionModal({ show, onHide }) {
   // const users = useSelector(state => state.user)
   // const categories = useSelector(state => state.category)
-
-  const [files, setFiles] = useState([])
 
   return <Modal show={show} onHide={onHide} size='lg'>
     <Modal.Header className="bg-primary text-white">
@@ -16,7 +12,9 @@ export default function AddTransactionModal({ show, onHide }) {
       </h5>
     </Modal.Header>
     <Modal.Body>
-      <Form method="POST" action="http://localhost:8081/transactions">
+      <Form onSubmit={e => {
+        e.preventDefault()
+      }}>
         <div className="row mb-2">
           <Form.Group className="col-6">
             <Form.Label>Số  tiền</Form.Label>
@@ -53,14 +51,9 @@ export default function AddTransactionModal({ show, onHide }) {
           <Form.Control type="date"/>
         </Form.Group>
 
-        <Form.Group>
-          <Form.Label>Thêm file mô tả</Form.Label>
-          <input 
-            type="file" multiple value={files} 
-            onChange={e => setFiles([...files, e.target.value])}
-          />
-        </Form.Group>
-        <button type="submit">Submit</button>
+        <AttachmentUploader />
+
+        <Button type="submit">Tạo giao dich</Button>
       </Form>
     </Modal.Body>
   </Modal>
