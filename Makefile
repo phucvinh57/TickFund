@@ -32,3 +32,10 @@ auth_service:
 
 file_server:
 	cd file-server; npm start
+
+all:
+	gnome-terminal -- sh -c "make tfservice"
+	gnome-terminal -- sh -c "make auth_service"
+	gnome-terminal -- sh -c "make file_server"
+	gnome-terminal -- sh -c "make application"
+	gnome-terminal -- sh -c "make api_specs"

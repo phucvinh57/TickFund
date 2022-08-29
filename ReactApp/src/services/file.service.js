@@ -1,9 +1,16 @@
-import httpCommon from "./httpCommon"
+import { shortKey } from "../utils/utils"
+import { httpCommon } from "./httpCommon"
 
 export const fileService = {
+
     upload: async function (formData) {
-        console.log(formData)
+        return { data: mockUploadFileResults }
     }
 }
 
-export default fileService
+const mockUploadFileResults = [...Array(10).keys()].map(key => {
+    return {
+        id: shortKey(),
+        message: ""
+    }
+})
