@@ -11,10 +11,10 @@ import Statistic from "./pages/statistic"
 import Planning from "./pages/planning"
 import NotFound from "./pages/notFound"
 import Fab from "./components/fab"
-import { BagPlus, BookmarkPlus } from "react-bootstrap-icons"
+import { BagPlus, BookmarkPlus, CartPlus } from "react-bootstrap-icons"
 import { useState } from "react"
 import PlanningModal from "./components/planning/modal"
-import TransactionModal from "./components/transactions/modal"
+import AddTransactionModal from "./components/transactions/createTransactionModal"
 
 const Main = styled.div`
   transition: 0.3s;
@@ -25,10 +25,12 @@ export default function App() {
 
   const [showTransaction, setShowTransaction] = useState(false)
   const [showPlanning, setShowPlanning] = useState(false)
+  const [showCategory, setShowCategory] = useState(false)
 
   const actions = [
-    { label: "Thêm giao dịch", icon: <BagPlus size={25} />, onClick: () => setShowTransaction(true), color: "#00a8ff" },
-    { label: "Thêm dự trù", icon: <BookmarkPlus size={25} />, onClick: () => setShowPlanning(true), color: "#00a8ff" }
+    { label: "Danh mục", icon: <BookmarkPlus size={25} />, onClick: () => setShowPlanning(true), color: "#00a8ff" },
+    { label: "Dự trù", icon: <CartPlus size={25} />, onClick: () => setShowPlanning(true), color: "#00a8ff" },
+    { label: "Giao dịch", icon: <BagPlus size={25} />, onClick: () => setShowTransaction(true), color: "#00a8ff" },
   ]
 
   return <div>
@@ -47,12 +49,11 @@ export default function App() {
       </div>
     </Main>
     <Fab actions={actions} />
-    
-    <TransactionModal
-        show={showTransaction}
-        onHide={() => setShowTransaction(false)}
+    <AddTransactionModal 
+      show={showTransaction}
+      onHide={() => setShowTransaction(false)}
     />
-    <PlanningModal             
+    <PlanningModal
       show={showPlanning}
       onHide={() => setShowPlanning(false)}
       mode='add'

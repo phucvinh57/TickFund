@@ -2,8 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import sidebarReducer from "./slice/sidebar";
 import planningReducer from "./slice/planning";
 import transactionReducer from "./slice/transaction"
-import categoryReducer from "./slice/category"
 import userReducer from "./slice/user"
+import categoryReducer from "./category";
 
 export default configureStore({
     reducer: {
@@ -13,5 +13,6 @@ export default configureStore({
         category: categoryReducer,
         user: userReducer,
         // table: tableReducer
-    }
+    },
+    devTools: true
 })

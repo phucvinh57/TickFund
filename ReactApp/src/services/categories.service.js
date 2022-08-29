@@ -1,32 +1,20 @@
-import http from './httpCommon'
+import httpCommon from './httpCommon'
 
 const path = '/categories'
 
-const getAll = async () => {
-    let response = await http.get(path)
-    return response
-}
-
-const addNew = async data => {
-    let response = await http.post(path, data)
-    return response
-}
-
-const update = async (name, data) => {
-    let response = await http.put(`${path}/${name}`)
-    return response
-}
-
-const remove = async (name) => {
-    let response = await http.delete(`${path}/${name}`)
-    return response
-}
-
 const categoriesService = {
-    getAll,
-    addNew,
-    update,
-    remove
+    getAll: async () => {
+        return httpCommon.get(path)
+    },
+    addNew: async data => {
+        return httpCommon.post(path, data)
+    },
+    update: async (name, data) => {
+        return httpCommon.put(`${path}/${name}`, data)
+    },
+    remove: async (name) => {
+        return httpCommon.delete(`${path}/${name}`)
+    }
 }
 
 export default categoriesService
