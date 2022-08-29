@@ -19,6 +19,8 @@ app.use(cookieParser())
 
 
 app.use(validateToken)
+
+app.use(express.static(__dirname + '/node_modules/bootstrap/dist'))
 app.use(express.static("public"))
 
 app.use("/", router);

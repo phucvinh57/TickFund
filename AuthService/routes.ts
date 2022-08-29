@@ -1,6 +1,5 @@
-import { Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import { AuthController } from "./controllers/auth.controller";
-import { MockTFServiceController } from "./controllers/mockTfService.controller";
 import { checkRequiredRequestQueries } from "./middlewares/checkRequiredRequestQueries.middleware";
 
 const router: Router = Router()
@@ -17,11 +16,5 @@ router.get(
     AuthController.checkCode
 )
 
-// Use only for testing
-router.get(
-    "/mock-service", 
-    checkRequiredRequestQueries(["code", "appCallbackUrl"]),
-    MockTFServiceController.getAuthentication
-)
 
 export default router;

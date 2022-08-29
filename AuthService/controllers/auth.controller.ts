@@ -31,12 +31,12 @@ export const AuthController = {
 
         res.cookie("token", jwt)
 
-        const appCallbackUrl = req.query["appCallbackUrl"]?.toString()
-        const serviceCallbackUrl = req.query["serviceCallbackUrl"]?.toString()
+        const appCallbackUrl = res.locals["appCallbackUrl"]
+        const serviceCallbackUrl = res.locals["serviceCallbackUrl"]
 
         const authCode = authCodeManager.generateCode(userId)
-
         res.redirect(301, `${serviceCallbackUrl}?appCallbackUrl=${appCallbackUrl}&code=${authCode}`)
+
     },
 
     checkCode: async function (req: Request, res: Response) {
@@ -46,12 +46,12 @@ export const AuthController = {
         if (userId === undefined) {
             res.json({
                 code_check: false,
-                message: "Code is invalid or has been expired !" 
+                message: "Code is invalid or has been expired !"
             })
             return
         }
 
-        res.json({ 
+        res.json({
             user_id: userId,
             code_check: true
         })
