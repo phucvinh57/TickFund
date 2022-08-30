@@ -8,16 +8,17 @@ services:
     restart: always
     ports:
       - 8082:8082
+    volumes:
+      - media:./media
 
-  # mysql:
-  #   image: mysql
-  #   container_name: mysql
-  #   volumes:
-  #     - mysqldb:/var/lib/mysql
-  #     - ./databases/init:/docker-entrypoint-initdb.d
-  #   restart: always
-  #   env_file: ./databases/.env
-  #   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  file_service:
+    container_name: file_service
+    build:
+      context: ./file-server
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 6000:6000
 
-# volumes:
-#   mysql:
+volumes:
+  media:
