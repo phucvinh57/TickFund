@@ -1,9 +1,4 @@
 INSERT INTO
-    tickfund.user
-VALUES
-    ('1915940', NULL);
-
-INSERT INTO
     tickfund.category
 VALUES
     ('Tiền điện', NULL, 'EXPENSE'),
@@ -46,6 +41,11 @@ VALUES
     (1, 'Thành viên'),
     (2, 'Thủ quỹ'),
     (3, 'Quản trị viên');
+
+INSERT INTO
+    tickfund.user
+VALUES
+    ('1915940', 1);
 
 INSERT INTO
     tickfund.resource (`ID`, `name`)
