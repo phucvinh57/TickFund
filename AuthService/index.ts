@@ -15,7 +15,8 @@ app.use(nocache())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
-app.use(express.static(__dirname + '/node_modules/bootstrap/dist'))
+app.use("/static", express.static(__dirname + '/node_modules/bootstrap/dist'))
+app.use("/static", express.static(__dirname + '/public/images'))
 
 route(app)
 

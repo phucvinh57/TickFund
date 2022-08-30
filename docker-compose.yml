@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  auth_service:
+    container_name: auth_service
+    build:
+      context: ./AuthService
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8082:8082
+
+  # mysql:
+  #   image: mysql
+  #   container_name: mysql
+  #   volumes:
+  #     - mysqldb:/var/lib/mysql
+  #     - ./databases/init:/docker-entrypoint-initdb.d
+  #   restart: always
+  #   env_file: ./databases/.env
+  #   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+# volumes:
+#   mysql:
