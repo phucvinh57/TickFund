@@ -7,18 +7,23 @@ export const validateToken = function (req: Request, res: Response, next: NextFu
     const token: string | undefined = req.cookies["token"]
 
     try {
-        if (token !== undefined) {
+        if (token) {
             // If not valid token, throw err
             const payload: any = verify(token, JWT_SECRET_KEY)
-
-            // next()
             const userId: string = payload["id"]
-            
-            const appCallbackUrl = req.query["appCallbackUrl"]
             const serviceCallbackUrl = req.query["serviceCallbackUrl"]
-            const authCode = authCodeManager.generateCode(userId)
-
-            res.redirect(301, `${serviceCallbackUrl}?appCallbackUrl=${appCallbackUrl}&code=${authCode}`)
+            if(serviceCallbackUrl) {
+                const appCallbackUrl = req.query["appCallbackUrl"]
+                const authCode = authCodeManager.generateCode(userId)
+                res.redirect(301, `${serviceCallbackUrl}?appCallbackUrl=${appCallbackUrl}&code=${authCode}`)
+                return
+            }
+            next()
+            return
+        }
+        // if not token
+        else if(!["/index.html", "/"].includes(req.path)) {
+            res.redirect("/")
             return
         }
         next()

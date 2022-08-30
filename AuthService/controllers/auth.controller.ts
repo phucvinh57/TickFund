@@ -30,13 +30,15 @@ export const AuthController = {
         })
 
         res.cookie("token", jwt)
+        const serviceCallbackUrl = req.query["serviceCallbackUrl"]?.toString()
+        if (serviceCallbackUrl) {
+            const appCallbackUrl = req.query["appCallbackUrl"]?.toString()
 
-        const appCallbackUrl = res.locals["appCallbackUrl"]
-        const serviceCallbackUrl = res.locals["serviceCallbackUrl"]
-
-        const authCode = authCodeManager.generateCode(userId)
-        res.redirect(301, `${serviceCallbackUrl}?appCallbackUrl=${appCallbackUrl}&code=${authCode}`)
-
+            const authCode = authCodeManager.generateCode(userId)
+            res.redirect(301, `${serviceCallbackUrl}?appCallbackUrl=${appCallbackUrl}&code=${authCode}`)
+        } else {
+            res.redirect("/success")
+        }
     },
 
     checkCode: async function (req: Request, res: Response) {
