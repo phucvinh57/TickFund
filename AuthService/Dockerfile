@@ -8,11 +8,12 @@ COPY .env package*.json dist/
 # Build from javascript src
 FROM node:16-alpine AS staging
 WORKDIR /usr/src/app/auth_service
-COPY --from=development /usr/src/app/auth_service/dist .
+COPY --from=development /usr/src/app/auth_service/dist/ .
 RUN npm ci --omit=dev
 RUN npm i --location=global @vercel/ncc
 RUN ncc build index.js -o dist
-COPY .env public/ dist/
+COPY .env dist/
+COPY public/ dist/public/
 
 # Production
 FROM node:16-alpine
