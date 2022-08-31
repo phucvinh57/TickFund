@@ -2,9 +2,7 @@ package com.tickfund.TFService.controllers;
 
 import com.tickfund.TFService.dtos.in.planning.PlanningDto;
 import com.tickfund.TFService.dtos.in.planning.PlanningQueryDTO;
-import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
 import com.tickfund.TFService.dtos.out.PlanningOut;
-import com.tickfund.TFService.dtos.out.TransactionOut;
 import com.tickfund.TFService.entities.tickfund.PlanningEntity;
 import com.tickfund.TFService.exceptions.ResourceNotFoundException;
 import com.tickfund.TFService.services.PlanningService;

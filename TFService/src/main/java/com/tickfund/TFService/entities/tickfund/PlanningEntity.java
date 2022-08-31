@@ -1,7 +1,6 @@
 package com.tickfund.TFService.entities.tickfund;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.tickfund.TFService.commons.enums.CategoryType;
 import com.tickfund.TFService.commons.enums.CycleEnum;
 import com.tickfund.TFService.dtos.in.planning.PlanningDto;
 

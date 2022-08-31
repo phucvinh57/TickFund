@@ -1,3 +1,5 @@
+-- Creates the new database
+
 CREATE DATABASE IF NOT EXISTS tickfund;
 ALTER DATABASE tickfund CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -34,9 +36,9 @@ CREATE TABLE IF NOT EXISTS permission (
     FOREIGN KEY (resource_id) REFERENCES `resource`(ID) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS `user` (
     ID VARCHAR(50) PRIMARY KEY,
-    role_id INT,
+    role_id INT NOT NULL,
 
     FOREIGN KEY (role_id) REFERENCES `role`(ID)
 );

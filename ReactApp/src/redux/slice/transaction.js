@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { genTransaction } from "../../components/transactions/sampleData"; 
 
-const data = genTransaction(72)
+// const data = genTransaction(72)
+const data = []
 
 const transactionSlice = createSlice({
   name: 'transaction',

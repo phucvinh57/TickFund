@@ -1,26 +1,14 @@
-import FormAdd from "../components/transactions/modal"
-import HistoryTable from "../components/transactions/history"
-import Category from "../components/transactions/category"
+import CreateTransactionModal from "../components/transactions/createTransactionModal"
 import { useState } from "react"
 import { Button } from "react-bootstrap";
+import TransactionTableV2 from "../components/transactions/transactionTableV2";
 
 
 export default function Transactions() {
-    const [modalAdd, setModalAdd] = useState(false)
 
     return <div>
-        <div className="mb-3">
-            <Button variant="primary" onClick={() => setModalAdd(true)}>
-                Tạo giao dịch
-            </Button>
-
-            <FormAdd
-                show={modalAdd}
-                onHide={() => setModalAdd(false)}
-            ></FormAdd>
-        </div>
-        <Category />
-        <HistoryTable />
+        {/* <Category /> */}
+        <TransactionTableV2 />
     </div>
 }
 

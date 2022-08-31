@@ -1,6 +1,6 @@
 setup_env:
 	cd TFService/src/main/resources; cp application_example.properties application.properties
-	cd databases; cp .env_example .env; cp createDbUsers_example.sql createDbUsers.sql
+	cd databases; cp .env_example .env; cp createDbUsers_example.sql init/3-createDbUsers.sql
 	cd AuthService; cp .env_example .env
 
 bootstrap:
@@ -15,7 +15,7 @@ down_db:
 tfservice:
 	cd TFService; ./gradlew bootRun
 
-start_app:
+application:
 	cd ReactApp; npm start
 
 build_app:
@@ -29,3 +29,13 @@ generate_user:
 
 auth_service:
 	cd AuthService; npm start
+
+file_server:
+	cd file-server; npm start
+
+all:
+	gnome-terminal -- sh -c "make tfservice"
+	gnome-terminal -- sh -c "make auth_service"
+	gnome-terminal -- sh -c "make file_server"
+	gnome-terminal -- sh -c "make application"
+	gnome-terminal -- sh -c "make api_specs"

@@ -1,4 +1,6 @@
 import { config } from "dotenv";
+import path from "path"
+
 config()
 
 if (typeof process.env.JWT_SECRET_KEY === "undefined") {
@@ -13,3 +15,5 @@ export const INTERNAL_SERVER_ERROR = 500
 
 // JWT Secret key
 export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+
+export const ROOT_PATH = path.resolve(__dirname)

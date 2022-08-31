@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import ModalBody from 'react-bootstrap/ModalBody'
 import { Link, X } from 'react-bootstrap-icons'
-import { prettyDate } from '../../utils';
+import { prettyDate } from '../../utils/utils';
 import { makeid } from './sampleData';
 import { EMPTY_AVATAR } from '../../resource';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,7 +28,7 @@ const init = {
 }
 
 
-export default function FormAdd({ show, onHide }) {
+export default function TransactionModal({ show, onHide }) {
   const users = useSelector(state => state.user)
   const categories = useSelector(state => state.category)
 
@@ -74,17 +74,19 @@ export default function FormAdd({ show, onHide }) {
     size="lg"
     aria-labelledby="contained-modal-title-vcenter"
     centered>
-    <Modal.Header closeButton>
+    <Modal.Header closeButton className="bg-primary text-white">
       <Modal.Title id="contained-modal-title-vcenter">
         Giao dịch mới
       </Modal.Title>
     </Modal.Header>
     <ModalBody>
       <Form onSubmit={handleAddTransaction} >
+
         <Form.Group className="mb-3">
           <Form.Label>Số tiền</Form.Label>
           <Form.Control type="number" required onChange={(event) => modify({ money: event.target.value + ' VND' })} />
         </Form.Group>
+
         <Row className="mb-3">
           <Form.Group as={Col}>
             <Form.Label>Loại danh mục</Form.Label>
@@ -105,6 +107,7 @@ export default function FormAdd({ show, onHide }) {
               <option value="Chi">Chi</option>
             </Form.Select>
           </Form.Group>
+
           <Form.Group as={Col}>
             <Form.Label>Tên danh mục</Form.Label>
             <Form.Select
@@ -132,6 +135,7 @@ export default function FormAdd({ show, onHide }) {
               }
             </Form.Select>
           </Form.Group>
+
         </Row>
         <Form.Group className="mb-3">
           <Form.Label>Người giao dịch</Form.Label>
@@ -144,8 +148,10 @@ export default function FormAdd({ show, onHide }) {
         </Form.Group>
 
         <Form.Group className="mb-3">
+          
           <Form.Label>Ghi chú</Form.Label>
           <Form.Control as="textarea" rows={3} onChange={(event) => modify({ notes: event.target.value })} />
+          
           <ListGroup horizontal="sm">
             <ListGroup.Item className='p-1 flex-grow-1'>
               {
@@ -169,7 +175,9 @@ export default function FormAdd({ show, onHide }) {
               </Form.Group>
             </ListGroup.Item>
           </ListGroup>
+
         </Form.Group>
+        
         <Button variant="primary" type="submit">
           Submit
         </Button>

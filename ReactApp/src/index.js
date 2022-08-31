@@ -6,7 +6,6 @@ import store from './redux/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom'
 
-import 'react-pro-sidebar/dist/css/styles.css';
 import './scss/custom.scss'
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import Protector from './Protector';

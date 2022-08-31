@@ -3,7 +3,6 @@ package com.tickfund.TFService.dtos.in.planning;
 import com.tickfund.TFService.dtos.in.query.AbstractQueryDTO;
 import com.tickfund.TFService.dtos.in.query.QueryOrder;
 import com.tickfund.TFService.entities.tickfund.PlanningEntity;
-import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 import com.tickfund.TFService.utils.AnnotationHelper;
 
 import javax.validation.constraints.AssertTrue;

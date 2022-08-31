@@ -19,6 +19,7 @@
 .env.test.local
 .env.production.local
 
+/mock_server
 
 compile.log
 
@@ -27,3 +28,6 @@ compile.log
 /.idea
 
 /TFService/src/main/resources/application.properties
+
+media
+node_modules

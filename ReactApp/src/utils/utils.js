@@ -1,6 +1,6 @@
 import ShortUniqueId from 'short-unique-id'
 import { isValidElement } from 'react'
-import { COMP_STR, DATE_TIME_TYPE } from './resource'
+import { COMP_STR, DATE_TIME_TYPE } from '../resource'
 
 export const shortKey = new ShortUniqueId({
     length: 6,
@@ -121,21 +121,21 @@ const evalComp = (ele, key, op, comparedValue, type) => {
 
     const propertyVal = ele[key].val ? ele[key].val : ele[key] // check if ele[key] is object
 
-    if(op === COMP_STR.eq) {return propertyVal === comparedValue}
-    else if(op === COMP_STR.lt) {return propertyVal < comparedValue}
-    else if(op === COMP_STR.gt) {return propertyVal > comparedValue}
-    else if(op === COMP_STR.uneq) {return propertyVal !== comparedValue}
-    else if(op === COMP_STR.lte) {return propertyVal <= comparedValue}
-    else if(op === COMP_STR.gte) {return propertyVal >= comparedValue}
+    if (op === COMP_STR.eq) { return propertyVal === comparedValue }
+    else if (op === COMP_STR.lt) { return propertyVal < comparedValue }
+    else if (op === COMP_STR.gt) { return propertyVal > comparedValue }
+    else if (op === COMP_STR.uneq) { return propertyVal !== comparedValue }
+    else if (op === COMP_STR.lte) { return propertyVal <= comparedValue }
+    else if (op === COMP_STR.gte) { return propertyVal >= comparedValue }
 }
 
 export const multiFilter = (arr, filterOptions) => {
-    const OP = filterOptions.logic == 'AND' ? '&&' : '||'
-    const initVal = OP === '&&' ? true : false 
-    const filteredResult = arr.filter(ele => filterOptions.filters.map( option => evalComp(ele, 
-                                        option.association.key,
-                                        option.operator,
-                                        option.comparedValue,
-                                        option.association.type)).reduce((prev, cur) => eval(`prev ${OP} cur`), initVal))
+    const OP = filterOptions.logic === 'AND' ? '&&' : '||'
+    const initVal = OP === '&&' ? true : false
+    const filteredResult = arr.filter(ele => filterOptions.filters.map(option => evalComp(ele,
+        option.association.key,
+        option.operator,
+        option.comparedValue,
+        option.association.type)).reduce((prev, cur) => eval(`prev ${OP} cur`), initVal))
     return filteredResult
 }

@@ -1,5 +1,5 @@
 import { Modal, Form, Button } from "react-bootstrap";
-import { generateHexId } from "../../utils";
+import { generateHexId } from "../../utils/utils";
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux'
 import { addPlanning, editPlanning, dropPlanning } from '../../redux/slice/planning'

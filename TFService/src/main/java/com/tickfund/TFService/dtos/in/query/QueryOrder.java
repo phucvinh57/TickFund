@@ -1,7 +1,6 @@
 package com.tickfund.TFService.dtos.in.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tickfund.TFService.dtos.validator.transaction.TransactionQueryFieldConstraint;
 
 import javax.validation.constraints.Pattern;
 

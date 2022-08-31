@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import PlanningModal from "./modal";
 import TickTableV2 from "../ticktable/tableV2";
-import { tickTableV2Headers } from "../../constants/tickTableV2Headers"
+import { planningTableV2Headers } from "../../constants/planningTableV2Headers"
 
 export default function PlanningTable() {
     const planningData = useSelector(state => state.planning)
@@ -35,7 +35,6 @@ export default function PlanningTable() {
     }, [planningData])
 
     const handleRowClick = row => {
-
         let planning = planningData.find(val => val.id === row.id.val)
         setTargetPlan(planning)
         console.log(planning)
@@ -53,7 +52,7 @@ export default function PlanningTable() {
         <TickTableV2
             // tableName={"Table Version 2"}
             componentSize="md"
-            headers={tickTableV2Headers}
+            headers={planningTableV2Headers}
             data={data}
             numPages={20}
 

@@ -1,7 +1,6 @@
 package com.tickfund.TFService.dtos.in.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 import com.tickfund.TFService.utils.AnnotationHelper;
 
 import javax.persistence.criteria.CriteriaBuilder;

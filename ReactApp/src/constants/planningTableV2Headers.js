@@ -3,7 +3,7 @@
 // If date, only have BETWEEN operator
 // If number, can have BETWEEN, LTE, GTE
 
-export const tickTableV2Headers = [{
+export const planningTableV2Headers = [{
     label: 'Mã dự trù',
     association: {
         key: 'id',

@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class AbstractQueryDTO {
     private final static String MUST = "must";
-    private final static String SHOULD = "should";
+    // private final static String SHOULD = "should";
 
     @JsonProperty
     @NotNull

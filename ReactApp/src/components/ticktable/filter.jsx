@@ -1,6 +1,6 @@
 import { Toast, Button, ToastContainer, Form } from "react-bootstrap";
 import { useMemo, useState } from "react";
-import { shortKey } from "../../utils";
+import { shortKey } from "../../utils/utils";
 import { TerminalPlus, Trash } from "react-bootstrap-icons";
 
 export default function Filter({ onFilter, fields, show, onHide }) {

@@ -1,6 +1,5 @@
 package com.tickfund.TFService.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
 import com.tickfund.TFService.dtos.in.transaction.TransactionDTO;
 import com.tickfund.TFService.dtos.out.AttachmentOut;
@@ -35,6 +34,7 @@ public class TransactionController {
     @GetMapping("/{id}")
     @ResponseBody
     public TransactionOut getTransactionById(@PathVariable(name = "id") String ID) throws ResourceNotFoundException {
+
         Optional<TransactionEntity> optionalTransaction =  this.transactionService.getTransactionById(ID);
         if(optionalTransaction.isPresent()){
             return new TransactionOut(optionalTransaction.get(), MY_DOMAIN);
@@ -46,8 +46,8 @@ public class TransactionController {
 
     @PostMapping("")
     @ResponseBody
-    public Map<String, Object> createTransaction(@Valid @RequestBody TransactionDTO body) {
 
+    public Map<String, Object> createTransaction(@Valid @RequestBody TransactionDTO body) {
         Set<String> attachmentIds = body.attachments;
 
         TransactionEntity transactionEntity = this.dtoToEntity(body);
@@ -73,8 +73,7 @@ public class TransactionController {
     @GetMapping("/query")
     @ResponseBody
     public List<TransactionOut> getTransactionsByQuery(@Valid @RequestBody TransactionQueryDTO dto) {
-        return this
-                .transactionService
+        return this.transactionService
                 .getTransactionByQuery(dto)
                 .stream()
                 .map(e -> new TransactionOut(e, MY_DOMAIN))

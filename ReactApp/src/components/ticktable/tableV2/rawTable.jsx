@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { shortKey, isObject } from "../../../utils"
+import { shortKey, isObject } from "../../../utils/utils"
 
 export default function RawTable({ headers, data, onRowClick }) {
 	const associations = useMemo(() => {

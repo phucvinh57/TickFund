@@ -1,16 +1,8 @@
-import axios from "axios"
-
-const httpCommon = axios.create({
-    baseURL: "http://localhost:8081",
-    headers: {
-        "Content-type": "application/json"
-    },
-    withCredentials: true
-})
+import httpCommon from "./httpCommon"
 
 const authService = {
-    checkIfLoggedIn: async function () {
-        return httpCommon.get("/auth/login")
+    checkIfLoggedIn: async function (appCallbackUrl) {
+        return httpCommon.get(`/auth/login?appCallbackUrl=${appCallbackUrl}`)
     }
 }
 

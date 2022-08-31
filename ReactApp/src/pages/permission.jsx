@@ -1,19 +1,19 @@
 
-import { Accordion, Button, Row, Col, Modal, InputGroup, FormControl} from "react-bootstrap";
+import { Accordion, Button, Row, Col, Modal, InputGroup, FormControl } from "react-bootstrap";
 
 import AccountTable from "../components/permission/accountTable";
 import PermissionCheckCard from "../components/permission/permissionCheckCard";
 import { useState } from "react";
 import { EMPTY_AVATAR, MEMBER_ROLE_STR } from "../resource";
 
-export default function Permission(){
+export default function Permission() {
     const [roles, setRoles] = useState(initRoles)
     const [addRoleShow, setAddRoleShow] = useState(false)
     const [db, setDb] = useState(ACCOUNT_DB)
 
-    return(
+    return (
         <div>
-            <AccountTable roles={roles} DB={db} setDB={setDb}/>
+            <AccountTable roles={roles} DB={db} setDB={setDb} />
             <Row className='mb-4'>
                 <Col>
                     <h4> Chỉnh sửa quyền truy cập</h4>
@@ -24,33 +24,33 @@ export default function Permission(){
             </Row>
             <Accordion>
                 {
-                    roles.map(role => 
+                    roles.map(role =>
                         <PermissionCheckCard
                             key={role}
                             handleDelete={handleDelete}
                             init={initRoles.includes(role) ? randPermission : emptyPermission}
-                            role={role}/>
+                            role={role} />
                     )
                 }
             </Accordion>
             <Modal show={addRoleShow} onHide={() => setAddRoleShow(false)}>
                 <Modal.Header>
-                <Modal.Title>Thêm nhóm quyền</Modal.Title>
+                    <Modal.Title>Thêm nhóm quyền</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <InputGroup className="mb-3">
-                        <FormControl onKeyDown={e => e.key === 'Enter' ? handleAdd(e.target.value) : null}/>
+                        <FormControl onKeyDown={e => e.key === 'Enter' ? handleAdd(e.target.value) : null} />
                     </InputGroup>
                 </Modal.Body>
             </Modal>
         </div>
     )
 
-    function handleAdd(role){
-        if(roles.includes(role)){
-            alert('Tên nhóm quyền đã tồn tại') 
+    function handleAdd(role) {
+        if (roles.includes(role)) {
+            alert('Tên nhóm quyền đã tồn tại')
         }
-        else{
+        else {
             setRoles([
                 ...roles,
                 role
@@ -61,9 +61,9 @@ export default function Permission(){
 
     function handleDelete(deletedRole) {
         setRoles(roles.filter(role => role !== deletedRole))
-        setDb(db.map(acc => ({...acc, role: MEMBER_ROLE_STR})))
+        setDb(db.map(acc => ({ ...acc, role: MEMBER_ROLE_STR })))
     }
-    
+
 }
 var ACCOUNT_DB = [
     {
@@ -154,44 +154,44 @@ const emptyPermission = [
     {
         resource: 'Tài khoản',
         actions: [
-            {name: 'Tạo tài khoản', valid: false},
-            {name: 'Chỉnh sửa thông tin tài khoản', valid: false},
-            {name: 'Vô hiệu hóa tài khoản', valid: false}
-        ] 
+            { name: 'Tạo tài khoản', valid: false },
+            { name: 'Chỉnh sửa thông tin tài khoản', valid: false },
+            { name: 'Vô hiệu hóa tài khoản', valid: false }
+        ]
     },
     {
         resource: 'Nhóm quyền',
         actions: [
-            {name: 'Chỉnh sửa các nhóm quyền', valid: false},
-            {name: 'Thêm gỡ các tài khoản vào nhóm quyền', valid: false},
-        ] 
+            { name: 'Chỉnh sửa các nhóm quyền', valid: false },
+            { name: 'Thêm gỡ các tài khoản vào nhóm quyền', valid: false },
+        ]
     },
     {
         resource: 'Giao dịch',
         actions: [
-            {name: 'Tạo giao dịch', valid: false},
-            {name: 'Vô hiệu hóa giao dịch', valid: false},
-            {name: 'Chỉnh sửa ghi chú', valid: false},
-            {name: 'Xem thống kê quỹ', valid: false},
-            {name: 'Xem thông tin tất cả các giao dịch', valid: false}
-        ] 
+            { name: 'Tạo giao dịch', valid: false },
+            { name: 'Vô hiệu hóa giao dịch', valid: false },
+            { name: 'Chỉnh sửa ghi chú', valid: false },
+            { name: 'Xem thống kê quỹ', valid: false },
+            { name: 'Xem thông tin tất cả các giao dịch', valid: false }
+        ]
     },
     {
         resource: 'Dự trù',
         actions: [
-            {name: 'Tạo dự trù', valid: false},
-            {name: 'Vô hiệu hóa dự trù', valid: false},
-            {name: 'Giải quyết dự trù', valid: false},
-            {name: 'Xem thông tin tất cả dự trù', valid: false}
-        ] 
+            { name: 'Tạo dự trù', valid: false },
+            { name: 'Vô hiệu hóa dự trù', valid: false },
+            { name: 'Giải quyết dự trù', valid: false },
+            { name: 'Xem thông tin tất cả dự trù', valid: false }
+        ]
     },
     {
         resource: 'Yêu cầu giải ngân/đóng góp',
         actions: [
-            {name: 'Tạo yêu cầu giải ngân/đóng góp', valid: false},
-            {name: 'Vô hiệu hóa yêu cầu giải ngân/đóng góp', valid: false},
-            {name: 'Xét duyệt yêu cầu giải ngân/đóng góp', valid: false},
-            {name: 'Xem thông tin tất cả các yêu cầu giải ngân đóng góp', valid: false}
-        ] 
+            { name: 'Tạo yêu cầu giải ngân/đóng góp', valid: false },
+            { name: 'Vô hiệu hóa yêu cầu giải ngân/đóng góp', valid: false },
+            { name: 'Xét duyệt yêu cầu giải ngân/đóng góp', valid: false },
+            { name: 'Xem thông tin tất cả các yêu cầu giải ngân đóng góp', valid: false }
+        ]
     }
 ]

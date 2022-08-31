@@ -2,9 +2,8 @@ import {
     shortKey,
     getRandomDate,
     getRandomItem,
-    prettyDate,
     generateHexId
-} from "../../utils";
+} from "../../utils/utils";
 
 export const headers = [{
     label: 'Mã dự trù',

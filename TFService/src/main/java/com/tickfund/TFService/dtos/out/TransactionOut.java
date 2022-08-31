@@ -6,15 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.commons.enums.CategoryType;
 import com.tickfund.TFService.entities.tickfund.AttachmentEntity;
 import com.tickfund.TFService.entities.tickfund.TransactionEntity;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TransactionOut {
     @JsonProperty
