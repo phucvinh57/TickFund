@@ -2,6 +2,7 @@ package com.tickfund.TFService.services;
 
 import com.tickfund.TFService.entities.UserToken;
 import com.tickfund.TFService.entities.tickfund.UserEntity;
+import com.tickfund.TFService.utils.CookieUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -15,6 +16,7 @@ import java.util.*;
 @Component
 public class TokenManager {
     private static final String ROLE = "role";
+    private static final String USER_ID = "user_id";
     @Value("${tickfund.jwt.secret}")
     private String jwtSecret;
 
@@ -23,6 +25,7 @@ public class TokenManager {
     public String generateJwtToken(UserEntity userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(ROLE, userDetails.getRole().getName());
+        claims.put(USER_ID, userDetails.getID());
         return Jwts.builder().setClaims(claims).setSubject(userDetails.getID())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
@@ -32,14 +35,12 @@ public class TokenManager {
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         UserToken cUser = new UserToken();
         cUser.setRole(claims.get(ROLE, String.class));
+        cUser.setUserId(claims.get(USER_ID, String.class));
         return cUser;
     }
 
     public boolean validateFromCookie(Cookie[] cookies, String cookieName){
-        cookies = Optional.ofNullable(cookies).orElse(new Cookie[0]);
-        Optional<Cookie> optNamedCookie = Arrays.stream(cookies)
-                .filter(cookie -> cookie.getName().equals(cookieName))
-                .findFirst();
+        Optional<Cookie> optNamedCookie = CookieUtil.getCookieFromName(cookies, cookieName);
         if(optNamedCookie.isPresent()){
             try{
                 Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(optNamedCookie.get().getValue()).getBody();
