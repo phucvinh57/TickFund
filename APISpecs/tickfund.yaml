@@ -390,6 +390,18 @@ paths:
         500:
           description: Internal Server Error
 
+  /users/me:
+    get:
+      summary: Get my user
+      tags:
+        - users
+      responses:
+        200:
+          description: Return user's info, include user's role
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CurrentUserInfo"
   # PLANNING
   /plannings:
     post:
@@ -559,6 +571,76 @@ paths:
 
 components:
   schemas:
+    CurrentUserInfo:
+      type: object
+      properties:
+        ID:
+          type: string
+          example: 1915940
+        name:
+          type: string
+          example: Nguyễn Phúc Vinh
+        username:
+          type: string
+          example: vinh.np
+        avatarUrl:
+          type: string
+          example: "https://cdn.ticklab.com"
+        phone:
+          type: string
+          example: 0373395726
+        birthday:
+          type: string
+          example: "2001-07-05"
+        expertise:
+          $ref: "#/components/schemas/Expertise"
+        department:
+          $ref: "#/components/schemas/Department"
+        role:
+          $ref: "#/components/schemas/Role"
+    
+    Role:
+      type: object
+      properties:
+        ID:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Thủ quỹ
+        resources:
+          type: array
+          items:
+            $ref: "#/components/schemas/Resource"
+    
+    Resource:
+      type: object
+      properties:
+        ID:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Giao dịch
+        actions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Action"
+    
+    Action:
+      type: object
+      properties:
+        ID:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Tạo giao dịch mới
+        permit:
+          type: boolean
+          example: true
+
+
     Category:
       type: object
       properties:

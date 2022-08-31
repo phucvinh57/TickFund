@@ -1,11 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { genUser } from "../../components/transactions/sampleData"; 
-
-const users = [];
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: users,
+    initialState: [],
     reducers : {
         addUser: (state, action) => {
             return [action.payload, ...state]

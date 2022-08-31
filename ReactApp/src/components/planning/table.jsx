@@ -1,12 +1,14 @@
 import { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
 
 import PlanningModal from "./modal";
 import TickTableV2 from "../ticktable/tableV2";
 import { planningTableV2Headers } from "../../constants/planningTableV2Headers"
+import randLogData from "./sampleData";
+
+const initPlanningData = randLogData()
 
 export default function PlanningTable() {
-    const planningData = useSelector(state => state.planning)
+    const planningData = initPlanningData
     const [showEditModal, setShowEditModal] = useState(false)
     const [targetPlan, setTargetPlan] = useState(null)
 
