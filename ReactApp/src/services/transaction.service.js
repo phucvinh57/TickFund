@@ -1,20 +1,18 @@
 import { EMPTY_AVATAR } from "../resource";
 import { shortKey } from "../utils/utils";
-import httpCommon from "./httpCommon";
-// import httpCommon from "./httpCommon";
-
+import { tfServiceHTTPCommon } from "./httpCommon";
 const path = '/transactions/'
 
 export const transactionService = {
     getTransactions: async function (query) {
         return { data: generateTransaction(10) }
-        
+
     },
     getTransactionDetailById: async function (id) {
         return { data: sampleTransactionDetail }
     },
     addTransactions: async function (data) {
-        return httpCommon.post(path, data)
+        return tfServiceHTTPCommon.post(path, data)
     }
 }
 

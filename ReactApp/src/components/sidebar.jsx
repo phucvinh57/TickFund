@@ -1,6 +1,6 @@
-import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent } from 'react-pro-sidebar'
+import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent, SidebarFooter } from 'react-pro-sidebar'
 import { Link } from 'react-router-dom'
-import { Speedometer2, BarChartLine, PieChart, List, GraphUp, ShieldLock, JournalText, Coin, PiggyBank } from 'react-bootstrap-icons'
+import { Speedometer2, BarChartLine, PieChart, List, GraphUp, ShieldLock, JournalText, Coin, PiggyBank, InfoCircle, People, BoxArrowRight } from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { setCollapse } from '../redux/slice/sidebar';
 import styled from 'styled-components'
@@ -41,6 +41,16 @@ export default function Sidebar() {
                 {sidebarContent.map(content => visitItem(content))}
             </Menu>
         </SidebarContent>
+        <SidebarFooter>
+            <Menu><SubMenu icon={<InfoCircle size={18} />} title={"Tài khoản"}>
+                <MenuItem icon={<People size={18} />}>
+                    <Link to={"/me"}>Thông tin cá nhân</Link>
+                </MenuItem>
+                <MenuItem icon={<BoxArrowRight size={18} />}>
+                    <a href={"https://facebook.com"}>Đăng xuất</a>
+                </MenuItem>
+            </SubMenu></Menu>
+        </SidebarFooter>
     </ProSidebar>;
 }
 
@@ -85,7 +95,7 @@ const sidebarContent = [
         icon: <PiggyBank size={18} />,
         title: "Dự trù",
         path: '/plannings'
-    }, 
+    },
     {
         icon: <ShieldLock size={18} />,
         title: 'Quyền truy cập',

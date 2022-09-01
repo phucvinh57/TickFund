@@ -2,19 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: [],
-    reducers : {
-        addUser: (state, action) => {
-            return [action.payload, ...state]
+    initialState: null,
+    reducers: {
+        initUser: (state, action) => {
+            console.log(action.payload)
+            return action.payload
         },
-        dropUser: (state, action) => {
-            const username = action.payload
-            let idx = state.findIndex(val => val.user === username)
-            if (idx !== -1) state.splice(idx, 1)
-            return state
+        setAvatarUrl: (state, action) => {
+            return { ...state, avatarUrl: action.payload }
         }
     }
 })
 
-export const { addUser, dropUser } = userSlice.actions
+export const { initUser, setAvatarUrl } = userSlice.actions
 export default userSlice.reducer

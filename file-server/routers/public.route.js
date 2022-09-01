@@ -21,7 +21,6 @@ router.post("/upload", function (req, res) {
     const avatarImage = req.files.avatar;
     const extension = mimetype.extension(avatarImage.mimetype)
     const filename = uuidV4().replaceAll("-", "") + "." + extension
-    console.log(PUBLIC_FOLDER_PATH + "/" + filename)
 
     avatarImage.mv(PUBLIC_FOLDER_PATH + "/" + filename, function (err) {
         if (err) return res.status(INTERNAL_SERVER_ERROR_CODE).json({ msg: err.message });
