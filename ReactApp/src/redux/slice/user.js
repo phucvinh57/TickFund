@@ -5,7 +5,6 @@ const userSlice = createSlice({
     initialState: null,
     reducers: {
         initUser: (state, action) => {
-            console.log(action.payload)
             return action.payload
         },
         setAvatarUrl: (state, action) => {
