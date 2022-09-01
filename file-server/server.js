@@ -1,30 +1,28 @@
-var express = require('express');
-const path = require('path');
+const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const _ = require('lodash');
+const fs = require('fs');
 
+const PUBLIC_STATIC_FOLDER = "./public"
+if (!fs.existsSync(PUBLIC_STATIC_FOLDER)) {
+    fs.mkdirSync(PUBLIC_STATIC_FOLDER);
+}
 
-var app = express();
-var PORT = 6000;
+const app = express();
 const fileRouter = require('./routers/fileRouter')
- 
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(morgan('dev'));
+const publicRouter = require("./routers/public.route");
+const PORT = require('./constanst/port');
 
+app.use(cors({
+    origin: "http://localhost:3000"
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/media', fileRouter.buildStaticFileServe(__dirname));
- 
-app.get('/', function(req, res){
-    console.log("File Sent")
-    res.send();
-});
- 
-app.listen(PORT, function(err){
+app.use('/public', publicRouter)
+
+app.listen(PORT, function (err) {
     if (err) console.log(err);
     console.log("Server listening on PORT", PORT);
 });

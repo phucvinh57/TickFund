@@ -577,12 +577,15 @@ components:
         ID:
           type: string
           example: 1915940
-        name:
-          type: string
-          example: Nguyễn Phúc Vinh
         username:
           type: string
           example: vinh.np
+        email:
+          type: string
+          example: npvinh0507@gmail.com
+        name:
+          type: string
+          example: Nguyễn Phúc Vinh
         avatarUrl:
           type: string
           example: "https://cdn.ticklab.com"
