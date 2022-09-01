@@ -1,7 +1,7 @@
 import { compare } from "bcrypt";
 import { FieldPacket, RowDataPacket } from "mysql2";
 import { dbQuery } from "../database";
-import UserDto from "../user.dto";
+import UserDto from "../dtos/user.dto";
 
 export const validateUser = async (loginDto: UserDto): Promise<string | null> => {
     const [queryResult]: [RowDataPacket[], FieldPacket[]] = await dbQuery(

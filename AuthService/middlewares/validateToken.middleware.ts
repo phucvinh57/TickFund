@@ -12,7 +12,7 @@ export const validateToken = function (req: Request, res: Response, next: NextFu
             const payload: any = verify(token, JWT_SECRET_KEY)
             const userId: string = payload["id"]
             const serviceCallbackUrl = req.query["serviceCallbackUrl"]
-            if(serviceCallbackUrl) {
+            if (serviceCallbackUrl) {
                 const appCallbackUrl = req.query["appCallbackUrl"]
                 const authCode = authCodeManager.generateCode(userId)
                 res.redirect(301, `${serviceCallbackUrl}?appCallbackUrl=${appCallbackUrl}&code=${authCode}`)
@@ -22,9 +22,11 @@ export const validateToken = function (req: Request, res: Response, next: NextFu
             return
         }
         // if not token
-        else if(!["/index.html", "/"].includes(req.path)) {
-            res.redirect("/")
-            return
+        else {
+            if (!["/index.html", "/"].includes(req.path)) {
+                res.redirect("/")
+                return
+            }
         }
         next()
     } catch (err: any) {

@@ -1,6 +1,9 @@
 export const userService = {
     getInfoAndRole: async function () {
         return { data: mockUserInfoAndRole }
+    },
+    updateAvatar: async function (avatarUrl) {
+        return { data: true }
     }
 }
 

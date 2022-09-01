@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { sign } from "jsonwebtoken";
-import UserDto from "../user.dto";
+import UserDto from "../dtos/user.dto";
 import { ACCESS_DENIED, BAD_REQUEST, JWT_SECRET_KEY } from "../constants";
 import { validateUser } from "../services/validateUser";
 import { authCodeManager } from "../services/authCodeManager";
