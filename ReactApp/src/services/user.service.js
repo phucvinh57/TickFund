@@ -5,15 +5,15 @@ export const userService = {
         return { data: mockUserInfoAndRole }
     },
     updateAvatar: async function (avatarUrl) {
-        return ssoServiceHTTPCommon.put("/user/avatar", { avatarUrl })
+        return ssoServiceHTTPCommon.put("/personal/avatar", { avatarUrl })
     },
     changePassword: async function (oldPass, newPass, confirmedNewPass) {
-        return ssoServiceHTTPCommon.put("/user/password", {
+        return ssoServiceHTTPCommon.put("/personal/password", {
             oldPass, newPass, confirmedNewPass
         })
     },
     updateInfo: async function(data) {
-        return ssoServiceHTTPCommon.put("/user/info", data)
+        return ssoServiceHTTPCommon.put("/personal/info", data)
     }
 }
 

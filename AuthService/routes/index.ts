@@ -1,10 +1,10 @@
 import { Express } from "express";
 import authRouter from "./auth.route";
 import staticRouter from "./static.route"
-import userRouter from "./user.route"
+import personalRouter from "./personal.route"
 
 export default function route(app: Express) {
     app.use("/auth", authRouter)
     app.use("/", staticRouter)
-    app.use("/user", userRouter)
+    app.use("/personal", personalRouter)
 }

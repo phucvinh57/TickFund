@@ -1,6 +1,6 @@
 import { authCodeManager } from "./authCodeManager";
-import { changeUserAvatar } from "./changeUserAvatar";
-import { updateUserInfo } from "./updateUserInfo.service";
+import { changePersonalAvatar } from "./changePersonalAvatar";
+import { updatePersonalInfo } from "./updatePersonalInfo.service";
 import { updateUserPassword } from "./updateUserPassword.service";
 import { validateUser } from "./validateUser.service";
 
@@ -8,6 +8,6 @@ export {
     updateUserPassword,
     validateUser,
     authCodeManager,
-    changeUserAvatar,
-    updateUserInfo
+    changePersonalAvatar,
+    updatePersonalInfo
 }

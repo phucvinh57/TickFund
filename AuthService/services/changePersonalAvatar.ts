@@ -2,7 +2,7 @@ import axios from "axios";
 import { dbQuery } from "../database"
 // import axios from "axios"
 
-export const changeUserAvatar = async function(avatarUrl: string, userId: string) {
+export const changePersonalAvatar = async function(avatarUrl: string, userId: string) {
     const rawQueryResult = await dbQuery(
         `SELECT avatarURL FROM account WHERE ID = ?`,
         [userId]

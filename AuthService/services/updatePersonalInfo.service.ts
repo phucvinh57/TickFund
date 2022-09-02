@@ -1,7 +1,7 @@
 import { dbQuery } from "../database"
 import { UpdateUserInfoDto } from "../dtos"
 
-export const updateUserInfo = async function (dto: UpdateUserInfoDto, userId: string) {
+export const updatePersonalInfo = async function (dto: UpdateUserInfoDto, userId: string) {
     return dbQuery(`UPDATE account SET
             email = ?,
             name = ?,
