@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 import { Form, Button } from "react-bootstrap"
-import { userService } from "../../services/user.service"
+import { personalService } from "../../services/personal.service"
 import { DEPARTMENTS } from "../../constants/departments"
 import { setUserInfo } from "../../redux/slice/user"
 
@@ -31,7 +31,7 @@ export function UserInfoForm() {
 
   return <Form onSubmit={e => {
     e.preventDefault()
-    userService.updateInfo(formInfoData).then(response => {
+    personalService.updateInfo(formInfoData).then(response => {
       alert(response.data.msg)
       const department = DEPARTMENTS.find(d => d.ID == formInfoData.departmentId)
 

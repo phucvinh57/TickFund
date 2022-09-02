@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useEffect } from "react"
 import authService from "./services/auth.service"
 import { useDispatch, useSelector } from "react-redux"
-import { userService } from "./services/user.service"
+import { personalService } from "./services/personal.service"
 import { initUser } from "./redux/slice/user"
 import { useMemo } from "react"
 
@@ -15,7 +15,7 @@ export default function Protector({ children }) {
 
     useEffect(() => {
         authService.checkIfLoggedIn(window.location.href).then(response => {
-            userService.getInfoAndRole().then(response => {
+            personalService.getInfoAndRole().then(response => {
                 dispatch(initUser(response.data))
             })
             if (response.data.code) setIsLoggedIn(true)

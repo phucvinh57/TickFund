@@ -1,8 +1,8 @@
 import { ssoServiceHTTPCommon } from "./httpCommon"
 
-export const userService = {
+export const personalService = {
     getInfoAndRole: async function () {
-        return { data: mockUserInfoAndRole }
+        return { data: mockPersonalInfoAndRole }
     },
     updateAvatar: async function (avatarUrl) {
         return ssoServiceHTTPCommon.put("/personal/avatar", { avatarUrl })
@@ -17,7 +17,7 @@ export const userService = {
     }
 }
 
-const mockUserInfoAndRole = {
+const mockPersonalInfoAndRole = {
     "ID": "1915940",
     "username": "vinh.np",
     "email": "npvinh0507@gmail.com",

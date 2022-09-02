@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Button, Form } from "react-bootstrap"
-import { userService } from "../../services/user.service"
+import { personalService } from "../../services/personal.service"
 
 export function ChangeUserPasswordForm() {
     const [oldPass, setOldPass] = useState("")
@@ -9,7 +9,7 @@ export function ChangeUserPasswordForm() {
 
     return <Form onSubmit={e => {
         e.preventDefault()
-        userService.changePassword(oldPass, newPass, confirmedNewPass).then(response => {
+        personalService.changePassword(oldPass, newPass, confirmedNewPass).then(response => {
             alert(response.data.msg)
             setOldPass("")
             setNewPass("")
