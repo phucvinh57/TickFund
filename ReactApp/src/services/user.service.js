@@ -11,6 +11,9 @@ export const userService = {
         return ssoServiceHTTPCommon.put("/user/password", {
             oldPass, newPass, confirmedNewPass
         })
+    },
+    updateInfo: async function(data) {
+        return ssoServiceHTTPCommon.put("/user/info", data)
     }
 }
 

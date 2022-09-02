@@ -448,7 +448,7 @@ paths:
           description: Update user avatar successfully
   /user/info:
     put:
-      summary: Update user's password
+      summary: Update user's info
       tags:
         - user
       requestBody:
@@ -457,18 +457,26 @@ paths:
             schema:
               type: object
               properties:
-                oldPass:
+                email:
                   type: string
-                  example: "******"
-                newPass:
+                  example: npvinh0507@gmail.com
+                name:
                   type: string
-                  example: "******"
-                confirmedNewPass:
+                  example: guyễn Phúc Vinh
+                phone:
                   type: string
-                  example: "******"
+                  example: "0373395726"
+                birthday:
+                  type: string
+                  example: "2001-07-05"
+                expertise:
+                  $ref: "#/components/schemas/Expertise"
+                departmentId:
+                  type: number
+                  example: 1
       responses:
         200:
-          description: Update password successfully
+          description: Update user info successfully
 
   # PLANNING
   /plannings:

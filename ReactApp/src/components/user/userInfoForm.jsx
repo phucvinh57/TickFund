@@ -1,14 +1,17 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react"
-import { Form } from "react-bootstrap"
+import { Form, Button } from "react-bootstrap"
+import { userService } from "../../services/user.service"
+import { DEPARTMENTS } from "../../constants/departments"
+import { setUserInfo } from "../../redux/slice/user"
 
 export function UserInfoForm() {
   const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
 
   const [formInfoData, setFormInfoData] = useState({
     email: "npvinh0507@gmail.com",
     name: "Nguyễn Phúc Vinh",
-    avatarUrl: "http://localhost:3002/public/1w5zx9q6asd.jpg",
     phone: "0373395726",
     birthday: "2001-07-05",
     expertise: "IT",
@@ -19,7 +22,6 @@ export function UserInfoForm() {
     setFormInfoData({
       email: user.email,
       name: user.name,
-      avatarUrl: user.avatarUrl,
       phone: user.phone,
       birthday: user.birthday,
       expertise: user.expertise,
@@ -27,7 +29,21 @@ export function UserInfoForm() {
     })
   }, [user])
 
-  return <Form>
+  return <Form onSubmit={e => {
+    e.preventDefault()
+    userService.updateInfo(formInfoData).then(response => {
+      alert(response.data.msg)
+      const department = DEPARTMENTS.find(d => d.ID == formInfoData.departmentId)
+
+      dispatch(setUserInfo({
+        ...formInfoData,
+        department
+      }))
+    }).catch(err => {
+      alert(err.response.data.msg)
+    })
+
+  }}>
     <h4>Thông tin tài khoản</h4>
     <div className="row mb-2">
       <Form.Group className="col-6">
@@ -42,7 +58,7 @@ export function UserInfoForm() {
     <Form.Group className="mb-2">
       <Form.Label>Họ và tên:</Form.Label>
       <Form.Control size="sm"
-        type="text" value={formInfoData.name}
+        type="text" value={formInfoData.name} required
         onChange={e => setFormInfoData({ ...formInfoData, name: e.target.value })}
       />
     </Form.Group>
@@ -57,7 +73,7 @@ export function UserInfoForm() {
       <Form.Group className="col-6">
         <Form.Label>Số  điện thoại:</Form.Label>
         <Form.Control size="sm"
-          type="tel" value={formInfoData.phone} required
+          type="tel" value={formInfoData.phone}
           onChange={e => setFormInfoData({ ...formInfoData, phone: e.target.value })}
         />
       </Form.Group>
@@ -89,10 +105,13 @@ export function UserInfoForm() {
         value={formInfoData.departmentId} required size="sm"
         onChange={e => setFormInfoData({ ...formInfoData, departmentId: e.target.value })}
       >
-        <option value={1}>Ban phát triển dự án</option>
-        <option value={2}>Ban Nghiên cứu khoa học</option>
-        <option value={3}>Ban Phát triển đội nhóm và con người</option>
+        {DEPARTMENTS.map(department => <option key={department.ID} value={department.ID}>
+          {department.name}
+        </option>)}
       </Form.Select>
     </Form.Group>
+    <div className="d-flex justify-content-end">
+      <Button type="submit">Lưu thông tin</Button>
+    </div>
   </Form>
 }

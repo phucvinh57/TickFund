@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { ACCESS_DENIED, BAD_REQUEST, INTERNAL_SERVER_ERROR } from "../constants"
-import { LoginDto, ChangePasswordDto } from "../dtos"
-import { changeUserAvatar, updateUserPassword, validateUser } from "../services"
+import { LoginDto, ChangePasswordDto, UpdateUserInfoDto } from "../dtos"
+import { changeUserAvatar, updateUserInfo, updateUserPassword, validateUser } from "../services"
 
 export const UserController = {
     changePassword: async function (req: Request, res: Response) {
@@ -38,6 +38,24 @@ export const UserController = {
         }
     },
     updateInfo: async function (req: Request, res: Response) {
+        let updateUserInfoDto: UpdateUserInfoDto
+        try {
+            updateUserInfoDto = new UpdateUserInfoDto().setBirthday(req.body.birthday)
+                .setEmail(req.body.email)
+                .setName(req.body.name)
+                .setExpertise(req.body.expertise)
+                .setDepartmentId(req.body.departmentId)
+                .setPhone(req.body.phone)
+            const userId: string = res.locals["userId"]
 
+            try {
+                await updateUserInfo(updateUserInfoDto, userId)
+                res.json({ msg: "Update info success" })
+            } catch (err: any) {
+                res.status(INTERNAL_SERVER_ERROR).json({ msg: err.message })
+            }
+        } catch (err: any) {
+            res.status(BAD_REQUEST).json({ msg: err.message })
+        }
     }
 }
