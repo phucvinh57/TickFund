@@ -15,7 +15,7 @@ import { BagPlus, BookmarkPlus, CartPlus } from "react-bootstrap-icons"
 import { useState } from "react"
 import PlanningModal from "./components/planning/modal"
 import AddTransactionModal from "./components/transactions/createTransactionModal"
-import User from "./pages/Personal"
+import Personal from "./pages/personal"
 
 const Main = styled.div`
   transition: 0.3s;
@@ -26,7 +26,7 @@ export default function App() {
 
   const [showTransaction, setShowTransaction] = useState(false)
   const [showPlanning, setShowPlanning] = useState(false)
-  const [showCategory, setShowCategory] = useState(false)
+  // const [showCategory, setShowCategory] = useState(false)
 
   const actions = [
     { label: "Danh mục", icon: <BookmarkPlus size={25} />, onClick: () => setShowPlanning(true), color: "#00a8ff" },
@@ -45,7 +45,7 @@ export default function App() {
           <Route path="/stat/*" element={<Statistic />} />
           <Route path='/permission' element={<Permission/>} />
           <Route path="/log" element={<Log />} />
-          <Route path="/personal" element={<User />} />
+          <Route path="/personal" element={<Personal />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
