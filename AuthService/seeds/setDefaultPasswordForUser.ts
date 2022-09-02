@@ -1,10 +1,9 @@
 import { dbQuery } from "../database";
 import { config } from "dotenv";
-import bcrypt from "bcrypt"
+import { updateUserPassword } from "../services";
 
 config()
 
-const SALT_ROUND = 10
 const DEFAULT_USER_PASSWORD: string | undefined = process.env.DEFAULT_USER_PASSWORD;
 
 async function setDefaultPasswordForAllNewUsers() {
@@ -16,11 +15,14 @@ async function setDefaultPasswordForAllNewUsers() {
     const getAllNewUsersIdsQueryResult = await dbQuery(`SELECT ID FROM account WHERE password IS NULL`);
     const newUsersIds: { ID: string }[] = JSON.parse(JSON.stringify(getAllNewUsersIdsQueryResult[0]))
 
+    if(newUsersIds.length === 0) {
+        console.log("No users need to generate default password !")
+    }
     await dbQuery("START TRANSACTION")
     try {
         for (let user of newUsersIds) {
-            const hashPassword = bcrypt.hashSync(DEFAULT_USER_PASSWORD, SALT_ROUND)
-            await dbQuery(`UPDATE account SET password = ? WHERE ID = ?`, [hashPassword, user.ID])
+            const hashPass = await updateUserPassword(DEFAULT_USER_PASSWORD, user.ID)
+            console.log(`${user.ID}'s hashed password: ${hashPass}`)
         }
         await dbQuery("COMMIT");
     } catch (err: any) {

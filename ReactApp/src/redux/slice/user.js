@@ -1,23 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { genUser } from "../../components/transactions/sampleData"; 
-
-const users = [];
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: users,
-    reducers : {
-        addUser: (state, action) => {
-            return [action.payload, ...state]
+    initialState: null,
+    reducers: {
+        initUser: (state, action) => {
+            return action.payload
         },
-        dropUser: (state, action) => {
-            const username = action.payload
-            let idx = state.findIndex(val => val.user === username)
-            if (idx !== -1) state.splice(idx, 1)
-            return state
+        setAvatarUrl: (state, action) => {
+            return { ...state, avatarUrl: action.payload }
+        },
+        setUserInfo: (state, action) => {
+            return {
+                ...state,
+                email: action.payload.email,
+                name: action.payload.name,
+                phone: action.payload.phone,
+                birthday: action.payload.birthday,
+                expertise: action.payload.expertise,
+                department: action.payload.department
+            }
         }
     }
 })
 
-export const { addUser, dropUser } = userSlice.actions
+export const { initUser, setAvatarUrl, setUserInfo } = userSlice.actions
 export default userSlice.reducer

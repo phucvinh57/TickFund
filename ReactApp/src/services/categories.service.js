@@ -1,19 +1,19 @@
-import httpCommon from './httpCommon'
+import { tfServiceHTTPCommon } from './httpCommon'
 
 const path = '/categories'
 
 const categoriesService = {
     getAll: async () => {
-        return httpCommon.get(path)
+        return tfServiceHTTPCommon.get(path)
     },
     addNew: async data => {
-        return httpCommon.post(path, data)
+        return tfServiceHTTPCommon.post(path, data)
     },
     update: async (name, data) => {
-        return httpCommon.put(`${path}/${name}`, data)
+        return tfServiceHTTPCommon.put(`${path}/${name}`, data)
     },
     remove: async (name) => {
-        return httpCommon.delete(`${path}/${name}`)
+        return tfServiceHTTPCommon.delete(`${path}/${name}`)
     }
 }
 

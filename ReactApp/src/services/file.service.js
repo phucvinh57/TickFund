@@ -1,10 +1,12 @@
 import { shortKey } from "../utils/utils"
-import { httpCommon } from "./httpCommon"
+import { fileServiceHTTPCommon } from "./httpCommon"
 
 export const fileService = {
-
-    upload: async function (formData) {
+    uploadToTfService: async function (formData) {
         return { data: mockUploadFileResults }
+    },
+    uploadToPublic: async function(formData) {
+        return fileServiceHTTPCommon.post("/public/upload", formData)
     }
 }
 

@@ -1,8 +1,8 @@
-import httpCommon from "./httpCommon"
+import { tfServiceHTTPCommon } from "./httpCommon"
 
 const authService = {
     checkIfLoggedIn: async function (appCallbackUrl) {
-        return httpCommon.get(`/auth/login?appCallbackUrl=${appCallbackUrl}`)
+        return tfServiceHTTPCommon.get(`/auth/login?appCallbackUrl=${appCallbackUrl}`)
     }
 }
 

@@ -6,7 +6,6 @@ const router: Router = Router()
 
 router.post(
     "/login",
-    // checkRequiredRequestQueries(["appCallbackUrl", "serviceCallbackUrl"]),
     AuthController.login
 )
 

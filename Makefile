@@ -24,7 +24,7 @@ build_app:
 api_specs:
 	cd APISpecs; http-server -c-1 -p 3001 . -o
 
-generate_user:
+generate_user_default_password:
 	cd AuthService; npm run seed
 
 auth_service:
