@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { ACCESS_DENIED, BAD_REQUEST, INTERNAL_SERVER_ERROR } from "../constants"
 import { LoginDto, ChangePasswordDto } from "../dtos"
-import { updateUserPassword, validateUser } from "../services"
+import { changeUserAvatar, updateUserPassword, validateUser } from "../services"
 
 export const UserController = {
     changePassword: async function (req: Request, res: Response) {
@@ -28,7 +28,13 @@ export const UserController = {
         }
     },
     updateAvatarUrl: async function (req: Request, res: Response) {
-        
+        const avatarUrl: string = req.body.avatarUrl
+        const userId: string = res.locals["userId"]
+        try {
+            await changeUserAvatar(avatarUrl, userId)
+        } catch(err: any) {
+            res.status(INTERNAL_SERVER_ERROR).json({msg: err.message})
+        }
     },
     updateInfo: async function (req: Request, res: Response) {
 
