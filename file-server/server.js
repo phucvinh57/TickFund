@@ -11,11 +11,10 @@ if (!fs.existsSync(PUBLIC_STATIC_FOLDER)) {
 const app = express();
 const fileRouter = require('./routers/fileRouter')
 const publicRouter = require("./routers/public.route");
-const PORT = require('./constanst/port');
 
-app.use(cors({
-    origin: "http://localhost:3000"
-}));
+const { PORT, SERVICE_DOMAIN_WHITELIST } = require("./constants")
+
+app.use(cors({ origin: SERVICE_DOMAIN_WHITELIST }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

@@ -3,14 +3,20 @@ const fileUpload = require("express-fileupload")
 const router = express.Router()
 const path = require("path")
 const mimetype = require("mime-types")
+const fs = require("fs")
 
 const { v4: uuidV4 } = require("uuid")
-const { BAD_REQUEST_CODE, INTERNAL_SERVER_ERROR_CODE } = require("../constanst/errorCode")
-const PORT = require("../constanst/port")
+const { BAD_REQUEST_CODE, INTERNAL_SERVER_ERROR_CODE, PORT } = require("../constants")
 
 const PUBLIC_FOLDER_PATH = path.resolve(__dirname, "..") + "/public"
 
 router.use("/", express.static(PUBLIC_FOLDER_PATH))
+
+router.delete("/:filename", function (req, res) {
+    const filename = req.params.filename
+    fs.rmSync(PUBLIC_FOLDER_PATH + "/" + filename)
+    res.send({ msg: "Delete old avatar ok" })
+})
 
 router.use(fileUpload())
 router.post("/upload", function (req, res) {
@@ -24,7 +30,7 @@ router.post("/upload", function (req, res) {
 
     avatarImage.mv(PUBLIC_FOLDER_PATH + "/" + filename, function (err) {
         if (err) return res.status(INTERNAL_SERVER_ERROR_CODE).json({ msg: err.message });
-        res.json({ path: req.protocol + `://` + req.hostname + ":" + PORT.toString()+ "/public/" + filename });
+        res.json({ path: req.protocol + `://` + req.hostname + ":" + PORT.toString() + "/public/" + filename });
     });
 })
 

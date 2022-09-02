@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 import { setAvatarUrl } from '../../redux/slice/user';
 import { fileService } from '../../services/file.service';
+import { userService } from '../../services/user.service';
 
 const RoundImg = styled.img`
     width: 220px;
@@ -42,8 +43,11 @@ export function UserAvatarImage() {
         formData.append("avatar", selectedImage, selectedImage.name)
         fileService.uploadToPublic(formData).then(response => {
             const imagePath = response.data.path
-            setSelectedImage(null)
-            dispatch(setAvatarUrl(imagePath))
+            userService.updateAvatar(imagePath).then(response => {
+                console.log(response.data)
+                setSelectedImage(null)
+                dispatch(setAvatarUrl(imagePath))
+            })
         })
     }
     const resetUploadState = () => setSelectedImage(null)

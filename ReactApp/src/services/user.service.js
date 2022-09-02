@@ -1,9 +1,16 @@
+import { ssoServiceHTTPCommon } from "./httpCommon"
+
 export const userService = {
     getInfoAndRole: async function () {
         return { data: mockUserInfoAndRole }
     },
     updateAvatar: async function (avatarUrl) {
-        return { data: true }
+        return ssoServiceHTTPCommon.put("/user/avatar", { avatarUrl })
+    },
+    changePassword: async function (oldPass, newPass, confirmedNewPass) {
+        return ssoServiceHTTPCommon.put("/user/password", {
+            oldPass, newPass, confirmedNewPass
+        })
     }
 }
 

@@ -32,8 +32,9 @@ export const UserController = {
         const userId: string = res.locals["userId"]
         try {
             await changeUserAvatar(avatarUrl, userId)
-        } catch(err: any) {
-            res.status(INTERNAL_SERVER_ERROR).json({msg: err.message})
+            res.json({ userId, avatarUrl })
+        } catch (err: any) {
+            res.status(INTERNAL_SERVER_ERROR).json({ msg: err.message })
         }
     },
     updateInfo: async function (req: Request, res: Response) {

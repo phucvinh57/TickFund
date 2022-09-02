@@ -7,7 +7,6 @@ class AuthCodeManager {
 
     public generateCode(userId: string): number {
         let code: number
-
         // Handle duplicate code
         do {
             code = Math.floor(Math.random() * (MAX_CODE - MIN_CODE + 1) + MIN_CODE)

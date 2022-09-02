@@ -1,4 +1,0 @@
-module.exports = {
-    BAD_REQUEST_CODE: 400,
-    INTERNAL_SERVER_ERROR_CODE: 500
-}
