@@ -44,7 +44,7 @@ export default function Sidebar() {
         <SidebarFooter>
             <Menu><SubMenu icon={<InfoCircle size={18} />} title={"Tài khoản"}>
                 <MenuItem icon={<People size={18} />}>
-                    <Link to={"/me"}>Thông tin cá nhân</Link>
+                    <Link to={"/personal"}>Thông tin cá nhân</Link>
                 </MenuItem>
                 <MenuItem icon={<BoxArrowRight size={18} />}>
                     <a href={"https://facebook.com"}>Đăng xuất</a>

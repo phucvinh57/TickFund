@@ -20,6 +20,7 @@ public class TokenManager {
 
     @Value("${tickfund.jwt.expiration}")
     Integer EXPIRATION;
+
     public String generateJwtToken(UserEntity userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(ROLE, userDetails.getRole().getName());

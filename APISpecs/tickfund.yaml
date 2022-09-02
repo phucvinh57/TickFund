@@ -19,11 +19,11 @@ tags:
     description: API for statistics
   - name: logs
     description: API for logs
-  - name: accounts
-    description: API for TickLab's account info
+  - name: users
+    description: API for user management
   - name: roles
     description: API for access control
-  - name: user
+  - name: personal
     description: API for personal user
     
 paths:
@@ -313,11 +313,11 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-  /accounts:
+  /users:
     get:
       summary: Get a list of all accounts
       tags:
-        - accounts
+        - users
       responses:
         200:
           description: Success
@@ -362,7 +362,7 @@ paths:
     post:
       summary: Add a new account
       tags:
-        - accounts
+        - users
       requestBody:
         content:
           application/json:
@@ -378,7 +378,7 @@ paths:
     put:
       summary: Edit
       tags:
-        - accounts
+        - users
       requestBody:
         content:
           application/json:
@@ -392,13 +392,13 @@ paths:
         500:
           description: Internal Server Error
 
-  /user:
+  /personal:
     get:
       servers:
         - url: finance.ticklab.vn
       summary: Get my user
       tags:
-        - user
+        - personal
       responses:
         200:
           description: Return user's info, include user's role
@@ -406,11 +406,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CurrentUserInfo"
-  /user/password:
+  /personal/password:
     put:
       summary: Update user's password
       tags:
-        - user
+        - personal
       requestBody:
         content:
           application/json:
@@ -429,11 +429,11 @@ paths:
       responses:
         200:
           description: Update password successfully
-  /user/avatar:
+  /personal/avatar:
     put:
       summary: Update user's avatar
       tags:
-        - user
+        - personal
       requestBody:
         content:
           application/json:
@@ -446,11 +446,11 @@ paths:
       responses:
         200:
           description: Update user avatar successfully
-  /user/info:
+  /personal/info:
     put:
       summary: Update user's info
       tags:
-        - user
+        - personal
       requestBody:
         content:
           application/json:

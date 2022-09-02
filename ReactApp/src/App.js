@@ -15,7 +15,7 @@ import { BagPlus, BookmarkPlus, CartPlus } from "react-bootstrap-icons"
 import { useState } from "react"
 import PlanningModal from "./components/planning/modal"
 import AddTransactionModal from "./components/transactions/createTransactionModal"
-import User from "./pages/user"
+import User from "./pages/Personal"
 
 const Main = styled.div`
   transition: 0.3s;
@@ -45,7 +45,7 @@ export default function App() {
           <Route path="/stat/*" element={<Statistic />} />
           <Route path='/permission' element={<Permission/>} />
           <Route path="/log" element={<Log />} />
-          <Route path="/me" element={<User />} />
+          <Route path="/personal" element={<User />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

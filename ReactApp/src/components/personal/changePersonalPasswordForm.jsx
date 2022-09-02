@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Button, Form } from "react-bootstrap"
 import { personalService } from "../../services/personal.service"
 
-export function ChangeUserPasswordForm() {
+export function ChangePersonalPasswordForm() {
     const [oldPass, setOldPass] = useState("")
     const [newPass, setNewPass] = useState("")
     const [confirmedNewPass, setConfirmedNewPass] = useState("")

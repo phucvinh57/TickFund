@@ -15,7 +15,7 @@ const RoundImg = styled.img`
     margin-right: 10px;
 `;
 
-export function UserAvatarImage() {
+export function PersonalAvatarImage() {
     const avatarUrl = useSelector(state => state.user.avatarUrl)
     const dispatch = useDispatch()
     const inputFileRef = useRef(null)

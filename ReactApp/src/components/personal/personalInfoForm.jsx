@@ -5,7 +5,7 @@ import { personalService } from "../../services/personal.service"
 import { DEPARTMENTS } from "../../constants/departments"
 import { setUserInfo } from "../../redux/slice/user"
 
-export function UserInfoForm() {
+export function PersonalInfoForm() {
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
