@@ -19,10 +19,12 @@ tags:
     description: API for statistics
   - name: logs
     description: API for logs
-  - name: users
-    description: API for user info
+  - name: accounts
+    description: API for TickLab's account info
   - name: roles
     description: API for access control
+  - name: user
+    description: API for personal user
     
 paths:
   /roles:
@@ -311,11 +313,11 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-  /users:
+  /accounts:
     get:
-      summary: Get a list of all users
+      summary: Get a list of all accounts
       tags:
-        - users
+        - accounts
       responses:
         200:
           description: Success
@@ -358,9 +360,9 @@ paths:
           description: Internal Server Error
 
     post:
-      summary: Add a new user
+      summary: Add a new account
       tags:
-        - users
+        - accounts
       requestBody:
         content:
           application/json:
@@ -376,7 +378,7 @@ paths:
     put:
       summary: Edit
       tags:
-        - users
+        - accounts
       requestBody:
         content:
           application/json:
@@ -390,11 +392,13 @@ paths:
         500:
           description: Internal Server Error
 
-  /users/me:
+  /user:
     get:
+      servers:
+        - url: finance.ticklab.vn
       summary: Get my user
       tags:
-        - users
+        - user
       responses:
         200:
           description: Return user's info, include user's role
@@ -402,6 +406,70 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CurrentUserInfo"
+  /user/password:
+    put:
+      summary: Update user's password
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPass:
+                  type: string
+                  example: "******"
+                newPass:
+                  type: string
+                  example: "******"
+                confirmedNewPass:
+                  type: string
+                  example: "******"
+      responses:
+        200:
+          description: Update password successfully
+  /user/avatar:
+    put:
+      summary: Update user's avatar
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                avatarUrl:
+                  type: string
+                  example: http://127.0.0.1:3002/public/as1s6Dc69kAhsd.jpeg
+      responses:
+        200:
+          description: Update user avatar successfully
+  /user/info:
+    put:
+      summary: Update user's password
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPass:
+                  type: string
+                  example: "******"
+                newPass:
+                  type: string
+                  example: "******"
+                confirmedNewPass:
+                  type: string
+                  example: "******"
+      responses:
+        200:
+          description: Update password successfully
+
   # PLANNING
   /plannings:
     post:
