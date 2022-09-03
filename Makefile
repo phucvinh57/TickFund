@@ -18,9 +18,6 @@ tfservice:
 application:
 	cd ReactApp; npm start
 
-build_app:
-	cd ReactApp; npm run build
-	
 api_specs:
 	cd APISpecs; http-server -c-1 -p 3001 . -o
 
@@ -33,9 +30,18 @@ auth_service:
 file_server:
 	cd file-server; npm start
 
-all:
+run_dev:
 	gnome-terminal -- sh -c "make tfservice"
 	gnome-terminal -- sh -c "make auth_service"
 	gnome-terminal -- sh -c "make file_server"
 	gnome-terminal -- sh -c "make application"
 	gnome-terminal -- sh -c "make api_specs"
+
+build_tfservice:
+	cd TFService; ./gradlew bootBuildImage --imageName=tfservice
+build_app:
+	cd ReactApp; npm run build
+
+build_all:
+	make build_tfservice;
+	docker-compose build

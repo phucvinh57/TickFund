@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
 import PlanningModal from "./modal";
-import TickTableV2 from "../ticktable/tableV2";
+import { TickTableV2 } from "../ticktable/tableV2";
 import { planningTableV2Headers } from "../../constants/planningTableV2Headers"
 import randLogData from "./sampleData";
 

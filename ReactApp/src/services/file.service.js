@@ -1,4 +1,4 @@
-import { shortKey } from "../utils/utils"
+import { shortKey } from "../utils"
 import { fileServiceHTTPCommon } from "./httpCommon"
 
 export const fileService = {

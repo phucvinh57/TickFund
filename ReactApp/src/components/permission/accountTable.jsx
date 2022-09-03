@@ -1,7 +1,7 @@
 import TickTable from "../ticktable"
 import { Row, Col, Form, Button } from "react-bootstrap"
 import { useState, useEffect } from "react"
-import { removeAccents, reduceValuesToString, multiFilter } from "../../utils/utils"
+import { removeAccents, reduceValuesToString, multiFilter } from "../../utils"
 import AccountDetail from "./accountDetail"
 import { ACTIVE_STR, INACTIVE_STR, MEMBER_ROLE_STR, EMPTY_AVATAR, EXIST_ACCOUNT_ERROR } from "../../resource"
 

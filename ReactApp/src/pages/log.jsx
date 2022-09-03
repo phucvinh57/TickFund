@@ -1,6 +1,6 @@
 import TickTable from "../components/ticktable";
 import { useEffect, useState, useMemo } from "react";
-import { MockDatabase, multiFilter } from "../utils/utils";
+import { MockDatabase, multiFilter } from "../utils";
 import randLogData, { numItemsPerPage, headers } from "../components/log/sampleData";
 
 

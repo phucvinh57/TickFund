@@ -5,7 +5,7 @@ import { transactionTableV2Headers } from '../../constants/transactionTableV2Hea
 import { transactionService } from '../../services/transaction.service';
 import { convertUnifiedCodeToEmojiSymbol } from '../../utils/convertUnifiedCodeToEmojiSymbol';
 import Attachment from '../attachment/attachment';
-import TickTableV2 from '../ticktable/tableV2';
+import { TickTableV2 } from '../ticktable/tableV2';
 
 function TransactionDetailModal({ data, show, onHide }) {
   return <Modal
@@ -76,7 +76,7 @@ function TransactionDetailModal({ data, show, onHide }) {
   </Modal>
 }
 
-export default function TransactionTableV2() {
+export default function TransactionTable() {
   const [show, setShow] = useState(false)
   const [showData, setShowData] = useState(null)
 

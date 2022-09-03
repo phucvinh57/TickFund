@@ -19,6 +19,13 @@ services:
       - 6000:6000
     volumes:
       - media:/usr/src/app/auth_service/media
+      
+  tfservice:
+    image: tfservice
+    container_name: tickfund_service
+    restart: always
+    ports:
+      - 8081:8081
 
 volumes:
   media:

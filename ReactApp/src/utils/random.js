@@ -1,47 +1,5 @@
-import ShortUniqueId from 'short-unique-id'
-import { isValidElement } from 'react'
 import { COMP_STR, DATE_TIME_TYPE } from '../resource'
-
-export const shortKey = new ShortUniqueId({
-    length: 6,
-    dictionary: 'alphanum'
-})
-
-export const generateHexId = new ShortUniqueId({
-    length: 8,
-    dictionary: 'hex'
-})
-
-export const isObject = obj => (typeof obj === 'object' && obj !== null)
-
-export const reduceValuesToString = obj => {
-    let str
-    if (Array.isArray(obj)) {
-        str = ''
-        obj.forEach(value => {
-            str += reduceValuesToString(value)
-        })
-    }
-    else if (isObject(obj)) {
-        str = ''
-        if (isValidElement(obj.component)) str += obj.val
-        else {
-            let keys = Object.keys(obj)
-            keys.forEach(key => {
-                str += reduceValuesToString(obj[key])
-            })
-        }
-    } else {
-        str = obj.toString()
-    }
-    return str
-}
-
-export const removeAccents = str => {
-    return str.normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/đ/g, 'd').replace(/Đ/g, 'D');
-}
+import { removeAccents, reduceValuesToString } from '../utils'
 
 export const getRandomDate = (start, end) => {
     let min = start.getTime()
@@ -49,6 +7,7 @@ export const getRandomDate = (start, end) => {
     let rand = Math.floor(Math.random() * (max - min) + min)
     return new Date(rand);
 }
+
 export const prettyDate = date => {
     return date.toISOString().slice(0, 19).replace('T', ' ').replaceAll('-', '/')
 }
