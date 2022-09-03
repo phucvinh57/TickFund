@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { Button, ButtonGroup, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
-import { setAvatarUrl } from '../../redux/slice/user';
+import { setAvatarUrl } from '../../redux/slice/personal';
 import { fileService } from '../../services/file.service';
 import { personalService } from '../../services/personal.service';
 
@@ -16,7 +16,7 @@ const RoundImg = styled.img`
 `;
 
 export function PersonalAvatarImage() {
-    const avatarUrl = useSelector(state => state.user.avatarUrl)
+    const avatarUrl = useSelector(state => state.personal.avatarUrl)
     const dispatch = useDispatch()
     const inputFileRef = useRef(null)
     const [selectedImage, setSelectedImage] = useState(null)

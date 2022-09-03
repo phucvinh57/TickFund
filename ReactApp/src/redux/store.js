@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import sidebarReducer from "./slice/sidebar";
 import planningReducer from "./slice/planning";
-import userReducer from "./slice/user"
+import personalReducer from "./slice/personal"
 import categoryReducer from "./category";
 import roleReducer from "./slice/role"
 
@@ -10,7 +10,7 @@ export default configureStore({
         sidebar: sidebarReducer,
         planning: planningReducer,
         category: categoryReducer,
-        user: userReducer,
+        personal: personalReducer,
         role: roleReducer
     }
 })

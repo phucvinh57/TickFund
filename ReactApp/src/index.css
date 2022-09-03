@@ -30,7 +30,29 @@ code {
   box-shadow: 0 ;
 } */
 
-.outline-none, .outline-none:focus {
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e7e6e6;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.outline-none,
+.outline-none:focus {
   z-index: 10000000000000;
   outline: none;
   box-shadow: 0;

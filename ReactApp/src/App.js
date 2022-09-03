@@ -16,9 +16,11 @@ import { useState } from "react"
 import PlanningModal from "./components/planning/modal"
 import AddTransactionModal from "./components/transactions/createTransactionModal"
 import Personal from "./pages/personal"
+import ManageUser from "./pages/manageUsers"
 
 const Main = styled.div`
   transition: 0.3s;
+  margin-bottom: 60px;
 `;
 
 export default function App() {
@@ -44,6 +46,7 @@ export default function App() {
           <Route path="/plannings" element={<Planning />} />
           <Route path="/stat/*" element={<Statistic />} />
           <Route path='/permission' element={<Permission/>} />
+          <Route path="/manager" element={<ManageUser />} />
           <Route path="/log" element={<Log />} />
           <Route path="/personal" element={<Personal />} />
           <Route path="/*" element={<NotFound />} />

@@ -3,10 +3,10 @@ import { useState, useEffect } from "react"
 import { Form, Button } from "react-bootstrap"
 import { personalService } from "../../services/personal.service"
 import { DEPARTMENTS } from "../../constants/departments"
-import { setUserInfo } from "../../redux/slice/user"
+import { setPersonalInfo } from "../../redux/slice/personal"
 
 export function PersonalInfoForm() {
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.personal)
   const dispatch = useDispatch()
 
   const [formInfoData, setFormInfoData] = useState({
@@ -35,7 +35,7 @@ export function PersonalInfoForm() {
       alert(response.data.msg)
       const department = DEPARTMENTS.find(d => d.ID == formInfoData.departmentId)
 
-      dispatch(setUserInfo({
+      dispatch(setPersonalInfo({
         ...formInfoData,
         department
       }))

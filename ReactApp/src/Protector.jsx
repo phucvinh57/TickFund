@@ -3,12 +3,12 @@ import { useEffect } from "react"
 import authService from "./services/auth.service"
 import { useDispatch, useSelector } from "react-redux"
 import { personalService } from "./services/personal.service"
-import { initUser } from "./redux/slice/user"
+import { initPersonal } from "./redux/slice/personal"
 import { useMemo } from "react"
 
 export default function Protector({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.personal)
     const dispatch = useDispatch()
 
     const isLoading = useMemo(() => !user || !isLoggedIn, [user, isLoggedIn])
@@ -16,7 +16,7 @@ export default function Protector({ children }) {
     useEffect(() => {
         authService.checkIfLoggedIn(window.location.href).then(response => {
             personalService.getInfoAndRole().then(response => {
-                dispatch(initUser(response.data))
+                dispatch(initPersonal(response.data))
             })
             if (response.data.code) setIsLoggedIn(true)
         }).catch(err => {
