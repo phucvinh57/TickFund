@@ -1,4 +1,4 @@
-package com.tickfund.TFService.entities;
+package com.tickfund.TFService.dtos;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonInclude;

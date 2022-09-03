@@ -1,4 +1,4 @@
-package com.tickfund.TFService.config;
+package com.tickfund.TFService.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

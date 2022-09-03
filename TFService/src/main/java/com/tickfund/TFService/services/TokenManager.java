@@ -1,6 +1,6 @@
 package com.tickfund.TFService.services;
 
-import com.tickfund.TFService.entities.UserToken;
+import com.tickfund.TFService.dtos.UserToken;
 import com.tickfund.TFService.entities.tickfund.UserEntity;
 import com.tickfund.TFService.utils.CookieUtil;
 import io.jsonwebtoken.Claims;
@@ -25,7 +25,7 @@ public class TokenManager {
 
     public String generateJwtToken(UserEntity userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(ROLE, userDetails.getRole().getName());
+        claims.put(ROLE, userDetails.getRole().ID);
         claims.put(USER_ID, userDetails.getID());
         return Jwts.builder().setClaims(claims).setSubject(userDetails.getID())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
@@ -35,7 +35,7 @@ public class TokenManager {
     public UserToken parseToUserToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         UserToken cUser = new UserToken();
-        cUser.setRole(claims.get(ROLE, String.class));
+        cUser.setRoleId(Integer.valueOf(claims.get(ROLE, Integer.class)));
         cUser.setUserId(claims.get(USER_ID, String.class));
         return cUser;
     }

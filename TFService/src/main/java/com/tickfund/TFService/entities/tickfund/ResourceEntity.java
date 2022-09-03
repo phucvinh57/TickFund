@@ -6,23 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tickfund", name = "role")
-public class RoleEntity {
+@Table(schema = "tickfund", name = "resource")
+public class ResourceEntity {
     @Id
     public Integer ID;
 
     @Column(nullable = false, unique = true)
     public String name;
-
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

@@ -5,7 +5,6 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.entities.tickfund.RoleEntity;
 
-// @JsonIgnoreProperties(ignoreUnknown = true)
 public class TickfundUserWithRoleDto {
     @NotBlank
     @JsonProperty
