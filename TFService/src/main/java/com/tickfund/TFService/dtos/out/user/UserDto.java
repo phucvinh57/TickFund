@@ -17,6 +17,9 @@ public class UserDto {
     public String username;
 
     @JsonProperty
+    public String avatarUrl;
+
+    @JsonProperty
     public ExpertiseEnum expertise;
 
     @JsonProperty
@@ -35,6 +38,7 @@ public class UserDto {
         this.expertise = ticklabUser.expertise;
         this.department = ticklabUser.department;
         this.active = ticklabUser.active;
+        this.avatarUrl = ticklabUser.avatarUrl;
 
         this.role = tickfundUserWithRole.role;
     }

@@ -16,6 +16,9 @@ public class TicklabUserDto {
     public String name;
 
     @JsonProperty
+    public String avatarUrl;
+
+    @JsonProperty
     @NotNull
     public Boolean active;
 

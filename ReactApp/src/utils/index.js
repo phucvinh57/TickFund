@@ -5,6 +5,7 @@ import { removeAccents } from "./removeAccents";
 import { shortKey } from "./shortKey";
 import { convertUnifiedCodeToEmojiSymbol } from "./convertUnifiedCodeToEmojiSymbol";
 import { multiFilter, getRandomDate, getRandomItem, MockDatabase, prettyDate } from "./random"
+import { getExpertiseName } from "./getExpertiseName";
 
 export {
     generateHexId,
@@ -16,5 +17,6 @@ export {
     multiFilter,
     getRandomDate,
     getRandomItem,
-    prettyDate, MockDatabase
+    prettyDate, MockDatabase,
+    getExpertiseName
 }

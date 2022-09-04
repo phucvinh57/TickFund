@@ -6,6 +6,7 @@ import com.tickfund.TFService.dtos.in.user.UpdateUserDto;
 import com.tickfund.TFService.dtos.out.user.TickfundUserWithRoleDto;
 import com.tickfund.TFService.dtos.out.user.TicklabUserDto;
 import com.tickfund.TFService.dtos.out.user.UserDto;
+import com.tickfund.TFService.entities.tickfund.RoleEntity;
 import com.tickfund.TFService.entities.tickfund.UserEntity;
 import com.tickfund.TFService.entities.ticklab_users.DepartmentEntity;
 import com.tickfund.TFService.entities.ticklab_users.TickLabUserEntity;
@@ -98,7 +99,28 @@ public class UserService {
 
         return userId;
     }
-    public UserEntity getUserById(String userId){
+
+    public UserEntity getUserById(String userId) {
         return this.userRepository.findById(userId).orElse(null);
+    }
+
+    public void changeRole(String userId, Integer roleId) {
+        UserEntity user = this.getUserById(userId);
+        RoleEntity role = this.roleRepository.findById(roleId).orElseThrow();
+        user.setRole(role);
+        this.userRepository.save(user);
+    }
+
+    public void changeDepartment(String userId, Integer departmentId) {
+        TickLabUserEntity user = this.ticklabUserRepository.findById(userId).orElseThrow();
+        DepartmentEntity deparment = this.departmentRepository.findById(departmentId).orElseThrow();
+        user.department = deparment;
+        this.ticklabUserRepository.save(user);
+    }
+
+    public void toggleActivation(String userId, Boolean active) {
+        TickLabUserEntity user = this.ticklabUserRepository.findById(userId).orElseThrow();
+        user.active = active;
+        this.ticklabUserRepository.save(user);
     }
 }

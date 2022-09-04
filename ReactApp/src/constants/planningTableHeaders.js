@@ -3,7 +3,7 @@
 // If date, only have BETWEEN operator
 // If number, can have BETWEEN, LTE, GTE
 
-export const planningTableV2Headers = [{
+export const planningTableHeaders = [{
     label: 'Mã dự trù',
     association: {
         key: 'id',

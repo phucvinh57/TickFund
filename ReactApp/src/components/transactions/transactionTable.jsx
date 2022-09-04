@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Col, Modal, ModalBody, Row } from 'react-bootstrap';
-import { transactionTableV2Headers } from '../../constants/transactionTableV2Headers';
+import { transactionTableHeaders } from '../../constants/transactionTableHeaders';
 import { transactionService } from '../../services/transaction.service';
 import { convertUnifiedCodeToEmojiSymbol } from '../../utils/convertUnifiedCodeToEmojiSymbol';
 import Attachment from '../attachment/attachment';
@@ -153,7 +153,7 @@ export default function TransactionTable() {
     <TickTableV2
       tableName={"Lịch sử giao dịch"}
       componentSize="md"
-      headers={transactionTableV2Headers}
+      headers={transactionTableHeaders}
       data={data}
       numPages={20}
       defaultSortField="time"

@@ -16,7 +16,6 @@ export default function Protector({ children }) {
     useEffect(() => {
         authService.checkIfLoggedIn(window.location.href).then(response => {
             personalService.getInfoAndRole().then(response => {
-                console.log(response.data)
                 dispatch(initPersonal(response.data))
             })
             if (response.data.code) setIsLoggedIn(true)

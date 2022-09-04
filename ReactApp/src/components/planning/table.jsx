@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 
 import PlanningModal from "./modal";
 import { TickTableV2 } from "../ticktable/tableV2";
-import { planningTableV2Headers } from "../../constants/planningTableV2Headers"
+import { planningTableHeaders } from "../../constants/planningTableHeaders"
 import randLogData from "./sampleData";
 
 const initPlanningData = randLogData()
@@ -54,7 +54,7 @@ export default function PlanningTable() {
         <TickTableV2
             // tableName={"Table Version 2"}
             componentSize="md"
-            headers={planningTableV2Headers}
+            headers={planningTableHeaders}
             data={data}
             numPages={20}
 

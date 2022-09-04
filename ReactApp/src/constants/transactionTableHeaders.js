@@ -1,4 +1,4 @@
-export const transactionTableV2Headers = [{
+export const transactionTableHeaders = [{
     label: 'Mã giao dịch',
     association: {
         key: 'id',

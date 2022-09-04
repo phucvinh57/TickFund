@@ -5,6 +5,7 @@ import { Button, ButtonGroup, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 import { setAvatarUrl } from '../../redux/slice/personal';
+import { EMPTY_AVATAR } from '../../resource';
 import { fileService } from '../../services/file.service';
 import { personalService } from '../../services/personal.service';
 
@@ -52,7 +53,7 @@ export function PersonalAvatarImage() {
     }
     const resetUploadState = () => setSelectedImage(null)
     return <div className="d-flex flex-column align-items-center">
-        <RoundImg src={imagePreview ? imagePreview : avatarUrl} alt="Avatar" />
+        <RoundImg src={imagePreview ? imagePreview : (avatarUrl ? avatarUrl : EMPTY_AVATAR)} alt="Avatar" />
         <Form
             onSubmit={e => {
                 e.preventDefault()
