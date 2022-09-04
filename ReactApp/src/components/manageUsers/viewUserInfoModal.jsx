@@ -5,8 +5,10 @@ import { RoundImg } from "../roundImage"
 
 export function ViewUserInfoModal({ user, show, onHide }) {
   return <Modal size="lg" centered show={show} onHide={onHide}>
-    <Modal.Header>
-      <h4>Thông tin tài khoản</h4>
+    <Modal.Header className="bg-primary text-white">
+      <h5 className="m-auto">
+        Thông tin tài khoản
+      </h5>
     </Modal.Header>
     <Modal.Body>
       <div className="row">
@@ -35,7 +37,7 @@ export function ViewUserInfoModal({ user, show, onHide }) {
             <strong className="col-5">Email</strong>
             <div className="col-7">{user.email}</div>
           </div>
-          
+
           <div className="row mt-2">
             <strong className="col-5">Ngày sinh</strong>
             <div className="col-7">{user.birthday}</div>
