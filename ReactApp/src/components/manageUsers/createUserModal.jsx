@@ -9,6 +9,7 @@ export function CreateUserModal({ show, onHide }) {
     </Modal.Header>
     <Modal.Body>
       <Form className="container">
+        
         <div className="row mb-2">
           <Form.Group className="col-6">
             <Form.Label className="fw-500">MSSV (ID cho tài khoản)</Form.Label>

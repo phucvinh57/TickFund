@@ -19,7 +19,7 @@ import com.tickfund.TFService.dtos.in.user.ChangeRoleDto;
 import com.tickfund.TFService.dtos.in.user.CreateUserDto;
 import com.tickfund.TFService.dtos.in.user.ToggleUserActivationDto;
 import com.tickfund.TFService.dtos.in.user.UpdateUserDto;
-import com.tickfund.TFService.dtos.out.user.UserDto;
+import com.tickfund.TFService.dtos.out.users.UserDto;
 import com.tickfund.TFService.services.PersonalService;
 import com.tickfund.TFService.services.UserService;
 

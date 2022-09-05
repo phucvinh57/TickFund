@@ -1,4 +1,4 @@
-package com.tickfund.TFService.dtos.out.user;
+package com.tickfund.TFService.dtos.out.users;
 
 import javax.validation.constraints.NotBlank;
 

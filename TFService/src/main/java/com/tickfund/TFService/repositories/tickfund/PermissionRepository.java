@@ -1,5 +1,6 @@
 package com.tickfund.TFService.repositories.tickfund;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -9,4 +10,5 @@ import com.tickfund.TFService.entities.tickfund.PermissionEntity;
 
 public interface PermissionRepository extends CrudRepository<PermissionEntity, PermissionEntityId>{
     List<PermissionEntity> findByRoleId(Integer roleId);
+    ArrayList<PermissionEntity> findAllByOrderByRoleIdAsc();
 }
