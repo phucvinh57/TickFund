@@ -1,6 +1,6 @@
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent, SidebarFooter } from 'react-pro-sidebar'
 import { Link } from 'react-router-dom'
-import { Speedometer2, BarChartLine, PieChart, List, GraphUp, ShieldLock, JournalText, Coin, PiggyBank, InfoCircle, People, BoxArrowRight, ShieldCheck } from 'react-bootstrap-icons'
+import { Speedometer2, BarChartLine, PieChart, List, GraphUp, JournalText, Coin, PiggyBank, InfoCircle, People, BoxArrowRight, ShieldCheck } from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { setCollapse } from '../redux/slice/sidebar';
 import styled from 'styled-components'
@@ -80,28 +80,19 @@ const sidebarContent = [
             title: 'Biểu đồ đường',
             path: '/stat/line'
         }]
-    },
-    {
+    }, {
         icon: <Coin size={18} />,
         title: "Giao dịch",
         path: '/transactions'
-    },
-    {
+    }, {
         icon: <PiggyBank size={18} />,
         title: "Dự trù",
         path: '/plannings'
-    },
-    {
-        icon: <ShieldLock size={18} />,
-        title: 'Quyền truy cập',
-        path: '/permission'
-    },
-    {
+    }, {
         icon: <ShieldCheck size={18} />,
         title: 'Quản lý tài khoản',
         path: '/manager'
-    },
-    {
+    }, {
         icon: <JournalText size={18} />,
         title: 'Nhật ký hệ thống',
         path: '/log'

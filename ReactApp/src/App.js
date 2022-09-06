@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import styled from "styled-components"
 import { useSelector } from "react-redux"
 
-import Permission from "./pages/permission"
 import Log from "./pages/log"
 import Transactions from "./pages/transactions"
 
@@ -45,7 +44,6 @@ export default function App() {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/plannings" element={<Planning />} />
           <Route path="/stat/*" element={<Statistic />} />
-          <Route path='/permission' element={<Permission/>} />
           <Route path="/manager" element={<ManageUser />} />
           <Route path="/log" element={<Log />} />
           <Route path="/personal" element={<Personal />} />
