@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tickfund.TFService.dtos.in.user.ChangeDepartmentDto;
-import com.tickfund.TFService.dtos.in.user.ChangeRoleDto;
+import com.tickfund.TFService.dtos.in.user.ChangeUserRoleDto;
 import com.tickfund.TFService.dtos.in.user.CreateUserDto;
 import com.tickfund.TFService.dtos.in.user.ToggleUserActivationDto;
 import com.tickfund.TFService.dtos.in.user.UpdateUserDto;
@@ -48,7 +48,7 @@ public class UserController {
 
     @PutMapping("/role")
     @ResponseBody
-    public String changeUserRole(@Valid @RequestBody ChangeRoleDto dto) {
+    public String changeUserRole(@Valid @RequestBody ChangeUserRoleDto dto) {
         this.userService.changeRole(dto.userId, dto.roleId);
         return dto.userId;
     }
