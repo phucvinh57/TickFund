@@ -28,9 +28,8 @@ public class CookieInterceptor implements HandlerInterceptor {
         Optional<Cookie> optCUserCookie = Arrays.stream(cookies)
                 .filter(cookie -> cookie.getName().equals(C_USER))
                 .findFirst();
-        if (request.getMethod().compareToIgnoreCase("OPTION") == 0) {
-            response.setStatus(HttpStatus.OK.value());
-            return false;
+        if (request.getMethod().compareToIgnoreCase("OPTIONS") == 0) {
+            return true;
         }
 
         if (optCUserCookie.isPresent()) {
