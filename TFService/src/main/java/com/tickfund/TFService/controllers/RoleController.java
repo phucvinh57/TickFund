@@ -19,4 +19,10 @@ public class RoleController {
     public Object getPermissionOfRoles() {
         return roleService.getPermissionOfRoles();
     }
+
+    @GetMapping("/mapping")
+    @ResponseBody
+    public Object getResourceActionMapping() {
+        return roleService.getResourceActionMapping();
+    }
 }

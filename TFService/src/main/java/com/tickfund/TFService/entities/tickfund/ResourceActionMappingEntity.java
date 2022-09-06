@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import com.tickfund.TFService.entities.composite_ids.ResourceActionMappingEntityId;
 
 @Entity
-@Table(schema = "tickfund", name = "resouce_action")
+@Table(schema = "tickfund", name = "resource_action")
 @IdClass(ResourceActionMappingEntityId.class)
 public class ResourceActionMappingEntity {
     @Id
@@ -27,6 +27,6 @@ public class ResourceActionMappingEntity {
     public ResourceEntity resource;
 
     @ManyToOne
-    @JoinColumn(name = "action")
+    @JoinColumn(name = "action_id")
     public ActionEntity action;
 }

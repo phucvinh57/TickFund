@@ -44,31 +44,27 @@ public class UserController {
         return personalService.getInfoWithRole(userId);
     }
 
-    @PutMapping("/{id}/role")
+    @PutMapping("/role")
     @ResponseBody
-    public String changeUserRole(
-            @PathVariable(name = "id") String userId,
-            @Valid @RequestBody ChangeRoleDto dto) {
-        this.userService.changeRole(userId, dto.roleId);
-        return userId;
+    public String changeUserRole(@Valid @RequestBody ChangeRoleDto dto) {
+        this.userService.changeRole(dto.userId, dto.roleId);
+        return dto.userId;
     }
 
-    @PutMapping("/{id}/department")
+    @PutMapping("/department")
     @ResponseBody
     public String changeUserDepartment(
-            @PathVariable(name = "id") String userId,
             @Valid @RequestBody ChangeDepartmentDto dto) {
-        this.userService.changeDepartment(userId, dto.departmentId);
-        return userId;
+        this.userService.changeDepartment(dto.userId, dto.departmentId);
+        return dto.userId;
     }
 
-    @PutMapping("/{id}/active")
+    @PutMapping("/active")
     @ResponseBody
     public String toggleUserActivation(
-            @PathVariable(name = "id") String userId,
             @Valid @RequestBody ToggleUserActivationDto dto) {
-        this.userService.toggleActivation(userId, dto.active);
-        return userId;
+        this.userService.toggleActivation(dto.userId, dto.active);
+        return dto.userId;
     }
 
     @PostMapping("")

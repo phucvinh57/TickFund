@@ -3,7 +3,6 @@ import { PersonalInfoForm } from "../components/personal/personalInfoForm"
 import { PersonalAvatarImage } from "../components/personal/personalAvatarImage"
 
 export default function Personal() {
-
   return <div className="container row">
     <div className="col-4">
       <PersonalAvatarImage />

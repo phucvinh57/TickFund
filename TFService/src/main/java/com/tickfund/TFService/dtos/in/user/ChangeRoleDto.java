@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ChangeRoleDto {
     @JsonProperty
+    @JsonAlias({"userID, user_id"})
+    public String userId;
+
+    @JsonProperty
     @JsonAlias({"roleID, role_id"})
     public Integer roleId;
 }

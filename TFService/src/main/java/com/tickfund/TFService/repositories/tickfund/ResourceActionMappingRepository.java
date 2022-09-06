@@ -7,5 +7,5 @@ import com.tickfund.TFService.entities.tickfund.ResourceActionMappingEntity;
 
 public interface ResourceActionMappingRepository
         extends CrudRepository<ResourceActionMappingEntity, ResourceActionMappingEntityId> {
-
+                
 }

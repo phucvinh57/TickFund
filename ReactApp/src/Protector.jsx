@@ -26,7 +26,7 @@ export default function Protector({ children }) {
                 return
             }
         })
-    }, [])
+    }, [dispatch])
     return <div>
         {isLoading ? <div>Is loading ...</div> : children}
     </div>
