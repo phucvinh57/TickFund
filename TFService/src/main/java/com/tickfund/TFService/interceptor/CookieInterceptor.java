@@ -28,6 +28,15 @@ public class CookieInterceptor implements HandlerInterceptor {
         Optional<Cookie> optCUserCookie = Arrays.stream(cookies)
                                     .filter(cookie -> cookie.getName().equals(C_USER))
                                     .findFirst();
+        if(request.getMethod().compareToIgnoreCase("OPTIONS") == 0){
+            response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+            response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            response.setHeader("Access-Control-Allow-Headers", "authorization, content-type, xsrf-token");
+            response.addHeader("Access-Control-Expose-Headers", "xsrf-token");
+            response.setStatus(HttpStatus.OK.value());
+            return false;
+        }
 
         if(optCUserCookie.isPresent()) {
             try {

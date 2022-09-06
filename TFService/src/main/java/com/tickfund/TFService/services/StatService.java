@@ -66,7 +66,7 @@ public class StatService {
                 .stream()
                 .flatMap(p -> planningToBucket(p, statDTO))
                 .collect(StatBucket.collectorToList());
-        Integer previousAmount = Optional.ofNullable(this.transactionRepository.previousTotalIncomeByDay(statDTO.getStart())).orElse(0) -
+        Integer previousAmount = Optional.ofNullable(this.transactionRepository.previousTotalIncomeByDay(statDTO.getStart())).orElse(0)
                 - Optional.ofNullable(this.transactionRepository.previousTotalExpenseByDay(statDTO.getStart())).orElse(0);
 
         return new StatOut(transactionBuckets, planningBuckets, previousAmount);
@@ -75,43 +75,69 @@ public class StatService {
     Stream<StatBucket> planningToBucket(PlanningEntity planningEntity, StatDTO statDTO){
         LocalDate dateTo = statDTO.getEnd();
         LocalDate nextDue = planningEntity.getNextDueDate();
+        LocalDate startDate = planningEntity.getStartDate();
 
         if(nextDue.isAfter(dateTo)) return Stream.empty();
         CycleEnum cycleEnum = CycleEnum.valueOf(statDTO.getPeriod_type());
-        ChronoUnit chronoUnit = switch (cycleEnum) {
+        ChronoUnit chronoUnit = switch (planningEntity.getCycleUnit()) {
             case WEEK -> ChronoUnit.WEEKS;
             case MONTH -> ChronoUnit.MONTHS;
             case YEAR -> ChronoUnit.YEARS;
             default -> ChronoUnit.DAYS;
         };
 
-        final long rangeEnd = chronoUnit.between(nextDue, dateTo);
 
-        return IntStream.range(0, (int) rangeEnd + 1).mapToObj(offset -> {
+        long countdown = 0;
+        LocalDate tempNextDue = nextDue;
+        while(! dateTo.isBefore(tempNextDue)){
+            tempNextDue = tempNextDue.plus(countdown + 1, chronoUnit);
+            countdown++;
+        }
+        // Note that countdown < 0 mean infinity
+        if(planningEntity.getCountdown() >= 0){
+            countdown = Math.min(countdown, planningEntity.getCountdown());
+        }
+
+        return IntStream.range(0, (int) countdown).mapToObj(offset -> {
             // Use calendar because some method of Date class is deprecated
-            LocalDate bucketDate = nextDue.plus(offset, cycleEnum.toCalendarMagicField());
+            long resolvedCount = chronoUnit.between(startDate, nextDue);
+            LocalDate bucketDate = nextDue.plus(resolvedCount + offset, chronoUnit);
             CategoryEntity categoryEntity = this
                     .categoryRepository
                     .findById(planningEntity.getCategoryName())
                     .orElse(null);
             StatBucket statBucket = new StatBucket();
             statBucket.setCategoryName(planningEntity.getCategoryName());
-            statBucket.setCategoryType(categoryEntity.type.name());
+            statBucket.setCategoryType(categoryEntity.type.getName());
             statBucket.setSum(planningEntity.getAmount());
 
-            // Note: don't add break statement here
+
             switch (cycleEnum){
                 case DAY:
                     statBucket.setDay(bucketDate.getDayOfMonth());
+                    statBucket.setMonth(bucketDate.getMonthValue());
+                    statBucket.setYear(bucketDate.getYear());
+                    break;
                 case WEEK:
-                    // Plus 1 here because Week.ISO starts at 0
                     statBucket.setWeek(bucketDate.get(WeekFields.ISO.weekOfYear()));
+                    statBucket.setYear(bucketDate.getYear());
+                    break;
                 case MONTH:
                     statBucket.setMonth(bucketDate.getMonthValue());
+                    statBucket.setYear(bucketDate.getYear());
+                    break;
                 case YEAR:
                     statBucket.setYear(bucketDate.getYear());
+                    break;
             }
             return statBucket;
         });
     }
+
+//    public static void main(String[] args){
+//        LocalDate from = LocalDate.of(2021, 12, 31);
+//        LocalDate to = LocalDate.of(2022, 12, 31);
+//        System.out.println(ChronoUnit.MONTHS.between(from, to));
+//        System.out.println(from.plus(1, ChronoUnit.WEEKS));
+//    }
 }

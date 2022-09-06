@@ -7,7 +7,7 @@ export default function Protector({ children }) {
     useEffect(() => {
         authService.checkIfLoggedIn(window.location.href).then(response => {
             // If TFService response a redirect
-            if(response.data.code) setIsLoggedIn(true)
+            if(response.data.code === true) setIsLoggedIn(true)
         }).catch(err => {
             const redirectURL = err.response.data.redirect_url
             // alert(redirectURL)

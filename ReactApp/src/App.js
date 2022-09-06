@@ -38,7 +38,7 @@ export default function App() {
     <Main style={{ marginLeft: collapse ? '80px' : '270px' }}>
       <div className="container-fluid p-4">
         <Routes>
-          <Route path='/' element={<Navigate to='/stat/donut' />} />
+          <Route path='/' element={<Navigate to='/stat/line' />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/plannings" element={<Planning />} />
           <Route path="/stat/*" element={<Statistic />} />
