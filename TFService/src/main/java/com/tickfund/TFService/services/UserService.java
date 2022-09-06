@@ -15,6 +15,7 @@ import com.tickfund.TFService.repositories.tickfund.RoleRepository;
 import com.tickfund.TFService.repositories.tickfund.UserRepository;
 import com.tickfund.TFService.repositories.ticklab_users.DepartmentRepository;
 import com.tickfund.TFService.repositories.ticklab_users.TickLabUserRepository;
+import com.tickfund.TFService.utils.RemoveAccents;
 
 import java.util.ArrayList;
 
@@ -75,8 +76,17 @@ public class UserService {
     public String createUser(CreateUserDto dto) {
         String userId = dto.ID;
         Integer roleId = dto.roleId;
-        this.ticklabUserRepository.createAccount(dto);
-        this.userRepository.setRoleForUser(userId, roleId);
+
+        String[] splitNames = RemoveAccents.normalize(dto.name)
+                .toLowerCase().trim().split("\\s+");
+        String username = splitNames[splitNames.length - 1] + ".";
+        for (int i = 0; i < splitNames.length - 1; i++) {
+            username  += splitNames[i].charAt(0);
+        }
+        System.out.println(username);
+
+        this.ticklabUserRepository.createAccount(username, dto);
+        this.userRepository.createUserWithRole(userId, roleId);
         return userId;
     }
 

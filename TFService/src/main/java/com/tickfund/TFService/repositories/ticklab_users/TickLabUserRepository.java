@@ -25,12 +25,12 @@ public interface TickLabUserRepository extends CrudRepository<TickLabUserEntity,
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO account ("
-            + "ID, username, name, phone, email, avatarURL, "
-            + "birthday, department_id, expertise, password"
+            + "ID, username, name, phone, email, "
+            + "department_id, expertise"
             + ") VALUES ("
-            + ":#{#dto.ID}, :#{#dto.username}, :#{#dto.name}, "
-            + ":#{#dto.phone}, :#{#dto.email}, :#{#dto.avatarUrl}, "
-            + ":#{#dto.birthday}, :#{#dto.departmentId}, :#{#dto.expertise.getName()}, "
-            + "NULL)", nativeQuery = true)
-    public void createAccount(@Param("dto") CreateUserDto dto);
+            + ":#{#dto.ID}, :#{#username}, :#{#dto.name}, "
+            + ":#{#dto.phone}, :#{#dto.email}, "
+            + ":#{#dto.departmentId}, :#{#dto.expertise.getName()}"
+            + ")", nativeQuery = true)
+    public void createAccount(@Param("username") String username, @Param("dto") CreateUserDto dto);
 }

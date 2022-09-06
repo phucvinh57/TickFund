@@ -1,8 +1,5 @@
 package com.tickfund.TFService.dtos.in.user;
 
-import java.time.LocalDate;
-import java.util.Set;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -23,15 +20,6 @@ public class CreateUserDto {
     @JsonProperty
     public String name;
 
-    @NotBlank
-    @JsonProperty
-    @Size(min = 5, message = "Username must have at least 5 characters")
-    public String username;
-
-    @JsonProperty
-    @JsonAlias({ "avatarURL", "avatar_url" })
-    public String avatarUrl;
-
     @JsonProperty
     @NotNull
     public ExpertiseEnum expertise;
@@ -41,9 +29,6 @@ public class CreateUserDto {
     public Integer roleId;
 
     @JsonProperty
-    public LocalDate birthday;
-
-    @JsonProperty
     @NotNull
     @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-]"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message = "Invalid email")
@@ -51,11 +36,9 @@ public class CreateUserDto {
 
     @JsonProperty
     @Size(max = 15)
+    @NotNull
     @Pattern(regexp = "^\\d{10}$", message = "Invalid phone number")
     public String phone;
-
-    @JsonProperty
-    public Set<String> personalLinks;
 
     @JsonProperty
     @JsonAlias({ "departmentID", "department_id" })

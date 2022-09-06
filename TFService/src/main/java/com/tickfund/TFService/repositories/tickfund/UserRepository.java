@@ -16,5 +16,5 @@ public interface UserRepository extends CrudRepository<UserEntity, String> {
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO user (ID, role_id) VALUES (:#{#userId}, :#{#roleId})", nativeQuery = true)
-    public void setRoleForUser(@Param("userId") String userId, @Param("roleId") Integer roleId);
+    public void createUserWithRole(@Param("userId") String userId, @Param("roleId") Integer roleId);
 }

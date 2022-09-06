@@ -4,6 +4,9 @@ export const userService = {
     getAllUserInfoWithRole: async function () {
         return tfServiceHTTPCommon.get("/users")
     },
+    create: async function(data) {
+        return tfServiceHTTPCommon.post(`/users`, data)
+    },
     getUserById: async function (userId) {
         return tfServiceHTTPCommon.get(`/users/${userId}`)
     },

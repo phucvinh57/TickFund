@@ -66,8 +66,8 @@ public class TickLabUserEntity {
 
     public void setBasicInfo(UpdateUserDto dto) {
         this.active = dto.active;
-        this.avatarURL = dto.avatarUrl;
-        this.birthday = dto.birthday;
+        this.avatarURL = null;
+        this.birthday = null;
         this.email = dto.email;
         this.expertise = dto.expertise;
         this.name = dto.name;
