@@ -15,6 +15,7 @@ import { BagPlus, BookmarkPlus, CartPlus } from "react-bootstrap-icons"
 import { useState } from "react"
 import PlanningModal from "./components/planning/modal"
 import AddTransactionModal from "./components/transactions/createTransactionModal"
+import CategoryModal from "./components/category/CategoryModal"
 
 const Main = styled.div`
   transition: 0.3s;
@@ -28,7 +29,7 @@ export default function App() {
   const [showCategory, setShowCategory] = useState(false)
 
   const actions = [
-    { label: "Danh mục", icon: <BookmarkPlus size={25} />, onClick: () => setShowPlanning(true), color: "#00a8ff" },
+    { label: "Danh mục", icon: <BookmarkPlus size={25} />, onClick: () => setShowCategory(true), color: "#00a8ff" },
     { label: "Dự trù", icon: <CartPlus size={25} />, onClick: () => setShowPlanning(true), color: "#00a8ff" },
     { label: "Giao dịch", icon: <BagPlus size={25} />, onClick: () => setShowTransaction(true), color: "#00a8ff" },
   ]
@@ -42,14 +43,14 @@ export default function App() {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/plannings" element={<Planning />} />
           <Route path="/stat/*" element={<Statistic />} />
-          <Route path='/permission' element={<Permission/>} />
+          <Route path='/permission' element={<Permission />} />
           <Route path="/log" element={<Log />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
     </Main>
     <Fab actions={actions} />
-    <AddTransactionModal 
+    <AddTransactionModal
       show={showTransaction}
       onHide={() => setShowTransaction(false)}
     />
@@ -57,6 +58,10 @@ export default function App() {
       show={showPlanning}
       onHide={() => setShowPlanning(false)}
       mode='add'
+    />
+    <CategoryModal
+      show={showCategory}
+      onHide={() => setShowCategory(false)}
     />
   </div>
 }

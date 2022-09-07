@@ -1,4 +1,4 @@
-import CreateTransactionModal from "../components/transactions/createTransactionModal"
+
 import { useState } from "react"
 import { Button } from "react-bootstrap";
 import TransactionTableV2 from "../components/transactions/transactionTableV2";
