@@ -12,7 +12,7 @@ down:
 down_db:
 	cd databases; docker-compose down --volumes
 
-tfservice:
+tickfund_service:
 	cd TFService; ./gradlew bootRun
 
 application:
@@ -31,14 +31,15 @@ file_server:
 	cd file-server; npm start
 
 run_dev:
-	gnome-terminal -- sh -c "make tfservice"
+	gnome-terminal -- sh -c "make tickfund_service"
 	gnome-terminal -- sh -c "make auth_service"
 	gnome-terminal -- sh -c "make file_server"
 	gnome-terminal -- sh -c "make application"
 	gnome-terminal -- sh -c "make api_specs"
 
+
 build_tfservice:
-	cd TFService; ./gradlew bootBuildImage --imageName=tfservice
+	cd TFService; ./gradlew bootBuildImage --imageName=tickfund_service
 build_app:
 	cd ReactApp; npm run build
 
