@@ -5,7 +5,7 @@ const initialState = [];
 
 export const postCategory = createAsyncThunk(
   'category/create',
-  async (name, type, icon) => {
+  async ({name, type, icon}) => {
     const res = await categoriesService.create({ name, type, icon })
     return res.data
   }

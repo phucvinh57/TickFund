@@ -1,0 +1,126 @@
+$primary: #0d1117;
+
+.tf-thumbnail {
+  margin-bottom: 1rem;
+  padding: 0.5em ;
+  background-color: #ffffff;
+  border-radius: 7px;
+  display: grid;
+  grid-template-columns: 1.3fr 6fr 0.5fr;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+  height: 6em;
+
+  
+
+  button{
+    align-self: flex-start;
+    background-color: transparent;
+    font-size: 20px;
+    color: #656565;
+    line-height: 0;
+    cursor: pointer;
+    border: none;
+  }
+
+  .tf-icon {
+    align-self: center;
+    padding-left: 0.25em;
+    padding-right: 0.25em;
+    font-size: 2em;
+  }
+  .tf-caption {
+    align-self: center;
+    padding-left: 0.5em;
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    p:first-child{
+      color: #101020;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    p:last-child{
+      font-size: 12px;
+      font-weight: 400;
+      color: #656565;
+    }
+
+    .form-group {
+      position: relative;
+      input {
+        height: 1.8rem;
+        display: block;
+        background: none;
+        padding: 0.125rem 0.125rem 0.0625rem;
+        font-size: 1rem;
+        border-width: 0;
+        border-color: transparent;
+        line-height: 1.9;
+        width: 100%;
+        
+        -webkit-transition: all 0.28s ease;
+        transition: all 0.28s ease;
+        box-shadow: none;
+
+        &:valid ~ .control-label, &:focus ~ .control-label {
+          font-size: 0.8rem;
+          color: gray;
+          top: -1rem;
+          left: 0;
+          color: $primary;
+        }
+
+        &:focus ~ .bar::before {
+          width: 100%;
+          left: 0;
+        }
+
+        &:focus, &:valid {
+          outline: none;
+        }
+        
+      }
+    
+      .control-label {
+        position:absolute;
+        top: 0.25rem;
+        pointer-events: none;
+        padding-left: 0.125rem;
+        z-index: 1;
+        color: #b3b3b3;
+        font-size: 1rem;
+        font-weight: normal;
+        -webkit-transition: all 0.28s ease;
+        transition: all 0.28s ease;
+      }
+    
+      .bar {
+        position: relative;
+        border-bottom: 0.0625rem solid #999;
+        display: block;
+
+        &::before {
+          height: 0.125rem;
+          width: 0;
+          left: 50%;
+          bottom: -0.0625rem;
+          position: absolute;
+          background: $primary;
+          -webkit-transition: left 0.28s ease, width 0.28s ease;
+          transition: left 0.28s ease, width 0.28s ease;
+          z-index: 10;
+        }
+      }
+    } 
+  }
+
+  &.new {
+    grid-template-columns: none;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
