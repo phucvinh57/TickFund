@@ -44,10 +44,13 @@ export function PersonalAvatarImage() {
         formData.append("avatar", selectedImage, selectedImage.name)
         fileService.uploadToPublic(formData).then(response => {
             const imagePath = response.data.path
+            console.log(imagePath)
             personalService.updateAvatar(imagePath).then(response => {
                 console.log(response.data)
                 setSelectedImage(null)
                 dispatch(setAvatarUrl(imagePath))
+            }).catch(err => {
+                console.log(err.response)
             })
         })
     }

@@ -10,8 +10,8 @@ const initFormData = {
   email: "",
   roleId: 1,
   phone: "",
-  expertise: "",
-  departmentId: 0,
+  expertise: "IT",
+  departmentId: 1,
 }
 
 export function CreateUserModal({ show, onHide }) {
@@ -31,6 +31,7 @@ export function CreateUserModal({ show, onHide }) {
     <Modal.Body>
       <Form className="container" onSubmit={e => {
         e.preventDefault()
+        console.log(formData)
         userService.getAllUserInfoWithRole().then(response => {
           console.log(response.data)
         })

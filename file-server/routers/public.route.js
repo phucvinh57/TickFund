@@ -14,8 +14,12 @@ router.use("/", express.static(PUBLIC_FOLDER_PATH))
 
 router.delete("/:filename", function (req, res) {
     const filename = req.params.filename
-    fs.rmSync(PUBLIC_FOLDER_PATH + "/" + filename)
-    res.send({ msg: "Delete old avatar ok" })
+    try {
+        fs.rmSync(PUBLIC_FOLDER_PATH + "/" + filename)
+        res.send({ msg: "Delete old avatar ok" })
+    } catch (error) {
+        res.send({ msg: "Avatar file does not exists" })
+    }
 })
 
 router.use(fileUpload())
@@ -26,10 +30,14 @@ router.post("/upload", function (req, res) {
 
     const avatarImage = req.files.avatar;
     const extension = mimetype.extension(avatarImage.mimetype)
+    
     const filename = uuidV4().replaceAll("-", "") + "." + extension
 
     avatarImage.mv(PUBLIC_FOLDER_PATH + "/" + filename, function (err) {
-        if (err) return res.status(INTERNAL_SERVER_ERROR_CODE).json({ msg: err.message });
+        if (err) {
+            console.log(err)
+            return res.status(INTERNAL_SERVER_ERROR_CODE).json({ msg: err.message });
+        }
         res.json({ path: req.protocol + `://` + req.hostname + ":" + PORT.toString() + "/public/" + filename });
     });
 })

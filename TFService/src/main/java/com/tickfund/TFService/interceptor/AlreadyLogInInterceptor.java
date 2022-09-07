@@ -24,8 +24,8 @@ public class AlreadyLogInInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        if(tokenManager.validateFromCookie(request.getCookies(), C_USER)){
-            Cookie userCookie= CookieUtil.getCookieFromName(request.getCookies(), C_USER).get();
+        if (tokenManager.validateFromCookie(request.getCookies(), C_USER)) {
+            Cookie userCookie = CookieUtil.getCookieFromName(request.getCookies(), C_USER).get();
 
             UserToken userToken = tokenManager.parseToUserToken(userCookie.getValue());
 
@@ -38,12 +38,11 @@ public class AlreadyLogInInterceptor implements HandlerInterceptor {
             response.getWriter().write(jsonOut);
             return false;
         }
-        else {
-            return true;
-        }
+
+        return true;
     }
 
-    CheckLoginOut toSuccessCheckLoginOut(UserToken token){
+    CheckLoginOut toSuccessCheckLoginOut(UserToken token) {
         CheckLoginOut out = new CheckLoginOut();
         out.setCode(true);
         out.setMessage("Already login");

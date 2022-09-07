@@ -3,6 +3,8 @@ package com.tickfund.TFService.configurations;
 import com.tickfund.TFService.interceptor.AlreadyLogInInterceptor;
 import com.tickfund.TFService.interceptor.CacheInterceptor;
 import com.tickfund.TFService.interceptor.CookieInterceptor;
+import com.tickfund.TFService.interceptor.RbacInterceptor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -19,6 +21,10 @@ public class TickFundSpringConfig implements WebMvcConfigurer {
 
     @Autowired
     CacheInterceptor cacheInterceptor;
+
+    @Autowired
+    RbacInterceptor rbacInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         final String LOGIN_PATH = "/auth/login";
@@ -26,5 +32,6 @@ public class TickFundSpringConfig implements WebMvcConfigurer {
         registry.addInterceptor(cookieInterceptor).excludePathPatterns(LOGIN_PATH, SSO_CALLBACK_PATH);
         registry.addInterceptor(alreadyLogInInterceptor).addPathPatterns(LOGIN_PATH, SSO_CALLBACK_PATH);
         registry.addInterceptor(cacheInterceptor);
+        registry.addInterceptor(rbacInterceptor).excludePathPatterns(LOGIN_PATH, SSO_CALLBACK_PATH);
     }
 }

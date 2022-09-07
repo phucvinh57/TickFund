@@ -40,7 +40,7 @@ export function UserTable() {
   }
 
   const mapFromUserDataToRow = user => ({
-    ID: user.ID, // For some API call, not for rendering
+    ID: user.ID,
     name: {
       val: user.name,
       component: <div>
