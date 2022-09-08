@@ -4,22 +4,28 @@ import authService from "./services/auth.service"
 import { useDispatch, useSelector } from "react-redux"
 import { personalService } from "./services/personal.service"
 import { initPersonal } from "./redux/slice/personal"
-import { useMemo } from "react"
+import { toast } from "react-toastify"
+import { LoadingPage } from "./pages/loading"
+
+const LOADING = "LOADING"
+const FULFILLED = "FULFILLED"
+const REJECTED = "REJECTED"
 
 export default function Protector({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const user = useSelector(state => state.personal)
   const dispatch = useDispatch()
-
-  const isLoading = useMemo(() => !user || !isLoggedIn, [user, isLoggedIn])
+  const [applicationState, setApplicationState] = useState(LOADING)
 
   useEffect(() => {
     authService.checkIfLoggedIn(window.location.href).then(response => {
       personalService.getInfoAndRole().then(response => {
         dispatch(initPersonal(response.data))
+        setTimeout(() => setApplicationState(FULFILLED), 2000) 
+      }).catch(err => {
+        toast.error("Error occurs !")
+        setApplicationState(REJECTED)
       })
-      if (response.data.code) setIsLoggedIn(true)
     }).catch(err => {
+      setApplicationState(REJECTED)
       const redirectURL = err.response.data.redirect_url
       if (redirectURL) {
         window.location.href = redirectURL
@@ -28,6 +34,8 @@ export default function Protector({ children }) {
     })
   }, [dispatch])
   return <div>
-    {isLoading ? <div>Is loading ...</div> : children}
+    {applicationState === LOADING && <LoadingPage />}
+    {applicationState === FULFILLED && children}
+    {applicationState === REJECTED && <div>Cannot connect to server</div>}
   </div>
 }
