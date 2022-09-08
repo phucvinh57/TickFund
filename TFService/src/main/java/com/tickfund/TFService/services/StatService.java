@@ -2,9 +2,9 @@ package com.tickfund.TFService.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tickfund.TFService.commons.enums.CycleEnum;
+import com.tickfund.TFService.dtos.StatBucket;
 import com.tickfund.TFService.dtos.in.StatDTO;
 import com.tickfund.TFService.dtos.out.StatOut;
-import com.tickfund.TFService.entities.StatBucket;
 import com.tickfund.TFService.entities.tickfund.CategoryEntity;
 import com.tickfund.TFService.entities.tickfund.PlanningEntity;
 import com.tickfund.TFService.repositories.tickfund.CategoryRepository;
@@ -110,6 +110,8 @@ public class StatService {
                     statBucket.setMonth(bucketDate.getMonthValue());
                 case YEAR:
                     statBucket.setYear(bucketDate.getYear());
+                default:
+                    break;
             }
             return statBucket;
         });

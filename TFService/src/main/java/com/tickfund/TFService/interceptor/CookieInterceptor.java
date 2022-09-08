@@ -26,43 +26,41 @@ public class CookieInterceptor implements HandlerInterceptor {
             throws Exception {
         Cookie[] cookies = Optional.ofNullable(request.getCookies()).orElse(new Cookie[0]);
         Optional<Cookie> optCUserCookie = Arrays.stream(cookies)
-                                    .filter(cookie -> cookie.getName().equals(C_USER))
-                                    .findFirst();
+                .filter(cookie -> cookie.getName().equals(C_USER))
+                .findFirst();
+        if (request.getMethod().compareToIgnoreCase("OPTIONS") == 0) {
+            return true;
+        }
 
-        if(optCUserCookie.isPresent()) {
+        if (optCUserCookie.isPresent()) {
             try {
                 request.setAttribute(USER_TOKEN, tokenManager.parseToUserToken(optCUserCookie.get().getValue()));
                 return true;
-            }
-            catch (JwtException e){
+            } catch (JwtException e) {
                 // Remove cookie
                 Cookie removeCUserCookie = new Cookie(C_USER, null);
                 removeCUserCookie.setMaxAge(0);
                 response.addCookie(removeCUserCookie);
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
                 return false;
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 throw e;
             }
-        }
-        else if(request.getHeader("Authorization") != null){
+        } else if (request.getHeader("Authorization") != null) {
             try {
                 final Integer BEARER_LENGTH = 6;
                 final String AUTH_HEADER_VALUE = request.getHeader("Authorization");
-                request.setAttribute(USER_TOKEN, tokenManager.parseToUserToken(AUTH_HEADER_VALUE.substring(BEARER_LENGTH)));
+                request.setAttribute(USER_TOKEN,
+                        tokenManager.parseToUserToken(AUTH_HEADER_VALUE.substring(BEARER_LENGTH)));
                 return true;
-            }
-            catch (JwtException e){
+            } catch (JwtException e) {
                 return false;
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 throw e;
             }
-        }
-        else {
+        } else {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return false;
         }

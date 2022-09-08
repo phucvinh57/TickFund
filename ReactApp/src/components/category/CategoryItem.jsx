@@ -1,7 +1,7 @@
 import data from "@emoji-mart/data"
 import Picker from "@emoji-mart/react"
 import { useState } from "react"
-import { Form, Toast } from "react-bootstrap"
+import { Toast } from "react-bootstrap"
 import { BrushFill, Check, PlusCircle, Trash } from "react-bootstrap-icons"
 import { useDispatch } from "react-redux"
 import { postCategory } from "../../redux/category"
@@ -13,31 +13,31 @@ export const UNMODIFY = 1
 export const MODIFY = 2
 
 const init = {
-  type: "",
+  type: 'expense',
   name: "",
   icon: null
 }
 
-export default function CategoryItem({ data, mode = UNTRACKED }) {
+export default function CategoryItem({ category = init, mode = UNTRACKED }) {
   const dispatch = useDispatch()
 
   const [modeItem, setModeItem] = useState(mode) 
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
-  const [formData, setFormData] = useState(data == null ? init : data)
+  const [formData, setFormData] = useState(category)
 
   return (
     modeItem === UNMODIFY ?
       <div className=" col-xs-3 col-lg-4">
         <div className="tf-thumbnail">
           <div className="tf-icon">
-            {data.icon === null ? <BrushFill /> : convertUnifiedCodeToEmojiSymbol(data.icon)}
+            {formData.icon === null ? <BrushFill /> : convertUnifiedCodeToEmojiSymbol(category.icon)}
           </div>
           <div className="tf-caption">
             <p >
-              {data.name}
+              {formData.name}
             </p>
             <p >
-              {data.type}
+              {formData.type==='expense' ? 'Thu' : 'Chi'} 
             </p>
           </div>
           <button><Trash size={18} /></button>
@@ -59,23 +59,24 @@ export default function CategoryItem({ data, mode = UNTRACKED }) {
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
                   required />
-                <label for="input" className="control-label" >Tên danh mục</label><i className="bar"></i>
+                <label htmlFor="input" className="control-label" >Tên danh mục</label><i className="bar"></i>
               </div>
               <p>
                 <a
-                  className={formData.type === 'Thu' ? 'text-black-50' : 'text-success'}
-                  onClick={() => setFormData({ ...formData, type: 'Thu' })}
+                  className={formData.type === 'income' ? 'text-black-50' : 'text-success'}
+                  onClick={() => setFormData({ ...formData, type: 'income' })}
                 >Thu</a>
                 &nbsp;
-                <a className={formData.type === 'Chi' ? 'text-black-50' : 'text-danger'}
-                  onClick={() => setFormData({ ...formData, type: 'Chi' })}
+                <a className={formData.type === 'expense' ? 'text-black-50' : 'text-danger'}
+                  onClick={() => setFormData({ ...formData, type: 'expense' })}
                 >Chi</a>
               </p>
             </div>
             <button onClick={e => {
-              e.preventDefault()
+              category = formData
               dispatch(postCategory(formData))
               setModeItem(UNTRACKED)
+              e.preventDefault()
             }}><Check size={18} /></button>
           </form>
 

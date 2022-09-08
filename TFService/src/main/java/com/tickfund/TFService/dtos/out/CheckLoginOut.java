@@ -1,6 +1,5 @@
 package com.tickfund.TFService.dtos.out;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CheckLoginOut {

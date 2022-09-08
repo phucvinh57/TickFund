@@ -1,4 +1,4 @@
-package com.tickfund.TFService.config;
+package com.tickfund.TFService.configurations;
 
 import com.tickfund.TFService.interceptor.AlreadyLogInInterceptor;
 import com.tickfund.TFService.interceptor.CacheInterceptor;

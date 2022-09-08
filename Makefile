@@ -1,7 +1,11 @@
+nothing:
+	echo "Hello"
+
 setup_env:
 	cd TFService/src/main/resources; cp application_example.properties application.properties
 	cd databases; cp .env_example .env; cp createDbUsers_example.sql init/3-createDbUsers.sql
 	cd AuthService; cp .env_example .env
+	cd file-server; cp .env_example .env
 
 bootstrap:
 	cd databases; docker-compose up -d
@@ -12,7 +16,7 @@ down:
 down_db:
 	cd databases; docker-compose down --volumes
 
-tfservice:
+tickfund_service:
 	cd TFService; ./gradlew bootRun
 
 application:
@@ -34,7 +38,7 @@ file_server:
 	cd file-server; npm start
 
 all:
-	gnome-terminal -- sh -c "make tfservice"
+	gnome-terminal -- sh -c "make tickfund_service"
 	gnome-terminal -- sh -c "make auth_service"
 	gnome-terminal -- sh -c "make file_server"
 	gnome-terminal -- sh -c "make application"

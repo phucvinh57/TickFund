@@ -36,12 +36,12 @@ const sample = [{
 export default function CategoryModal({ show, onHide }) {
 
   const dispatch = useDispatch()
-
-  const categories = useSelector(selectAllCategories) || sample
+  const categories = useSelector(selectAllCategories)
 
   useEffect(() => {
     dispatch(getCategory())
   }, [])
+  
 
   return <Modal
     show={show}
@@ -57,8 +57,8 @@ export default function CategoryModal({ show, onHide }) {
     <Modal.Body>
 
       <div id="products" className="row">
-        {categories.map(el =>
-          <CategoryItem mode={UNMODIFY} data={el} />
+        {categories.map((el, _) =>
+          <CategoryItem mode={UNMODIFY} category={el} key={_} />
         )}
         <CategoryItem mode={UNTRACKED} />
       </div>

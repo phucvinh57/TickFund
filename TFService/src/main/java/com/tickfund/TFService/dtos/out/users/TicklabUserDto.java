@@ -1,4 +1,4 @@
-package com.tickfund.TFService.dtos.out.user;
+package com.tickfund.TFService.dtos.out.users;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,6 +14,9 @@ public class TicklabUserDto {
     @JsonProperty
     @NotBlank
     public String name;
+
+    @JsonProperty
+    public String avatarUrl;
 
     @JsonProperty
     @NotNull
