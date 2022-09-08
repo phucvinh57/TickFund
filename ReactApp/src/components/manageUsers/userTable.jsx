@@ -111,6 +111,8 @@ export function UserTable() {
   useEffect(() => {
     userService.getAllUserInfoWithRole().then(response => {
       setUserData(response.data)
+    }).catch(err => {
+      console.log(err.response)
     })
   }, [])
 

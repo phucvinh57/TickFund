@@ -40,8 +40,7 @@ public class RoleService {
         return dto;
     }
 
-    @SuppressWarnings("uncheck")
-    public Object getPermissionOfRoles() {
+    public RolesWithPermissionDto getPermissionOfRoles() {
         ArrayList<PermissionEntity> permissions = permissionRepository.findAllByOrderByRoleIdAsc();
         ArrayList<ArrayList<PermissionEntity>> fragmentList = new ArrayList<>();
 
