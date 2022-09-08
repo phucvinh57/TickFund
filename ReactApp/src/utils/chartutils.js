@@ -222,7 +222,7 @@ export const mergePlanningByTime = (transactions, plannings) => {
     return Array.from(map.values())
 }
 
-export const calculateTotal = (incomes, expenses, prevBalance) => {
+export const calcFundTotalLineData = (incomes, expenses, prevBalance) => {
     var clonedIncomes = [...incomes]
     var clonedExpense = [...expenses]
 

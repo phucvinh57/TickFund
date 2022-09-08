@@ -7,7 +7,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import faker from 'faker'
 import { ISO8601_week_no } from '../../utils/utils';
-import { calculateTotal, genInRangeDataSetWithMissing, genOutRangeDataSet, getRecordLabel, mergePlanningByTime, reduceRecordByTime, translateDateUnit } from '../../utils/chartutils';
+import { calcFundTotalLineData, genInRangeDataSetWithMissing, genOutRangeDataSet, getRecordLabel, mergePlanningByTime, reduceRecordByTime, translateDateUnit } from '../../utils/chartutils';
 
 ChartJS.register(
     CategoryScale, LinearScale, PointElement, LineElement,
@@ -44,7 +44,7 @@ function generateLineData(filter, transactions, plannings, prevBalance){
     const mergeExpense = [...outRangeMergeExpense, ...inRangeMergeExpense]
 
     
-    const total = calculateTotal(
+    const total = calcFundTotalLineData(
                             inRangeIncome.map(ele => ele.y),
                             inRangeExpense.map(ele => ele.y),
                             prevBalance)
@@ -52,7 +52,7 @@ function generateLineData(filter, transactions, plannings, prevBalance){
                                 x: inRangeIncome[idx].x,
                                 y: ele
                             }))
-    const totalWithPlanning = calculateTotal(
+    const totalWithPlanning = calcFundTotalLineData(
                             mergeIncome.map(ele => ele.y),
                             mergeExpense.map(ele => ele.y),
                             prevBalance)

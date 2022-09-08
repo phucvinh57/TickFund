@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ButtonGroup, Form, FormGroup, Button } from "react-bootstrap";
 import DateRangePicker from 'react-bootstrap-daterangepicker'
 
@@ -6,8 +6,14 @@ export default function FilterBar({onFilter}) {
     const [interval, setInterval] = useState('month')
     const [start, setStartDate] = useState(null)
     const [end, setEndDate] =     useState(new Date())
+
+    const initSetting= useMemo(() => ({
+        startDate: (new Date(new Date().getFullYear(), 0, 1)).toLocaleDateString(),
+        endDate: new Date().toLocaleDateString()
+    }))
     useEffect(() => {
         console.log("Update->>>>>>>>")
+        console.log(initSetting)
         onFilter({
             interval: interval,
             start: start ? start : new Date(end.getFullYear(), 0, 1),
@@ -36,7 +42,7 @@ export default function FilterBar({onFilter}) {
             </ButtonGroup>
             <FormGroup style={{ width: '210px' }}>
                 <DateRangePicker
-                    initialSettings={{ startDate: start ? start : (new Date(end.getFullYear(), 0, 1)).toLocaleDateString(), endDate: end.toLocaleDateString() }}
+                    initialSettings={initSetting}
                     onCallback={(start, end, label) => {
                         console.log("call back")
                         start = new Date(start.year(), start.month(), start.date())
