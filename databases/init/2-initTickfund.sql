@@ -63,7 +63,6 @@ CREATE TABLE IF NOT EXISTS planning (
     end_date DATE,
     countdown SMALLINT UNSIGNED,
     category_name VARCHAR(255) NOT NULL,
-    `type` ENUM('INCOME', 'EXPENSE') NOT NULL,
     `user_id` VARCHAR(50),
     FOREIGN KEY (`user_id`) REFERENCES user(ID) ON DELETE SET NULL,
     FOREIGN KEY (category_name) REFERENCES category(`name`) ON UPDATE CASCADE

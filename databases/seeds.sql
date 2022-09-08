@@ -16,7 +16,6 @@ INSERT INTO
         `end_date`,
         `countdown`,
         `category_name`,
-        `type`,
         `user_id`
     )
 VALUES
@@ -31,7 +30,6 @@ VALUES
         NULL,
         NULL,
         'Tiền nhà',
-        'INCOME',
         NULL
     );
 
