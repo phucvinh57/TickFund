@@ -1,8 +1,10 @@
 import axios from "axios"
+
 export const tfServiceHTTPCommon = axios.create({
     baseURL: process.env.REACT_APP_TFSERVICE_BASE_URL, 
     headers: {
-        "Content-type": "application/json"
+        "Content-type": "application/json",
+        'Accept': 'application/json',
     },
     withCredentials: true,
 })
@@ -10,7 +12,8 @@ export const tfServiceHTTPCommon = axios.create({
 export const ssoServiceHTTPCommon = axios.create({
     baseURL: process.env.REACT_APP_SSOSERVICE_BASE_URL, 
     headers: {
-        "Content-type": "application/json"
+        "Content-type": "application/json",
+        'Accept': 'application/json',
     },
     withCredentials: true,
 })

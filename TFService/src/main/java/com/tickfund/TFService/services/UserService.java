@@ -3,9 +3,10 @@ package com.tickfund.TFService.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tickfund.TFService.dtos.in.user.CreateUserDto;
 import com.tickfund.TFService.dtos.in.user.UpdateUserDto;
-import com.tickfund.TFService.dtos.out.user.TickfundUserWithRoleDto;
-import com.tickfund.TFService.dtos.out.user.TicklabUserDto;
-import com.tickfund.TFService.dtos.out.user.UserDto;
+import com.tickfund.TFService.dtos.out.users.TickfundUserWithRoleDto;
+import com.tickfund.TFService.dtos.out.users.TicklabUserDto;
+import com.tickfund.TFService.dtos.out.users.UserDto;
+import com.tickfund.TFService.entities.tickfund.RoleEntity;
 import com.tickfund.TFService.entities.tickfund.UserEntity;
 import com.tickfund.TFService.entities.ticklab_users.DepartmentEntity;
 import com.tickfund.TFService.entities.ticklab_users.TickLabUserEntity;
@@ -14,6 +15,7 @@ import com.tickfund.TFService.repositories.tickfund.RoleRepository;
 import com.tickfund.TFService.repositories.tickfund.UserRepository;
 import com.tickfund.TFService.repositories.ticklab_users.DepartmentRepository;
 import com.tickfund.TFService.repositories.ticklab_users.TickLabUserRepository;
+import com.tickfund.TFService.utils.RemoveAccents;
 
 import java.util.ArrayList;
 
@@ -74,8 +76,17 @@ public class UserService {
     public String createUser(CreateUserDto dto) {
         String userId = dto.ID;
         Integer roleId = dto.roleId;
-        this.ticklabUserRepository.createAccount(dto);
-        this.userRepository.setRoleForUser(userId, roleId);
+
+        String[] splitNames = RemoveAccents.normalize(dto.name)
+                .toLowerCase().trim().split("\\s+");
+        String username = splitNames[splitNames.length - 1] + ".";
+        for (int i = 0; i < splitNames.length - 1; i++) {
+            username  += splitNames[i].charAt(0);
+        }
+        System.out.println(username);
+
+        this.ticklabUserRepository.createAccount(username, dto);
+        this.userRepository.createUserWithRole(userId, roleId);
         return userId;
     }
 
@@ -98,7 +109,28 @@ public class UserService {
 
         return userId;
     }
-    public UserEntity getUserById(String userId){
+
+    public UserEntity getUserById(String userId) {
         return this.userRepository.findById(userId).orElse(null);
+    }
+
+    public void changeRole(String userId, Integer roleId) {
+        UserEntity user = this.getUserById(userId);
+        RoleEntity role = this.roleRepository.findById(roleId).orElseThrow();
+        user.setRole(role);
+        this.userRepository.save(user);
+    }
+
+    public void changeDepartment(String userId, Integer departmentId) {
+        TickLabUserEntity user = this.ticklabUserRepository.findById(userId).orElseThrow();
+        DepartmentEntity deparment = this.departmentRepository.findById(departmentId).orElseThrow();
+        user.department = deparment;
+        this.ticklabUserRepository.save(user);
+    }
+
+    public void toggleActivation(String userId, Boolean active) {
+        TickLabUserEntity user = this.ticklabUserRepository.findById(userId).orElseThrow();
+        user.active = active;
+        this.ticklabUserRepository.save(user);
     }
 }

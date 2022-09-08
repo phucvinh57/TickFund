@@ -1,7 +1,7 @@
 package com.tickfund.TFService.dtos.out;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tickfund.TFService.entities.StatBucket;
+import com.tickfund.TFService.dtos.StatBucket;
 
 import java.util.List;
 import java.util.stream.Stream;

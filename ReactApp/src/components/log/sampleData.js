@@ -5,7 +5,7 @@ import {
     getRandomDate,
     getRandomItem,
     prettyDate
-} from "../../utils/utils";
+} from "../../utils";
 
 import nhancu from '../../assets/nhancu.jpg'
 import vinh from '../../assets/vinh.jpg'

@@ -338,6 +338,9 @@ paths:
                     username:
                       type: string
                       example: vinh.np
+                    avatarUrl:
+                      type: string
+                      example: http://localhost:3002/public/071cbe55b86845c19ffe1d20a0ad4855.jpeg
                     expertise:
                       $ref: "#/components/schemas/Expertise"
                     role:
@@ -358,7 +361,6 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-
     post:
       summary: Add a new account
       tags:
@@ -392,6 +394,75 @@ paths:
         500:
           description: Internal Server Error
 
+  /users/{id}:
+    get:
+      summary: Get a detail info of a user
+      tags:
+        - users
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: User's ID
+          required: true
+      responses:
+        200:
+          description: Admin get a user's detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PersonalInfo"
+  
+  /users/{id}/role:
+    put:
+      summary: Change user's role
+      tags:
+        - users
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: User's ID
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roleId:
+                  type: number
+                  example: 1
+      responses:
+        200:
+          description: Success
+
+  /users/{id}/department:
+    put:
+      summary: Change a user's department
+      tags:
+        - users
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: User's ID
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                departmentId:
+                  type: number
+                  example: 1
+      responses:
+        200:
+          description: Success
   /personal:
     get:
       servers:
@@ -405,7 +476,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CurrentUserInfo"
+                $ref: "#/components/schemas/PersonalInfo"
   /personal/password:
     put:
       summary: Update user's password
@@ -647,7 +718,7 @@ paths:
 
 components:
   schemas:
-    CurrentUserInfo:
+    PersonalInfo:
       type: object
       properties:
         ID:

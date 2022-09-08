@@ -48,18 +48,35 @@ VALUES
     ('1915940', 1);
 
 INSERT INTO
-    tickfund.resource (`ID`, `name`)
+    `resource` (`ID`, `name`)
 VALUES
-    (1, 'planning'),
-    (2, 'transaction');
+    (1, 'Giao dịch'),
+    (2, 'Dự trù'),
+    (3, 'Tài khoản'),
+    (4, 'Nhóm quyền');
 
 INSERT INTO
     tickfund.action (`ID`, `name`)
 VALUES
-    (1, 'SELECT'),
-    (2, 'INSERT'),
+    (1, 'CREATE'),
+    (2, 'READ'),
     (3, 'UPDATE'),
-    (4, 'DELETE');
+    (4, 'DELETE'),
+    (5, 'DISABLE');
+
+INSERT INTO tickfund.resource_action (`resource_id`, `action_id`)
+VALUES
+    (1, 1), (1, 5),
+    (2, 1), (2, 3), (2, 4),
+    (3, 1), (3, 3), (3, 5),
+    (4, 1), (4, 2), (4, 3), (4, 4);
+
+INSERT INTO tickfund.permission (`role_id`, `resource_id`, `action_id`)
+VALUES
+    (3, 1, 1), (3, 1, 5),
+    (3, 2, 1), (3, 2, 3), (3, 2, 4),
+    (3, 3, 1), (3, 3, 3), (3, 3, 5),
+    (3, 4, 1), (3, 4, 2), (3, 4, 3), (3, 4, 4);
 
 INSERT INTO
     ticklab_users.`department` (`ID`, `name`)

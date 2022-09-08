@@ -7,7 +7,7 @@ export const validateUser = async (loginDto: LoginDto): Promise<string | null> =
     const [queryResult]: [RowDataPacket[], FieldPacket[]] = await dbQuery(
         `SELECT ID, email, password FROM account WHERE email = ?`,
         [loginDto.email]
-    )
+    );
 
     if (queryResult.length === 0) return null
     if (queryResult[0].password === null) return null

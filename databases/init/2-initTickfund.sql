@@ -26,6 +26,15 @@ CREATE TABLE IF NOT EXISTS `action` (
     `name` VARCHAR(255) NOT NULL UNIQUE
 );
 
+CREATE TABLE IF NOT EXISTS resource_action (
+    action_id INT,
+    resource_id INT,
+
+    PRIMARY KEY(action_id, resource_id),
+    FOREIGN KEY (action_id) REFERENCES `action`(ID) ON DELETE CASCADE,
+    FOREIGN KEY (resource_id) REFERENCES `resource`(ID) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS permission (
     role_id INT,
     action_id INT,

@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import styled from "styled-components"
 import { useSelector } from "react-redux"
 
-import Permission from "./pages/permission"
 import Log from "./pages/log"
 import Transactions from "./pages/transactions"
 
@@ -15,11 +14,14 @@ import { BagPlus, BookmarkPlus, CartPlus } from "react-bootstrap-icons"
 import { useState } from "react"
 import PlanningModal from "./components/planning/modal"
 import AddTransactionModal from "./components/transactions/createTransactionModal"
-import User from "./pages/Personal"
+
 import CategoryModal from "./components/category/CategoryModal"
+import Personal from "./pages/personal"
+import ManageUser from "./pages/manageUsers"
 
 const Main = styled.div`
   transition: 0.3s;
+  margin-bottom: 60px;
 `;
 
 export default function App() {
@@ -44,9 +46,10 @@ export default function App() {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/plannings" element={<Planning />} />
           <Route path="/stat/*" element={<Statistic />} />
-          <Route path='/permission' element={<Permission />} />
+
+          <Route path="/manager" element={<ManageUser />} />
           <Route path="/log" element={<Log />} />
-          <Route path="/personal" element={<User />} />
+          <Route path="/personal" element={<Personal />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

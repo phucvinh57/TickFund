@@ -1,5 +1,5 @@
 import { EMPTY_AVATAR } from "../resource";
-import { shortKey } from "../utils/utils";
+import { shortKey } from "../utils";
 import { tfServiceHTTPCommon } from "./httpCommon";
 const path = '/transactions/'
 
