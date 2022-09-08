@@ -1,6 +1,6 @@
-import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent } from 'react-pro-sidebar'
+import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent, SidebarFooter } from 'react-pro-sidebar'
 import { Link } from 'react-router-dom'
-import { Speedometer2, BarChartLine, PieChart, List, GraphUp, ShieldLock, JournalText, Coin, PiggyBank } from 'react-bootstrap-icons'
+import { Speedometer2, BarChartLine, PieChart, List, GraphUp, JournalText, Coin, PiggyBank, InfoCircle, People, BoxArrowRight, ShieldCheck } from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { setCollapse } from '../redux/slice/sidebar';
 import styled from 'styled-components'
@@ -41,6 +41,16 @@ export default function Sidebar() {
                 {sidebarContent.map(content => visitItem(content))}
             </Menu>
         </SidebarContent>
+        <SidebarFooter>
+            <Menu><SubMenu icon={<InfoCircle size={18} />} title={"Tài khoản"}>
+                <MenuItem icon={<People size={18} />}>
+                    <Link to={"/personal"}>Thông tin cá nhân</Link>
+                </MenuItem>
+                <MenuItem icon={<BoxArrowRight size={18} />}>
+                    <a href={"https://facebook.com"}>Đăng xuất</a>
+                </MenuItem>
+            </SubMenu></Menu>
+        </SidebarFooter>
     </ProSidebar>;
 }
 
@@ -54,11 +64,6 @@ function visitItem(node) {
 }
 
 const sidebarContent = [
-    // {
-    //     icon: <House size={18} />,
-    //     title: 'Trang chủ',
-    //     path: '/home'
-    // }, 
     {
         icon: <Speedometer2 size={18} />,
         title: 'Thống kê',
@@ -75,21 +80,18 @@ const sidebarContent = [
             title: 'Biểu đồ đường',
             path: '/stat/line'
         }]
-    },
-    {
+    }, {
         icon: <Coin size={18} />,
         title: "Giao dịch",
         path: '/transactions'
-    },
-    {
+    }, {
         icon: <PiggyBank size={18} />,
         title: "Dự trù",
         path: '/plannings'
-    }, 
-    {
-        icon: <ShieldLock size={18} />,
-        title: 'Quyền truy cập',
-        path: '/permission'
+    }, {
+        icon: <ShieldCheck size={18} />,
+        title: 'Quản lý tài khoản',
+        path: '/manager'
     }, {
         icon: <JournalText size={18} />,
         title: 'Nhật ký hệ thống',

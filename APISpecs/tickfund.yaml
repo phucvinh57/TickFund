@@ -20,9 +20,11 @@ tags:
   - name: logs
     description: API for logs
   - name: users
-    description: API for user info
+    description: API for user management
   - name: roles
     description: API for access control
+  - name: personal
+    description: API for personal user
     
 paths:
   /roles:
@@ -313,7 +315,7 @@ paths:
           description: Internal Server Error
   /users:
     get:
-      summary: Get a list of all users
+      summary: Get a list of all accounts
       tags:
         - users
       responses:
@@ -336,6 +338,9 @@ paths:
                     username:
                       type: string
                       example: vinh.np
+                    avatarUrl:
+                      type: string
+                      example: http://localhost:3002/public/071cbe55b86845c19ffe1d20a0ad4855.jpeg
                     expertise:
                       $ref: "#/components/schemas/Expertise"
                     role:
@@ -356,9 +361,8 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-
     post:
-      summary: Add a new user
+      summary: Add a new account
       tags:
         - users
       requestBody:
@@ -389,6 +393,161 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
+
+  /users/{id}:
+    get:
+      summary: Get a detail info of a user
+      tags:
+        - users
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: User's ID
+          required: true
+      responses:
+        200:
+          description: Admin get a user's detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PersonalInfo"
+  
+  /users/{id}/role:
+    put:
+      summary: Change user's role
+      tags:
+        - users
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: User's ID
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roleId:
+                  type: number
+                  example: 1
+      responses:
+        200:
+          description: Success
+
+  /users/{id}/department:
+    put:
+      summary: Change a user's department
+      tags:
+        - users
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: User's ID
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                departmentId:
+                  type: number
+                  example: 1
+      responses:
+        200:
+          description: Success
+  /personal:
+    get:
+      servers:
+        - url: finance.ticklab.vn
+      summary: Get my user
+      tags:
+        - personal
+      responses:
+        200:
+          description: Return user's info, include user's role
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PersonalInfo"
+  /personal/password:
+    put:
+      summary: Update user's password
+      tags:
+        - personal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPass:
+                  type: string
+                  example: "******"
+                newPass:
+                  type: string
+                  example: "******"
+                confirmedNewPass:
+                  type: string
+                  example: "******"
+      responses:
+        200:
+          description: Update password successfully
+  /personal/avatar:
+    put:
+      summary: Update user's avatar
+      tags:
+        - personal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                avatarUrl:
+                  type: string
+                  example: http://127.0.0.1:3002/public/as1s6Dc69kAhsd.jpeg
+      responses:
+        200:
+          description: Update user avatar successfully
+  /personal/info:
+    put:
+      summary: Update user's info
+      tags:
+        - personal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: npvinh0507@gmail.com
+                name:
+                  type: string
+                  example: guyễn Phúc Vinh
+                phone:
+                  type: string
+                  example: "0373395726"
+                birthday:
+                  type: string
+                  example: "2001-07-05"
+                expertise:
+                  $ref: "#/components/schemas/Expertise"
+                departmentId:
+                  type: number
+                  example: 1
+      responses:
+        200:
+          description: Update user info successfully
 
   # PLANNING
   /plannings:
@@ -559,6 +718,79 @@ paths:
 
 components:
   schemas:
+    PersonalInfo:
+      type: object
+      properties:
+        ID:
+          type: string
+          example: 1915940
+        username:
+          type: string
+          example: vinh.np
+        email:
+          type: string
+          example: npvinh0507@gmail.com
+        name:
+          type: string
+          example: Nguyễn Phúc Vinh
+        avatarUrl:
+          type: string
+          example: "https://cdn.ticklab.com"
+        phone:
+          type: string
+          example: 0373395726
+        birthday:
+          type: string
+          example: "2001-07-05"
+        expertise:
+          $ref: "#/components/schemas/Expertise"
+        department:
+          $ref: "#/components/schemas/Department"
+        role:
+          $ref: "#/components/schemas/Role"
+    
+    Role:
+      type: object
+      properties:
+        ID:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Thủ quỹ
+        resources:
+          type: array
+          items:
+            $ref: "#/components/schemas/Resource"
+    
+    Resource:
+      type: object
+      properties:
+        ID:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Giao dịch
+        actions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Action"
+    
+    Action:
+      type: object
+      properties:
+        ID:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Tạo giao dịch mới
+        permit:
+          type: boolean
+          example: true
+
+
     Category:
       type: object
       properties:

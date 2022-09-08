@@ -1,7 +1,7 @@
 import { Sparklines, SparklinesLine } from "react-sparklines"
 import faker from "faker"
 import { calcFundTotalLineData, genInRangeDataSetWithMissing, reduceRecordByTime } from "../../utils/chartutils"
-import { dateToString } from "../../utils/utils"
+import { dateToString, prettyNumber } from "../../utils"
 
 function genData(filter, records){
     if(filter == null){
@@ -51,7 +51,7 @@ export default function Overviews({transactions, filter, prevBalance = 0}) {
             overviewNum={calcTotalExpense(transactions)} />
         <Overview
             title='Tổng quỹ'
-            subtitle={getSubTitle(filter) + ` - Tổng quỹ trước ${filter ? dateToString(filter.start) : ''} là: ${format(prevBalance)} VNĐ`}
+            subtitle={getSubTitle(filter) + ` - Tổng quỹ trước ${filter ? dateToString(filter.start) : ''} là: ${prettyNumber(prevBalance)} VNĐ`}
             data={calcFundTotalLineData(
                     genData(filter, transactions.filter(t => t.category_type === 'income')),
                     genData(filter, transactions.filter(t => t.category_type === 'expense'))
@@ -68,7 +68,7 @@ function Overview({ title, subtitle, data, color, overviewNum = 0 }) {
             <div className="col-6">
                 <h5>{title}</h5>
                 <span className="fw-bold fs-5">
-                    {format(overviewNum)} VND
+                    {prettyNumber(overviewNum)} VND
                 </span>
             </div>
             <div className="col-6 p-0">
@@ -80,7 +80,3 @@ function Overview({ title, subtitle, data, color, overviewNum = 0 }) {
         <div className="fst-italic mt-2">{subtitle}</div>
     </div>
 }
-
-
-// Create our number formatter.
-const format = number =>(number < 0 ? '-' : '')  + String(Math.abs(number)).replace(/(.)(?=(\d{3})+$)/g,'$1,')

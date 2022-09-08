@@ -1,35 +1,54 @@
-import { useState } from "react";
+import { useRef } from "react";
+import { useEffect, useState } from "react";
 import { PlusLg } from "react-bootstrap-icons";
 import "../scss/fab.scss";
 
 const Fab = ({ actions }) => {
+  const ref = useRef()
+
   const [open, setOpen] = useState(false);
+  
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      // If the menu is open and the clicked target is not within the menu,
+      // then close the menu
+      if (open && ref.current && !ref.current.contains(e.target)) {
+        setOpen(false)
+      }
+    }
 
-  const mouseEnter = () => setOpen(true);
+    document.addEventListener("mousedown", checkIfClickedOutside)
 
-  const mouseLeave = () => setOpen(false);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", checkIfClickedOutside)
+    }
+  }, [open])
+
+
+  const mouseEnter = () => setOpen(!open);
 
   return (
-      <ul
+    <ul
       className="fab-container"
-      onMouseEnter={mouseEnter}
-      onMouseLeave={mouseLeave}
-      >
+      onClick={mouseEnter}
+      ref={ref}
+    >
       <li className="fab-button">
-          <PlusLg size={25}/>
+        <PlusLg size={25} />
       </li>
       {actions.map((action, index) => (
-          <li
-          style={{ transitionDelay: `${index * 25}ms`,backgroundColor: `${action.color}` }}
+        <li
+          style={{ transitionDelay: `${index * 25}ms`, backgroundColor: `${action.color}` }}
           className={`fab-action ${open && 'open'}`}
           key={action.label}
           onClick={action.onClick}
-          >
+        >
           {action.icon}
           <span className="tooltip">{action.label}</span>
-          </li>
+        </li>
       ))}
-      </ul>
+    </ul>
   );
 };
 

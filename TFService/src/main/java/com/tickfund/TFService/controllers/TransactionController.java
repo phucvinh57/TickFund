@@ -35,11 +35,10 @@ public class TransactionController {
     @ResponseBody
     public TransactionOut getTransactionById(@PathVariable(name = "id") String ID) throws ResourceNotFoundException {
 
-        Optional<TransactionEntity> optionalTransaction =  this.transactionService.getTransactionById(ID);
-        if(optionalTransaction.isPresent()){
+        Optional<TransactionEntity> optionalTransaction = this.transactionService.getTransactionById(ID);
+        if (optionalTransaction.isPresent()) {
             return new TransactionOut(optionalTransaction.get(), MY_DOMAIN);
-        }
-        else {
+        } else {
             throw new ResourceNotFoundException("Transaction ID %s is not exist".formatted(ID));
         }
     }
@@ -59,7 +58,7 @@ public class TransactionController {
         return response;
     }
 
-    TransactionEntity dtoToEntity(TransactionDTO dto){
+    TransactionEntity dtoToEntity(TransactionDTO dto) {
         TransactionEntity entity = new TransactionEntity();
         entity.setAmount(dto.amount);
         entity.setHistory(dto.history);
@@ -80,19 +79,16 @@ public class TransactionController {
                 .collect(Collectors.toList());
     }
 
-    List<AttachmentOut> genAttachmentOut(List<AttachmentEntity> attachmentEntities){
+    List<AttachmentOut> genAttachmentOut(List<AttachmentEntity> attachmentEntities) {
         List<AttachmentOut> attachmentOuts = new ArrayList<>();
-        for(AttachmentEntity entity : attachmentEntities){
+        for (AttachmentEntity entity : attachmentEntities) {
             AttachmentOut attachmentOut = new AttachmentOut();
             attachmentOut.setID(entity.getID());
             String realFileUrl = entity.getUrl();
             String fakeFileUrl = "%s://%s/%s".formatted(PROTOCOL_SCHEME, MY_DOMAIN, entity.getID());
-
             attachmentOut.setPath(fakeFileUrl);
-
             String fileName = realFileUrl.substring(realFileUrl.lastIndexOf('/') + 1);
             attachmentOut.setName(fileName);
-
             attachmentOuts.add(attachmentOut);
         }
 

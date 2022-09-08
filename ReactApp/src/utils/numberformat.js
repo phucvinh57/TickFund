@@ -1,0 +1,1 @@
+export const prettyNumber = number => (number < 0 ? '-' : '')  + String(Math.abs(number)).replace(/(.)(?=(\d{3})+$)/g,'$1,')

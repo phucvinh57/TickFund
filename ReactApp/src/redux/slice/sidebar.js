@@ -12,6 +12,5 @@ const sidebarSlice = createSlice({
         }
     }
 })
-
 export const { setCollapse } = sidebarSlice.actions
 export default sidebarSlice.reducer

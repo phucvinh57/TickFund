@@ -2,6 +2,8 @@ setup_env:
 	cd TFService/src/main/resources; cp application_example.properties application.properties
 	cd databases; cp .env_example .env; cp createDbUsers_example.sql init/3-createDbUsers.sql
 	cd AuthService; cp .env_example .env
+	cd file-server; cp .env_example .env
+	cd ReactApp; cp .env_example .env
 
 bootstrap:
 	cd databases; docker-compose up -d
@@ -12,19 +14,16 @@ down:
 down_db:
 	cd databases; docker-compose down --volumes
 
-tfservice:
+tickfund_service:
 	cd TFService; ./gradlew bootRun
 
 application:
 	cd ReactApp; npm start
 
-build_app:
-	cd ReactApp; npm run build
-	
 api_specs:
 	cd APISpecs; http-server -c-1 -p 3001 . -o
 
-generate_user:
+generate_user_default_password:
 	cd AuthService; npm run seed
 
 auth_service:
@@ -33,9 +32,19 @@ auth_service:
 file_server:
 	cd file-server; npm start
 
-all:
-	gnome-terminal -- sh -c "make tfservice"
+run_dev:
+	gnome-terminal -- sh -c "make tickfund_service"
 	gnome-terminal -- sh -c "make auth_service"
 	gnome-terminal -- sh -c "make file_server"
 	gnome-terminal -- sh -c "make application"
 	gnome-terminal -- sh -c "make api_specs"
+
+
+build_tfservice:
+	cd TFService; ./gradlew bootBuildImage --imageName=tickfund_service
+build_app:
+	cd ReactApp; npm run build
+
+build_all:
+	make build_tfservice;
+	docker-compose build

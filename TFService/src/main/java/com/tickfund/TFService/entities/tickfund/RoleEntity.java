@@ -9,14 +9,10 @@ import javax.persistence.Table;
 @Table(schema = "tickfund", name = "role")
 public class RoleEntity {
     @Id
-    private Integer ID;
+    public Integer ID;
 
     @Column(nullable = false, unique = true)
-    private String name;
-
-    public Integer getID() {
-        return ID;
-    }
+    public String name;
 
     public void setID(Integer ID) {
         this.ID = ID;

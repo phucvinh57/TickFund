@@ -19,10 +19,10 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @RestController
 @RequestMapping("/attachments")
 public class AttachmentController {
-
     @Value("${tickfund.domain.file.server}")
     String FILE_SERVER_HOST;
 
@@ -35,29 +35,30 @@ public class AttachmentController {
     AttachmentService attachmentService;
 
     @GetMapping("/{id}")
-    public RedirectView getAttachment(@PathVariable(name = "id") String id, RedirectAttributes attributes) throws ResourceNotFoundException {
+    public RedirectView getAttachment(@PathVariable(name = "id") String id, RedirectAttributes attributes)
+            throws ResourceNotFoundException {
         Integer code = attachmentService.genAuthCode();
         AttachmentEntity attachmentEntity = attachmentService.getAttachmentById(id);
-        if(attachmentEntity != null){
-            attributes.addAttribute("code_callback", String.format("%s://%s/auth/file?code=%d", PROTOCOL, MY_DOMAIN, code));
+        if (attachmentEntity != null) {
+            attributes.addAttribute("code_callback",
+                    String.format("%s://%s/auth/file?code=%d", PROTOCOL, MY_DOMAIN, code));
             RedirectView redirectView = new RedirectView();
             redirectView.setUrl(attachmentEntity.getUrl());
             return redirectView;
-        }
-        else {
+        } else {
             throw new ResourceNotFoundException(String.format("Attachment id %s is not exist", id));
         }
     }
 
     @PostMapping("/upload")
-    @SuppressWarnings({"unchecked"})
-    public Map<String, Object> uploadAttachment(@RequestParam("file") MultipartFile file){
+    @SuppressWarnings({ "unchecked" })
+    public Map<String, Object> uploadAttachment(@RequestParam("file") MultipartFile file) {
         Map<String, Object> response = new HashMap<>();
         WebClient client = WebClient.builder()
                 .baseUrl(String.format("%s://%s", PROTOCOL, FILE_SERVER_HOST))
                 .build();
 
-        try{
+        try {
             MultipartBodyBuilder builder = new MultipartBodyBuilder();
             final String fileId = UniqueId.generate("0");
 
@@ -65,14 +66,14 @@ public class AttachmentController {
             builder.part("prefix_id", fileId);
             builder.part("app_name", "tickfund");
             var fileUploadResponse = client
-                .post()
-                .uri("/media/upload")
-                .contentType(MediaType.MULTIPART_FORM_DATA)
-                .body(BodyInserters.fromMultipartData(builder.build()))
-                .retrieve()
-                .toEntity(String.class)
-                .block();
-            if(fileUploadResponse.getStatusCode().is2xxSuccessful()){
+                    .post()
+                    .uri("/media/upload")
+                    .contentType(MediaType.MULTIPART_FORM_DATA)
+                    .body(BodyInserters.fromMultipartData(builder.build()))
+                    .retrieve()
+                    .toEntity(String.class)
+                    .block();
+            if (fileUploadResponse.getStatusCode().is2xxSuccessful()) {
                 Map<String, Object> map = new ObjectMapper().readValue(fileUploadResponse.getBody(), Map.class);
                 final String url = (String) map.get("url");
                 AttachmentEntity attachmentEntity = new AttachmentEntity();
@@ -83,13 +84,11 @@ public class AttachmentController {
 
                 response.put(MESSAGE, "Create attachment successfully");
                 response.put(ID, fileId);
-                return  response;
-            }
-            else {
+                return response;
+            } else {
                 throw new RuntimeException();
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException();
         }

@@ -1,10 +1,26 @@
 import axios from "axios"
-const httpCommon = axios.create({
+
+export const tfServiceHTTPCommon = axios.create({
     baseURL: process.env.REACT_APP_TFSERVICE_BASE_URL, 
     headers: {
-        "Content-type": "application/json"
+        "Content-type": "application/json",
+        'Accept': 'application/json',
     },
     withCredentials: true,
 })
 
-export default httpCommon
+export const ssoServiceHTTPCommon = axios.create({
+    baseURL: process.env.REACT_APP_SSOSERVICE_BASE_URL, 
+    headers: {
+        "Content-type": "application/json",
+        'Accept': 'application/json',
+    },
+    withCredentials: true,
+})
+
+export const fileServiceHTTPCommon = axios.create({
+    baseURL: process.env.REACT_APP_FILESERVICE_BASE_URL, 
+    headers: {
+        "Content-type": "application/json"
+    }
+})

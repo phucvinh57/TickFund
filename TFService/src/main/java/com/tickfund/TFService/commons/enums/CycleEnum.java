@@ -35,6 +35,8 @@ public enum CycleEnum {
                 return ChronoUnit.MONTHS;
             case YEAR:
                 return ChronoUnit.YEARS;
+            default:
+                break;
         }
         return ChronoUnit.DAYS;
     }

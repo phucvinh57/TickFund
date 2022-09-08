@@ -3,7 +3,7 @@ import {
     getRandomDate,
     getRandomItem,
     generateHexId
-} from "../../utils/utils";
+} from "../../utils";
 
 export const headers = [{
     label: 'Mã dự trù',

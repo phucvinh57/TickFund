@@ -3,10 +3,12 @@ package com.tickfund.TFService.entities.ticklab_users;
 import java.time.LocalDate;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -58,14 +60,14 @@ public class TickLabUserEntity {
     @Nullable
     public DepartmentEntity department;
 
-    @OneToMany(targetEntity = PersonalLinkEntity.class)
+    @OneToMany(mappedBy = "ticklabUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     public Set<PersonalLinkEntity> personalLinks;
 
     public void setBasicInfo(UpdateUserDto dto) {
         this.active = dto.active;
-        this.avatarURL = dto.avatarUrl;
-        this.birthday = dto.birthday;
+        this.avatarURL = null;
+        this.birthday = null;
         this.email = dto.email;
         this.expertise = dto.expertise;
         this.name = dto.name;
@@ -74,9 +76,5 @@ public class TickLabUserEntity {
 
     public void setDepartment(DepartmentEntity department) {
         this.department = department;
-    }
-
-    public void setPersonalLinks(Set<PersonalLinkEntity> links) {
-        this.personalLinks = links;
     }
 }

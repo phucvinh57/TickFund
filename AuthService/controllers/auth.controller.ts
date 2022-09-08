@@ -1,18 +1,17 @@
 import { Request, Response } from "express";
 import { sign } from "jsonwebtoken";
-import UserDto from "../user.dto";
+import { LoginDto } from "../dtos";
 import { ACCESS_DENIED, BAD_REQUEST, JWT_SECRET_KEY } from "../constants";
-import { validateUser } from "../services/validateUser";
-import { authCodeManager } from "../services/authCodeManager";
+import { validateUser, authCodeManager } from "../services";
 
 const MONTH = 1000 * 3600 * 24 * 30
 
 export const AuthController = {
     login: async function (req: Request, res: Response) {
-        let loginDto: UserDto
+        let loginDto: LoginDto
 
         try {
-            loginDto = new UserDto(req.body.email, req.body.password)
+            loginDto = new LoginDto(req.body.email, req.body.password)
         } catch (err) {
             res.status(BAD_REQUEST).json({ msg: "Incorrect request body" })
             return
@@ -24,7 +23,7 @@ export const AuthController = {
             return
         }
 
-        const jwt: string = sign({ id: userId }, JWT_SECRET_KEY, {
+        const jwt: string = sign({ id: userId, email: loginDto.email }, JWT_SECRET_KEY, {
             algorithm: "HS256",
             expiresIn: MONTH
         })

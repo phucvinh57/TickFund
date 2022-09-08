@@ -2,9 +2,6 @@ import { Button, Form, Modal } from "react-bootstrap"
 import { AttachmentUploader } from "../attachment/attachmentUploader"
 
 export default function AddTransactionModal({ show, onHide }) {
-  // const users = useSelector(state => state.user)
-  // const categories = useSelector(state => state.category)
-
   return <Modal show={show} onHide={onHide} size='lg'>
     <Modal.Header className="bg-primary text-white">
       <h5 className="m-auto">
