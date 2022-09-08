@@ -5,8 +5,6 @@ import {
     Title, Tooltip, Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import faker from 'faker'
-import { ISO8601_week_no } from '../../utils/utils';
 import { calcFundTotalLineData, genInRangeDataSetWithMissing, genOutRangeDataSet, getRecordLabel, mergePlanningByTime, reduceRecordByTime, translateDateUnit } from '../../utils/chartutils';
 
 ChartJS.register(

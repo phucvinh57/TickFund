@@ -15,7 +15,7 @@ import com.tickfund.TFService.entities.tickfund.UserEntity;
 import com.tickfund.TFService.repositories.tickfund.PermissionRepository;
 import com.tickfund.TFService.repositories.tickfund.ResourceActionMappingRepository;
 import com.tickfund.TFService.repositories.tickfund.UserRepository;
-import com.tickfund.TFService.commons.enums.ApiPath;
+// import com.tickfund.TFService.commons.enums.ApiPath;
 
 import java.io.IOException;
 import java.util.ArrayList;
