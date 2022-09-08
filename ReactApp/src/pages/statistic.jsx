@@ -4,10 +4,9 @@ import LineChart, { compareRecord } from "../components/statistics/lineChart"
 import BarChart from "../components/statistics/barChart"
 import PieChart from "../components/statistics/pieChart"
 import Overviews from "../components/statistics/overview"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import statService from "../services/stat.service"
-import { dateToString } from "../utils/utils"
-import { Toast } from "react-bootstrap"
+import { dateToString } from "../utils"
 import WarnToast from "../components/statistics/warnToast"
 
 
