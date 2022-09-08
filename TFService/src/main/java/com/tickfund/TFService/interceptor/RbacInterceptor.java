@@ -15,6 +15,7 @@ import com.tickfund.TFService.entities.tickfund.UserEntity;
 import com.tickfund.TFService.repositories.tickfund.PermissionRepository;
 import com.tickfund.TFService.repositories.tickfund.ResourceActionMappingRepository;
 import com.tickfund.TFService.repositories.tickfund.UserRepository;
+import com.tickfund.TFService.commons.enums.ApiPath;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class RbacInterceptor implements HandlerInterceptor {
             if (map.resource.ID == 1) {
                 if (map.action.name.equals("CREATE")) {
 
-                    this.requirePermissionMap.put(this.POST_METHOD + " /transactions", map);
+                    this.requirePermissionMap.put(this.POST_METHOD + " " + "/transactions", map);
                 } else if (map.action.name.equals("DISABLE"))
                     this.requirePermissionMap.put(this.PUT_METHOD + " /transactions/disable", map);
             }

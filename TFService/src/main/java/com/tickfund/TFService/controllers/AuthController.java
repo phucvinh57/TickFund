@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 import static com.tickfund.TFService.interceptor.CookieInterceptor.C_USER;
 
-
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -53,7 +52,7 @@ public class AuthController {
 
     @GetMapping("/file")
     @ResponseBody
-    public Map<String, Object> getTransactionById(@RequestParam Integer code)  {
+    public Map<String, Object> getTransactionById(@RequestParam Integer code) {
         Map<String, Object> response = new HashMap<>();
         response.put("message", attachmentService.authenticateCode(code));
         return response;
@@ -61,7 +60,8 @@ public class AuthController {
 
     @GetMapping("/login")
     @ResponseBody
-    public void login(@RequestParam("appCallbackUrl") String appCallback, HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public void login(@RequestParam("appCallbackUrl") String appCallback, HttpServletResponse response,
+            HttpServletRequest request) throws IOException {
         final String REDIRECT_SSO = this.genRedirectSso(appCallback);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
@@ -74,7 +74,8 @@ public class AuthController {
 
     @GetMapping("/ticksso")
     @ResponseBody
-    public void tickSsoCallback(@RequestParam("appCallbackUrl") String appCallback, @RequestParam Integer code, HttpServletResponse response)  {
+    public void tickSsoCallback(@RequestParam("appCallbackUrl") String appCallback, @RequestParam Integer code,
+            HttpServletResponse response) {
         WebClient client = WebClient.builder()
                 .baseUrl(String.format("%s://%s", PROTOCOL_SCHEME, SSO_SERVER))
                 .build();
@@ -87,7 +88,7 @@ public class AuthController {
                     .block();
             CodeCheckBody body = codeCheckResponse.getBody();
 
-            if(codeCheckResponse.getStatusCode().is2xxSuccessful() && body != null && body.codeCheck){
+            if (codeCheckResponse.getStatusCode().is2xxSuccessful() && body != null && body.codeCheck) {
                 UserEntity userEntity = userService.getUserById(body.userId);
                 String token = tokenManager.generateJwtToken(userEntity);
                 Cookie cookie = new Cookie(C_USER, token);
@@ -95,8 +96,7 @@ public class AuthController {
                 response.addCookie(cookie);
 
                 response.sendRedirect(appCallback);
-            }
-            else {
+            } else {
                 final String REDIRECT_SSO = this.genRedirectSso(appCallback);
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.setContentType("application/json");
@@ -107,16 +107,16 @@ public class AuthController {
                         "}");
             }
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 
-    String genRedirectSso(String appCallback){
+    String genRedirectSso(String appCallback) {
         final String SERVICE_CALLBACK = String.format("%s://%s", PROTOCOL_SCHEME, MY_DOMAIN) + "/auth/ticksso";
-        return String.format("%s://%s?serviceCallbackUrl=%s&appCallbackUrl=%s", PROTOCOL_SCHEME, SSO_SERVER, SERVICE_CALLBACK, appCallback);
+        return String.format("%s://%s?serviceCallbackUrl=%s&appCallbackUrl=%s", PROTOCOL_SCHEME, SSO_SERVER,
+                SERVICE_CALLBACK, appCallback);
     }
 }

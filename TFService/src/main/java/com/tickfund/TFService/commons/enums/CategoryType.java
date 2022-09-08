@@ -7,15 +7,16 @@ public enum CategoryType {
     INCOME("income"),
 
     EXPENSE("expense");
+
     @JsonProperty
     private final String name;
-    
-    CategoryType(String name){
+
+    CategoryType(String name) {
         this.name = name.toLowerCase();
     }
 
     @JsonValue
-    public String getName(){
-       return this.name;
-   }
+    public String getName() {
+        return this.name;
+    }
 }

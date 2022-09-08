@@ -86,12 +86,9 @@ public class TransactionController {
             attachmentOut.setID(entity.getID());
             String realFileUrl = entity.getUrl();
             String fakeFileUrl = "%s://%s/%s".formatted(PROTOCOL_SCHEME, MY_DOMAIN, entity.getID());
-
             attachmentOut.setPath(fakeFileUrl);
-
             String fileName = realFileUrl.substring(realFileUrl.lastIndexOf('/') + 1);
             attachmentOut.setName(fileName);
-
             attachmentOuts.add(attachmentOut);
         }
 
