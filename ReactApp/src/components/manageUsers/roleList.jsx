@@ -7,7 +7,7 @@ import { RoleItem } from "./roleItem";
 import { useSelector } from "react-redux";
 
 export function RoleList() {
-  const roles = useSelector(state => state.roles)
+  const permissions = useSelector(state => state.permissions)
   const [resourceActionMappings, setResourceActionMappings] = useState([])
   useEffect(() => {
     roleService.getResourceActionMapping().then(response => {
@@ -18,7 +18,7 @@ export function RoleList() {
   const [roleConfigs, setRoleConfigs] = useState([])
 
   useEffect(() => {
-    const config = roles.map(role => {
+    const config = permissions.map(role => {
       const resources = resourceActionMappings.map(resource => {
         const userResource = role.resources.find(rsrc => rsrc.ID === resource.ID)
         if (!userResource) {
@@ -52,7 +52,7 @@ export function RoleList() {
       }
     })
     setRoleConfigs(config)
-  }, [roles, resourceActionMappings])
+  }, [permissions, resourceActionMappings])
 
   const changePolicy = (roleId, resourceId, actionId, permit) => {
     const copyRoleConfigs = [...roleConfigs]

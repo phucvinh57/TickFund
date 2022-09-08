@@ -22,8 +22,20 @@ public class RoleController {
 
     @GetMapping("")
     @ResponseBody
+    public Object getRoles() {
+        return roleService.getRoles();
+    }
+
+    @GetMapping("/permissions")
+    @ResponseBody
     public Object getPermissionOfRoles() {
         return roleService.getPermissionOfRoles();
+    }
+
+    @PutMapping("/permissions")
+    @ResponseBody
+    public Object updatePermissions(@Valid @RequestBody UpdatePermissionDto dto) {
+        return null;
     }
 
     @GetMapping("/mapping")
@@ -36,11 +48,5 @@ public class RoleController {
     @ResponseBody
     public Integer updateRoleName(@Valid @RequestBody UpdateRoleNameDto dto) {
         return roleService.updateRoleName(dto);
-    }
-
-    @PutMapping("/permission")
-    @ResponseBody
-    public Object updatePermissions(@Valid @RequestBody UpdatePermissionDto dto) {
-        return null;
     }
 }

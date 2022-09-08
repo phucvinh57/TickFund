@@ -6,12 +6,12 @@ import com.tickfund.TFService.commons.vos.RoleVo;
 import com.tickfund.TFService.entities.tickfund.PermissionEntity;
 
 public class RolesWithPermissionDto {
-    public ArrayList<RoleVo> roles;
+    public ArrayList<RoleVo> permissions;
 
     public RolesWithPermissionDto(ArrayList<ArrayList<PermissionEntity>> fragmentListPermissionEntity) {
-        this.roles = new ArrayList<>();
+        this.permissions = new ArrayList<>();
         for (ArrayList<PermissionEntity> list : fragmentListPermissionEntity) {
-            this.roles.add(new RoleVo(list));
+            this.permissions.add(new RoleVo(list));
         }
     }
 }

@@ -31,6 +31,10 @@ public class RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
+    public Object getRoles() {
+        return roleRepository.findAll();
+    }
+
     public Object getResourceActionMapping() {
         Iterable<ResourceActionMappingEntity> queryResult = ramRepository.findAll();
         ArrayList<ResourceActionMappingEntity> mappings = new ArrayList<>();

@@ -3,7 +3,8 @@ import sidebarReducer from "./slice/sidebar";
 import planningReducer from "./slice/planning";
 import personalReducer from "./slice/personal"
 import categoryReducer from "./category";
-import rolesReducer from "./slice/roles"
+import permissionReducer from "./slice/permission"
+import roleReducer from "./slice/role";
 
 export default configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export default configureStore({
         planning: planningReducer,
         category: categoryReducer,
         personal: personalReducer,
-        roles: rolesReducer
+        permissions: permissionReducer,
+        roles: roleReducer
     }
 })
