@@ -1,5 +1,4 @@
 import { Sparklines, SparklinesLine } from "react-sparklines"
-import faker from "faker"
 import { calcFundTotalLineData, genInRangeDataSetWithMissing, reduceRecordByTime } from "../../utils/chartutils"
 import { dateToString, prettyNumber } from "../../utils"
 
