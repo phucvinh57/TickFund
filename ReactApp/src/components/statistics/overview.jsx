@@ -17,7 +17,7 @@ function getSubTitle(filter){
     return filter == null ? '' : `Tính từ ${dateToString(filter.start)} đến ${dateToString(filter.end)} - Không bao gôm dự trù`
 }
 function calcTotalIncome(records){
-    console.log(records)
+    // console.log(records)
     return records
             .filter(r =>  r.category_type === 'income')
             .reduce((prev, cur) => prev + cur.sum, 0)

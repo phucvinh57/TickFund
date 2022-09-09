@@ -20,13 +20,16 @@ import java.time.temporal.ChronoField;
 })
 @Service
 public abstract class AbstractQueryFilter {
-    abstract public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot, Class<?> clazz);
+    abstract public Predicate toPredicate(CriteriaBuilder builder, Root<?> transactionRoot, Class<?> clazz);
 
     @JsonProperty
     protected String field;
 
-    final public String getField(){ return this.field;}
-    final protected DateTimeFormatter getGeneralDateTimeFormat(String format){
+    final public String getField() {
+        return this.field;
+    }
+
+    final protected DateTimeFormatter getGeneralDateTimeFormat(String format) {
         return new DateTimeFormatterBuilder().appendPattern(format)
                 .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
                 .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)

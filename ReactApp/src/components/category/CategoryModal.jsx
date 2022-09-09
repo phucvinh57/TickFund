@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory, selectAllCategories } from "../../redux/category";
+import { shortKey } from "../../utils";
 import "./category.scss"
 import CategoryItem, { UNMODIFY, UNTRACKED } from "./CategoryItem";
 
@@ -58,7 +59,7 @@ export default function CategoryModal({ show, onHide }) {
 
       <div id="products" className="row">
         {categories.map(el =>
-          <CategoryItem mode={UNMODIFY} data={el} />
+          <CategoryItem mode={UNMODIFY} data={el} key={el.name}/>
         )}
         <CategoryItem mode={UNTRACKED} />
       </div>

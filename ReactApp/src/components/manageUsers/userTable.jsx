@@ -10,6 +10,7 @@ import { getExpertiseName } from "../../utils";
 import { CreateUserModal } from "./createUserModal";
 import { useSelector } from "react-redux";
 import { DEPARTMENTS } from "../../constants/departments";
+import { toast } from "react-toastify";
 export function UserTable() {
   const [showModalAddUser, setShowModalAddUser] = useState(false)
   const [showModalUserInfo, setShowModalUserInfo] = useState(false)
@@ -26,7 +27,8 @@ export function UserTable() {
       targetUser.role.ID = targetRole.ID
       targetUser.role.name = targetRole.name
       setUserData(copyUserData)
-    })
+      toast.success("Thay đổi thành công")
+    }).catch(err => toast.error("Thao tác bị từ chối")) 
   }
   const changeDepartment = (userId, departmentId) => {
     userService.changeDepartment(userId, departmentId).then(response => {
@@ -36,7 +38,8 @@ export function UserTable() {
       targetUser.department.ID = targetDepartment.ID
       targetUser.department.name = targetDepartment.name
       setUserData(copyUserData)
-    })
+      toast.success("Thay đổi thành công")
+    }).catch(err => toast.error("Thao tác bị từ chối")) 
   }
 
   const mapFromUserDataToRow = user => ({

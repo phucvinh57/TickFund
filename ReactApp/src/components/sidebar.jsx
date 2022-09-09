@@ -71,11 +71,13 @@ const sidebarContent = [
             icon: <PieChart size={18} />,
             title: 'Biểu đồ tròn',
             path: '/stat/donut'
-        }, {
-            icon: <BarChartLine size={18} />,
-            title: 'Biểu đồ cột',
-            path: '/stat/bar'
-        }, {
+        }, 
+        // {
+        //     icon: <BarChartLine size={18} />,
+        //     title: 'Biểu đồ cột',
+        //     path: '/stat/bar'
+        // }, 
+        {
             icon: <GraphUp size={18} />,
             title: 'Biểu đồ đường',
             path: '/stat/line'

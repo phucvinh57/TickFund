@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 public class QueryNotEqualFilter extends AbstractQueryFilter {
 
     public Object getValue() {
@@ -23,29 +22,27 @@ public class QueryNotEqualFilter extends AbstractQueryFilter {
     @JsonProperty
     String format = "yyyy-MM-dd";
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot, Class<?> clazz){
+    public Predicate toPredicate(CriteriaBuilder builder, Root<?> transactionRoot, Class<?> clazz) {
         String entityMapField = AnnotationHelper.getFieldByAlias(clazz.getDeclaredFields(), field);
 
         Class fieldType = transactionRoot.get(entityMapField).getJavaType();
-        if(fieldType.equals(LocalDate.class) || fieldType.equals(LocalDateTime.class)){
+        if (fieldType.equals(LocalDate.class) || fieldType.equals(LocalDateTime.class)) {
             DateTimeFormatter dateFormat = this.getGeneralDateTimeFormat(format);
-            try{
+            try {
                 LocalDateTime value = LocalDateTime.parse(String.valueOf(this.value), dateFormat);
-                if(fieldType.equals(LocalDateTime.class)){
+                if (fieldType.equals(LocalDateTime.class)) {
                     return builder.notEqual(transactionRoot.get(entityMapField), value);
-                }
-                else {
+                } else {
                     return builder.notEqual(transactionRoot.get(entityMapField), value.toLocalDate());
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 // Empty
             }
-        }
-        else if(fieldType.isEnum()){
-            return builder.notEqual(transactionRoot.get(entityMapField), Enum.valueOf(fieldType, ((String) value).toUpperCase()));
+        } else if (fieldType.isEnum()) {
+            return builder.notEqual(transactionRoot.get(entityMapField),
+                    Enum.valueOf(fieldType, ((String) value).toUpperCase()));
         }
         return builder.notEqual(transactionRoot.get(entityMapField), value);
     }

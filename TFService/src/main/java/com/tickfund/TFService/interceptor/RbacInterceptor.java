@@ -33,7 +33,7 @@ public class RbacInterceptor implements HandlerInterceptor {
     @Autowired
     private UserRepository userRepository;
 
-    private final String FORBIDDEN_MSG = "Access denied !";
+    private final String FORBIDDEN_MSG = "Permission denied!";
     private final String USER_INVALID_MSG = "User does not exist !";
 
     private final String GET_METHOD = "GET";

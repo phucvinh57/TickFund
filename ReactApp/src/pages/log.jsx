@@ -77,7 +77,6 @@ export default function Log() {
             numPages={numPages}
             onSearch={handleSearch}
             onPageChange={handlePageChange}
-            // onRowClick={row => console.log(row)}
             onSort={handleSort}
             onFilter={handleFilter}
         />
