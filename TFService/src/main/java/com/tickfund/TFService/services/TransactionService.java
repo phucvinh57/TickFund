@@ -7,7 +7,6 @@ import com.tickfund.TFService.repositories.tickfund.CategoryRepository;
 import com.tickfund.TFService.repositories.tickfund.TransactionRepository;
 import com.tickfund.TFService.utils.UniqueId;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,14 +39,14 @@ public class TransactionService {
         return this.transactionRepository.findById(ID);
     }
 
-    @Transactional(rollbackOn = {Exception.class, Throwable.class})
-    public String createTransaction(TransactionEntity transactionEntity, Set<String> attachmentsIds){
+    @Transactional(rollbackOn = { Exception.class, Throwable.class })
+    public String createTransaction(TransactionEntity transactionEntity, Set<String> attachmentsIds) {
         transactionEntity.setID(UniqueId.generate(transactionEntity.getUserId()));
 
         CategoryEntity categoryEntity = categoryRepository.findById(transactionEntity.getCategoryName()).get();
         transactionEntity.setCategoryType(categoryEntity.type);
 
-        for(String attachId : attachmentsIds){
+        for (String attachId : attachmentsIds) {
             transactionEntity.getAttachments().add(attachmentService.createAttachment(attachId, transactionEntity));
         }
 
@@ -56,7 +55,7 @@ public class TransactionService {
     }
 
     @Transactional
-    public List<TransactionEntity> getTransactionByQuery(TransactionQueryDTO queryDTO){
+    public List<TransactionEntity> getTransactionByQuery(TransactionQueryDTO queryDTO) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<TransactionEntity> criteriaQuery = criteriaBuilder.createQuery(TransactionEntity.class);
@@ -67,38 +66,44 @@ public class TransactionService {
 
         return complexQueryService.getEntityByQuery(transactionRoot, criteriaQuery, queryDTO, TransactionEntity.class);
 
-//        List<Predicate> predicateList = new ArrayList<>();
-//        List<TransactionQueryFilter> conditionDTOList = queryDTO.getFilters();
-//
-//        for(TransactionQueryFilter conditionDTO : conditionDTOList){
-//            predicateList.add(conditionDTO.toPredicate(criteriaBuilder, transactionRoot));
-//        }
-//
-//        if(queryDTO.isMust()){
-//            criteriaQuery.where(criteriaBuilder.and(predicateList.toArray(new Predicate[0])));
-//        }
-//        else {
-//            criteriaQuery.where(criteriaBuilder.or(predicateList.toArray(new Predicate[0])));
-//        }
-//
-//        String orderField = queryDTO.getOrder().getField();
-//
-//        String orderMapField = AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(), orderField);
-//        if(queryDTO.getOrder().isAsc()){
-//            criteriaQuery.orderBy(criteriaBuilder.asc(transactionRoot.get(orderMapField)));
-//        }
-//        else {
-//            criteriaQuery.orderBy(criteriaBuilder.desc(transactionRoot.get(orderMapField)));
-//        }
-//
-//        TypedQuery<TransactionEntity> transactionQuery = entityManager.createQuery(criteriaQuery);
-//
-//        Integer pageSize = queryDTO.getSize().getPageSize();
-//        Integer pageNumber = queryDTO.getSize().getPageNumber();
-//
-//        return transactionQuery
-//                .setMaxResults(pageSize)
-//                .setFirstResult((pageNumber - 1) * pageSize)
-//                .getResultList();
+        // List<Predicate> predicateList = new ArrayList<>();
+        // List<TransactionQueryFilter> conditionDTOList = queryDTO.getFilters();
+        //
+        // for(TransactionQueryFilter conditionDTO : conditionDTOList){
+        // predicateList.add(conditionDTO.toPredicate(criteriaBuilder,
+        // transactionRoot));
+        // }
+        //
+        // if(queryDTO.isMust()){
+        // criteriaQuery.where(criteriaBuilder.and(predicateList.toArray(new
+        // Predicate[0])));
+        // }
+        // else {
+        // criteriaQuery.where(criteriaBuilder.or(predicateList.toArray(new
+        // Predicate[0])));
+        // }
+        //
+        // String orderField = queryDTO.getOrder().getField();
+        //
+        // String orderMapField =
+        // AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(),
+        // orderField);
+        // if(queryDTO.getOrder().isAsc()){
+        // criteriaQuery.orderBy(criteriaBuilder.asc(transactionRoot.get(orderMapField)));
+        // }
+        // else {
+        // criteriaQuery.orderBy(criteriaBuilder.desc(transactionRoot.get(orderMapField)));
+        // }
+        //
+        // TypedQuery<TransactionEntity> transactionQuery =
+        // entityManager.createQuery(criteriaQuery);
+        //
+        // Integer pageSize = queryDTO.getSize().getPageSize();
+        // Integer pageNumber = queryDTO.getSize().getPageNumber();
+        //
+        // return transactionQuery
+        // .setMaxResults(pageSize)
+        // .setFirstResult((pageNumber - 1) * pageSize)
+        // .getResultList();
     }
 }

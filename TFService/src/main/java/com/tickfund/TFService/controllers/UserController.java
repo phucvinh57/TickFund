@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tickfund.TFService.dtos.in.user.ChangeDepartmentDto;
 import com.tickfund.TFService.dtos.in.user.ChangeUserRoleDto;
 import com.tickfund.TFService.dtos.in.user.CreateUserDto;
-import com.tickfund.TFService.dtos.in.user.ToggleUserActivationDto;
 import com.tickfund.TFService.dtos.in.user.UpdateUserDto;
 import com.tickfund.TFService.dtos.out.users.UserDto;
 import com.tickfund.TFService.services.PersonalService;
@@ -58,14 +57,6 @@ public class UserController {
     public String changeUserDepartment(
             @Valid @RequestBody ChangeDepartmentDto dto) {
         this.userService.changeDepartment(dto.userId, dto.departmentId);
-        return dto.userId;
-    }
-
-    @PutMapping("/active")
-    @ResponseBody
-    public String toggleUserActivation(
-            @Valid @RequestBody ToggleUserActivationDto dto) {
-        this.userService.toggleActivation(dto.userId, dto.active);
         return dto.userId;
     }
 

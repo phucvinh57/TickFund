@@ -127,10 +127,4 @@ public class UserService {
         user.department = deparment;
         this.ticklabUserRepository.save(user);
     }
-
-    public void toggleActivation(String userId, Boolean active) {
-        TickLabUserEntity user = this.ticklabUserRepository.findById(userId).orElseThrow();
-        user.active = active;
-        this.ticklabUserRepository.save(user);
-    }
 }

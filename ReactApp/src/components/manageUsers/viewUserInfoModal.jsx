@@ -17,8 +17,6 @@ export function ViewUserInfoModal({ user, show, onHide }) {
             sizes={"200"} src={user.avatarUrl ? user.avatarUrl : EMPTY_AVATAR}
             alt="avatar" className="mb-2"
           />
-          {user.active ? <Button variant="outline-danger">Vô hiệu hóa</Button>
-            : <Button variant="outline-success">Kích hoạt</Button>}
         </div>
         <div className="col-8">
           <div>
