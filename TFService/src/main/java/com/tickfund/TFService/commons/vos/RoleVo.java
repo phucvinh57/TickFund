@@ -13,6 +13,12 @@ public class RoleVo {
     public String name;
     public Set<Resource> resources;
 
+    public RoleVo(Integer ID, String name) {
+        this.resources = new HashSet<Resource>();
+        this.ID = ID;
+        this.name = name;
+    }
+
     public RoleVo(List<PermissionEntity> permissionEntities) {
         this.ID = permissionEntities.get(0).role.ID;
         this.name = permissionEntities.get(0).role.name;

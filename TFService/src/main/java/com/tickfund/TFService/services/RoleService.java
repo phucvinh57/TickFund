@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tickfund.TFService.commons.vos.RoleVo;
 import com.tickfund.TFService.dtos.in.user.UpdatePermissionDto;
 import com.tickfund.TFService.dtos.in.user.UpdateRoleNameDto;
 import com.tickfund.TFService.dtos.out.roles.ResourceActionMappingDto;
@@ -51,18 +52,33 @@ public class RoleService {
 
         Integer roleIdTemp = null;
         ArrayList<PermissionEntity> fragmentItemTemp = new ArrayList<>();
-        for (int i = 0; i < permissions.size(); i++) {
-            PermissionEntity currPermission = permissions.get(i);
-            if (currPermission.role.ID != roleIdTemp && roleIdTemp != null) {
+        for (PermissionEntity permission: permissions) {
+            if (permission.role.ID != roleIdTemp && roleIdTemp != null) {
                 ArrayList<PermissionEntity> fragment = ArrayList.class.cast(fragmentItemTemp.clone());
                 fragmentList.add(fragment);
                 fragmentItemTemp.clear();
             }
-            roleIdTemp = currPermission.role.ID;
-            fragmentItemTemp.add(currPermission);
+            roleIdTemp = permission.role.ID;
+            fragmentItemTemp.add(permission);
         }
         fragmentList.add(fragmentItemTemp);
-        return new RolesWithPermissionDto(fragmentList);
+
+        RolesWithPermissionDto rolesWithPermissionDto = new RolesWithPermissionDto(fragmentList);
+        Iterable<RoleEntity> allRoles = this.roleRepository.findAll();
+        for (RoleEntity role : allRoles) {
+            boolean isExist = false;
+            for (RoleVo item: rolesWithPermissionDto.getPermissions()) {
+                if(role.ID == item.ID) {
+                    isExist = true;
+                    break;
+                }
+            }
+            if(!isExist) {
+                rolesWithPermissionDto.add(new RoleVo(role.ID, role.name));
+            }
+        }
+
+        return rolesWithPermissionDto;
     }
 
     public Integer updateRoleName(UpdateRoleNameDto dto) {

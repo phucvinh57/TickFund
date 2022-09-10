@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,13 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tickfund.TFService.dtos.in.user.ChangeDepartmentDto;
 import com.tickfund.TFService.dtos.in.user.ChangeUserRoleDto;
 import com.tickfund.TFService.dtos.in.user.CreateUserDto;
-import com.tickfund.TFService.dtos.in.user.UpdateUserDto;
 import com.tickfund.TFService.dtos.out.users.UserDto;
 import com.tickfund.TFService.services.PersonalService;
 import com.tickfund.TFService.services.UserService;
 
 @RestController
-@CrossOrigin({ "http://localhost:3000" })
 @RequestMapping("/users")
 public class UserController {
     @Autowired
@@ -64,11 +61,5 @@ public class UserController {
     @ResponseBody
     public String createUser(@Valid @RequestBody CreateUserDto dto) {
         return this.userService.createUser(dto);
-    }
-
-    @PutMapping("")
-    @ResponseBody
-    public String updateUser(@Valid @RequestBody UpdateUserDto dto) throws Exception {
-        return this.userService.updateUser(dto);
     }
 }

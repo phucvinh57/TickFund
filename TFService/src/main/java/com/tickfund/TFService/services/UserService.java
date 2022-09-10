@@ -90,6 +90,7 @@ public class UserService {
         return userId;
     }
 
+    @Deprecated
     public String updateUser(UpdateUserDto dto) throws Exception {
         String userId = dto.ID;
         Integer roleId = dto.roleId;
