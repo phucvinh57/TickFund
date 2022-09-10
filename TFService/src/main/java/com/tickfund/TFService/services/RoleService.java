@@ -47,6 +47,7 @@ public class RoleService {
 
     @SuppressWarnings({ "unchecked" })
     public RolesWithPermissionDto getPermissionOfRoles() {
+
         ArrayList<PermissionEntity> permissions = permissionRepository.findAllByOrderByRoleIdAsc();
         ArrayList<ArrayList<PermissionEntity>> fragmentList = new ArrayList<>();
 
@@ -54,6 +55,7 @@ public class RoleService {
         ArrayList<PermissionEntity> fragmentItemTemp = new ArrayList<>();
         for (PermissionEntity permission: permissions) {
             if (permission.role.ID != roleIdTemp && roleIdTemp != null) {
+
                 ArrayList<PermissionEntity> fragment = ArrayList.class.cast(fragmentItemTemp.clone());
                 fragmentList.add(fragment);
                 fragmentItemTemp.clear();

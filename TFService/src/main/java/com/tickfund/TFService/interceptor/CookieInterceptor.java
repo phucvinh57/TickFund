@@ -36,7 +36,8 @@ public class CookieInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        if(optCUserCookie.isPresent()) {
+
+        if (optCUserCookie.isPresent()) {
             try {
                 request.setAttribute(USER_TOKEN, tokenManager.parseToUserToken(optCUserCookie.get().getValue()));
                 return true;

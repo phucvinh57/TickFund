@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import randLogData from '../../components/planning/sampleData'
 
-const data = randLogData()
+const initialState = []
+
+
 
 const planningSlice = createSlice({
   name: 'planning',
-  initialState: data, // Data of a page
+  initialState,
   reducers: {
     addPlanning: (state, action) => {
       return [action.payload, ...state]

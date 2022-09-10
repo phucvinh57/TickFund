@@ -2,3 +2,5 @@ node_modules
 media
 dist/
 public/
+
+package-lock.json

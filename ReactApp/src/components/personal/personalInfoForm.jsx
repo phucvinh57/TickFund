@@ -8,7 +8,6 @@ import { setPersonalInfo } from "../../redux/slice/personal"
 export function PersonalInfoForm() {
   const user = useSelector(state => state.personal)
   const dispatch = useDispatch()
-
   const [formInfoData, setFormInfoData] = useState({
     email: "npvinh0507@gmail.com",
     name: "Nguyễn Phúc Vinh",

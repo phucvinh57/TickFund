@@ -22,4 +22,5 @@ public class RolesWithPermissionDto {
     public ArrayList<RoleVo> getPermissions() {
         return this.permissions;
     }
+
 }

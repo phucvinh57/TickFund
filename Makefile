@@ -1,3 +1,6 @@
+nothing:
+	echo "Hello"
+
 setup_env:
 	cd TFService/src/main/resources; cp application_example.properties application.properties
 	cd databases; cp .env_example .env; cp createDbUsers_example.sql init/3-createDbUsers.sql

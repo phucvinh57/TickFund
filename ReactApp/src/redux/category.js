@@ -6,7 +6,7 @@ const initialState = [];
 export const postCategory = createAsyncThunk(
   'category/create',
   async ({name, type, icon}) => {
-    const res = await categoriesService.create({ name, type, icon })
+    const res = await categoriesService.addNew({name, type, icon})
     return res.data
   }
 )
@@ -15,6 +15,7 @@ export const getCategory = createAsyncThunk(
   'category/get',
   async () => {
     const res = await categoriesService.getAll()
+    console.log(res)
     return res.data
   }
 )
@@ -29,7 +30,7 @@ export const putCategory = createAsyncThunk(
 export const deleteCategory = createAsyncThunk(
   'category/delete',
   async ({ name }) => {
-    await categoriesService.delete(name)
+    await categoriesService.remove(name)
     return { name }
   }
 )
@@ -58,7 +59,7 @@ const categoriesSlice = createSlice({
   }
 })
 
-export const selectAllCategories = (state) => state.categories
+export const selectAllCategories = (state) => state.category
 
 const { reducer } = categoriesSlice;
 export default reducer;
