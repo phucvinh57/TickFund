@@ -4,6 +4,7 @@ import { Form, Button } from "react-bootstrap"
 import { personalService } from "../../services/personal.service"
 import { DEPARTMENTS } from "../../constants/departments"
 import { setPersonalInfo } from "../../redux/slice/personal"
+import { toast } from "react-toastify"
 
 export function PersonalInfoForm() {
   const user = useSelector(state => state.personal)
@@ -31,15 +32,14 @@ export function PersonalInfoForm() {
   return <Form onSubmit={e => {
     e.preventDefault()
     personalService.updateInfo(formInfoData).then(response => {
-      alert(response.data.msg)
       const department = DEPARTMENTS.find(d => d.ID == formInfoData.departmentId)
-
       dispatch(setPersonalInfo({
         ...formInfoData,
         department
       }))
+      toast.success("Cập nhật thành công")
     }).catch(err => {
-      alert(err.response.data.msg)
+      toast.success("Cập nhật thất bại")
     })
 
   }}>

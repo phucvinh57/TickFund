@@ -31,10 +31,22 @@ export default function App() {
   const [showPlanning, setShowPlanning] = useState(false)
   const [showCategory, setShowCategory] = useState(false)
 
-  const actions = [
-    { label: "Danh mục", icon: <BookmarkPlus size={25} />, onClick: () => setShowCategory(true), color: "#00a8ff" },
-    { label: "Dự trù", icon: <CartPlus size={25} />, onClick: () => setShowPlanning(true), color: "#00a8ff" },
-    { label: "Giao dịch", icon: <BagPlus size={25} />, onClick: () => setShowTransaction(true), color: "#00a8ff" },
+  const actions = [{
+    label: "Danh mục",
+    icon: <BookmarkPlus size={25} />,
+    onClick: () => setShowCategory(true),
+    color: "#343a40"
+  }, {
+    label: "Dự trù",
+    icon: <CartPlus size={25} />,
+    onClick: () => setShowPlanning(true),
+    color: "#343a40"
+  }, {
+    label: "Giao dịch",
+    icon: <BagPlus size={25} />,
+    onClick: () => setShowTransaction(true),
+    color: "#343a40"
+  },
   ]
 
   return <div>

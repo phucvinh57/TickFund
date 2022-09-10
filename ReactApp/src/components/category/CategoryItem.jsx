@@ -90,7 +90,6 @@ export default function CategoryItem({ category = init, mode = UNTRACKED }) {
               data={data} previewPosition={"none"}
               onEmojiSelect={emoji => {
                 setFormData({ ...formData, icon: emoji.unified })
-                console.log(emoji.unified)
               }}
             />
           </Toast>

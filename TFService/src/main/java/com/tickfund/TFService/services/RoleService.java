@@ -53,7 +53,7 @@ public class RoleService {
 
         Integer roleIdTemp = null;
         ArrayList<PermissionEntity> fragmentItemTemp = new ArrayList<>();
-        for (PermissionEntity permission: permissions) {
+        for (PermissionEntity permission : permissions) {
             if (permission.role.ID != roleIdTemp && roleIdTemp != null) {
 
                 ArrayList<PermissionEntity> fragment = ArrayList.class.cast(fragmentItemTemp.clone());
@@ -69,13 +69,13 @@ public class RoleService {
         Iterable<RoleEntity> allRoles = this.roleRepository.findAll();
         for (RoleEntity role : allRoles) {
             boolean isExist = false;
-            for (RoleVo item: rolesWithPermissionDto.getPermissions()) {
-                if(role.ID == item.ID) {
+            for (RoleVo item : rolesWithPermissionDto.getPermissions()) {
+                if (role.ID == item.ID) {
                     isExist = true;
                     break;
                 }
             }
-            if(!isExist) {
+            if (!isExist) {
                 rolesWithPermissionDto.add(new RoleVo(role.ID, role.name));
             }
         }

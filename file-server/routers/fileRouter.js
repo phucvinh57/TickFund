@@ -46,9 +46,7 @@ function buildStaticFileServe(parentDirName) {
     });
 
     router.get('/*', async (req, res, next) => {
-
         const urlParts = url.parse(req.url);
-        console.log(req.url)
 
         const response = await axios.get(req.query.code_callback)
         if(response.status == 200 && response.data.message == true){
@@ -72,7 +70,6 @@ function buildStaticFileServe(parentDirName) {
         var options = {
             root: path.join(parentDirName)
         };
-        console.log(absolutePath)
     
         res.sendFile(absolutePath, options, function (err) {
             if (err) {

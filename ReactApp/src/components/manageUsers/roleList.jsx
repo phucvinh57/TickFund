@@ -5,6 +5,7 @@ import { roleService } from "../../services/role.service";
 import { v4 as uuidv4 } from "uuid";
 import { RoleItem } from "./roleItem";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify"
 
 export function RoleList() {
   const permissions = useSelector(state => state.permissions)
@@ -54,7 +55,7 @@ export function RoleList() {
     setRoleConfigs(config)
   }, [permissions, resourceActionMappings])
 
-  const changePolicy = (roleId, resourceId, actionId, permit) => {
+  const setPolicy = (roleId, resourceId, actionId, permit) => {
     const copyRoleConfigs = [...roleConfigs]
     const role = copyRoleConfigs.find(roleConfig => roleConfig.ID === roleId)
     const resource = role.resources.find(rsrc => rsrc.ID === resourceId)
@@ -64,13 +65,35 @@ export function RoleList() {
     setRoleConfigs(copyRoleConfigs)
   }
 
+  const updateRolePolicyById = (roleId) => {
+    const role = roleConfigs.find(r => r.ID === roleId)
+    const data = {
+      roleId: role.ID,
+      mappings: []
+    }
+    role.resources.forEach(resource => {
+      resource.actions.forEach(action => {
+        if (action.permit === true)
+          data.mappings.push({
+            resourceId: resource.ID,
+            actionId: action.ID
+          })
+      })
+    })
+    roleService.updatePermissions(data).then(response => {
+      console.log(response.data)
+      toast.success("Cập nhật quyền truy cập thành công")
+    }).catch(err => toast.error("Xảy ra lỗi"))
+  }
+
   return <div className="mt-3">
     <h4>Quản lý quyền truy cập</h4>
     <Accordion>
       {roleConfigs.map(itemConfig => <RoleItem
         config={itemConfig}
         key={itemConfig.key}
-        changePolicy={changePolicy}
+        setPolicy={setPolicy}
+        updatePolicy={updateRolePolicyById}
       />)}
     </Accordion>
   </div>

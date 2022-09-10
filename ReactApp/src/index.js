@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 import './scss/custom.scss'
+import './scss/fab.scss'
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import 'react-toastify/dist/ReactToastify.css';
 

@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { userService } from "../../services/user.service";
 
 const initFormData = {
@@ -31,15 +32,12 @@ export function CreateUserModal({ show, onHide }) {
     <Modal.Body>
       <Form className="container" onSubmit={e => {
         e.preventDefault()
-        console.log(formData)
-        userService.getAllUserInfoWithRole().then(response => {
-          console.log(response.data)
-        })
         userService.create(formData).then(response => {
           setFormData(initFormData)
+          toast.success("Tạo tài khoản thành công")
           onHide()
         }).catch(err => {
-          console.log(err.response)
+          toast.error("Từ chối thao tác")
         })
       }}>
         <div className="row mb-2">

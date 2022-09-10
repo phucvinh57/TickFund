@@ -1,4 +1,4 @@
-$primary: #343a40;
+$primary: #0d1117;
 
 .fab-container {
   display: flex;
@@ -71,7 +71,7 @@ $primary: #343a40;
     position: absolute;
     left: -12px;
     transform: translateX(-75%);
-    background-color: #353b48;
+    background-color: $primary;
     border-radius: 4px;
     color: white;
     opacity: 0;
@@ -80,3 +80,7 @@ $primary: #343a40;
     user-select: none;
   }
 }
+
+
+@import "~bootstrap/scss/bootstrap.scss";
+@import '~react-pro-sidebar/dist/scss/styles.scss';

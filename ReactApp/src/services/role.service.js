@@ -9,5 +9,9 @@ export const roleService = {
     },
     getResourceActionMapping: async function() {
         return tfServiceHTTPCommon.get("/roles/mapping")
+    },
+    updatePermissions: async function(data) {
+        console.log(data)
+        return tfServiceHTTPCommon.put("/roles/permissions", data)
     }
 }

@@ -12,8 +12,6 @@ export default function FilterBar({ onFilter }) {
         endDate: new Date().toLocaleDateString()
     }))
     useEffect(() => {
-        console.log("Update->>>>>>>>")
-        console.log(initSetting)
         onFilter({
             interval: interval,
             start: start ? start : new Date(end.getFullYear(), 0, 1),
@@ -44,12 +42,10 @@ export default function FilterBar({ onFilter }) {
                 <DateRangePicker
                     initialSettings={initSetting}
                     onCallback={(start, end, label) => {
-                        console.log("call back")
                         start = new Date(start.year(), start.month(), start.date())
                         end = new Date(end.year(), end.month(), end.date())
                         setStartDate(start)
                         setEndDate(end)
-
                     }}
                     format={"dd-MM-yyyy"}
                 >

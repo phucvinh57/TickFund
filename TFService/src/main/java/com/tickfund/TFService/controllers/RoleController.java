@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tickfund.TFService.dtos.in.user.UpdatePermissionDto;
 import com.tickfund.TFService.dtos.in.user.UpdateRoleNameDto;
+import com.tickfund.TFService.exceptions.InvalidPermission;
 import com.tickfund.TFService.services.RoleService;
 
 @RestController
@@ -34,8 +35,9 @@ public class RoleController {
 
     @PutMapping("/permissions")
     @ResponseBody
-    public Object updatePermissions(@Valid @RequestBody UpdatePermissionDto dto) {
-        return null;
+    public Integer updatePermissions(@Valid @RequestBody UpdatePermissionDto dto) throws InvalidPermission {
+        roleService.updatePermissions(dto);
+        return dto.roleId;
     }
 
     @GetMapping("/mapping")

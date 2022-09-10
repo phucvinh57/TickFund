@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button, Row, Col, Modal, Form } from "react-bootstrap";
 import { TickTableV2 } from "../ticktable/tableV2";
 import { userService } from "../../services/user.service"
-import { ACTIVE_STR, INACTIVE_STR } from "../../resource";
+import { ACTIVE_STR, EMPTY_AVATAR, INACTIVE_STR } from "../../resource";
 import { useMemo } from "react";
 import { ViewUserInfoModal } from "./viewUserInfoModal";
 import { getExpertiseName } from "../../utils";
@@ -11,6 +11,10 @@ import { CreateUserModal } from "./createUserModal";
 import { useSelector } from "react-redux";
 import { DEPARTMENTS } from "../../constants/departments";
 import { toast } from "react-toastify";
+
+const USER_RESOURCE_ID = 3
+const UPDATE_ACTION_ID = 3
+
 export function UserTable() {
   const [showModalAddUser, setShowModalAddUser] = useState(false)
   const [showModalUserInfo, setShowModalUserInfo] = useState(false)
@@ -18,6 +22,17 @@ export function UserTable() {
 
   const [currViewUser, setCurrViewUser] = useState(null)
   const roles = useSelector(state => state.roles)
+  const userRole = useSelector(state => state.personal.role)
+
+  const hasUpdateUserPermission = useMemo(() => {
+    const userResource = userRole.resources.find(rsrc => rsrc.ID === USER_RESOURCE_ID)
+    if (!userResource)
+      return false
+    const updateAction = userResource.actions.find(action => action.ID === UPDATE_ACTION_ID)
+    if (!updateAction)
+      return false
+    return true
+  }, [userRole])
 
   const changeRole = (userId, roleId) => {
     userService.changeRole(userId, roleId).then(response => {
@@ -28,7 +43,7 @@ export function UserTable() {
       targetUser.role.name = targetRole.name
       setUserData(copyUserData)
       toast.success("Thay đổi thành công")
-    }).catch(err => toast.error("Thao tác bị từ chối")) 
+    }).catch(err => toast.error("Thao tác bị từ chối"))
   }
   const changeDepartment = (userId, departmentId) => {
     userService.changeDepartment(userId, departmentId).then(response => {
@@ -39,7 +54,7 @@ export function UserTable() {
       targetUser.department.name = targetDepartment.name
       setUserData(copyUserData)
       toast.success("Thay đổi thành công")
-    }).catch(err => toast.error("Thao tác bị từ chối")) 
+    }).catch(err => toast.error("Thao tác bị từ chối"))
   }
 
   const mapFromUserDataToRow = user => ({
@@ -50,7 +65,11 @@ export function UserTable() {
         <Row>
           <Col className='col-auto d-flex align-items-center'>
             <div style={{ height: '2.5rem', width: '2.5rem' }}>
-              <img className='img-fluid circle-border' src={user.avatarUrl} style={{ aspectRatio: '1/1' }} alt='img' />
+              <img
+                className='img-fluid circle-border'
+                src={user.avatarUrl ? user.avatarUrl : EMPTY_AVATAR}
+                style={{ aspectRatio: '1/1' }} alt='img'
+              />
             </div>
           </Col>
           <Col>
@@ -68,7 +87,7 @@ export function UserTable() {
       val: user.expertise,
       component: <span>{getExpertiseName(user.expertise)}</span>
     },
-    role: {
+    role: hasUpdateUserPermission ? {
       val: user.role.ID,
       component: <Form.Select
         size="sm" value={user.role.ID}
@@ -80,8 +99,11 @@ export function UserTable() {
       >
         {roles.map(role => <option key={role.ID} value={role.ID}>{role.name}</option>)}
       </Form.Select>
+    } : {
+      val: user.role.ID,
+      component: <span>{user.role.name}</span>
     },
-    department: {
+    department: hasUpdateUserPermission ? {
       val: user.department.ID,
       component: <Form.Select
         size="sm" value={user.department.ID}
@@ -96,6 +118,9 @@ export function UserTable() {
         </option>)}
 
       </Form.Select>
+    } : {
+      val: user.department.ID,
+      component: <span>{user.department.name}</span>
     },
     active: {
       val: user.active,

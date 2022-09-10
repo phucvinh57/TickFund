@@ -54,7 +54,7 @@ public class PersonalDto {
         this.role = new Role();
         this.role.ID = role.ID;
         this.role.name = role.name;
-        this.role.resources = null;
+        this.role.resources = new HashSet<Resource>();
     }
 
     public void setInfo(TickLabUserEntity entity) {

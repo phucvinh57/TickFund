@@ -19,11 +19,10 @@ export default function Statistic() {
     // useEffect(() => {
     //     statService.getStat
     // }, [])
-    function handleOnFilter(newFilter){
+    function handleOnFilter(newFilter) {
         statService
             .getStat(newFilter.start, newFilter.end, newFilter.interval)
             .then(response => {
-                console.log(response.data)
                 setTransactions(response.data.transactions.sort(compareRecord))
                 setPlannings(response.data.plannings.sort(compareRecord))
                 setPrevBalance(response.data.previous_amount)
@@ -33,7 +32,7 @@ export default function Statistic() {
     }
     return <div>
         <FilterBar onFilter={handleOnFilter} />
-        <Overviews 
+        <Overviews
             transactions={transactions}
             filter={filter}
             prevBalance={prevBalance} />
@@ -41,18 +40,18 @@ export default function Statistic() {
             filter={filter}
             plannings={plannings}
             show={showWarn}
-            setShow={setShowWarn}/>
+            setShow={setShowWarn} />
         <Routes>
-            <Route path='donut' element={<PieChart 
-                    transactions={transactions}
-                    plannings={plannings} />} />
+            <Route path='donut' element={<PieChart
+                transactions={transactions}
+                plannings={plannings} />} />
             {/* <Route path='bar' element={<BarChart />} /> */}
             <Route path='line' element={<LineChart
-                    title={filter == null ? null : `Biểu đồ đường từ ngày ${dateToString(filter.start)}  đến ${dateToString(filter.end)}`}
-                    filter={filter}
-                    prevBalance={prevBalance}
-                    transactions={transactions} 
-                    plannings={plannings} />} />
+                title={filter == null ? null : `Biểu đồ đường từ ngày ${dateToString(filter.start)}  đến ${dateToString(filter.end)}`}
+                filter={filter}
+                prevBalance={prevBalance}
+                transactions={transactions}
+                plannings={plannings} />} />
         </Routes>
     </div>
 }

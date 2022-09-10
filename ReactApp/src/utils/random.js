@@ -43,7 +43,6 @@ export class MockDatabase {
                 .replaceAll(' ', '').toLowerCase()
             return str.match(normalQuery) !== null
         })
-        console.log(matches)
         this.#currLength = matches.length
         return end ? matches.slice(start, end) : matches.slice(start)
     }
@@ -61,8 +60,6 @@ export class MockDatabase {
         if (order === 'inc')
             this.#db.sort((row1, row2) => row1[key].localeCompare(row2[key]))
         else this.#db.sort((row1, row2) => -row1[key].localeCompare(row2[key]))
-
-        // this.#db.forEach(row => console.log(row[key]))
     }
 
     filter(filterOptions, start, end = null) {

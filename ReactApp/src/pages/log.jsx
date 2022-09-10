@@ -50,7 +50,6 @@ export default function Log() {
     }
     
     const handleSort = option => {
-        console.log(option)
         setSortOption(option)
         
         const result = mockDB.query(searchQuery, filters, option)
@@ -60,7 +59,6 @@ export default function Log() {
     }
     const handleFilter = filterOptions => {
         setFilters(filterOptions)
-        console.log(filterOptions)
         
         const result = mockDB.query(searchQuery, filterOptions, sortOption)
 

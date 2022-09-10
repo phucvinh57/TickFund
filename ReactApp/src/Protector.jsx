@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useEffect } from "react"
 import authService from "./services/auth.service"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { personalService } from "./services/personal.service"
 import { initPersonal } from "./redux/slice/personal"
 import { toast } from "react-toastify"

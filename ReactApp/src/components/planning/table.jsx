@@ -8,12 +8,11 @@ import randLogData from "./sampleData";
 const initPlanningData = randLogData()
 
 export default function PlanningTable() {
-    const planningData = initPlanningData
     const [showEditModal, setShowEditModal] = useState(false)
     const [targetPlan, setTargetPlan] = useState(null)
 
     const data = useMemo(() => {
-        return planningData.map(planning => {
+        return initPlanningData.map(planning => {
             let color = planning.category.type === "Thu" ? "success" : "danger"
             return {
                 id: {
@@ -34,10 +33,10 @@ export default function PlanningTable() {
                 startDate: planning.startDate
             }
         })
-    }, [planningData])
+    }, [])
 
     const handleRowClick = row => {
-        let planning = planningData.find(val => val.id === row.id.val)
+        let planning = initPlanningData.find(val => val.id === row.id.val)
         setTargetPlan(planning)
         console.log(planning)
         setShowEditModal(true)
@@ -52,7 +51,6 @@ export default function PlanningTable() {
         />}
 
         <TickTableV2
-            // tableName={"Table Version 2"}
             componentSize="md"
             headers={planningTableHeaders}
             data={data}

@@ -141,7 +141,7 @@ public class RbacInterceptor implements HandlerInterceptor {
         Set<String> keys = this.requirePermissionMap.keySet();
         for (String key : keys) {
             if (api.matches(key)) {
-                System.out.println(api + " matches " + key);
+                // System.out.println(api + " matches " + key);
                 return this.requirePermissionMap.get(key);
             }
         }
