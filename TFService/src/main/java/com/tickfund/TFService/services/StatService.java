@@ -90,7 +90,7 @@ public class StatService {
         long countdown = 0;
         LocalDate tempNextDue = nextDue;
         while(! dateTo.isBefore(tempNextDue)){
-            tempNextDue = tempNextDue.plus(countdown + 1, chronoUnit);
+            tempNextDue = tempNextDue.plus(1, chronoUnit);
             countdown++;
         }
         // Note that countdown < 0 mean infinity

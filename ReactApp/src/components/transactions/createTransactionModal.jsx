@@ -71,6 +71,7 @@ export default function AddTransactionModal({ show, onHide }) {
     <Modal.Body>
       <Form onSubmit={e => {
         e.preventDefault()
+        createTransaction()
       }}>
         <div className="row mb-2">
           <Form.Group className="col-6">
@@ -148,7 +149,7 @@ export default function AddTransactionModal({ show, onHide }) {
         </Form.Group>
         <AttachmentUploader onFileChange={onFileChange} />
 
-        <Button type="submit" onClick={createTransaction}>Tạo giao dich</Button>
+        <Button type="submit">Tạo giao dich</Button>
       </Form>
     </Modal.Body>
   </Modal>

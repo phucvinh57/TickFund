@@ -39,7 +39,7 @@ public class ComplexQueryService<T> {
 
         String orderField = queryDTO.getOrder().getField();
 
-        String orderMapField = AnnotationHelper.getFieldByAlias(TransactionEntity.class.getDeclaredFields(), orderField);
+        String orderMapField = AnnotationHelper.getFieldByAlias(clazz.getDeclaredFields(), orderField);
         if(queryDTO.getOrder().isAsc()){
             criteriaQuery.orderBy(criteriaBuilder.asc(root.get(orderMapField)));
         }

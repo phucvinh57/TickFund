@@ -59,7 +59,7 @@ export default function PlanningModal({ show, onHide, mode, initData }) {
   return <Modal show={show} onHide={onHide} size='lg'>
     <Modal.Header className="bg-primary text-white">
       <h5 className="m-auto">
-        {mode === 'add' ? 'Thêm dự trù' : `Chỉnh sửa dự trù #${initData.id}`}
+        {mode === 'add' ? 'Thêm dự trù' : `Chỉnh sửa dự trù #${initData.ID}`}
       </h5>
     </Modal.Header>
     <Modal.Body>
@@ -92,7 +92,7 @@ export default function PlanningModal({ show, onHide, mode, initData }) {
           <Form.Group className="col-6">
             <Form.Label className="fw-500">Tên danh mục</Form.Label>
             <Form.Select required
-              value={formData.category.name}
+              value={formData.category_name}
               onChange={e => setFormData({
                 ...formData,
                 category: {

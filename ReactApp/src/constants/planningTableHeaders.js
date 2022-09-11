@@ -12,6 +12,26 @@ export const planningTableHeaders = [{
     sort: true,
     filter: false
 }, {
+    label: 'Người giao dịch',
+    association: {
+        key: 'user',
+        type: 'select',
+        options: [{
+            value: "1915940", // user id
+            label: "Nguyễn Phúc Vinh" // user's name
+        }]
+    },
+    sort: false,
+    filter: true
+}, {
+    label: 'Số tiền',
+    association: {
+        key: 'amount',
+        type: 'number'
+    },
+    sort: true,
+    filter: true
+}, {
     label: 'Tên danh mục',
     association: {
         key: 'categoryName',
@@ -27,32 +47,17 @@ export const planningTableHeaders = [{
     sort: false,
     filter: false
 }, {
-    label: 'Loại',
+    label: 'Lặp lại',
     association: {
-        key: 'categoryType',
-        type: 'select',
-        options: [{
-            value: 'INCOME', 
-            label: 'Thu'
-        }, {
-            value: 'EXPENSE', 
-            label: 'Chi'
-        }]
-    },
-    sort: false,
-    filter: true
-}, {
-    label: 'Số tiền',
-    association: {
-        key: 'amount',
+        key: 'countdown',
         type: 'number'
     },
     sort: true,
     filter: true
 }, {
-    label: 'Ngày bắt đầu',
+    label: 'Ngày xử lý tiếp theo',
     association: {
-        key: 'startDate',
+        key: 'nextDue',
         type: 'date' // Select
     },
     sort: true,

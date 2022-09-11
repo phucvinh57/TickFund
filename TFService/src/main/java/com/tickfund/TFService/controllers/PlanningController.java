@@ -64,7 +64,7 @@ public class PlanningController {
 		return response;
 	}
 
-	@GetMapping("/query")
+	@PostMapping("/query")
 	@ResponseBody
 	public QueryResultOut<PlanningOut> getPlanningByQuery(@Valid @RequestBody PlanningQueryDTO dto) {
 		Long total = this.service.countPlanningByQuery(dto);

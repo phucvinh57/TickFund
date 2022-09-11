@@ -26,7 +26,7 @@ public class PlanningEntity {
     private LocalDate startDate;
 
     @Column(name = "next_due", columnDefinition = "DATE")
-    @JsonAlias({"next_due_date"})
+    @JsonAlias({"next_due"})
     private LocalDate nextDueDate;
 
     @Column(name = "is_repeat")

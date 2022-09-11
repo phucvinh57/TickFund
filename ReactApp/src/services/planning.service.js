@@ -3,11 +3,8 @@ import { tfServiceHTTPCommon } from "./httpCommon";
 const path = '/plannings'
 
 const planningService = {
-    getById: async (id) => {
-        return tfServiceHTTPCommon.get(`${path}/${id}`)
-    },
-    getByQuery: async () => {
-        return tfServiceHTTPCommon.get(`${path}/query`)
+    getPlanningByQuery: (query) => {
+        return tfServiceHTTPCommon.post(`${path}/query`, query)
     },
     addNew: async data => {
         return tfServiceHTTPCommon.post(path, data)
