@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tickfund.TFService.commons.vos.RoleVo;
 import com.tickfund.TFService.dtos.in.user.UpdatePermissionDto;
 import com.tickfund.TFService.dtos.in.user.UpdateRoleNameDto;
 import com.tickfund.TFService.dtos.out.roles.ResourceActionMappingDto;
@@ -35,6 +36,13 @@ public class RoleService {
         return roleRepository.findAll();
     }
 
+    public Object createRole(String roleName) {
+        RoleEntity newRole = new RoleEntity();
+        newRole.name = roleName;
+        this.roleRepository.save(newRole);
+        return new RoleVo(newRole.ID, newRole.name);
+    }
+
     public Object getResourceActionMapping() {
         Iterable<ResourceActionMappingEntity> queryResult = ramRepository.findAll();
         ArrayList<ResourceActionMappingEntity> mappings = new ArrayList<>();
@@ -46,26 +54,43 @@ public class RoleService {
 
     @SuppressWarnings({ "unchecked" })
     public RolesWithPermissionDto getPermissionOfRoles() {
+
         ArrayList<PermissionEntity> permissions = permissionRepository.findAllByOrderByRoleIdAsc();
         ArrayList<ArrayList<PermissionEntity>> fragmentList = new ArrayList<>();
 
         Integer roleIdTemp = null;
         ArrayList<PermissionEntity> fragmentItemTemp = new ArrayList<>();
-        for (int i = 0; i < permissions.size(); i++) {
-            PermissionEntity currPermission = permissions.get(i);
-            if (currPermission.role.ID != roleIdTemp && roleIdTemp != null) {
+        for (PermissionEntity permission : permissions) {
+            if (permission.role.ID != roleIdTemp && roleIdTemp != null) {
+
                 ArrayList<PermissionEntity> fragment = ArrayList.class.cast(fragmentItemTemp.clone());
                 fragmentList.add(fragment);
                 fragmentItemTemp.clear();
             }
-            roleIdTemp = currPermission.role.ID;
-            fragmentItemTemp.add(currPermission);
+            roleIdTemp = permission.role.ID;
+            fragmentItemTemp.add(permission);
         }
         fragmentList.add(fragmentItemTemp);
-        return new RolesWithPermissionDto(fragmentList);
+
+        RolesWithPermissionDto rolesWithPermissionDto = new RolesWithPermissionDto(fragmentList);
+        Iterable<RoleEntity> allRoles = this.roleRepository.findAll();
+        for (RoleEntity role : allRoles) {
+            boolean isExist = false;
+            for (RoleVo item : rolesWithPermissionDto.getPermissions()) {
+                if (role.ID == item.ID) {
+                    isExist = true;
+                    break;
+                }
+            }
+            if (!isExist) {
+                rolesWithPermissionDto.add(new RoleVo(role.ID, role.name));
+            }
+        }
+
+        return rolesWithPermissionDto;
     }
 
-    public Integer updateRoleName(UpdateRoleNameDto dto) {
+    public Object updateRoleName(UpdateRoleNameDto dto) {
         Optional<RoleEntity> qResult = roleRepository.findById(dto.roleId);
         if (qResult.isEmpty())
             return null;
@@ -73,7 +98,7 @@ public class RoleService {
         RoleEntity role = qResult.get();
         role.name = dto.roleName;
         roleRepository.save(role);
-        return role.ID;
+        return role;
     }
 
     @Transactional(rollbackOn = InvalidPermission.class)
@@ -102,6 +127,15 @@ public class RoleService {
                     dto.roleId,
                     dto.mappings.get(i).resourceId,
                     dto.mappings.get(i).actionId);
+        }
+    }
+
+    public Integer deleteById(Integer roleId) throws Exception {
+        try {
+            this.roleRepository.deleteById(roleId);
+            return roleId;
+        } catch (Exception e) {
+           throw new Exception("SQL constraint");
         }
     }
 }

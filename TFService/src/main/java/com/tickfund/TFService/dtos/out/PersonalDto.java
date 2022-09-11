@@ -54,7 +54,7 @@ public class PersonalDto {
         this.role = new Role();
         this.role.ID = role.ID;
         this.role.name = role.name;
-        this.role.resources = null;
+        this.role.resources = new HashSet<Resource>();
     }
 
     public void setInfo(TickLabUserEntity entity) {
@@ -64,10 +64,11 @@ public class PersonalDto {
         this.phone = entity.phone;
         this.email = entity.email;
         this.avatarUrl = entity.avatarURL;
+        
         if(entity.birthday != null) {
             this.birthday = entity.birthday.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         } else this.birthday = null;
-        
+
         this.expertise = entity.expertise;
         this.active = entity.active;
         this.department = entity.department;

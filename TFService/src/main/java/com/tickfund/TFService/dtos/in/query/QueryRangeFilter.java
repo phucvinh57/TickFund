@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 public class QueryRangeFilter extends AbstractQueryFilter {
 
     public Object getLowerBound() {
@@ -24,76 +23,72 @@ public class QueryRangeFilter extends AbstractQueryFilter {
     }
 
     @JsonProperty
-    @JsonAlias({"lower_bound"})
+    @JsonAlias({ "lower_bound" })
     Object lowerBound;
 
     @JsonProperty
-    @JsonAlias({"upper_bound"})
+    @JsonAlias({ "upper_bound" })
     Object upperBound;
 
     @JsonProperty
     String format = "yyyy-MM-dd";
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public Predicate toPredicate(CriteriaBuilder builder, Root transactionRoot, Class<?> clazz){
+    public Predicate toPredicate(CriteriaBuilder builder, Root<?> transactionRoot, Class<?> clazz) {
         String entityMapField = AnnotationHelper.getFieldByAlias(clazz.getDeclaredFields(), field);
 
         Class<?> fieldType = transactionRoot.get(entityMapField).getJavaType();
-        if(fieldType.equals(LocalDate.class) || fieldType.equals(LocalDateTime.class)){
+        if (fieldType.equals(LocalDate.class) || fieldType.equals(LocalDateTime.class)) {
 
             DateTimeFormatter dateFormat = super.getGeneralDateTimeFormat(format);
-            try{
-                if(lowerBound != null && upperBound != null){
+            try {
+                if (lowerBound != null && upperBound != null) {
                     LocalDateTime fromDateTime = LocalDateTime.parse(String.valueOf(lowerBound), dateFormat);
                     LocalDateTime toDateTime = LocalDateTime.parse(String.valueOf(upperBound), dateFormat);
-                    if(fieldType.equals(LocalDateTime.class)){
+                    if (fieldType.equals(LocalDateTime.class)) {
                         return builder.between(transactionRoot.get(entityMapField), fromDateTime, toDateTime);
+                    } else {
+                        return builder.between(transactionRoot.get(entityMapField), fromDateTime.toLocalDate(),
+                                toDateTime.toLocalDate());
                     }
-                    else {
-                        return builder.between(transactionRoot.get(entityMapField), fromDateTime.toLocalDate(), toDateTime.toLocalDate());
-                    }
-                }
-                else if(lowerBound != null){
+                } else if (lowerBound != null) {
                     LocalDateTime lowerDateTime = LocalDateTime.parse(String.valueOf(lowerBound), dateFormat);
-                    if(fieldType.equals(LocalDateTime.class)){
+                    if (fieldType.equals(LocalDateTime.class)) {
                         return builder.greaterThanOrEqualTo(transactionRoot.get(entityMapField), lowerDateTime);
+                    } else {
+                        return builder.greaterThanOrEqualTo(transactionRoot.get(entityMapField),
+                                lowerDateTime.toLocalDate());
                     }
-                    else {
-                        return builder.greaterThanOrEqualTo(transactionRoot.get(entityMapField), lowerDateTime.toLocalDate());
-                    }
-                }
-                else {
+                } else {
                     LocalDateTime upperDateTime = LocalDateTime.parse(String.valueOf(upperBound), dateFormat);
-                    if(fieldType.equals(LocalDateTime.class)){
+                    if (fieldType.equals(LocalDateTime.class)) {
                         return builder.greaterThanOrEqualTo(transactionRoot.get(entityMapField), upperDateTime);
-                    }
-                    else {
-                        return builder.greaterThanOrEqualTo(transactionRoot.get(entityMapField), upperDateTime.toLocalDate());
+                    } else {
+                        return builder.greaterThanOrEqualTo(transactionRoot.get(entityMapField),
+                                upperDateTime.toLocalDate());
                     }
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 // Empty
             }
         }
 
         return captureHelper(builder, transactionRoot, fieldType, entityMapField);
     }
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    <T> Predicate captureHelper(CriteriaBuilder builder, Root transactionRoot, Class<T> clazz, String field){
-        if(lowerBound != null && upperBound != null){
-            return builder.between(transactionRoot.get(field), (Comparable) clazz.cast(lowerBound), (Comparable) clazz.cast(upperBound));
-        }
-        else if(lowerBound != null){
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    <T> Predicate captureHelper(CriteriaBuilder builder, Root transactionRoot, Class<T> clazz, String field) {
+        if (lowerBound != null && upperBound != null) {
+            return builder.between(transactionRoot.get(field), (Comparable) clazz.cast(lowerBound),
+                    (Comparable) clazz.cast(upperBound));
+        } else if (lowerBound != null) {
             return builder.greaterThanOrEqualTo(transactionRoot.get(field), (Comparable) clazz.cast(lowerBound));
-        }
-        else {
+        } else {
             return builder.lessThanOrEqualTo(transactionRoot.get(field), (Comparable) clazz.cast(upperBound));
         }
     }
 
     @AssertTrue(message = "At least upper bound or lower bound is not null")
-    public boolean isAtLeastOneBoundNotNull(){
+    public boolean isAtLeastOneBoundNotNull() {
         return lowerBound != null || upperBound != null;
     }
 }

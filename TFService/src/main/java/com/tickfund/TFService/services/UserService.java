@@ -90,6 +90,7 @@ public class UserService {
         return userId;
     }
 
+    @Deprecated
     public String updateUser(UpdateUserDto dto) throws Exception {
         String userId = dto.ID;
         Integer roleId = dto.roleId;
@@ -125,12 +126,6 @@ public class UserService {
         TickLabUserEntity user = this.ticklabUserRepository.findById(userId).orElseThrow();
         DepartmentEntity deparment = this.departmentRepository.findById(departmentId).orElseThrow();
         user.department = deparment;
-        this.ticklabUserRepository.save(user);
-    }
-
-    public void toggleActivation(String userId, Boolean active) {
-        TickLabUserEntity user = this.ticklabUserRepository.findById(userId).orElseThrow();
-        user.active = active;
         this.ticklabUserRepository.save(user);
     }
 }

@@ -2,18 +2,16 @@ import { useState, useEffect, useMemo } from "react";
 import { ButtonGroup, Form, FormGroup, Button } from "react-bootstrap";
 import DateRangePicker from 'react-bootstrap-daterangepicker'
 
-export default function FilterBar({onFilter}) {
+export default function FilterBar({ onFilter }) {
     const [interval, setInterval] = useState('month')
     const [start, setStartDate] = useState(null)
-    const [end, setEndDate] =     useState(new Date())
+    const [end, setEndDate] = useState(new Date())
 
-    const initSetting= useMemo(() => ({
+    const initSetting = useMemo(() => ({
         startDate: (new Date(new Date().getFullYear(), 0, 1)).toLocaleDateString(),
         endDate: new Date().toLocaleDateString()
     }))
     useEffect(() => {
-        console.log("Update->>>>>>>>")
-        console.log(initSetting)
         onFilter({
             interval: interval,
             start: start ? start : new Date(end.getFullYear(), 0, 1),
@@ -48,7 +46,9 @@ export default function FilterBar({onFilter}) {
                         end = new Date(end.year(), end.month(), end.date())
                         setStartDate(start)
                         setEndDate(end)
-                }}>
+                    }}
+                    format={"dd-MM-yyyy"}
+                >
                     <input type="text" className="form-control" />
                 </DateRangePicker>
             </FormGroup>
@@ -57,18 +57,18 @@ export default function FilterBar({onFilter}) {
 }
 
 const radioSet = [
-{
-    name: 'Ngày',
-    value: 'day'
-},
-{
-    name: 'Tuần',
-    value: 'week'
-}, {
-    name: 'Tháng',
-    value: 'month'
-}, {
-    name: 'Năm',
-    value: 'year'
-}
+    {
+        name: 'Ngày',
+        value: 'day'
+    },
+    {
+        name: 'Tuần',
+        value: 'week'
+    }, {
+        name: 'Tháng',
+        value: 'month'
+    }, {
+        name: 'Năm',
+        value: 'year'
+    }
 ]

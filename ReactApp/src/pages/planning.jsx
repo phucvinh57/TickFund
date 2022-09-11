@@ -6,25 +6,24 @@ import PlanningTable from "../components/planning/table";
 import CreateCategoryModal from "../components/category/CreateCategoryModal";
 
 export default function Planning() {
-    const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
-    return <div>
-        <CreateCategoryModal mode={"add"}/>
-        <div className="d-flex justify-content-between align-items-center">
-            <h4>Danh sách dự trù</h4>
-            <Button className="d-flex align-items-center text-white"
-                onClick={() => setShowModal(true)}
-            >
-                Thêm dự trù
-                <PiggyBank size={18} className='ms-2'/>
-            </Button>
-        </div>
-        <PlanningTable />
-        <PlanningModal 
-            show={showModal}
-            onHide={() => setShowModal(false)}
-            mode='add'
-        />
-        
+  return <div>
+    <CreateCategoryModal mode={"add"} />
+    <div className="d-flex justify-content-between align-items-center">
+      <h4>Danh sách dự trù</h4>
+      <Button className="d-flex align-items-center text-white"
+        onClick={() => setShowModal(true)}
+      >
+        Thêm dự trù
+        <PiggyBank size={18} className='ms-2' />
+      </Button>
     </div>
+    <PlanningTable />
+    <PlanningModal
+      show={showModal}
+      onHide={() => setShowModal(false)}
+      mode='add'
+    />
+  </div>
 }

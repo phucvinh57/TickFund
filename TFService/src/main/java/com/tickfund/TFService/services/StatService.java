@@ -129,6 +129,8 @@ public class StatService {
                 case YEAR:
                     statBucket.setYear(bucketDate.getYear());
                     break;
+                default:
+                    break;
             }
             return statBucket;
         });

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRef } from 'react';
 import { Button, ButtonGroup, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import styled from 'styled-components'
 import { setAvatarUrl } from '../../redux/slice/personal';
 import { EMPTY_AVATAR } from '../../resource';
@@ -43,16 +44,13 @@ export function PersonalAvatarImage() {
         const formData = new FormData()
         formData.append("avatar", selectedImage, selectedImage.name)
         fileService.uploadToPublic(formData).then(response => {
-            const imagePath = response.data.path
-            console.log(imagePath)
+            const imagePath = response.data.avatar
             personalService.updateAvatar(imagePath).then(response => {
-                console.log(response.data)
                 setSelectedImage(null)
                 dispatch(setAvatarUrl(imagePath))
-            }).catch(err => {
-                console.log(err.response)
-            })
-        })
+                toast.success("Cập nhật avatar thành công")
+            }).catch(err => toast.error("Lỗi service"))
+        }).catch(err => toast.error("Upload ảnh thất bại"))
     }
     const resetUploadState = () => setSelectedImage(null)
     return <div className="d-flex flex-column align-items-center">

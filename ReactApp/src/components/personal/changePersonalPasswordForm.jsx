@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Button, Form } from "react-bootstrap"
+import { toast } from "react-toastify"
 import { personalService } from "../../services/personal.service"
 
 export function ChangePersonalPasswordForm() {
@@ -10,13 +11,11 @@ export function ChangePersonalPasswordForm() {
     return <Form onSubmit={e => {
         e.preventDefault()
         personalService.changePassword(oldPass, newPass, confirmedNewPass).then(response => {
-            alert(response.data.msg)
             setOldPass("")
             setNewPass("")
             setConfirmedNewPass("")
-        }).catch(err => {
-            alert(err.response.data.msg)
-        })
+            toast.success("Cập nhật mật khẩu thành công")
+        }).catch(err => toast.error("Cập nhật mật khẩu thất bại"))
     }}>
         <h4>Thay đổi mật khẩu</h4>
         <Form.Group className="mb-2">

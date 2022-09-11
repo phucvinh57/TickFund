@@ -11,7 +11,7 @@ const app: Express = express();
 
 connectToDb()
 
-app.use(cors({ 
+app.use(cors({
     origin: TICKFUND_APP_DOMAIN,
     credentials: true
 }))
@@ -26,6 +26,4 @@ app.use("/static", express.static(__dirname + '/public/images'))
 
 route(app)
 
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
-})
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`))

@@ -1,11 +1,9 @@
 import { useRef } from "react";
 import { useEffect, useState } from "react";
 import { PlusLg } from "react-bootstrap-icons";
-import "../scss/fab.scss";
 
 const Fab = ({ actions }) => {
   const ref = useRef()
-
   const [open, setOpen] = useState(false);
   
   useEffect(() => {
@@ -40,7 +38,7 @@ const Fab = ({ actions }) => {
       {actions.map((action, index) => (
         <li
           style={{ transitionDelay: `${index * 25}ms`, backgroundColor: `${action.color}` }}
-          className={`fab-action ${open && 'open'}`}
+          className={`fab-action ${open && ' open'} text-white`}
           key={action.label}
           onClick={action.onClick}
         >

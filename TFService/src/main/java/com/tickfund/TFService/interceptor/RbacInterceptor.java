@@ -33,7 +33,7 @@ public class RbacInterceptor implements HandlerInterceptor {
     @Autowired
     private UserRepository userRepository;
 
-    private final String FORBIDDEN_MSG = "Access denied !";
+    private final String FORBIDDEN_MSG = "Permission denied!";
     private final String USER_INVALID_MSG = "User does not exist !";
 
     private final String GET_METHOD = "GET";
@@ -141,7 +141,7 @@ public class RbacInterceptor implements HandlerInterceptor {
         Set<String> keys = this.requirePermissionMap.keySet();
         for (String key : keys) {
             if (api.matches(key)) {
-                System.out.println(api + " matches " + key);
+                // System.out.println(api + " matches " + key);
                 return this.requirePermissionMap.get(key);
             }
         }

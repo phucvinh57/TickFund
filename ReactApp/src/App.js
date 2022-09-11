@@ -10,12 +10,12 @@ import Statistic from "./pages/statistic"
 import Planning from "./pages/planning"
 import NotFound from "./pages/notFound"
 import Fab from "./components/fab"
-import { BagPlus, BookmarkPlus, CartPlus } from "react-bootstrap-icons"
+import { Coin, PiggyBank, Tags } from "react-bootstrap-icons"
 import { useState } from "react"
 import PlanningModal from "./components/planning/modal"
 import AddTransactionModal from "./components/transactions/createTransactionModal"
 
-import CategoryModal from "./components/category/CategoryModal"
+import { CategoryModal } from "./components/category/categoryModal"
 import Personal from "./pages/personal"
 import ManageUser from "./pages/manageUsers"
 
@@ -31,11 +31,22 @@ export default function App() {
   const [showPlanning, setShowPlanning] = useState(false)
   const [showCategory, setShowCategory] = useState(false)
 
-  const actions = [
-    { label: "Danh mục", icon: <BookmarkPlus size={25} />, onClick: () => setShowCategory(true), color: "#00a8ff" },
-    { label: "Dự trù", icon: <CartPlus size={25} />, onClick: () => setShowPlanning(true), color: "#00a8ff" },
-    { label: "Giao dịch", icon: <BagPlus size={25} />, onClick: () => setShowTransaction(true), color: "#00a8ff" },
-  ]
+  const actions = [{
+    label: "Danh mục",
+    icon: <Tags size={25} />,
+    onClick: () => setShowCategory(true),
+    color: "#343a40"
+  }, {
+    label: "Dự trù",
+    icon: <PiggyBank size={25} />,
+    onClick: () => setShowPlanning(true),
+    color: "#343a40"
+  }, {
+    label: "Giao dịch",
+    icon: <Coin size={25} />,
+    onClick: () => setShowTransaction(true),
+    color: "#343a40"
+  }]
 
   return <div>
     <Sidebar />

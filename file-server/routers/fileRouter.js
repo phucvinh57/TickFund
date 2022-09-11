@@ -39,7 +39,7 @@ function buildStaticFileServe(parentDirName) {
                 res.send({
                     status: true,
                     message: 'File is uploaded',
-                    url: ['http:/', HOST, ROOT_PATH, appName,  [prefixId, extension].join('/')].join('/')
+                    url: ['http:/', HOST, ROOT_PATH, appName,  [prefixId, extension].join('.')].join('/')
                 });
             }
         } catch (err) {
@@ -77,7 +77,6 @@ function buildStaticFileServe(parentDirName) {
         var options = {
             root: path.join(parentDirName)
         };
-        console.log(absolutePath)
     
         res.download(absolutePath, originalName, options, function (err) {
             if (err) {

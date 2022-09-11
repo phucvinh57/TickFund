@@ -41,11 +41,9 @@ public abstract class AbstractQueryDTO {
         return order;
     }
 
-
-    public boolean isMust(){
+    public boolean isMust() {
         return this.op.equals(MUST);
     }
-
 
     abstract public boolean isFilterFieldValid();
 

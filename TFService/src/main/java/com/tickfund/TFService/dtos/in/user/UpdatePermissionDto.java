@@ -15,12 +15,11 @@ public class UpdatePermissionDto {
 
     public ArrayList<ResourceActionMapping> mappings;
 
-    public class ResourceActionMapping {
+    public static class ResourceActionMapping {
         @JsonProperty
         @NotNull
         @Min(value = 1)
         public Integer resourceId;
-    
     
         @JsonProperty
         @NotNull

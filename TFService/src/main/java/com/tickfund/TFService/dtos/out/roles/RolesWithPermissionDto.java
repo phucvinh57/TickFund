@@ -14,4 +14,13 @@ public class RolesWithPermissionDto {
             this.permissions.add(new RoleVo(list));
         }
     }
+
+    public void add(RoleVo rVo) {
+        this.permissions.add(rVo);
+    }
+
+    public ArrayList<RoleVo> getPermissions() {
+        return this.permissions;
+    }
+
 }

@@ -1,8 +1,11 @@
 INSERT INTO
-    tickfund.category
+    tickfund.category (`name`, `icon`, `type`)
 VALUES
-    ('Tiền điện', NULL, 'EXPENSE'),
-    ('Tiền nhà', NULL, 'EXPENSE');
+    ('Tiền nhà', '1f3e0', 'EXPENSE'),
+    ('Tiền điện', '1f4a1', 'INCOME'),
+    ('Tiền thiết bị', '1fa9b', 'INCOME'),
+    ('Tiền dự án', '1f468-200d-1f4bb', 'INCOME'),
+    ('Tiền nước', '1f4a7', 'INCOME');
 
 INSERT INTO
     tickfund.`planning` (
@@ -16,7 +19,6 @@ INSERT INTO
         `end_date`,
         `countdown`,
         `category_name`,
-        `type`,
         `user_id`
     )
 VALUES
@@ -31,7 +33,6 @@ VALUES
         NULL,
         NULL,
         'Tiền nhà',
-        'INCOME',
         NULL
     );
 
@@ -106,7 +107,7 @@ VALUES
         'Nguyễn Phúc Vinh',
         '0373395726',
         'npvinh0507@gmail.com',
-        NULL,
+        null,
         'https://scontent-sin6-3.xx.fbcdn.net/',
         '2022-08-24',
         1,

@@ -17,7 +17,7 @@ export default function AddTransactionModal({ show, onHide }) {
   const [isExpenseSelect, setIsExpenseSelect] = useState(true)
   const [fileData, setFileData] = useState([])
 
-  const categories = useSelector((state) => state.category)
+  const categories = useSelector((state) => state.categories)
   const users = useSelector((state) => state.users)
   const personal = useSelector((state) => state.personal)
 

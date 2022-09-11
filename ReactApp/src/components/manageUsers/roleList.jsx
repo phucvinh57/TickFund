@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Accordion } from "react-bootstrap";
+import { Accordion, Button } from "react-bootstrap";
 import { roleService } from "../../services/role.service";
 import { v4 as uuidv4 } from "uuid";
 import { RoleItem } from "./roleItem";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify"
+import { CreateRoleModal } from "./createRoleModal";
+import { EditRoleNameModal } from "./editRoleNameModal";
 
 export function RoleList() {
   const permissions = useSelector(state => state.permissions)
@@ -16,6 +19,9 @@ export function RoleList() {
   }, [])
 
   const [roleConfigs, setRoleConfigs] = useState([])
+  const [showCreateRoleModal, setShowCreateRoleModal] = useState(false)
+  const [showEditRoleNameModal, setShowEditRoleNameModal] = useState(false)
+  const [edittingRole, setEdittingRole] = useState(null)
 
   useEffect(() => {
     const config = permissions.map(role => {
@@ -54,7 +60,7 @@ export function RoleList() {
     setRoleConfigs(config)
   }, [permissions, resourceActionMappings])
 
-  const changePolicy = (roleId, resourceId, actionId, permit) => {
+  const setPolicy = (roleId, resourceId, actionId, permit) => {
     const copyRoleConfigs = [...roleConfigs]
     const role = copyRoleConfigs.find(roleConfig => roleConfig.ID === roleId)
     const resource = role.resources.find(rsrc => rsrc.ID === resourceId)
@@ -64,13 +70,51 @@ export function RoleList() {
     setRoleConfigs(copyRoleConfigs)
   }
 
-  return <div className="mt-3">
-    <h4>Quản lý quyền truy cập</h4>
+  const updateRolePolicyById = (roleId) => {
+    const role = roleConfigs.find(r => r.ID === roleId)
+    const data = {
+      roleId: role.ID,
+      mappings: []
+    }
+    role.resources.forEach(resource => {
+      resource.actions.forEach(action => {
+        if (action.permit === true)
+          data.mappings.push({
+            resourceId: resource.ID,
+            actionId: action.ID
+          })
+      })
+    })
+    roleService.updatePermissions(data).then(response => {
+      console.log(response.data)
+      toast.success("Cập nhật quyền truy cập thành công")
+    }).catch(err => toast.error("Xảy ra lỗi"))
+  }
+
+  return <div className="mt-4">
+    <div className="d-flex justify-content-between align-items-center mb-2">
+      <h4>Quản lý quyền truy cập</h4>
+      <Button onClick={() => setShowCreateRoleModal(true)}>Thêm vai trò</Button>
+    </div>
+
+    <CreateRoleModal show={showCreateRoleModal} onHide={() => setShowCreateRoleModal(false)}/>
+    {edittingRole && <EditRoleNameModal 
+      show={showEditRoleNameModal} onHide={() => setShowEditRoleNameModal(false)}
+      roleId={edittingRole.ID} currRoleName={edittingRole.name}
+    />}
     <Accordion>
       {roleConfigs.map(itemConfig => <RoleItem
         config={itemConfig}
         key={itemConfig.key}
-        changePolicy={changePolicy}
+        setPolicy={setPolicy}
+        updatePolicy={updateRolePolicyById}
+        openRoleNameModal={() => {
+          setEdittingRole({
+            ID: itemConfig.ID,
+            name: itemConfig.name
+          })
+          setShowEditRoleNameModal(true)
+        }}
       />)}
     </Accordion>
   </div>

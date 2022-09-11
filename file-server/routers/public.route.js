@@ -3,19 +3,21 @@ const fileUpload = require("express-fileupload")
 const router = express.Router()
 const path = require("path")
 const mimetype = require("mime-types")
-const fs = require("fs")
-
+const fs = require("fs/promises")
+const util = require("util")
 const { v4: uuidV4 } = require("uuid")
-const { BAD_REQUEST_CODE, INTERNAL_SERVER_ERROR_CODE, PORT } = require("../constants")
 
+const { BAD_REQUEST_CODE, INTERNAL_SERVER_ERROR_CODE, PORT } = require("../constants")
 const PUBLIC_FOLDER_PATH = path.resolve(__dirname, "..") + "/public"
+
+const mvFilePromise = file => util.promisify(file.mv).bind(file)
 
 router.use("/", express.static(PUBLIC_FOLDER_PATH))
 
-router.delete("/:filename", function (req, res) {
+router.delete("/:filename", async function (req, res) {
     const filename = req.params.filename
     try {
-        fs.rmSync(PUBLIC_FOLDER_PATH + "/" + filename)
+        await fs.rm(PUBLIC_FOLDER_PATH + "/" + filename)
         res.send({ msg: "Delete old avatar ok" })
     } catch (error) {
         res.send({ msg: "Avatar file does not exists" })
@@ -23,23 +25,41 @@ router.delete("/:filename", function (req, res) {
 })
 
 router.use(fileUpload())
-router.post("/upload", function (req, res) {
-    if (!req.files || Object.keys(req.files).length === 0) {
+router.post("/upload", async function (req, res) {
+    if (!req.files) {
+        return res.status(BAD_REQUEST_CODE).send({ msg: 'No files were uploaded.' });
+    }
+    const fileKeys = Object.keys(req.files)
+    if (fileKeys.length === 0) {
         return res.status(BAD_REQUEST_CODE).send({ msg: 'No files were uploaded.' });
     }
 
-    const avatarImage = req.files.avatar;
-    const extension = mimetype.extension(avatarImage.mimetype)
-    
-    const filename = uuidV4().replaceAll("-", "") + "." + extension
+    const mvJobs = fileKeys.map(key => {
+        const file = req.files[key]
+        const extension = mimetype.extension(file.mimetype)
+        const filename = uuidV4().replaceAll("-", "") + "." + extension
 
-    avatarImage.mv(PUBLIC_FOLDER_PATH + "/" + filename, function (err) {
-        if (err) {
-            console.log(err)
-            return res.status(INTERNAL_SERVER_ERROR_CODE).json({ msg: err.message });
+        const path = req.protocol
+            + `://` + req.hostname + ":"
+            + (req.hostname === "localhost" ? PORT.toString() : "")
+            + "/public/" + filename;
+        return {
+            key: key,
+            returnPath: path,
+            promise: mvFilePromise(file)(PUBLIC_FOLDER_PATH + "/" + filename)
         }
-        res.json({ path: req.protocol + `://` + req.hostname + ":" + PORT.toString() + "/public/" + filename });
-    });
+    })
+
+    try {
+        await Promise.allSettled(mvJobs.map(job => job.promise))
+        const filePaths = {}
+        mvJobs.forEach(job => {
+            filePaths[job.key] = job.returnPath
+        })
+        return res.json(filePaths);
+    } catch (err) {
+        return res.status(INTERNAL_SERVER_ERROR_CODE).json({ msg: err.message });
+    }
 })
 
 module.exports = router

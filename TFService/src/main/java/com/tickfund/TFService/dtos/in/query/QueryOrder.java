@@ -13,7 +13,7 @@ public class QueryOrder {
         return type;
     }
 
-    public boolean isAsc(){
+    public boolean isAsc() {
         return this.type.equals("ASC");
     }
 
@@ -24,8 +24,10 @@ public class QueryOrder {
     @Pattern(regexp = "ASC|DESC")
     String type;
 
-    public QueryOrder(){}
-    public QueryOrder(String field, String type){
+    public QueryOrder() {
+    }
+
+    public QueryOrder(String field, String type) {
         this.field = field;
         this.type = type;
     }

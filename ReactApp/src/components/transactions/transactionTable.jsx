@@ -147,7 +147,7 @@ export default function TransactionTable() {
   const users = useSelector((state) => state.users)
   const [transactions, setTransactions] = useState([])
   const [query, setQuery] = useState(DEFAULT_QUERY)
-  const categories = useSelector(state => state.category)
+  const categories = useSelector(state => state.categories)
 
   useEffect(() => {
     transactionService.getTransactions(query).then(response => {

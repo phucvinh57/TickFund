@@ -1,7 +1,7 @@
 import data from "@emoji-mart/data"
 import Picker from "@emoji-mart/react"
 import { useState } from "react"
-import { Form, Modal, Button, ToastContainer, Toast, InputGroup } from "react-bootstrap"
+import { Form, Modal, Button, Toast, InputGroup } from "react-bootstrap"
 import { BrushFill } from "react-bootstrap-icons"
 
 import { convertUnifiedCodeToEmojiSymbol } from "../../utils/convertUnifiedCodeToEmojiSymbol"

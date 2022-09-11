@@ -1,6 +1,5 @@
 // $primary: #1aa79c;
 $primary: #0d1117;
-$secondary: #007bff;
 $danger: #e22a40;
 
 .styled-table {
@@ -78,6 +77,7 @@ $danger: #e22a40;
     background-color: $danger;
     color: white;
 }
+
 
 @import "~bootstrap/scss/bootstrap.scss";
 @import '~react-pro-sidebar/dist/scss/styles.scss';

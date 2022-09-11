@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 @Service
 @Component
 public class QueryEqualFilter extends AbstractQueryFilter {
@@ -27,29 +26,25 @@ public class QueryEqualFilter extends AbstractQueryFilter {
     @JsonProperty
     String format = "yyyy-MM-dd";
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public Predicate toPredicate(CriteriaBuilder builder, Root root, Class<?> clazz){
+    public Predicate toPredicate(CriteriaBuilder builder, Root<?> root, Class<?> clazz) {
         String entityMapField = AnnotationHelper.getFieldByAlias(clazz.getDeclaredFields(), field);
 
         Class fieldType = root.get(entityMapField).getJavaType();
-        if(fieldType.equals(LocalDate.class) || fieldType.equals(LocalDateTime.class)){
+        if (fieldType.equals(LocalDate.class) || fieldType.equals(LocalDateTime.class)) {
             DateTimeFormatter dateFormat = this.getGeneralDateTimeFormat(format);
-            try{
+            try {
                 LocalDateTime value = LocalDateTime.parse(String.valueOf(this.value), dateFormat);
-                if(fieldType.equals(LocalDateTime.class)){
+                if (fieldType.equals(LocalDateTime.class)) {
                     return builder.equal(root.get(entityMapField), value);
-                }
-                else {
+                } else {
                     return builder.equal(root.get(entityMapField), value.toLocalDate());
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 // Empty
             }
-        }
-        else if(fieldType.isEnum()){
+        } else if (fieldType.isEnum()) {
             return builder.equal(root.get(entityMapField), Enum.valueOf(fieldType, ((String) value).toUpperCase()));
         }
         return builder.equal(root.get(entityMapField), value);
