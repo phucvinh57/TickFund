@@ -6,7 +6,6 @@ import { addPlanning, editPlanning, dropPlanning } from '../../redux/slice/plann
 
 import { categoryType, categories, users, repeatModes } from "./sampleData";
 
-
 const emptyData = {
   id: '',
   category: {

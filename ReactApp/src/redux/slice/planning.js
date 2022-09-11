@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import randLogData from '../../components/planning/sampleData'
 
 const initialState = []
-
-
 
 const planningSlice = createSlice({
   name: 'planning',

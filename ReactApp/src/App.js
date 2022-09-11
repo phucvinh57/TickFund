@@ -12,12 +12,12 @@ import NotFound from "./pages/notFound"
 import Fab from "./components/fab"
 import { Coin, PiggyBank, Tags } from "react-bootstrap-icons"
 import { useState } from "react"
-import PlanningModal from "./components/planning/modal"
 import AddTransactionModal from "./components/transactions/createTransactionModal"
 
 import { CategoryModal } from "./components/category/categoryModal"
 import Personal from "./pages/personal"
 import ManageUser from "./pages/manageUsers"
+import { AddPlanningModal } from "./components/planning/addPlanningModal"
 
 const Main = styled.div`
   transition: 0.3s;
@@ -27,24 +27,24 @@ const Main = styled.div`
 export default function App() {
   const collapse = useSelector(state => state.sidebar.collapse)
 
-  const [showTransaction, setShowTransaction] = useState(false)
-  const [showPlanning, setShowPlanning] = useState(false)
-  const [showCategory, setShowCategory] = useState(false)
+  const [showAddTransactionModal, setShowAddTransactionModal] = useState(false)
+  const [showAddPlanningModal, setShowAddPlanningModal] = useState(false)
+  const [showManageCategoryModal, setShowManageCategoryModal] = useState(false)
 
   const actions = [{
     label: "Danh mục",
     icon: <Tags size={25} />,
-    onClick: () => setShowCategory(true),
+    onClick: () => setShowManageCategoryModal(true),
     color: "#343a40"
   }, {
     label: "Dự trù",
     icon: <PiggyBank size={25} />,
-    onClick: () => setShowPlanning(true),
+    onClick: () => setShowAddPlanningModal(true),
     color: "#343a40"
   }, {
     label: "Giao dịch",
     icon: <Coin size={25} />,
-    onClick: () => setShowTransaction(true),
+    onClick: () => setShowAddTransactionModal(true),
     color: "#343a40"
   }]
 
@@ -67,17 +67,17 @@ export default function App() {
     </Main>
     <Fab actions={actions} />
     <AddTransactionModal
-      show={showTransaction}
-      onHide={() => setShowTransaction(false)}
+      show={showAddTransactionModal}
+      onHide={() => setShowAddTransactionModal(false)}
     />
-    <PlanningModal
-      show={showPlanning}
-      onHide={() => setShowPlanning(false)}
+    <AddPlanningModal
+      show={showAddPlanningModal}
+      onHide={() => setShowAddPlanningModal(false)}
       mode='add'
     />
     <CategoryModal
-      show={showCategory}
-      onHide={() => setShowCategory(false)}
+      show={showManageCategoryModal}
+      onHide={() => setShowManageCategoryModal(false)}
     />
   </div>
 }

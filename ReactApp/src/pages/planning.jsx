@@ -17,11 +17,11 @@ export default function Planning() {
         <PiggyBank size={18} className='ms-2' />
       </Button>
     </div>
-    <PlanningTable />
     <PlanningModal
       show={showModal}
       onHide={() => setShowModal(false)}
       mode='add'
     />
+    <PlanningTable />
   </div>
 }

@@ -9,10 +9,7 @@ import Picker from "@emoji-mart/react"
 import categoriesService from "../../services/categories.service";
 import { toast } from "react-toastify";
 import { addCategory } from "../../redux/slice/categories";
-
-const ALL = "all"
-const INCOME = "income"
-const EXPENSE = "expense"
+import { ALL, EXPENSE, INCOME } from "../../constants/categoryTypes";
 
 const defaultAddCategoryData = {
   name: "",
@@ -100,7 +97,6 @@ export function CategoryModal({ show, onHide }) {
               data={data} previewPosition={"none"}
               onEmojiSelect={emoji => {
                 setShowEmojiPicker(false)
-                console.log(emoji.unified)
                 setAddCategoryData({ ...addCategoryData, icon: emoji.unified })
               }}
             />
@@ -120,7 +116,6 @@ export function CategoryModal({ show, onHide }) {
 
       <hr />
       {categories.reduce((filtered, category) => {
-        console.log(category.type)
         if (category.type === categoryFilter || categoryFilter === ALL) {
           filtered.push(<CategoryItem
             key={category.name}
