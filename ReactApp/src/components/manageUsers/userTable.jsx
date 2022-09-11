@@ -38,7 +38,7 @@ export function UserTable() {
       dispatch(initUsers(copyUserData))
       toast.success("Thay đổi thành công")
     }).catch(err => toast.error("Thao tác bị từ chối"))
-  }, [roles, userData])
+  }, [roles, userData, dispatch])
 
   const changeDepartment = useCallback((userId, departmentId) => {
     userService.changeDepartment(userId, departmentId).then(response => {
@@ -50,7 +50,7 @@ export function UserTable() {
       dispatch(initUsers(copyUserData))
       toast.success("Thay đổi thành công")
     }).catch(err => toast.error("Thao tác bị từ chối"))
-  }, [userData])
+  }, [userData, dispatch])
 
   const mapFromUserDataToRow = useCallback(user => {
     return ({

@@ -11,6 +11,8 @@ import categoriesService from "./services/categories.service"
 import { initCategories } from "./redux/slice/categories"
 import { userService } from "./services/user.service"
 import { initUsers } from "./redux/slice/users"
+import { roleService } from "./services/role.service"
+import { initRoles } from "./redux/slice/role"
 
 const LOADING = "LOADING"
 const FULFILLED = "FULFILLED"
@@ -51,19 +53,22 @@ export default function Protector({ children }) {
         } catch (err) {
             toast.error("Không thể lấy danh sách các danh mục")
         }
+        categoriesService.getAll().then((response) => {
+            dispatch(initCategories(response.data))
+        }).catch(err => toast.error("Không thể lấy danh sách các danh mục"))
 
-        // Get category data
-        try {
-            const response = await userService.getAllUserInfoWithRole()
+        userService.getAllUserInfoWithRole().then(response => {
             dispatch(initUsers(response.data))
-        } catch (err) {
-            toast.error("Không thể lấy danh sách các danh mục")
-        }
+        }).catch(err => toast.error("Không thể lấy danh sách các danh mục"))
+
+        roleService.getRoles().then(response => {
+            dispatch(initRoles(response.data))
+        }).catch(err => toast.error("Không thể load data cho role"))
     }, [dispatch])
 
     useEffect(() => {
         initApplicationStates()
-    }, [dispatch])
+    }, [dispatch, initApplicationStates])
     return <div>
         {applicationState === LOADING && <LoadingPage />}
         {applicationState === FULFILLED && children}

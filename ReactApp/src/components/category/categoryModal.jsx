@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, InputGroup, Modal, Toast, Dropdown, SplitButton, DropdownButton } from "react-bootstrap";
+import { Button, Form, InputGroup, Modal, Toast, Dropdown, DropdownButton } from "react-bootstrap";
 import { PlusCircle, BrushFill } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { CategoryItem } from "./categoryItem";
@@ -21,7 +21,6 @@ const defaultAddCategoryData = {
 }
 
 export function CategoryModal({ show, onHide }) {
-  // Naming convention ?
   const categories = useSelector(state => state.categories)
   const [categoryFilter, setCategoryFilter] = useState(ALL)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
@@ -120,12 +119,18 @@ export function CategoryModal({ show, onHide }) {
       </div>
 
       <hr />
-      {categories.map(category => <CategoryItem
-        key={category.name}
-        icon={category.icon}
-        name={category.name}
-        type={category.type}
-      />)}
+      {categories.reduce((filtered, category) => {
+        console.log(category.type)
+        if (category.type === categoryFilter || categoryFilter === ALL) {
+          filtered.push(<CategoryItem
+            key={category.name}
+            icon={category.icon}
+            name={category.name}
+            type={category.type}
+          />)
+        }
+        return filtered
+      }, [])}
     </Modal.Body>
   </Modal>
 }
