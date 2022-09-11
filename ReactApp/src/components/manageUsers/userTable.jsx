@@ -11,9 +11,8 @@ import { CreateUserModal } from "./createUserModal";
 import { useSelector } from "react-redux";
 import { DEPARTMENTS } from "../../constants/departments";
 import { toast } from "react-toastify";
-
-const USER_RESOURCE_ID = 3
-const UPDATE_ACTION_ID = 3
+import { CREATE_ACTION_ID, UPDATE_ACTION_ID } from "../../constants/actionIds";
+import { USER_RESOURCE_ID } from "../../constants/resourceIds";
 
 export function UserTable() {
   const [showModalAddUser, setShowModalAddUser] = useState(false)
@@ -33,6 +32,16 @@ export function UserTable() {
       return false
     return true
   }, [userRole])
+
+  const hasCreateUserPermission = useMemo(() => {
+    const userResource = userRole.resources.find(rsrc => rsrc.ID === USER_RESOURCE_ID)
+    if (!userResource)
+      return false
+    const createAction = userResource.actions.find(action => action.ID === CREATE_ACTION_ID)
+    if (!createAction)
+      return false
+    return true
+  }, [userRole]) 
 
   const changeRole = (userId, roleId) => {
     userService.changeRole(userId, roleId).then(response => {
@@ -215,7 +224,7 @@ export function UserTable() {
   return <div>
     <div className="d-flex justify-content-between">
       <h4>Danh sách tài khoản</h4>
-      <Button onClick={() => setShowModalAddUser(true)}>Tạo tài khoản</Button>
+      {hasCreateUserPermission && <Button onClick={() => setShowModalAddUser(true)}>Tạo tài khoản</Button>} 
     </div>
     {roles.length > 0 && <TickTableV2
       headers={userTableHeaders}

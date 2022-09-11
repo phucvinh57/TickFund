@@ -36,6 +36,13 @@ public class RoleService {
         return roleRepository.findAll();
     }
 
+    public Integer createRole(String roleName) {
+        RoleEntity newRole = new RoleEntity();
+        newRole.name = roleName;
+        this.roleRepository.save(newRole);
+        return newRole.ID;
+    }
+
     public Object getResourceActionMapping() {
         Iterable<ResourceActionMappingEntity> queryResult = ramRepository.findAll();
         ArrayList<ResourceActionMappingEntity> mappings = new ArrayList<>();

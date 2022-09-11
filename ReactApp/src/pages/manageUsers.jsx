@@ -7,9 +7,8 @@ import { initRoles } from "../redux/slice/role"
 import { roleService } from "../services/role.service";
 import { useMemo } from "react";
 import { toast } from "react-toastify";
-
-const PERMISSION_RESOURCE_ID = 4
-const READ_ACTION_ID = 2
+import { PERMISSION_RESOURCE_ID } from "../constants/resourceIds";
+import { READ_ACTION_ID } from "../constants/actionIds";
 
 export default function ManageUser() {
     const userRole = useSelector(state => state.personal.role)

@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Accordion } from "react-bootstrap";
+import { Accordion, Button } from "react-bootstrap";
 import { roleService } from "../../services/role.service";
 import { v4 as uuidv4 } from "uuid";
 import { RoleItem } from "./roleItem";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify"
+import { CreateRoleModal } from "./createRoleModal";
 
 export function RoleList() {
   const permissions = useSelector(state => state.permissions)
@@ -17,6 +18,7 @@ export function RoleList() {
   }, [])
 
   const [roleConfigs, setRoleConfigs] = useState([])
+  const [showCreateRoleModal, setShowCreateRoleModal] = useState(false)
 
   useEffect(() => {
     const config = permissions.map(role => {
@@ -86,8 +88,13 @@ export function RoleList() {
     }).catch(err => toast.error("Xảy ra lỗi"))
   }
 
-  return <div className="mt-3">
-    <h4>Quản lý quyền truy cập</h4>
+  return <div className="mt-4">
+    <div className="d-flex justify-content-between align-items-center mb-2">
+      <h4>Quản lý quyền truy cập</h4>
+      <Button onClick={() => setShowCreateRoleModal(true)}>Thêm vai trò</Button>
+    </div>
+
+    <CreateRoleModal show={showCreateRoleModal} onHide={() => setShowCreateRoleModal(false)}/>
     <Accordion>
       {roleConfigs.map(itemConfig => <RoleItem
         config={itemConfig}

@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { useEffect, useState } from "react";
 import { PlusLg } from "react-bootstrap-icons";
-import "../scss/fab.scss";
 
 const Fab = ({ actions }) => {
   const ref = useRef()

@@ -10,7 +10,7 @@ import Statistic from "./pages/statistic"
 import Planning from "./pages/planning"
 import NotFound from "./pages/notFound"
 import Fab from "./components/fab"
-import { BagPlus, BookmarkPlus, CartPlus } from "react-bootstrap-icons"
+import { BookmarkPlus, Coin, PiggyBank } from "react-bootstrap-icons"
 import { useState } from "react"
 import PlanningModal from "./components/planning/modal"
 import AddTransactionModal from "./components/transactions/createTransactionModal"
@@ -38,16 +38,15 @@ export default function App() {
     color: "#343a40"
   }, {
     label: "Dự trù",
-    icon: <CartPlus size={25} />,
+    icon: <PiggyBank size={25} />,
     onClick: () => setShowPlanning(true),
     color: "#343a40"
   }, {
     label: "Giao dịch",
-    icon: <BagPlus size={25} />,
+    icon: <Coin size={25} />,
     onClick: () => setShowTransaction(true),
     color: "#343a40"
-  },
-  ]
+  }]
 
   return <div>
     <Sidebar />

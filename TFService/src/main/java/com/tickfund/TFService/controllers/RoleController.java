@@ -4,12 +4,14 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tickfund.TFService.dtos.in.role.CreateRoleDto;
 import com.tickfund.TFService.dtos.in.user.UpdatePermissionDto;
 import com.tickfund.TFService.dtos.in.user.UpdateRoleNameDto;
 import com.tickfund.TFService.exceptions.InvalidPermission;
@@ -25,6 +27,12 @@ public class RoleController {
     @ResponseBody
     public Object getRoles() {
         return roleService.getRoles();
+    }
+
+    @PostMapping("")
+    @ResponseBody 
+    public Integer createRole(@Valid @RequestBody CreateRoleDto dto) {
+        return this.roleService.createRole(dto.roleName);
     }
 
     @GetMapping("/permissions")
