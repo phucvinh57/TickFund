@@ -35,6 +35,16 @@ public class AttachmentEntity {
         this.transactionEntity = transactionEntity;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Column
+    private String name;
     @Column
     private String url;
 

@@ -35,11 +35,11 @@ public class TransactionDTO {
     @JsonProperty
     public String userId;
 
-    @JsonAlias({"creator_id"})
-    @UserIDConstraint
-    @NotNull
-    @JsonProperty
-    public String creatorId;
+//    @JsonAlias({"creator_id"})
+//    @UserIDConstraint
+//    @NotNull
+//    @JsonProperty
+//    public String creatorId;
 
     @Column
     @JsonProperty

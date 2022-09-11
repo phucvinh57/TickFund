@@ -36,8 +36,8 @@ public class TransactionOut {
     @JsonProperty
     private String note;
 
-    @JsonProperty("create_at")
-    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    @JsonProperty("created_at")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime createdAt;
 
     @JsonProperty("attachments")
@@ -57,9 +57,8 @@ public class TransactionOut {
         for(AttachmentEntity attachmentEntity : transactionEntity.getAttachments()){
             AttachmentOut attachmentOut = new AttachmentOut();
             attachmentOut.setID(attachmentEntity.getID());
-            String realFileUrl = attachmentEntity.getUrl();
-            String fileName = realFileUrl.substring(realFileUrl.lastIndexOf('/') + 1);
-            String fakeFileUrl = "http://%s/%s".formatted(fakeAttachmentDomain, attachmentEntity.getID());
+            String fileName = attachmentEntity.getName();
+            String fakeFileUrl = "http://%s/attachments/%s".formatted(fakeAttachmentDomain, attachmentEntity.getID());
 
             attachmentOut.setPath(fakeFileUrl);
 

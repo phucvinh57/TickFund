@@ -32,10 +32,6 @@ public class CookieInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        if(request.getMethod().compareToIgnoreCase("OPTIONS") == 0){
-            return true;
-        }
-
         if(optCUserCookie.isPresent()) {
             try {
                 request.setAttribute(USER_TOKEN, tokenManager.parseToUserToken(optCUserCookie.get().getValue()));

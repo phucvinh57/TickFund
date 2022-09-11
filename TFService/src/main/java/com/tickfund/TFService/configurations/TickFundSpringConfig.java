@@ -29,9 +29,10 @@ public class TickFundSpringConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry){
         final String LOGIN_PATH = "/auth/login";
         final String SSO_CALLBACK_PATH = "/auth/ticksso";
-        registry.addInterceptor(cookieInterceptor).excludePathPatterns(LOGIN_PATH, SSO_CALLBACK_PATH);
+        final String FILE_CALLBACK_PATH = "/auth/file";
+        registry.addInterceptor(cookieInterceptor).excludePathPatterns(LOGIN_PATH, SSO_CALLBACK_PATH, FILE_CALLBACK_PATH);
         registry.addInterceptor(alreadyLogInInterceptor).addPathPatterns(LOGIN_PATH, SSO_CALLBACK_PATH);
         registry.addInterceptor(cacheInterceptor);
-        registry.addInterceptor(rbacInterceptor).excludePathPatterns(LOGIN_PATH, SSO_CALLBACK_PATH);
+        registry.addInterceptor(rbacInterceptor).excludePathPatterns(LOGIN_PATH, SSO_CALLBACK_PATH, FILE_CALLBACK_PATH);
     }
 }

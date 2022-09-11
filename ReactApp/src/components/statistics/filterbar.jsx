@@ -44,7 +44,6 @@ export default function FilterBar({onFilter}) {
                 <DateRangePicker
                     initialSettings={initSetting}
                     onCallback={(start, end, label) => {
-                        console.log("call back")
                         start = new Date(start.year(), start.month(), start.date())
                         end = new Date(end.year(), end.month(), end.date())
                         setStartDate(start)

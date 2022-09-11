@@ -1,8 +1,10 @@
 package com.tickfund.TFService.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tickfund.TFService.dtos.UserToken;
 import com.tickfund.TFService.entities.tickfund.AttachmentEntity;
 import com.tickfund.TFService.exceptions.ResourceNotFoundException;
+import com.tickfund.TFService.interceptor.CookieInterceptor;
 import com.tickfund.TFService.services.AttachmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +18,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -42,6 +47,7 @@ public class AttachmentController {
         if (attachmentEntity != null) {
             attributes.addAttribute("code_callback",
                     String.format("%s://%s/auth/file?code=%d", PROTOCOL, MY_DOMAIN, code));
+            attributes.addAttribute("originalName", attachmentEntity.getName());
             RedirectView redirectView = new RedirectView();
             redirectView.setUrl(attachmentEntity.getUrl());
             return redirectView;
@@ -52,42 +58,47 @@ public class AttachmentController {
 
     @PostMapping("/upload")
     @SuppressWarnings({ "unchecked" })
-    public Map<String, Object> uploadAttachment(@RequestParam("file") MultipartFile file) {
+    public Map<String, Object> uploadAttachment(@RequestParam("file") MultipartFile[] files, HttpServletRequest request) {
+        UserToken userToken = (UserToken) request.getAttribute(CookieInterceptor.USER_TOKEN);
         Map<String, Object> response = new HashMap<>();
         WebClient client = WebClient.builder()
                 .baseUrl(String.format("%s://%s", PROTOCOL, FILE_SERVER_HOST))
                 .build();
+        List<String> fileIds = new ArrayList<>();
 
         try {
-            MultipartBodyBuilder builder = new MultipartBodyBuilder();
-            final String fileId = UniqueId.generate("0");
+            for(MultipartFile file : files){
+                MultipartBodyBuilder builder = new MultipartBodyBuilder();
+                final String fileId = UniqueId.generate(userToken.getUserId());
 
-            builder.part("file", file.getResource());
-            builder.part("prefix_id", fileId);
-            builder.part("app_name", "tickfund");
-            var fileUploadResponse = client
-                    .post()
-                    .uri("/media/upload")
-                    .contentType(MediaType.MULTIPART_FORM_DATA)
-                    .body(BodyInserters.fromMultipartData(builder.build()))
-                    .retrieve()
-                    .toEntity(String.class)
-                    .block();
-            if (fileUploadResponse.getStatusCode().is2xxSuccessful()) {
-                Map<String, Object> map = new ObjectMapper().readValue(fileUploadResponse.getBody(), Map.class);
-                final String url = (String) map.get("url");
-                AttachmentEntity attachmentEntity = new AttachmentEntity();
-                attachmentEntity.setID(fileId);
-                attachmentEntity.setUrl(url);
+                builder.part("file", file.getResource());
+                builder.part("prefix_id", fileId);
+                builder.part("app_name", "tickfund");
+                var fileUploadResponse = client
+                        .post()
+                        .uri("/media/upload")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .body(BodyInserters.fromMultipartData(builder.build()))
+                        .retrieve()
+                        .toEntity(String.class)
+                        .block();
+                if (fileUploadResponse.getStatusCode().is2xxSuccessful()) {
+                    Map<String, Object> map = new ObjectMapper().readValue(fileUploadResponse.getBody(), Map.class);
+                    final String url = (String) map.get("url");
+                    AttachmentEntity attachmentEntity = new AttachmentEntity();
+                    attachmentEntity.setID(fileId);
+                    attachmentEntity.setUrl(url);
+                    attachmentEntity.setName(file.getOriginalFilename());
 
-                attachmentService.addPendingFile(attachmentEntity);
-
-                response.put(MESSAGE, "Create attachment successfully");
-                response.put(ID, fileId);
-                return response;
-            } else {
-                throw new RuntimeException();
+                    attachmentService.addPendingFile(attachmentEntity);
+                    fileIds.add(fileId);
+                } else {
+                    throw new RuntimeException();
+                }
             }
+            response.put(MESSAGE, "Create attachments successfully");
+            response.put(ID, fileIds);
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException();

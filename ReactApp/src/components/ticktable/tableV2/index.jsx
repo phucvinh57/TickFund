@@ -7,7 +7,7 @@ import { Funnel, TerminalPlus, Trash, XCircle } from "react-bootstrap-icons"
 import ReactPaginate from "react-paginate"
 import { BETWEEN, getOperators } from "../../../constants/compareOperator"
 import { PAGE_SIZE } from "../../../constants/pageSettings"
-import { shortKey } from "../../../utils"
+import { dateToString, shortKey } from "../../../utils"
 import RawTable from "./rawTable"
 
 export function TickTableV2({
@@ -320,7 +320,7 @@ export function TickTableV2({
                       filter.association.type === 'number'
                       && (filter.operator !== BETWEEN ? <Form.Control
                         type={filter.association.type} value={filter.rhs} size='sm'
-                        onChange={e => setFilterItemRhs(filter.association.key, e.target.value)}
+                        onChange={e => setFilterItemRhs(filter.association.key, parseInt(e.target.value))}
                       /> : <div className="d-flex align-items-center">
                         <Form.Control
                           className="me-1"
@@ -329,7 +329,7 @@ export function TickTableV2({
                           value={filter.rhs.lowerbound}
                           onChange={e => setFilterItemRhs(filter.association.key, {
                             ...filter.rhs,
-                            lowerbound: e.target.value
+                            lowerbound: parseInt(e.target.value)
                           })}
                           size="sm"
                           width={100}
@@ -342,14 +342,25 @@ export function TickTableV2({
                           value={filter.rhs.upperbound}
                           onChange={e => setFilterItemRhs(filter.association.key, {
                             ...filter.rhs,
-                            upperbound: e.target.value
+                            upperbound: parseInt(e.target.value)
                           })}
                           size="sm"
                           width={100}
                         />
                       </div>)
                     }
-                    {filter.association.type === 'date' && <DateRangePicker>
+                    {filter.association.type === 'date' && <DateRangePicker
+                      onCallback={(start, end, label) => {
+                        const lowerbound = new Date(start.year(), start.month(), start.date())
+                        const upperbound = new Date(end.year(), end.month(), end.date())
+                        console.log(upperbound)
+                        console.log(lowerbound)
+                        setFilterItemRhs(filter.association.key, {
+                          ...filter.rhs,
+                          upperbound: dateToString(upperbound),
+                          lowerbound: dateToString(lowerbound)
+                        })
+                      }}>
                       <input type="text" className="form-control" />
                     </DateRangePicker>}
                   </Form.Group>
@@ -400,7 +411,7 @@ export function TickTableV2({
         previousLabel='<'
         pageCount={numPages}
         renderOnZeroPageCount={null}
-        onPageChange={e => setPageSlice(e.selected)}
+        onPageChange={e => setPageSlice(e.selected + 1)}
         pageRangeDisplayed={2}
         marginPagesDisplayed={2}
 

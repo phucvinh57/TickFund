@@ -19,9 +19,9 @@ export const transactionTableHeaders = [{
     sort: false,
     filter: true
 }, {
-    label: 'Thời gian',
+    label: 'Ngày giao dịch',
     association: {
-        key: 'time',
+        key: 'history',
         type: 'date',
     },
     sort: true,
@@ -29,7 +29,7 @@ export const transactionTableHeaders = [{
 }, {
     label: 'Số tiền',
     association: {
-        key: 'money',
+        key: 'amount',
         type: 'number'
     },
     sort: true,
@@ -48,5 +48,13 @@ export const transactionTableHeaders = [{
         }]
     },
     sort: false,
+    filter: true
+}, {
+    label: 'Ngày tạo',
+    association: {
+        key: 'createdAt',
+        type: 'date'
+    },
+    sort: true,
     filter: true
 }];

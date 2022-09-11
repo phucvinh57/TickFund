@@ -52,7 +52,7 @@ public class AuthController {
 
     @GetMapping("/file")
     @ResponseBody
-    public Map<String, Object> getTransactionById(@RequestParam Integer code) {
+    public Map<String, Object> getAttachmentById(@RequestParam Integer code) {
         Map<String, Object> response = new HashMap<>();
         response.put("message", attachmentService.authenticateCode(code));
         return response;

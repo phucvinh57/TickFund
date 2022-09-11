@@ -5,6 +5,10 @@ export const dateToString = (date) => {
     return `${year}-${month}-${day}`
 }
 
+export const dateTimeToString = (date) => {
+    return  date.toLocaleTimeString([], {hour12: false}) + ' ' + dateToString(date)
+}
+
 export const ISO8601_week_no = (dt) => {
     const dayMillis = 86400000
     const weekMillis = dayMillis * 7

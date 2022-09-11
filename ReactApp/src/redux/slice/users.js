@@ -4,14 +4,14 @@ const usersSlice = createSlice({
     name: 'users',
     initialState: [],
     reducers: {
-        initRoles: (state, action) => {
+        initUsers: (state, action) => {
             return action.payload
         },
-        addRole: (state, action) => {
+        addUser: (state, action) => {
             return [action.payload, ...state]
         }
     }
 })
 
-export const { initUser, addUser } = usersSlice.actions
+export const { initUsers, addUser } = usersSlice.actions
 export default usersSlice.reducer
