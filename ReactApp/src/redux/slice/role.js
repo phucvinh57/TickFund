@@ -9,9 +9,16 @@ const roleSlice = createSlice({
         },
         addRole: (state, action) => {
             return [action.payload, ...state]
+        },
+        editRoleName: (state, action) => {
+            const roleId = action.payload.roleId
+            const newRoleName = action.payload.roleName
+            const role = state.find(r => r.ID === roleId)
+            role.name = newRoleName
+            return state
         }
     }
 })
 
-export const { initRoles, addRole } = roleSlice.actions
+export const { initRoles, addRole, editRoleName } = roleSlice.actions
 export default roleSlice.reducer

@@ -7,6 +7,7 @@ import { RoleItem } from "./roleItem";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify"
 import { CreateRoleModal } from "./createRoleModal";
+import { EditRoleNameModal } from "./editRoleNameModal";
 
 export function RoleList() {
   const permissions = useSelector(state => state.permissions)
@@ -19,6 +20,8 @@ export function RoleList() {
 
   const [roleConfigs, setRoleConfigs] = useState([])
   const [showCreateRoleModal, setShowCreateRoleModal] = useState(false)
+  const [showEditRoleNameModal, setShowEditRoleNameModal] = useState(false)
+  const [edittingRole, setEdittingRole] = useState(null)
 
   useEffect(() => {
     const config = permissions.map(role => {
@@ -95,12 +98,23 @@ export function RoleList() {
     </div>
 
     <CreateRoleModal show={showCreateRoleModal} onHide={() => setShowCreateRoleModal(false)}/>
+    {edittingRole && <EditRoleNameModal 
+      show={showEditRoleNameModal} onHide={() => setShowEditRoleNameModal(false)}
+      roleId={edittingRole.ID} currRoleName={edittingRole.name}
+    />}
     <Accordion>
       {roleConfigs.map(itemConfig => <RoleItem
         config={itemConfig}
         key={itemConfig.key}
         setPolicy={setPolicy}
         updatePolicy={updateRolePolicyById}
+        openRoleNameModal={() => {
+          setEdittingRole({
+            ID: itemConfig.ID,
+            name: itemConfig.name
+          })
+          setShowEditRoleNameModal(true)
+        }}
       />)}
     </Accordion>
   </div>

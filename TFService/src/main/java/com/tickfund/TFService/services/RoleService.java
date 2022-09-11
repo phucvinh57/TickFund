@@ -90,7 +90,7 @@ public class RoleService {
         return rolesWithPermissionDto;
     }
 
-    public Integer updateRoleName(UpdateRoleNameDto dto) {
+    public Object updateRoleName(UpdateRoleNameDto dto) {
         Optional<RoleEntity> qResult = roleRepository.findById(dto.roleId);
         if (qResult.isEmpty())
             return null;
@@ -98,7 +98,7 @@ public class RoleService {
         RoleEntity role = qResult.get();
         role.name = dto.roleName;
         roleRepository.save(role);
-        return role.ID;
+        return role;
     }
 
     @Transactional(rollbackOn = InvalidPermission.class)
@@ -127,6 +127,15 @@ public class RoleService {
                     dto.roleId,
                     dto.mappings.get(i).resourceId,
                     dto.mappings.get(i).actionId);
+        }
+    }
+
+    public Integer deleteById(Integer roleId) throws Exception {
+        try {
+            this.roleRepository.deleteById(roleId);
+            return roleId;
+        } catch (Exception e) {
+           throw new Exception("SQL constraint");
         }
     }
 }

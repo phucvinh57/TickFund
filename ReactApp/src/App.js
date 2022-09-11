@@ -10,12 +10,12 @@ import Statistic from "./pages/statistic"
 import Planning from "./pages/planning"
 import NotFound from "./pages/notFound"
 import Fab from "./components/fab"
-import { BookmarkPlus, Coin, PiggyBank } from "react-bootstrap-icons"
+import { Coin, PiggyBank, Tags } from "react-bootstrap-icons"
 import { useState } from "react"
 import PlanningModal from "./components/planning/modal"
 import AddTransactionModal from "./components/transactions/createTransactionModal"
 
-import CategoryModal from "./components/category/CategoryModal"
+import { CategoryModal } from "./components/category/categoryModal"
 import Personal from "./pages/personal"
 import ManageUser from "./pages/manageUsers"
 
@@ -33,7 +33,7 @@ export default function App() {
 
   const actions = [{
     label: "Danh mục",
-    icon: <BookmarkPlus size={25} />,
+    icon: <Tags size={25} />,
     onClick: () => setShowCategory(true),
     color: "#343a40"
   }, {

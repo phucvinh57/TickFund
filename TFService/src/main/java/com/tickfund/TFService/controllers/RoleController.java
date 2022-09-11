@@ -3,7 +3,9 @@ package com.tickfund.TFService.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +22,7 @@ import com.tickfund.TFService.services.RoleService;
 @RestController
 @RequestMapping("/roles")
 public class RoleController {
-    @Autowired 
+    @Autowired
     private RoleService roleService;
 
     @GetMapping("")
@@ -30,9 +32,15 @@ public class RoleController {
     }
 
     @PostMapping("")
-    @ResponseBody 
+    @ResponseBody
     public Object createRole(@Valid @RequestBody CreateRoleDto dto) {
         return this.roleService.createRole(dto.roleName);
+    }
+
+    @PutMapping("/name")
+    @ResponseBody
+    public Object updateRoleName(@Valid @RequestBody UpdateRoleNameDto dto) {
+        return roleService.updateRoleName(dto);
     }
 
     @GetMapping("/permissions")
@@ -54,9 +62,8 @@ public class RoleController {
         return roleService.getResourceActionMapping();
     }
 
-    @PutMapping("/name")
-    @ResponseBody
-    public Integer updateRoleName(@Valid @RequestBody UpdateRoleNameDto dto) {
-        return roleService.updateRoleName(dto);
+    @DeleteMapping("/{roleId}")
+    public Integer deleteRoleById(@PathVariable(name = "roleId") Integer roleId) throws Exception {
+        return this.roleService.deleteById(roleId);
     }
 }

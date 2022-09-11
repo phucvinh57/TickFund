@@ -15,5 +15,11 @@ export const roleService = {
     },
     createRole: async function (roleName) {
         return tfServiceHTTPCommon.post("/roles", { roleName })
+    },
+    updateRoleName: async function (roleId, roleName) {
+        return tfServiceHTTPCommon.put("/roles/name", { roleId, roleName })
+    },
+    deleteRoleById: async function(roleId) {
+        return tfServiceHTTPCommon.delete(`/roles/${roleId}`)
     }
 }

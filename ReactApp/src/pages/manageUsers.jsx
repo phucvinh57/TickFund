@@ -1,29 +1,18 @@
 import { useEffect } from "react";
 import { RoleList } from "../components/manageUsers/roleList";
 import { UserTable } from "../components/manageUsers/userTable";
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { initPermissions } from "../redux/slice/permission";
 import { initRoles } from "../redux/slice/role"
 import { roleService } from "../services/role.service";
-import { useMemo } from "react";
 import { toast } from "react-toastify";
 import { PERMISSION_RESOURCE_ID } from "../constants/resourceIds";
 import { READ_ACTION_ID } from "../constants/actionIds";
+import { useHasPermission } from "../hooks/hasPermission";
 
 export default function ManageUser() {
-    const userRole = useSelector(state => state.personal.role)
     const dispatch = useDispatch()
-
-    const hasReadRoleListPermission = useMemo(() => {
-        // Find "nhóm quyền"
-        const permissionResource = userRole.resources.find(rsrc => rsrc.ID === PERMISSION_RESOURCE_ID)
-        if (!permissionResource)
-            return false
-        const readAction = permissionResource.actions.find(action => action.ID === READ_ACTION_ID)
-        if (!readAction)
-            return false
-        return true
-    }, [userRole])
+    const hasReadRoleListPermission = useHasPermission(PERMISSION_RESOURCE_ID, READ_ACTION_ID)
 
     useEffect(() => {
         if (hasReadRoleListPermission)

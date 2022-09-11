@@ -12,7 +12,6 @@ export function AttachmentUploader() {
     const onFileChange = event => {
         const uploadedFiles = Object.values(event.target.files)
 
-
         const formData = new FormData()
         uploadedFiles.forEach(file => formData.append(file.name, file, file.name))
 
