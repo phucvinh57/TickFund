@@ -31,7 +31,7 @@ public class RoleController {
 
     @PostMapping("")
     @ResponseBody 
-    public Integer createRole(@Valid @RequestBody CreateRoleDto dto) {
+    public Object createRole(@Valid @RequestBody CreateRoleDto dto) {
         return this.roleService.createRole(dto.roleName);
     }
 

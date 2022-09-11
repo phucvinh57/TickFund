@@ -36,11 +36,11 @@ public class RoleService {
         return roleRepository.findAll();
     }
 
-    public Integer createRole(String roleName) {
+    public Object createRole(String roleName) {
         RoleEntity newRole = new RoleEntity();
         newRole.name = roleName;
         this.roleRepository.save(newRole);
-        return newRole.ID;
+        return new RoleVo(newRole.ID, newRole.name);
     }
 
     public Object getResourceActionMapping() {
