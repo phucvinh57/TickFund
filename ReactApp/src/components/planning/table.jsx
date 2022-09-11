@@ -94,12 +94,12 @@ export default function PlanningTable() {
         })
     }, [query])
 
-    const handleRowClick = row => {
-        let planning = initPlanningData.find(val => val.id === row.id.val)
-        setTargetPlan(planning)
-        console.log(planning)
-        setShowEditModal(true)
-    }
+  const handleRowClick = row => {
+    let planning = initPlanningData.find(val => val.id === row.id.val)
+    setTargetPlan(planning)
+    console.log(planning)
+    setShowEditModal(true)
+  }
 
     if(users.lenght == 0 || categories.length == 0){
         return <></>
@@ -119,11 +119,11 @@ export default function PlanningTable() {
             data={planingToTableData(plannings, users, categories)}
             numPages={20}
 
-            defaultSortField='startDate'
-            onQuery={conditions => console.log(conditions)}
-            onRowClick={handleRowClick}
-        />
-    </div>
+      defaultSortField='startDate'
+      onQuery={conditions => console.log(conditions)}
+      onRowClick={handleRowClick}
+    />
+  </div>
 }
 
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, InputGroup, Modal, Toast, Dropdown, SplitButton, DropdownButton } from "react-bootstrap";
+import { Button, Form, InputGroup, Modal, Toast, Dropdown, DropdownButton } from "react-bootstrap";
 import { PlusCircle, BrushFill } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { CategoryItem } from "./categoryItem";
@@ -9,10 +9,7 @@ import Picker from "@emoji-mart/react"
 import categoriesService from "../../services/categories.service";
 import { toast } from "react-toastify";
 import { addCategory } from "../../redux/slice/categories";
-
-const ALL = "all"
-const INCOME = "income"
-const EXPENSE = "expense"
+import { ALL, EXPENSE, INCOME } from "../../constants/categoryTypes";
 
 const defaultAddCategoryData = {
   name: "",
@@ -21,7 +18,6 @@ const defaultAddCategoryData = {
 }
 
 export function CategoryModal({ show, onHide }) {
-  // Naming convention ?
   const categories = useSelector(state => state.categories)
   const [categoryFilter, setCategoryFilter] = useState(ALL)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
@@ -101,7 +97,6 @@ export function CategoryModal({ show, onHide }) {
               data={data} previewPosition={"none"}
               onEmojiSelect={emoji => {
                 setShowEmojiPicker(false)
-                console.log(emoji.unified)
                 setAddCategoryData({ ...addCategoryData, icon: emoji.unified })
               }}
             />
@@ -120,12 +115,17 @@ export function CategoryModal({ show, onHide }) {
       </div>
 
       <hr />
-      {categories.map(category => <CategoryItem
-        key={category.name}
-        icon={category.icon}
-        name={category.name}
-        type={category.type}
-      />)}
+      {categories.reduce((filtered, category) => {
+        if (category.type === categoryFilter || categoryFilter === ALL) {
+          filtered.push(<CategoryItem
+            key={category.name}
+            icon={category.icon}
+            name={category.name}
+            type={category.type}
+          />)
+        }
+        return filtered
+      }, [])}
     </Modal.Body>
   </Modal>
 }

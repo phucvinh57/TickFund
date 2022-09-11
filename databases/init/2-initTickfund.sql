@@ -7,7 +7,7 @@ USE tickfund;
 
 CREATE TABLE IF NOT EXISTS category (
     `name` VARCHAR(255) PRIMARY KEY,
-    icon TEXT,
+    icon VARCHAR(10),
     `type` ENUM('INCOME', 'EXPENSE') NOT NULL
 );
 
@@ -61,11 +61,13 @@ CREATE TABLE IF NOT EXISTS planning (
     cycle_mode ENUM('CYCLE', 'COUNTDOWN'),
     cycle_unit ENUM('DAY', 'WEEK', 'MONTH', 'QUARTER', 'YEAR'),
     end_date DATE,
-    countdown SMALLINT UNSIGNED,
+    countdown SMALLINT,
     category_name VARCHAR(255) NOT NULL,
-    `user_id` VARCHAR(50),
-    FOREIGN KEY (`user_id`) REFERENCES user(ID) ON DELETE SET NULL,
-    FOREIGN KEY (category_name) REFERENCES category(`name`) ON UPDATE CASCADE
+    `user_id` VARCHAR(50) NOT NULL,
+    FOREIGN KEY (`user_id`) REFERENCES user(ID) ON DELETE CASCADE,
+    FOREIGN KEY (category_name) REFERENCES category(`name`) 
+        ON DELETE RESTRICT 
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `transaction` (

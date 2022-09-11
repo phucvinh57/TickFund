@@ -4,11 +4,11 @@ import { Col, Modal, ModalBody, Row } from 'react-bootstrap';
 import { transactionService } from '../../services/transaction.service';
 import { dateTimeToString, prettyNumber, queryToApiBody } from '../../utils';
 import { convertUnifiedCodeToEmojiSymbol } from '../../utils/convertUnifiedCodeToEmojiSymbol';
-import Attachment from '../attachment/attachment';
 import { TickTableV2 } from '../ticktable/tableV2';
 import { useSelector } from 'react-redux';
 import { EMPTY_AVATAR } from '../../resource';
 import { DEFAULT_TRANSACTION_QUERY, PAGE_SIZE } from '../../constants/pageSettings';
+import Attachment from '../attachment/attachment';
 
 function TransactionDetailModal({ data, show, onHide }) {
   return <Modal

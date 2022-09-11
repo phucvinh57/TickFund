@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 public class PlanningDto {
     @NotNull
-    @JsonAlias({"category_name"})
+    @JsonAlias({ "category_name" })
     @CategoryNameConstraint
     @JsonProperty
     public String categoryName;
@@ -23,20 +23,19 @@ public class PlanningDto {
     public Integer amount;
 
     @JsonProperty
-    @JsonAlias({"user_id"})
+    @JsonAlias({ "user_id" })
     public String userId;
 
     @JsonProperty
     @NotNull
-    @JsonAlias({"is_repeat"})
+    @JsonAlias({ "is_repeat" })
     public Boolean isRepeat;
 
     @JsonProperty
     @NotNull
-    @JsonAlias({"start_date"})
+    @JsonAlias({ "start_date" })
     public LocalDate startDate;
 
     @JsonProperty
-    @Valid
     public RepetitionVo repeat;
 }

@@ -43,7 +43,7 @@ public class PlanningEntity {
     private LocalDate endDate;
     
     @Column
-    @Min(value = 0)
+    @Min(value = -1)
     private Integer countdown;
 
     @Column(name = "category_name")
