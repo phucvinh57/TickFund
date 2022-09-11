@@ -3,6 +3,7 @@ package com.tickfund.TFService.controllers;
 import com.tickfund.TFService.dtos.in.planning.PlanningDto;
 import com.tickfund.TFService.dtos.in.planning.PlanningQueryDTO;
 import com.tickfund.TFService.dtos.out.PlanningOut;
+import com.tickfund.TFService.dtos.out.QueryResultOut;
 import com.tickfund.TFService.entities.tickfund.PlanningEntity;
 import com.tickfund.TFService.exceptions.ResourceNotFoundException;
 import com.tickfund.TFService.services.PlanningService;
@@ -65,12 +66,18 @@ public class PlanningController {
 
 	@GetMapping("/query")
 	@ResponseBody
-	public List<PlanningOut> getPlanningByQuery(@Valid @RequestBody PlanningQueryDTO dto) {
-		return this
-				.service
-				.getPlanningByQuery(dto)
-				.stream()
-				.map(PlanningOut::new)
-				.collect(Collectors.toList());
+	public QueryResultOut<PlanningOut> getPlanningByQuery(@Valid @RequestBody PlanningQueryDTO dto) {
+		Long total = this.service.countPlanningByQuery(dto);
+		List<PlanningOut> results = this
+			.service
+			.getPlanningByQuery(dto)
+			.stream()
+			.map(PlanningOut::new)
+			.collect(Collectors.toList());
+
+		QueryResultOut<PlanningOut> queryResultOut = new QueryResultOut<>();
+		queryResultOut.setTotal(total);
+		queryResultOut.setResults(results);
+		return queryResultOut;
 	}
 }

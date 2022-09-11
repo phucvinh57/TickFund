@@ -405,7 +405,7 @@ export function TickTableV2({
     </div>}
 
     {/* Pagination */}
-    {data.length !== 0 && <div className='d-flex justify-content-center mt-2'>
+    { <div className='d-flex justify-content-center mt-2'>
       <ReactPaginate
         nextLabel='>'
         previousLabel='<'

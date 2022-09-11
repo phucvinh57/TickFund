@@ -4,6 +4,7 @@ import com.tickfund.TFService.dtos.UserToken;
 import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
 import com.tickfund.TFService.dtos.in.transaction.TransactionDTO;
 import com.tickfund.TFService.dtos.out.AttachmentOut;
+import com.tickfund.TFService.dtos.out.QueryResultOut;
 import com.tickfund.TFService.dtos.out.TransactionOut;
 import com.tickfund.TFService.entities.tickfund.AttachmentEntity;
 import com.tickfund.TFService.entities.tickfund.TransactionEntity;
@@ -75,12 +76,26 @@ public class TransactionController {
 
     @PostMapping("/query")
     @ResponseBody
-    public List<TransactionOut> getTransactionsByQuery(@Valid @RequestBody TransactionQueryDTO dto) {
-        return this.transactionService
-                .getTransactionByQuery(dto)
-                .stream()
-                .map(e -> new TransactionOut(e, MY_DOMAIN))
-                .collect(Collectors.toList());
+    public QueryResultOut<TransactionOut> getTransactionsByQuery(@Valid @RequestBody TransactionQueryDTO dto) {
+        Long total = this.transactionService.countTransactionByQuery(dto);
+        QueryResultOut<TransactionOut> queryResultOut = new QueryResultOut<>();
+        queryResultOut.setTotal(total);
+
+        List<TransactionOut> results = this.transactionService
+            .getTransactionByQuery(dto)
+            .stream()
+            .map(e -> new TransactionOut(e, MY_DOMAIN))
+            .collect(Collectors.toList());
+
+        queryResultOut.setResults(results);
+
+        return queryResultOut;
+
+//        return this.transactionService
+//                .getTransactionByQuery(dto)
+//                .stream()
+//                .map(e -> new TransactionOut(e, MY_DOMAIN))
+//                .collect(Collectors.toList());
     }
 
 }

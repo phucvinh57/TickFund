@@ -8,7 +8,7 @@ import Attachment from '../attachment/attachment';
 import { TickTableV2 } from '../ticktable/tableV2';
 import { useSelector } from 'react-redux';
 import { EMPTY_AVATAR } from '../../resource';
-import { DEFAULT_QUERY } from '../../constants/pageSettings';
+import { DEFAULT_QUERY, PAGE_SIZE } from '../../constants/pageSettings';
 
 function TransactionDetailModal({ data, show, onHide }) {
   return <Modal
@@ -146,14 +146,25 @@ export default function TransactionTable() {
   const [showData, setShowData] = useState(null)
   const users = useSelector((state) => state.users)
   const [transactions, setTransactions] = useState([])
+  const [totalMatched, setTotalMatched] = useState(0)
   const [query, setQuery] = useState(DEFAULT_QUERY)
   const categories = useSelector(state => state.categories)
 
   useEffect(() => {
     transactionService.getTransactions(query).then(response => {
-      setTransactions(response.data)
+      setTransactions(response.data.results)
+      setTotalMatched(response.data.total)
+    })
+    .catch(err => {
+      console.log(err)
     })
   }, [query])
+
+  useEffect(() => {
+    if(Math.ceil(totalMatched / PAGE_SIZE) < query.size.page_number){
+      setQuery({...query, size: {page_number: 1, page_size: PAGE_SIZE}})
+    }
+  }, [totalMatched])
 
   const openTransactionDetail = row => {
     const transaction = transactions.find(t => t.ID === row.id)
@@ -237,9 +248,11 @@ export default function TransactionTable() {
       componentSize="md"
       headers={transactionTableHeaders}
       data={transactionToTableData(transactions, users, categories)}
-      numPages={20}
+      numPages={Math.ceil(totalMatched / PAGE_SIZE)}
       defaultSortField="createdAt"
       onQuery={data => {
+        const filterPageNum = data.slice.pageNumber
+        data.slice.pageNumber = filterPageNum > totalMatched ? totalMatched : filterPageNum
         console.log(data)
         setQuery(queryToApiBody(data, TRANSACTION_FIELD_MAP))
       }}

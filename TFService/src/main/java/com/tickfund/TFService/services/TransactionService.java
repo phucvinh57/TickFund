@@ -55,6 +55,16 @@ public class TransactionService {
     }
 
     @Transactional
+    public Long countTransactionByQuery(TransactionQueryDTO queryDTO){
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+        Root<TransactionEntity> transactionRoot = countQuery.from(TransactionEntity.class);
+
+        return complexQueryService.countEntityByQuery(transactionRoot, countQuery, queryDTO, TransactionEntity.class);
+    }
+
+    @Transactional
     public List<TransactionEntity> getTransactionByQuery(TransactionQueryDTO queryDTO) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();

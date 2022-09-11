@@ -2,7 +2,9 @@ package com.tickfund.TFService.services;
 
 import com.tickfund.TFService.dtos.in.planning.PlanningDto;
 import com.tickfund.TFService.dtos.in.planning.PlanningQueryDTO;
+import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
 import com.tickfund.TFService.entities.tickfund.PlanningEntity;
+import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 import com.tickfund.TFService.entities.tickfund.UserEntity;
 import com.tickfund.TFService.repositories.tickfund.CategoryRepository;
 import com.tickfund.TFService.repositories.tickfund.PlanningRepository;
@@ -16,6 +18,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +69,16 @@ public class PlanningService {
 
         return planningEntity;
     }
+    @Transactional
+    public Long countPlanningByQuery(PlanningQueryDTO queryDTO){
 
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+        Root<PlanningEntity> planningRoot = countQuery.from(PlanningEntity.class);
+
+        return complexQueryService.countEntityByQuery(planningRoot, countQuery, queryDTO, TransactionEntity.class);
+    }
+    @Transactional
     public List<PlanningEntity> getPlanningByQuery(PlanningQueryDTO queryDTO){
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<PlanningEntity> criteriaQuery = criteriaBuilder.createQuery(PlanningEntity.class);
