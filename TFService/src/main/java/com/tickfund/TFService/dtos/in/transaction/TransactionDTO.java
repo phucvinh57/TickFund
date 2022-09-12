@@ -24,28 +24,28 @@ public class TransactionDTO {
     public LocalDate history;
 
     @NotNull
-    @JsonAlias({"category_name"})
+    @JsonAlias({ "category_name" })
     @CategoryNameConstraint
     @JsonProperty
     public String categoryName;
 
-    @JsonAlias({"user_id"})
+    @JsonAlias({ "user_id" })
     @UserIDConstraint
     @NotNull
     @JsonProperty
     public String userId;
 
-//    @JsonAlias({"creator_id"})
-//    @UserIDConstraint
-//    @NotNull
-//    @JsonProperty
-//    public String creatorId;
+    // @JsonAlias({"creator_id"})
+    // @UserIDConstraint
+    // @NotNull
+    // @JsonProperty
+    // public String creatorId;
 
     @Column
     @JsonProperty
     public String note;
 
-    @JsonAlias({"created_at"})
+    @JsonAlias({ "created_at" })
     @JsonProperty
     public LocalDateTime createdAt;
 

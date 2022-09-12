@@ -47,7 +47,6 @@ public class TransactionController {
 
     @PostMapping("")
     @ResponseBody
-
     public Map<String, Object> createTransaction(@Valid @RequestBody TransactionDTO body, HttpServletRequest request) {
         UserToken userToken = (UserToken)  request.getAttribute(CookieInterceptor.USER_TOKEN);
         Set<String> attachmentIds = body.attachments;
