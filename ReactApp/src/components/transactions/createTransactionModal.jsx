@@ -2,11 +2,12 @@ import { useEffect, useState } from "react"
 import { Button, Form, Modal } from "react-bootstrap"
 import { AttachmentUploader } from "../attachment/attachmentUploader"
 import { useSelector } from "react-redux"
-import { dateToString, prettyNumber } from "../../utils"
+import { convertUnifiedCodeToEmojiSymbol, dateToString, dateToStringYYYYmmDD, prettyNumber } from "../../utils"
 import DatePicker from "react-datepicker"
 import { transactionService } from "../../services/transaction.service"
 import { fileService } from "../../services/file.service"
 import { toast } from "react-toastify"
+import { INCOME, EXPENSE } from "../../constants/categoryTypes"
 
 const initFormData = {
   type: 'expense',
@@ -18,7 +19,7 @@ const initFormData = {
 }
 export default function AddTransactionModal({ show, onHide, planningData }) {
   const [formData, setFormData] = useState(initFormData)
-  const [isExpenseSelect, setIsExpenseSelect] = useState(true)
+  const [categoryType, setCategoryType] = useState(INCOME)
   const [fileData, setFileData] = useState([])
 
   const categories = useSelector((state) => state.categories)
@@ -27,28 +28,25 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
 
   useEffect(() => {
     if (planningData) {
-      const x = {
+      setFormData({
         type: categories.find(category => category.name === planningData.categoryName).type,
         history: dateToString(new Date()),
         note: '',
         amount: planningData.amount,
         category_name: planningData.categoryName,
         user_id: planningData.userId
-      }
-      console.log(x)
-
-      setFormData(x)
+      })
     }
-  }, [categories, planningData,])
+  }, [categories, planningData])
 
   useEffect(() => {
     var defaultCategory = null
-    const temp = categories.filter(c => c.type == (isExpenseSelect ? 'expense' : 'income'))
+    const temp = categories.filter(c => c.type === categoryType)
     if (temp.length != 0) {
       defaultCategory = temp[0]
       setFormData({ ...formData, category_name: defaultCategory.name })
     }
-  }, [categories])
+  }, [categories, categoryType])
 
   useEffect(() => {
     setFormData({ ...formData, user_id: personal.ID })
@@ -65,7 +63,7 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
     const fileForm = new FormData()
     try {
       if (fileData.length == 0) {
-        createBody = { ...createBody, attachments: [] }
+        createBody = { ...createBody, attachments: [], planningId: planningData ? planningData.ID : null }
       }
       else {
         fileData.forEach(file => fileForm.append('file', file, file.name))
@@ -129,42 +127,36 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
             <Form.Label className="fw-500">Loại</Form.Label>
             <Form.Select
               onChange={e => {
-                setIsExpenseSelect(e.target.value == 'true')
+                setCategoryType(e.target.value)
               }}
-              value={isExpenseSelect}
+              value={categoryType}
               disabled={!!planningData}
             >
-              <option value={false}>Thu</option>
-              <option value={true}>Chi</option>
+              <option value={INCOME}>Thu</option>
+              <option value={EXPENSE}>Chi</option>
             </Form.Select>
           </Form.Group>
 
           <Form.Group className="col-6">
             <Form.Label className="fw-500">Danh mục</Form.Label>
             <Form.Select
-              value={formData.category_name ? formData.category_name : null}
+              value={formData.category_name}
               onChange={e => setFormData({ ...formData, category_name: e.target.value })}
               disabled={!!planningData}
             >
               {categories
-                .filter(c => c.type == (isExpenseSelect ? 'expense' : 'income'))
-                .map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
+                .filter(c => c.type === categoryType)
+                .map(c => <option key={c.name} value={c.name}>{c.name + " " + convertUnifiedCodeToEmojiSymbol(c.icon)}</option>)}
             </Form.Select>
           </Form.Group>
         </div>
         <Form.Group className="mb-2">
           <Form.Label className="fw-500">Ngày diễn ra giao dịch</Form.Label>
-          {/* <Form.Control
-          placeholder={"dd/mm/yyyy"}
-          format={"dd/mm/yyyy"}
-            // value={formData.history}
-            onChange={e => setFormData({...formData, history: (e.target.value)})}
-            type="date"/> */}
           <DatePicker
             className="form-control"
             dateFormat="dd/MM/yyyy"
             selected={new Date(formData.history)}
-            onChange={newDate => setFormData({ ...formData, history: dateToString(newDate) })} />
+            onChange={newDate => setFormData({ ...formData, history: dateToStringYYYYmmDD(newDate) })} />
         </Form.Group>
         <Form.Group className="mb-2">
           <Form.Label className="fw-500">Ghi chú</Form.Label>
@@ -177,7 +169,7 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
         </Form.Group>
         <AttachmentUploader onFileChange={onFileChange} />
 
-        <Button type="submit" className="float-end">Tạo giao dich</Button>
+        <Button type="submit" className="float-end">Tạo giao dịch</Button>
       </Form>
     </Modal.Body>
   </Modal>

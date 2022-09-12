@@ -175,7 +175,8 @@ export default function TransactionTable() {
       history: row.history,
       id: row.id,
       notes: transaction.note ? transaction.note : '',
-      attachments: transaction.attachments
+      attachments: transaction.attachments,
+      createdAt: transaction.created_at
     }
     setShowData(allTransactionData)
     setShow(true)

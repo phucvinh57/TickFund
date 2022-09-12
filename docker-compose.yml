@@ -16,16 +16,25 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - 6000:6000
+      - 3002:3002
     volumes:
       - media:/usr/src/app/auth_service/media
       
-  tfservice:
-    image: tfservice
+  tickfund_service:
+    image: tickfund_service
     container_name: tickfund_service
     restart: always
     ports:
       - 8081:8081
+
+  tickfund_application:
+    build:
+      context: ./ReactApp
+      dockerfile: Dockerfile
+    container_name: tickfund_application
+    restart: always
+    ports:
+      - 3000:3000
 
 volumes:
   media:
