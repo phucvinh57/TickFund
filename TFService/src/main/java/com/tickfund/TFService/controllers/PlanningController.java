@@ -55,6 +55,7 @@ public class PlanningController {
 		response.put("id", planningId);
 		return response;
 	}
+	
 	@DeleteMapping("/{id}")
 	@ResponseBody
 	public Map<String, Object> deletePlanningById(@PathVariable(name = "id") String ID) {

@@ -2,7 +2,6 @@ package com.tickfund.TFService.services;
 
 import com.tickfund.TFService.dtos.in.query.AbstractQueryDTO;
 import com.tickfund.TFService.dtos.in.query.AbstractQueryFilter;
-import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 import com.tickfund.TFService.utils.AnnotationHelper;
 import org.springframework.stereotype.Service;
 

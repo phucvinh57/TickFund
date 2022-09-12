@@ -6,6 +6,9 @@ const planningService = {
     getPlanningByQuery: (query) => {
         return tfServiceHTTPCommon.post(`${path}/query`, query)
     },
+    getById: async (planningId) => {
+        return tfServiceHTTPCommon.get(path + "/" + planningId)
+    },
     addNew: async data => {
         return tfServiceHTTPCommon.post(path, data)
     },

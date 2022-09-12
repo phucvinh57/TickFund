@@ -2,7 +2,6 @@ package com.tickfund.TFService.services;
 
 import com.tickfund.TFService.dtos.in.planning.PlanningDto;
 import com.tickfund.TFService.dtos.in.planning.PlanningQueryDTO;
-import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
 import com.tickfund.TFService.entities.tickfund.PlanningEntity;
 import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 import com.tickfund.TFService.entities.tickfund.UserEntity;

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tickfund.TFService.commons.vos.RepetitionVo;
 import com.tickfund.TFService.dtos.validator.transaction.CategoryNameConstraint;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;

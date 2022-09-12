@@ -15,7 +15,7 @@ public class QueryResultOut<T> {
     }
 
     @JsonProperty
-    List<T> results = new ArrayList();
+    List<T> results = new ArrayList<>();
 
     @JsonProperty
     Long total = 0L;
