@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react"
 import { Button, Form, Modal } from "react-bootstrap"
 import { AttachmentUploader } from "../attachment/attachmentUploader"
-import { useSelector } from "react-redux"
-import { convertUnifiedCodeToEmojiSymbol, dateToString, dateToStringYYYYmmDD, prettyNumber } from "../../utils"
+import { useDispatch, useSelector } from "react-redux"
+import { convertUnifiedCodeToEmojiSymbol, dateToStringYYYYmmDD, prettyNumber } from "../../utils"
 import DatePicker from "react-datepicker"
 import { transactionService } from "../../services/transaction.service"
 import { fileService } from "../../services/file.service"
 import { toast } from "react-toastify"
 import { INCOME, EXPENSE } from "../../constants/categoryTypes"
+import { triggerReloadTransaction } from "../../redux/slice/transactionTrigger"
 
 const initFormData = {
   type: 'expense',
-  history: dateToString(new Date()),
+  history: dateToStringYYYYmmDD(new Date()),
   note: '',
-  amount: 1000,
+  amount: 0,
   category_name: "",
   user_id: ""
 }
+
 export default function AddTransactionModal({ show, onHide, planningData }) {
   const [formData, setFormData] = useState(initFormData)
   const [categoryType, setCategoryType] = useState(INCOME)
@@ -26,11 +28,13 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
   const users = useSelector((state) => state.users)
   const personal = useSelector((state) => state.personal)
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     if (planningData) {
       setFormData({
         type: categories.find(category => category.name === planningData.categoryName).type,
-        history: dateToString(new Date()),
+        history: dateToStringYYYYmmDD(new Date()),
         note: '',
         amount: planningData.amount,
         category_name: planningData.categoryName,
@@ -62,21 +66,23 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
 
     const fileForm = new FormData()
     try {
-      if (fileData.length == 0) {
+      if (fileData.length === 0) {
         createBody = { ...createBody, attachments: [], planningId: planningData ? planningData.ID : null }
       }
       else {
         fileData.forEach(file => fileForm.append('file', file, file.name))
         const fileUploadResponse = await fileService.uploadToTfService(fileForm)
+        console.log(fileUploadResponse.data.id)
         createBody = { ...createBody, attachments: fileUploadResponse.data.id }
       }
       await transactionService.addTransactions(createBody)
+      dispatch(triggerReloadTransaction())
       toast.success("Tạo giao dich thành công")
       setFormData(initFormData)
       onHide()
     }
     catch (err) {
-      alert("Tao giao dịch thất bại")
+      toast.error("Tạo giao dịch thất bại")
     }
   }
 
@@ -107,16 +113,20 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
                   setFormData({ ...formData, amount: newValue })
                 }
               }}
-              type="text" />
+              type="text"
+              required
+            />
           </Form.Group>
 
           <Form.Group className="col-6">
             <Form.Label className="fw-500">Người giao dịch</Form.Label>
             <Form.Select
+              required
               value={formData.user_id}
               onChange={e => setFormData({ ...formData, user_id: e.target.value })}
               disabled={!!planningData}
             >
+              <option value={""} disabled> -- Chọn người giao dịch --</option>
               {users.map(u =>
                 <option key={u.ID} value={u.ID}>{u.name}</option>)}
             </Form.Select>
@@ -131,7 +141,9 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
               }}
               value={categoryType}
               disabled={!!planningData}
+              required
             >
+              <option value={""} disabled> -- Loại danh mục --</option>
               <option value={INCOME}>Thu</option>
               <option value={EXPENSE}>Chi</option>
             </Form.Select>
@@ -143,7 +155,9 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
               value={formData.category_name}
               onChange={e => setFormData({ ...formData, category_name: e.target.value })}
               disabled={!!planningData}
+              required
             >
+              <option value={""} disabled> -- Tên danh mục --</option>
               {categories
                 .filter(c => c.type === categoryType)
                 .map(c => <option key={c.name} value={c.name}>{c.name + " " + convertUnifiedCodeToEmojiSymbol(c.icon)}</option>)}

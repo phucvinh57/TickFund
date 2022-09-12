@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { INCOME, EXPENSE } from "../../constants/categoryTypes"
 import planningService from "../../services/planning.service";
 import { convertUnifiedCodeToEmojiSymbol } from "../../utils";
 import { toast } from "react-toastify"
+import { triggerReloadPlanning } from "../../redux/slice/planningTrigger";
 
 const cycles = [{
   value: "day",
@@ -41,6 +42,8 @@ export function AddPlanningModal({ show, onHide }) {
   const [categoryType, setCategoryType] = useState('')
   const [formData, setFormData] = useState(initFormData)
 
+  const dispatch = useDispatch()
+
   return <Modal show={show} onHide={onHide} size="lg">
     <Modal.Header className="bg-primary text-white">
       <h5 className="m-auto">
@@ -57,6 +60,7 @@ export function AddPlanningModal({ show, onHide }) {
           toast.success("Tạo dự trù thành công")
           setFormData(initFormData)
           onHide()
+          dispatch(triggerReloadPlanning())
         }).catch(err => {
           console.log(err.response.data)
           toast.error("Tạo dự trù thất bại")

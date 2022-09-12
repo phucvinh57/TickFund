@@ -6,6 +6,8 @@ import categoryReducer from "./slice/categories";
 import permissionReducer from "./slice/permission"
 import roleReducer from "./slice/role";
 import usersReducer from "./slice/users"
+import planningTriggerReducer from "./slice/planningTrigger";
+import transactionTriggerReducer from "./slice/transactionTrigger";
 
 export default configureStore({
     reducer: {
@@ -15,6 +17,8 @@ export default configureStore({
         personal: personalReducer,
         permissions: permissionReducer,
         roles: roleReducer,
-        users: usersReducer
+        users: usersReducer,
+        planningTrigger: planningTriggerReducer,
+        transactionTrigger: transactionTriggerReducer 
     }
 })

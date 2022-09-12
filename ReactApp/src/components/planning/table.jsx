@@ -19,6 +19,7 @@ const PLANNING_FIELD_MAP = {
   'startDate': 'start_date',
   'nextDue': 'next_due'
 }
+
 function planingToTableData(plannings, users, categories) {
   return plannings.map(planning => {
     const storeCategory = categories.find(c => c.name === planning.category_name)
@@ -77,6 +78,7 @@ function planingToTableData(plannings, users, categories) {
     }
   })
 }
+
 export default function PlanningTable() {
   const users = useSelector((state) => state.users)
   const categories = useSelector((state) => state.categories)
@@ -85,12 +87,13 @@ export default function PlanningTable() {
   const [showEditPlanningModal, setShowEditPlanningModal] = useState(false)
   const [showResolvePlanningModal, setShowResolvePlanningModal] = useState(false)
   const [targetPlanning, setTargetPlanning] = useState(null)
+  const planningTrigger = useSelector(state => state.planningTrigger)
 
   useEffect(() => {
     planningService.getPlanningByQuery(query).then(response => {
       setPlannings(response.data.results)
     })
-  }, [query])
+  }, [query, planningTrigger])
 
   const handleOnRowClick = row => {
     planningService.getById(row.id.val).then(response => {
