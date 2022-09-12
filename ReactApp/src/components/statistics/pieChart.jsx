@@ -3,33 +3,23 @@ import { Pie } from 'react-chartjs-2';
 import { reduceRecordByCategory } from '../../utils/chartutils';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-const inBgColors = [
-    'rgba(255, 99, 132, 0.8)',
-    'rgba(54, 162, 235, 0.8)',
-    'rgba(255, 206, 86, 0.8)',
-    'rgba(75, 192, 192, 0.8)',
-]
+const generateRandomColor = (start, num) => {
+    const R_INTERVAL = 30
+    const G_INTERVAL = 110
+    const B_INTERVAL = 200
+    const temp = [...Array(num).keys()].map(idx => {
+        const r = (start + (idx + 1) * R_INTERVAL) % 255
+        const g = (start + (idx + 1) * G_INTERVAL) % 255
+        const b = (start + (idx + 1) * B_INTERVAL) % 255
+        return `rgba(${r}, ${g}, ${b}, 0.8)`
+    })
+    console.log(temp)
+    return temp
+} 
+const inBgColors = generateRandomColor(10, 20)
 
-const inBorderColors = [
-    'rgba(255, 99, 132, 1)',
-    'rgba(54, 162, 235, 1)',
-    'rgba(255, 206, 86, 1)',
-    'rgba(75, 192, 192, 1)',
-]
 
-const exBgColors = [
-    'rgba(167, 55, 33, 0.8)',
-    'rgba(54, 162, 235, 0.8)',
-    'rgba(255, 206, 86, 0.8)',
-    'rgba(75, 192, 192, 0.8)',
-]
-
-const exBorderColors = [
-    'rgba(167, 55, 33, 1)',
-    'rgba(54, 162, 235, 1)',
-    'rgba(255, 206, 86, 1)',
-    'rgba(75, 192, 192, 1)',
-]
+const exBgColors = generateRandomColor(90, 20)
 
 const EMPTY_PIE_DATE = {
     labels: ['Rỗng (không có dự trù)'],
@@ -57,7 +47,7 @@ function generatePieData(records, isIncome){
                 label: '# of Votes',
                 data: reducedRecords.map(t => t.sum),
                 backgroundColor: isIncome ? inBgColors : exBgColors,
-                borderColor: isIncome ? inBorderColors : exBorderColors,
+                borderColor: isIncome ? inBgColors : exBgColors,
                 borderWidth: 1,
             },
         ],
