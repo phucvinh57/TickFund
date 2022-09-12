@@ -39,7 +39,8 @@ function buildStaticFileServe(parentDirName) {
                 res.send({
                     status: true,
                     message: 'File is uploaded',
-                    url: ['http:/', HOST, ROOT_PATH, appName,  [prefixId, extension].join('.')].join('/')
+                    // ??
+                    url: [`${req.protocol}:/`, HOST, ROOT_PATH, appName,  [prefixId, extension].join('.')].join('/')
                 });
             }
         } catch (err) {

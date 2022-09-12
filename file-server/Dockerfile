@@ -5,6 +5,7 @@ COPY . .
 RUN npm ci --omit=dev
 RUN npm i --location=global @vercel/ncc
 RUN ncc build server.js -o dist
+COPY .env dist
 
 # Production
 FROM node:16-alpine

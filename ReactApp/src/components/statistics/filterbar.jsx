@@ -18,13 +18,7 @@ export default function FilterBar({ onFilter }) {
             end: end
         })
     }, [start, end, interval])
-    return <div className="d-flex justify-content-between">
-        <FormGroup className='col-auto'>
-            <Form.Select defaultValue={1}>
-                <option value={0}>Không tính dự trù</option>
-                <option value={1}>Có tính dự trù</option>
-            </Form.Select>
-        </FormGroup>
+    return <div className="d-flex justify-content-end">
 
         <div className="d-inline-flex">
             <ButtonGroup className="me-3">

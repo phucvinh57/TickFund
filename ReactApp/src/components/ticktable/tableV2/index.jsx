@@ -7,7 +7,7 @@ import { Funnel, TerminalPlus, Trash, XCircle } from "react-bootstrap-icons"
 import ReactPaginate from "react-paginate"
 import { BETWEEN, getOperators } from "../../../constants/compareOperator"
 import { PAGE_SIZE } from "../../../constants/pageSettings"
-import { dateToString, dateToStringYYYYmmDD, shortKey } from "../../../utils"
+import { dateToStringYYYYmmDD, shortKey } from "../../../utils"
 import RawTable from "./rawTable"
 
 export function TickTableV2({
@@ -23,7 +23,7 @@ export function TickTableV2({
 }) {
   const sortableFields = useMemo(() => {
     const fields = headers.filter(header => header.sort === true)
-    if(fields.length === 0) throw new Error("Must have at least a sort field")
+    if (fields.length === 0) throw new Error("Must have at least a sort field")
     return fields
   }, [headers])
 
@@ -80,7 +80,14 @@ export function TickTableV2({
         if (header.association.type === "select") {
           defaultRhsValue = header.association.options[0].value
         } else if (operator === BETWEEN) {
-          defaultRhsValue = { upperbound: '', lowerbound: '' }
+          if (header.association.type === "date") {
+            const currDate = new Date()
+            defaultRhsValue = {
+              upperbound: dateToStringYYYYmmDD(currDate),
+              lowerbound: dateToStringYYYYmmDD(currDate)
+            }
+          }
+          else defaultRhsValue = { upperbound: '', lowerbound: '' }
         }
 
         let filterRule = {
@@ -96,7 +103,7 @@ export function TickTableV2({
       }
       return rules
     }, [])
-    if(list.length === 0) throw new Error("Must at least a filterable field !")
+    if (list.length === 0) throw new Error("Must at least a filterable field !")
     return list
   }, [headers])
 
@@ -353,9 +360,6 @@ export function TickTableV2({
                       onCallback={(start, end, label) => {
                         const lowerbound = new Date(start.year(), start.month(), start.date())
                         const upperbound = new Date(end.year(), end.month(), end.date())
-                        console.log(upperbound)
-                        console.log(lowerbound)
-                        console.log(dateToStringYYYYmmDD(upperbound))
                         setFilterItemRhs(filter.association.key, {
                           ...filter.rhs,
                           upperbound: dateToStringYYYYmmDD(upperbound),
@@ -406,13 +410,16 @@ export function TickTableV2({
     </div>}
 
     {/* Pagination */}
-    { <div className='d-flex justify-content-center mt-2'>
+    {<div className='d-flex justify-content-center mt-2'>
       <ReactPaginate
         nextLabel='>'
         previousLabel='<'
-        pageCount={numPages}
+        pageCount={numPages === 0 ? 1 : numPages}
         renderOnZeroPageCount={null}
-        onPageChange={e => setPageSlice(e.selected + 1)}
+        onPageChange={e => {
+          console.log(e.selected)
+          setPageSlice(e.selected + 1)
+        }}
         pageRangeDisplayed={2}
         marginPagesDisplayed={2}
 

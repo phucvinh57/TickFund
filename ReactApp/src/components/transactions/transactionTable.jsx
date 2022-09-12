@@ -1,84 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { useEffect } from 'react';
-import { Col, Modal, ModalBody, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { transactionService } from '../../services/transaction.service';
-import { dateTimeToString, prettyNumber, queryToApiBody } from '../../utils';
+import { dateToString, dateTimeToString, prettyNumber, queryToApiBody } from '../../utils';
 import { convertUnifiedCodeToEmojiSymbol } from '../../utils/convertUnifiedCodeToEmojiSymbol';
 import { TickTableV2 } from '../ticktable/tableV2';
 import { useSelector } from 'react-redux';
 import { EMPTY_AVATAR } from '../../resource';
 import { DEFAULT_TRANSACTION_QUERY, PAGE_SIZE } from '../../constants/pageSettings';
-import Attachment from '../attachment/attachment';
-import { dateToString } from '../../utils';
-
-function TransactionDetailModal({ data, show, onHide }) {
-  return <Modal
-    show={show}
-    onHide={onHide}
-    size="lg"
-    aria-labelledby="contained-modal-title-vcenter"
-    centered>
-    <Modal.Header closeButton>
-      <Modal.Title id="contained-modal-title-vcenter">
-        Chi tiết giao dịch
-      </Modal.Title>
-    </Modal.Header>
-    <ModalBody>
-      <Row className='mb-2'>
-        <Col className="ms-2">
-          <strong>Số tiền</strong>
-        </Col>
-        <Col className="me-2" sm={8} >
-          {data.amount}
-        </Col>
-      </Row>
-      <Row className='mb-2'>
-        <Col className="ms-2">
-          <strong>Danh mục</strong>
-        </Col>
-        <Col className="me-2" sm={8} >
-          {data.category}
-        </Col>
-      </Row>
-      <Row className='mb-2'>
-        <Col className="ms-2">
-          <strong>Người giao dịch</strong>
-        </Col>
-        <Col className="me-2" sm={8} >{data.user}</Col>
-      </Row>
-      <Row className='mb-2'>
-        <Col className="ms-2">
-          <strong>Ngày giao dịch</strong>
-        </Col>
-        <Col className="me-2" sm={8} >{dateToString(new Date(data.history))}</Col>
-      </Row>
-      <Row className='mb-2'>
-        <Col className="ms-2">
-          <strong>Mã giao dịch</strong>
-        </Col>
-        <Col className="me-2" sm={8} >{data.id}</Col>
-      </Row>
-      <Row className='mb-2'>
-        <Col className="ms-2">
-          <strong>Ghi chú</strong>
-        </Col>
-        <Col className="me-2" sm={8} >{data.note}</Col>
-      </Row>
-      <Row className='mb-2'>
-        <Col className="ms-2">
-          <strong>Đính kèm</strong>
-        </Col>
-        <Col className="me-2" sm={8} >
-          {data.attachments.map(attachment => <Attachment
-            key={attachment.name}
-            path={attachment.path}
-            name={attachment.name}
-          />)}
-        </Col>
-      </Row>
-    </ModalBody>
-  </Modal>
-}
+import { TransactionDetailModal } from './transactionDetailModal';
 
 function transactionToTableData(transactions, users, categories) {
   return transactions.map(transaction => {
@@ -151,6 +81,8 @@ export default function TransactionTable() {
   const [query, setQuery] = useState(DEFAULT_TRANSACTION_QUERY)
   const categories = useSelector(state => state.categories)
 
+  const transactionTrigger = useSelector(state => state.transactionTrigger)
+
   useEffect(() => {
     transactionService.getTransactions(query).then(response => {
       setTransactions(response.data.results)
@@ -159,7 +91,7 @@ export default function TransactionTable() {
     .catch(err => {
       console.log(err)
     })
-  }, [query])
+  }, [query, transactionTrigger])
 
   useEffect(() => {
     if(Math.ceil(totalMatched / PAGE_SIZE) < query.size.page_number){
@@ -173,11 +105,12 @@ export default function TransactionTable() {
       amount: row.amount.component,
       category: row.category.component,
       user: row.user.component,
-      history: row.history,
+      history: transaction.history,
       id: row.id,
       note: transaction.note ? transaction.note : '',
       attachments: transaction.attachments,
-      createdAt: transaction.createdAt
+      createdAt: transaction.created_at,
+      creatorId: transaction.creator_id
     }
     setShowData(allTransactionData)
     setShow(true)
@@ -254,7 +187,9 @@ export default function TransactionTable() {
       defaultSortField="createdAt"
       onQuery={data => {
         const filterPageNum = data.slice.pageNumber
-        data.slice.pageNumber = filterPageNum > totalMatched ? totalMatched : filterPageNum
+        if(totalMatched !== 0){
+          data.slice.pageNumber = filterPageNum > Math.ceil(totalMatched / PAGE_SIZE) ? Math.ceil(totalMatched / PAGE_SIZE) : filterPageNum
+        }
         console.log(data)
         setQuery(queryToApiBody(data, TRANSACTION_FIELD_MAP))
       }}

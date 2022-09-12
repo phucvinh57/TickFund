@@ -1,54 +1,56 @@
 import { useEffect, useState } from "react"
 import { Button, Form, Modal } from "react-bootstrap"
 import { AttachmentUploader } from "../attachment/attachmentUploader"
-import { useSelector } from "react-redux"
-import { dateToString, prettyNumber, dateToStringYYYYmmDD } from "../../utils"
+import { useDispatch, useSelector } from "react-redux"
+import { convertUnifiedCodeToEmojiSymbol, dateToStringYYYYmmDD, prettyNumber } from "../../utils"
 import DatePicker from "react-datepicker"
 import { transactionService } from "../../services/transaction.service"
 import { fileService } from "../../services/file.service"
 import { toast } from "react-toastify"
+import { INCOME, EXPENSE } from "../../constants/categoryTypes"
+import { triggerReloadTransaction } from "../../redux/slice/transactionTrigger"
 
 const initFormData = {
   type: 'expense',
   history: dateToStringYYYYmmDD(new Date()),
   note: '',
-  amount: 1000,
+  amount: 0,
   category_name: "",
   user_id: ""
 }
+
 export default function AddTransactionModal({ show, onHide, planningData }) {
   const [formData, setFormData] = useState(initFormData)
-  const [isExpenseSelect, setIsExpenseSelect] = useState(true)
+  const [categoryType, setCategoryType] = useState(INCOME)
   const [fileData, setFileData] = useState([])
 
   const categories = useSelector((state) => state.categories)
   const users = useSelector((state) => state.users)
   const personal = useSelector((state) => state.personal)
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     if (planningData) {
-      const x = {
+      setFormData({
         type: categories.find(category => category.name === planningData.categoryName).type,
-        history: dateToString(new Date()),
+        history: dateToStringYYYYmmDD(new Date()),
         note: '',
         amount: planningData.amount,
         category_name: planningData.categoryName,
         user_id: planningData.userId
-      }
-      console.log(x)
-
-      setFormData(x)
+      })
     }
-  }, [categories, planningData,])
+  }, [categories, planningData])
 
   useEffect(() => {
     var defaultCategory = null
-    const temp = categories.filter(c => c.type == (isExpenseSelect ? 'expense' : 'income'))
+    const temp = categories.filter(c => c.type === categoryType)
     if (temp.length != 0) {
       defaultCategory = temp[0]
       setFormData({ ...formData, category_name: defaultCategory.name })
     }
-  }, [categories])
+  }, [categories, categoryType])
 
   useEffect(() => {
     setFormData({ ...formData, user_id: personal.ID })
@@ -64,21 +66,23 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
 
     const fileForm = new FormData()
     try {
-      if (fileData.length == 0) {
-        createBody = { ...createBody, attachments: [] }
+      if (fileData.length === 0) {
+        createBody = { ...createBody, attachments: [], planningId: planningData ? planningData.ID : null }
       }
       else {
         fileData.forEach(file => fileForm.append('file', file, file.name))
         const fileUploadResponse = await fileService.uploadToTfService(fileForm)
+        console.log(fileUploadResponse.data.id)
         createBody = { ...createBody, attachments: fileUploadResponse.data.id }
       }
       await transactionService.addTransactions(createBody)
+      dispatch(triggerReloadTransaction())
       toast.success("Tạo giao dich thành công")
       setFormData(initFormData)
       onHide()
     }
     catch (err) {
-      alert("Tao giao dịch thất bại")
+      toast.error("Tạo giao dịch thất bại")
     }
   }
 
@@ -109,16 +113,20 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
                   setFormData({ ...formData, amount: newValue })
                 }
               }}
-              type="text" />
+              type="text"
+              required
+            />
           </Form.Group>
 
           <Form.Group className="col-6">
             <Form.Label className="fw-500">Người giao dịch</Form.Label>
             <Form.Select
+              required
               value={formData.user_id}
               onChange={e => setFormData({ ...formData, user_id: e.target.value })}
               disabled={!!planningData}
             >
+              <option value={""} disabled> -- Chọn người giao dịch --</option>
               {users.map(u =>
                 <option key={u.ID} value={u.ID}>{u.name}</option>)}
             </Form.Select>
@@ -129,37 +137,35 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
             <Form.Label className="fw-500">Loại</Form.Label>
             <Form.Select
               onChange={e => {
-                setIsExpenseSelect(e.target.value == 'true')
+                setCategoryType(e.target.value)
               }}
-              value={isExpenseSelect}
+              value={categoryType}
               disabled={!!planningData}
+              required
             >
-              <option value={false}>Thu</option>
-              <option value={true}>Chi</option>
+              <option value={""} disabled> -- Loại danh mục --</option>
+              <option value={INCOME}>Thu</option>
+              <option value={EXPENSE}>Chi</option>
             </Form.Select>
           </Form.Group>
 
           <Form.Group className="col-6">
             <Form.Label className="fw-500">Danh mục</Form.Label>
             <Form.Select
-              value={formData.category_name ? formData.category_name : ''}
+              value={formData.category_name}
               onChange={e => setFormData({ ...formData, category_name: e.target.value })}
               disabled={!!planningData}
+              required
             >
+              <option value={""} disabled> -- Tên danh mục --</option>
               {categories
-                .filter(c => c.type == (isExpenseSelect ? 'expense' : 'income'))
-                .map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
+                .filter(c => c.type === categoryType)
+                .map(c => <option key={c.name} value={c.name}>{c.name + " " + convertUnifiedCodeToEmojiSymbol(c.icon)}</option>)}
             </Form.Select>
           </Form.Group>
         </div>
         <Form.Group className="mb-2">
           <Form.Label className="fw-500">Ngày diễn ra giao dịch</Form.Label>
-          {/* <Form.Control
-          placeholder={"dd/mm/yyyy"}
-          format={"dd/mm/yyyy"}
-            // value={formData.history}
-            onChange={e => setFormData({...formData, history: (e.target.value)})}
-            type="date"/> */}
           <DatePicker
             className="form-control"
             dateFormat="dd/MM/yyyy"
@@ -177,7 +183,7 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
         </Form.Group>
         <AttachmentUploader onFileChange={onFileChange} />
 
-        <Button type="submit" className="float-end">Tạo giao dich</Button>
+        <Button type="submit" className="float-end">Tạo giao dịch</Button>
       </Form>
     </Modal.Body>
   </Modal>
