@@ -52,7 +52,7 @@ public class TransactionController {
         Set<String> attachmentIds = body.attachments;
 
         TransactionEntity transactionEntity = this.dtoToEntity(body, userToken.getUserId());
-        String createdTransactionId = this.transactionService.createTransaction(transactionEntity, attachmentIds);
+        String createdTransactionId = this.transactionService.createTransaction(transactionEntity, attachmentIds, body.planningId);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Create transaction successfully");

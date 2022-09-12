@@ -1,5 +1,6 @@
 import Attachment from '../attachment/attachment';
 import { Modal, Row, Col } from "react-bootstrap"
+import { dateToString } from '../../utils';
 
 export function TransactionDetailModal({ data, show, onHide }) {
   return <Modal
@@ -19,7 +20,7 @@ export function TransactionDetailModal({ data, show, onHide }) {
           <strong>Số tiền</strong>
         </Col>
         <Col className="me-2" sm={8} >
-          {data.money}
+          {data.amount}
         </Col>
       </Row>
       <Row className='mb-2'>
@@ -40,7 +41,7 @@ export function TransactionDetailModal({ data, show, onHide }) {
         <Col className="ms-2">
           <strong>Thời gian giao dịch</strong>
         </Col>
-        <Col className="me-2" sm={8} >{data.time}</Col>
+        <Col className="me-2" sm={8} >{dateToString(new Date(data.history))}</Col>
       </Row>
       <Row className='mb-2'>
         <Col className="ms-2">
@@ -52,7 +53,19 @@ export function TransactionDetailModal({ data, show, onHide }) {
         <Col className="ms-2">
           <strong>Ghi chú</strong>
         </Col>
-        <Col className="me-2" sm={8} >{data.notes}</Col>
+        <Col className="me-2" sm={8} >{data.note}</Col>
+      </Row>
+      <Row className='mb-2'>
+        <Col className="ms-2">
+          <strong>Ngày tạo</strong>
+        </Col>
+        <Col className="me-2" sm={8} >{dateToString(new Date(data.createdAt))}</Col>
+      </Row>
+      <Row className='mb-2'>
+        <Col className="ms-2">
+          <strong>Id Người tạo</strong>
+        </Col>
+        <Col className="me-2" sm={8} >{data.creatorId}</Col>
       </Row>
       <Row className='mb-2'>
         <Col className="ms-2">

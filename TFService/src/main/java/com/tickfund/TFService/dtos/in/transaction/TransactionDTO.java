@@ -52,4 +52,8 @@ public class TransactionDTO {
     @AttachmentConstraint
     @JsonProperty
     public Set<String> attachments;
+
+    @JsonProperty
+    @JsonAlias({"planning_id"})
+    public String planningId;
 }

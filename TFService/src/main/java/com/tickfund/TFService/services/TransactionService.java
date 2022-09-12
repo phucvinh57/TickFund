@@ -1,9 +1,11 @@
 package com.tickfund.TFService.services;
 
 import com.tickfund.TFService.entities.tickfund.CategoryEntity;
+import com.tickfund.TFService.entities.tickfund.PlanningEntity;
 import com.tickfund.TFService.entities.tickfund.TransactionEntity;
 import com.tickfund.TFService.dtos.in.transaction.TransactionQueryDTO;
 import com.tickfund.TFService.repositories.tickfund.CategoryRepository;
+import com.tickfund.TFService.repositories.tickfund.PlanningRepository;
 import com.tickfund.TFService.repositories.tickfund.TransactionRepository;
 import com.tickfund.TFService.utils.UniqueId;
 
@@ -14,6 +16,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -25,6 +29,9 @@ public class TransactionService {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    PlanningRepository planningRepository;
 
     @Autowired
     AttachmentService attachmentService;
@@ -40,9 +47,8 @@ public class TransactionService {
     }
 
     @Transactional(rollbackOn = { Exception.class, Throwable.class })
-    public String createTransaction(TransactionEntity transactionEntity, Set<String> attachmentsIds) {
+    public String createTransaction(TransactionEntity transactionEntity, Set<String> attachmentsIds, String planningId) {
         transactionEntity.setID(UniqueId.generate(transactionEntity.getUserId()));
-
         CategoryEntity categoryEntity = categoryRepository.findById(transactionEntity.getCategoryName()).get();
         transactionEntity.setCategoryType(categoryEntity.type);
 
@@ -51,6 +57,36 @@ public class TransactionService {
         }
 
         this.transactionRepository.save(transactionEntity);
+
+        if(planningId != null){
+            PlanningEntity resolvePlanning = this.planningRepository.findById(planningId).orElse(null);
+            if(resolvePlanning != null){
+                Integer countdown = resolvePlanning.getCountdown();
+                if (countdown == 0){
+                    throw new RuntimeException("Countdown of planning cannot be zero");
+                }
+                ChronoUnit chronoUnit = switch (resolvePlanning.getCycleUnit()) {
+                    case WEEK -> ChronoUnit.WEEKS;
+                    case MONTH -> ChronoUnit.MONTHS;
+                    case YEAR -> ChronoUnit.YEARS;
+                    default -> ChronoUnit.DAYS;
+                };
+                LocalDate temp = resolvePlanning.getStartDate();
+                while(temp.isBefore(resolvePlanning.getNextDueDate())){
+                    temp = temp.plus(1, chronoUnit);
+                }
+                resolvePlanning.setNextDueDate(temp.plus(1, chronoUnit));
+
+                if(countdown != -1){
+                    resolvePlanning.setCountdown(countdown - 1);
+                }
+                this.planningRepository.save(resolvePlanning);
+
+            }
+            else {
+
+            }
+        }
         return transactionEntity.getID();
     }
 

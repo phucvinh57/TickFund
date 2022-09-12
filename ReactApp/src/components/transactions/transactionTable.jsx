@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { transactionService } from '../../services/transaction.service';
-import { dateTimeToString, prettyNumber, queryToApiBody } from '../../utils';
+import { dateToString, dateTimeToString, prettyNumber, queryToApiBody } from '../../utils';
 import { convertUnifiedCodeToEmojiSymbol } from '../../utils/convertUnifiedCodeToEmojiSymbol';
 import { TickTableV2 } from '../ticktable/tableV2';
 import { useSelector } from 'react-redux';
@@ -39,7 +39,7 @@ function transactionToTableData(transactions, users, categories) {
           </Row>
         </div>
       },
-      history: transaction.history,
+      history: dateToString(new Date(transaction.history)),
       createdAt: dateTimeToString(new Date(transaction.created_at)),
       amount: {
         val: transaction.amount,
@@ -102,14 +102,15 @@ export default function TransactionTable() {
   const openTransactionDetail = row => {
     const transaction = transactions.find(t => t.ID === row.id)
     const allTransactionData = {
-      money: row.amount.component,
+      amount: row.amount.component,
       category: row.category.component,
       user: row.user.component,
-      history: row.history,
+      history: transaction.history,
       id: row.id,
-      notes: transaction.note ? transaction.note : '',
+      note: transaction.note ? transaction.note : '',
       attachments: transaction.attachments,
-      createdAt: transaction.created_at
+      createdAt: transaction.created_at,
+      creatorId: transaction.creator_id
     }
     setShowData(allTransactionData)
     setShow(true)

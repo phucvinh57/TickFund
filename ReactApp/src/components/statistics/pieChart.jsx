@@ -71,8 +71,6 @@ export default function PieChart({transactions, plannings}) {
         <div className="d-flex m-0 p-0 justify-content-around mt-2">
             <CustomPie data={generatePieData(transactions.filter(t => t.category_type == 'income'), true)} title='Thu' />
             <CustomPie data={generatePieData(transactions.filter(t => t.category_type == 'expense'), false)} title='Chi' />
-        </div>
-        <div className="d-flex m-0 p-0 justify-content-around mt-2">
             <CustomPie data={generatePieData(plannings.filter(t => t.category_type == 'income'), true)} title='Dự trù thu' />
             <CustomPie data={generatePieData(plannings.filter(t => t.category_type == 'expense'), false)} title='Dự trù chi' />
         </div>

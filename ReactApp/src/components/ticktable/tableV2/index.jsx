@@ -360,7 +360,6 @@ export function TickTableV2({
                       onCallback={(start, end, label) => {
                         const lowerbound = new Date(start.year(), start.month(), start.date())
                         const upperbound = new Date(end.year(), end.month(), end.date())
-
                         setFilterItemRhs(filter.association.key, {
                           ...filter.rhs,
                           upperbound: dateToStringYYYYmmDD(upperbound),

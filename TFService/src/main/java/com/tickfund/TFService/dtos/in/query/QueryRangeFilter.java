@@ -11,6 +11,7 @@ import javax.validation.constraints.AssertTrue;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class QueryRangeFilter extends AbstractQueryFilter {
 
@@ -44,6 +45,7 @@ public class QueryRangeFilter extends AbstractQueryFilter {
                 if (lowerBound != null && upperBound != null) {
                     LocalDateTime fromDateTime = LocalDateTime.parse(String.valueOf(lowerBound), dateFormat);
                     LocalDateTime toDateTime = LocalDateTime.parse(String.valueOf(upperBound), dateFormat);
+                    toDateTime = toDateTime.plus(1, ChronoUnit.DAYS);
                     if (fieldType.equals(LocalDateTime.class)) {
                         return builder.between(transactionRoot.get(entityMapField), fromDateTime, toDateTime);
                     } else {
@@ -60,6 +62,7 @@ public class QueryRangeFilter extends AbstractQueryFilter {
                     }
                 } else {
                     LocalDateTime upperDateTime = LocalDateTime.parse(String.valueOf(upperBound), dateFormat);
+                    upperDateTime = upperDateTime.plus(1, ChronoUnit.DAYS);
                     if (fieldType.equals(LocalDateTime.class)) {
                         return builder.greaterThanOrEqualTo(transactionRoot.get(entityMapField), upperDateTime);
                     } else {
