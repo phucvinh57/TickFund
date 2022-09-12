@@ -40,7 +40,7 @@ export function TransactionDetailModal({ data, show, onHide }) {
         <Col className="ms-2">
           <strong>Thời gian giao dịch</strong>
         </Col>
-        <Col className="me-2" sm={8} >{data.time}</Col>
+        <Col className="me-2" sm={8} >{data.createdAt}</Col>
       </Row>
       <Row className='mb-2'>
         <Col className="ms-2">

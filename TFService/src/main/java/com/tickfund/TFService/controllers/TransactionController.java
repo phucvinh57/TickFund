@@ -47,13 +47,12 @@ public class TransactionController {
 
     @PostMapping("")
     @ResponseBody
-
     public Map<String, Object> createTransaction(@Valid @RequestBody TransactionDTO body, HttpServletRequest request) {
         UserToken userToken = (UserToken)  request.getAttribute(CookieInterceptor.USER_TOKEN);
         Set<String> attachmentIds = body.attachments;
 
         TransactionEntity transactionEntity = this.dtoToEntity(body, userToken.getUserId());
-        String createdTransactionId = this.transactionService.createTransaction(transactionEntity, attachmentIds);
+        String createdTransactionId = this.transactionService.createTransaction(transactionEntity, attachmentIds, body.planningId);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Create transaction successfully");

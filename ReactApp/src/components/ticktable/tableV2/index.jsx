@@ -7,7 +7,7 @@ import { Funnel, TerminalPlus, Trash, XCircle } from "react-bootstrap-icons"
 import ReactPaginate from "react-paginate"
 import { BETWEEN, getOperators } from "../../../constants/compareOperator"
 import { PAGE_SIZE } from "../../../constants/pageSettings"
-import { dateToString, shortKey } from "../../../utils"
+import { dateToString, dateToStringYYYYmmDD, shortKey } from "../../../utils"
 import RawTable from "./rawTable"
 
 export function TickTableV2({
@@ -355,10 +355,11 @@ export function TickTableV2({
                         const upperbound = new Date(end.year(), end.month(), end.date())
                         console.log(upperbound)
                         console.log(lowerbound)
+                        console.log(dateToStringYYYYmmDD(upperbound))
                         setFilterItemRhs(filter.association.key, {
                           ...filter.rhs,
-                          upperbound: dateToString(upperbound),
-                          lowerbound: dateToString(lowerbound)
+                          upperbound: dateToStringYYYYmmDD(upperbound),
+                          lowerbound: dateToStringYYYYmmDD(lowerbound)
                         })
                       }}>
                       <input type="text" className="form-control" />

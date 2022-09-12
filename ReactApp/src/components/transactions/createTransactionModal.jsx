@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Button, Form, Modal } from "react-bootstrap"
 import { AttachmentUploader } from "../attachment/attachmentUploader"
 import { useSelector } from "react-redux"
-import { dateToString, prettyNumber } from "../../utils"
+import { dateToString, prettyNumber, dateToStringYYYYmmDD } from "../../utils"
 import DatePicker from "react-datepicker"
 import { transactionService } from "../../services/transaction.service"
 import { fileService } from "../../services/file.service"
@@ -10,7 +10,7 @@ import { toast } from "react-toastify"
 
 const initFormData = {
   type: 'expense',
-  history: dateToString(new Date()),
+  history: dateToStringYYYYmmDD(new Date()),
   note: '',
   amount: 1000,
   category_name: "",
@@ -142,7 +142,7 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
           <Form.Group className="col-6">
             <Form.Label className="fw-500">Danh mục</Form.Label>
             <Form.Select
-              value={formData.category_name ? formData.category_name : null}
+              value={formData.category_name ? formData.category_name : ''}
               onChange={e => setFormData({ ...formData, category_name: e.target.value })}
               disabled={!!planningData}
             >
@@ -164,7 +164,7 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
             className="form-control"
             dateFormat="dd/MM/yyyy"
             selected={new Date(formData.history)}
-            onChange={newDate => setFormData({ ...formData, history: dateToString(newDate) })} />
+            onChange={newDate => setFormData({ ...formData, history: dateToStringYYYYmmDD(newDate) })} />
         </Form.Group>
         <Form.Group className="mb-2">
           <Form.Label className="fw-500">Ghi chú</Form.Label>

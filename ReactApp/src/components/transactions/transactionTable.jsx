@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { EMPTY_AVATAR } from '../../resource';
 import { DEFAULT_TRANSACTION_QUERY, PAGE_SIZE } from '../../constants/pageSettings';
 import Attachment from '../attachment/attachment';
+import { dateToString } from '../../utils';
 
 function TransactionDetailModal({ data, show, onHide }) {
   return <Modal
@@ -28,7 +29,7 @@ function TransactionDetailModal({ data, show, onHide }) {
           <strong>Số tiền</strong>
         </Col>
         <Col className="me-2" sm={8} >
-          {data.money}
+          {data.amount}
         </Col>
       </Row>
       <Row className='mb-2'>
@@ -47,9 +48,9 @@ function TransactionDetailModal({ data, show, onHide }) {
       </Row>
       <Row className='mb-2'>
         <Col className="ms-2">
-          <strong>Thời gian giao dịch</strong>
+          <strong>Ngày giao dịch</strong>
         </Col>
-        <Col className="me-2" sm={8} >{data.time}</Col>
+        <Col className="me-2" sm={8} >{dateToString(new Date(data.history))}</Col>
       </Row>
       <Row className='mb-2'>
         <Col className="ms-2">
@@ -61,7 +62,7 @@ function TransactionDetailModal({ data, show, onHide }) {
         <Col className="ms-2">
           <strong>Ghi chú</strong>
         </Col>
-        <Col className="me-2" sm={8} >{data.notes}</Col>
+        <Col className="me-2" sm={8} >{data.note}</Col>
       </Row>
       <Row className='mb-2'>
         <Col className="ms-2">
@@ -108,7 +109,7 @@ function transactionToTableData(transactions, users, categories) {
           </Row>
         </div>
       },
-      history: transaction.history,
+      history: dateToString(new Date(transaction.history)),
       createdAt: dateTimeToString(new Date(transaction.created_at)),
       amount: {
         val: transaction.amount,
@@ -169,13 +170,14 @@ export default function TransactionTable() {
   const openTransactionDetail = row => {
     const transaction = transactions.find(t => t.ID === row.id)
     const allTransactionData = {
-      money: row.amount.component,
+      amount: row.amount.component,
       category: row.category.component,
       user: row.user.component,
       history: row.history,
       id: row.id,
-      notes: transaction.note ? transaction.note : '',
-      attachments: transaction.attachments
+      note: transaction.note ? transaction.note : '',
+      attachments: transaction.attachments,
+      createdAt: transaction.createdAt
     }
     setShowData(allTransactionData)
     setShow(true)

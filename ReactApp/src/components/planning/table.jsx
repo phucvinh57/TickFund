@@ -8,9 +8,10 @@ import planningService from "../../services/planning.service";
 import { useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import { EMPTY_AVATAR } from "../../resource";
-import { dateToString, prettyNumber } from "../../utils";
+import { dateToString, prettyNumber, queryToApiBody } from "../../utils";
 import { convertUnifiedCodeToEmojiSymbol } from "../../utils";
 import AddTransactionModal from "../transactions/createTransactionModal";
+import { PAGE_SIZE } from "../../constants/pageSettings";
 
 const PLANNING_FIELD_MAP = {
   'id': 'ID',
@@ -85,10 +86,12 @@ export default function PlanningTable() {
   const [showEditPlanningModal, setShowEditPlanningModal] = useState(false)
   const [showResolvePlanningModal, setShowResolvePlanningModal] = useState(false)
   const [targetPlanning, setTargetPlanning] = useState(null)
+  const [totalMatched, setTotalMatched] = useState(0)
 
   useEffect(() => {
     planningService.getPlanningByQuery(query).then(response => {
       setPlannings(response.data.results)
+      setTotalMatched(response.data.total)
     })
   }, [query])
 
@@ -130,10 +133,15 @@ export default function PlanningTable() {
       componentSize="md"
       headers={planningTableHeaders}
       data={planingToTableData(plannings, users, categories)}
-      numPages={20}
+      numPages={Math.ceil(totalMatched / PAGE_SIZE)}
 
-      defaultSortField='startDate'
-      onQuery={conditions => console.log(conditions)}
+      defaultSortField='nextDue'
+      onQuery={data => {
+        const filterPageNum = data.slice.pageNumber
+        data.slice.pageNumber = filterPageNum > totalMatched ? totalMatched : filterPageNum
+          console.log(data)
+          setQuery(queryToApiBody(data, PLANNING_FIELD_MAP))
+        }}
       onRowClick={handleOnRowClick}
     />
   </div>
