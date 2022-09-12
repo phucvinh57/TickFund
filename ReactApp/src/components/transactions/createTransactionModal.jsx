@@ -9,14 +9,15 @@ import { fileService } from "../../services/file.service"
 import { toast } from "react-toastify"
 import { INCOME, EXPENSE } from "../../constants/categoryTypes"
 import { triggerReloadTransaction } from "../../redux/slice/transactionTrigger"
+import { triggerReloadPlanning } from "../../redux/slice/planningTrigger"
 
 const initFormData = {
   type: 'expense',
   history: dateToStringYYYYmmDD(new Date()),
   note: '',
   amount: 0,
-  category_name: "",
-  user_id: ""
+  categoryName: "",
+  userId: ""
 }
 
 export default function AddTransactionModal({ show, onHide, planningData }) {
@@ -37,8 +38,8 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
         history: dateToStringYYYYmmDD(new Date()),
         note: '',
         amount: planningData.amount,
-        category_name: planningData.categoryName,
-        user_id: planningData.userId
+        categoryName: planningData.categoryName,
+        userId: planningData.userId
       })
     }
   }, [categories, planningData])
@@ -48,12 +49,12 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
     const temp = categories.filter(c => c.type === categoryType)
     if (temp.length != 0) {
       defaultCategory = temp[0]
-      setFormData({ ...formData, category_name: defaultCategory.name })
+      setFormData({ ...formData, categoryName: defaultCategory.name })
     }
   }, [categories, categoryType])
 
   useEffect(() => {
-    setFormData({ ...formData, user_id: personal.ID })
+    setFormData({ ...formData, userId: personal.ID })
   }, [personal])
 
   function onFileChange(fileData) {
@@ -76,7 +77,9 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
         createBody = { ...createBody, attachments: fileUploadResponse.data.id }
       }
       await transactionService.addTransactions(createBody)
-      dispatch(triggerReloadTransaction())
+      if(!planningData)
+        dispatch(triggerReloadTransaction())
+      else dispatch(triggerReloadPlanning())
       toast.success("Tạo giao dich thành công")
       setFormData(initFormData)
       onHide()
@@ -122,8 +125,8 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
             <Form.Label className="fw-500">Người giao dịch</Form.Label>
             <Form.Select
               required
-              value={formData.user_id}
-              onChange={e => setFormData({ ...formData, user_id: e.target.value })}
+              value={formData.userId}
+              onChange={e => setFormData({ ...formData, userId: e.target.value })}
               disabled={!!planningData}
             >
               <option value={""} disabled> -- Chọn người giao dịch --</option>
@@ -152,8 +155,8 @@ export default function AddTransactionModal({ show, onHide, planningData }) {
           <Form.Group className="col-6">
             <Form.Label className="fw-500">Danh mục</Form.Label>
             <Form.Select
-              value={formData.category_name}
-              onChange={e => setFormData({ ...formData, category_name: e.target.value })}
+              value={formData.categoryName}
+              onChange={e => setFormData({ ...formData, categoryName: e.target.value })}
               disabled={!!planningData}
               required
             >

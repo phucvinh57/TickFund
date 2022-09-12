@@ -36,8 +36,6 @@ const initPlanningFormData = {
   }
 }
 
-
-
 export function EditPlanningModal({ show, onHide, planningData, onResolve }) {
   const categories = useSelector(state => state.categories)
   const users = useSelector(state => state.users)
@@ -204,7 +202,12 @@ export function EditPlanningModal({ show, onHide, planningData, onResolve }) {
               Xóa
             </Button>
             <Button variant="outline-success"
-              onClick={() => onResolve()}
+              onClick={() => {
+                if(planningData.repeat.countdown === 0) {
+                  toast.warn("Dự trù đã giải quyết xong")
+                }
+                else onResolve()
+              }}
             >
               Giải quyết
             </Button>
