@@ -31,7 +31,6 @@ public class TransactionController {
     @Value("${tickfund.domain.my}")
     String MY_DOMAIN;
 
-    final String PROTOCOL_SCHEME = "http";
 
     @GetMapping("/{id}")
     @ResponseBody
