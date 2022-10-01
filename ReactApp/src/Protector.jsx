@@ -34,6 +34,9 @@ export default function Protector({ children }) {
                 setApplicationState(REJECTED)
             }
             return
+        } finally {
+            setApplicationState(REJECTED)
+            
         }
 
         // Get user's personal data (include permission)

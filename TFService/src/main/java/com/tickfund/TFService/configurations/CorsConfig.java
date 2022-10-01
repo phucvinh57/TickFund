@@ -16,7 +16,7 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         System.out.println(corsUrl);
         registry.addMapping("/**")
-                .allowedOrigins(corsUrl)
+                .allowedOrigins("https://finance.ticklab.vn", "https://git.ticklab/vn", "https://auth.ticklab.vn")
                 .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
 //                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
                 .allowCredentials(true);

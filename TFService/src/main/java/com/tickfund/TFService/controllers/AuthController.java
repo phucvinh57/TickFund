@@ -74,7 +74,7 @@ public class AuthController {
 
     @GetMapping("/ticksso")
     @ResponseBody
-    public void tickSsoCallback(@RequestParam("appCallbackUrl") String appCallback, @RequestParam Integer code,
+    public void tickSsoCallback(@RequestParam("appCallbackUrl") String appCallback, @RequestParam("code") Integer code,
             HttpServletResponse response) {
         WebClient client = WebClient.builder()
                 .baseUrl(String.format("%s://%s", PROTOCOL_SCHEME, SSO_SERVER))
