@@ -45,9 +45,7 @@ function generatePieData(records, isIncome){
         return EMPTY_PIE_DATE
     }
 
-    
     const reducedRecords = reduceRecordByCategory(records)
-
     const recordLabels = reducedRecords.map(t => t.category_name)
     
     return  {
@@ -69,7 +67,7 @@ function generatePieData(records, isIncome){
 export default function PieChart({transactions, plannings}) {
     return <>
         <div className="d-flex m-0 p-0 justify-content-around mt-2">
-            <CustomPie data={generatePieData(transactions.filter(t => t.category_type == 'income'), true)} title='Thu' />
+            <CustomPie data={generatePieData(transactions.filter(t => t.category_type == 'income'), true)} title='Thu'/>
             <CustomPie data={generatePieData(transactions.filter(t => t.category_type == 'expense'), false)} title='Chi' />
             <CustomPie data={generatePieData(plannings.filter(t => t.category_type == 'income'), true)} title='Dự trù thu' />
             <CustomPie data={generatePieData(plannings.filter(t => t.category_type == 'expense'), false)} title='Dự trù chi' />
