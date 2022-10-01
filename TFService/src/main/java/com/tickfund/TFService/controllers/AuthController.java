@@ -77,7 +77,7 @@ public class AuthController {
     public void tickSsoCallback(@RequestParam("appCallbackUrl") String appCallback, @RequestParam Integer code,
             HttpServletResponse response) {
         WebClient client = WebClient.builder()
-                .baseUrl(String.format("%s://%s/api", PROTOCOL_SCHEME, SSO_SERVER))
+                .baseUrl(String.format("%s://%s", PROTOCOL_SCHEME, SSO_SERVER))
                 .build();
         try {
             ResponseEntity<CodeCheckBody> codeCheckResponse = client
@@ -115,7 +115,7 @@ public class AuthController {
     }
 
     String genRedirectSso(String appCallback) {
-        final String SERVICE_CALLBACK = String.format("%s://%s/api", PROTOCOL_SCHEME, MY_DOMAIN) + "/auth/ticksso";
+        final String SERVICE_CALLBACK = String.format("%s://%s", PROTOCOL_SCHEME, MY_DOMAIN) + "/auth/ticksso";
         return String.format("%s://%s?serviceCallbackUrl=%s&appCallbackUrl=%s", PROTOCOL_SCHEME, SSO_SERVER,
                 SERVICE_CALLBACK, appCallback);
     }

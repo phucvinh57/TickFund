@@ -4,7 +4,7 @@ VALUES
     ('Tiền nhà', '1f3e0', 'EXPENSE'),
     ('Tiền điện', '1f4a1', 'INCOME'),
     ('Tiền thiết bị', '1fa9b', 'INCOME'),
-    ('Tiền dự án', '1f468-200d-1f4bb', 'INCOME'),
+    ('Tiền dự án', '1f468', 'INCOME'),
     ('Tiền nước', '1f4a7', 'INCOME');
 
 INSERT INTO
@@ -114,10 +114,6 @@ VALUES
         'IT',
         1
     );
-transaction.amount
-
-ALTER TABLE tickfund.planning
-ADD next_due date;
 
 INSERT INTO `transaction` VALUES 
 ('1659543244836-1915940',43000,'2022-01-06','Tiền điện','1915940','1915940','EXPENSE',NULL,'2022-08-03 16:14:04'),
