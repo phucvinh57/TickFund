@@ -50,12 +50,17 @@ function generateLineData(filter, transactions, plannings, prevBalance){
                                 x: inRangeIncome[idx].x,
                                 y: ele
                             }))
+    console.log(calcFundTotalLineData(
+        mergeIncome.map(ele => ele.y),
+        mergeExpense.map(ele => ele.y),
+        prevBalance))
+    console.log(mergeIncome)
     const totalWithPlanning = calcFundTotalLineData(
                             mergeIncome.map(ele => ele.y),
                             mergeExpense.map(ele => ele.y),
                             prevBalance)
                             .map((ele, idx) => ({
-                                x: mergeIncome[idx].x,
+                                x: mergeIncome.length >= mergeExpense.length ? mergeIncome[idx].x : mergeExpense[idx].x,
                                 y: ele
                             }))
 
